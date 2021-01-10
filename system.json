@@ -1,0 +1,139 @@
+{
+  "name": "tagmar_rpg",
+  "title": "Tagmar RPG",
+  "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
+  "version": "0.1.7",
+  "templateVersion": 2,
+  "author": "Vinicius Fernandez, Marcos Walker",
+  "minimumCoreVersion": "0.7.7",
+  "compatibleCoreVersion": "0.7.9",
+  "scripts": [
+  ],
+  "esmodules": [
+    "modules/tagmar.js"
+  ],
+  "styles": [
+    "css/bootstrap-grid.css",
+    "css/sheet.css"
+  ],
+  "packs": [
+    {
+      "name": "armaduras-elmos-escudos",
+      "label": "Armaduras, Elmos e Escudos",
+      "system": "tagmar",
+      "path": "./packs/armaduras-elmos-escudos.db",
+      "entity": "Item"
+    },
+    {
+      "name": "criando-criaturas",
+      "label": "Criando Criaturas",
+      "system": "tagmar",
+      "path": "./packs/criando-criaturas.db",
+      "entity": "Item"
+    },
+    {
+      "name": "grupo-de-armas",
+      "label": "Grupos de Armas",
+      "system": "tagmar",
+      "path": "./packs/grupo-de-armas.db",
+      "entity": "Item"
+    },
+    {
+      "name": "habilidade",
+      "label": "Habilidades",
+      "system": "tagmar",
+      "path": "./packs/habilidade.db",
+      "entity": "Item"
+    },
+    {
+      "name": "magias",
+      "label": "Magias",
+      "system": "tagmar",
+      "path": "./packs/magias.db",
+      "entity": "Item"
+    },
+    {
+      "name": "pertences-e-afins",
+      "label": "Pertences e Afins",
+      "system": "tagmar",
+      "path": "./packs/pertences-e-afins.db",
+      "entity": "Item"
+    },
+    {
+      "name": "pocoes-oleos-elixires-unguentos",
+      "label": "Poções, Óleos, Elixires e Unguento",
+      "system": "tagmar",
+      "path": "./packs/pocoes-oleos-elixires-unguentos.db",
+      "entity": "Item"
+    },
+    {
+      "name": "racas-e-profissoes",
+      "label": "Raças e Profissões",
+      "system": "tagmar",
+      "path": "./packs/racas-e-profissoes.db",
+      "entity": "Item"
+    },
+    {
+      "name": "tecnicas-de-combate",
+      "label": "Técnicas de Combate",
+      "system": "tagmar",
+      "path": "./packs/tecnicas-de-combate.db",
+      "entity": "Item"
+    },
+    {
+      "name": "venenos-e-drogas",
+      "label": "Venenos e Drogas",
+      "system": "tagmar",
+      "path": "./packs/venenos-e-drogas.db",
+      "entity": "Item"
+    },
+    {
+      "name": "lista-de-arquetipos",
+      "label": "Lista de Arquétipos",
+      "system": "tagmar",
+      "path": "./packs/lista-de-arquetipos.db",
+      "entity": "Actor"
+    },
+    {
+      "name": "livro-de-criaturas",
+      "label": "Livro de Criaturas",
+      "system": "tagmar",
+      "path": "./packs/livro-de-criaturas.db",
+      "entity": "Actor"
+    },
+    {
+      "name": "itens-magicos-exemplos",
+      "label": "Itens Mágicos de Exemplo",
+      "system": "tagmar",
+      "path": "./packs/itens-magicos-exemplos.db",
+      "entity": "Item"
+    },
+    {
+      "name": "magias-ancestrais",
+      "label": "Magias Ancestrais",
+      "system": "tagmar",
+      "path": "./packs/magias-ancestrais.db",
+      "entity": "Item"
+    },
+    {
+      "name": "magias-perdidas",
+      "label": "Magias Perdidas",
+      "system": "tagmar",
+      "path": "./packs/magias-perdidas.db",
+      "entity": "Item"
+    }
+  ],
+  "languages": [
+  ],
+  "dependencies": [
+    {
+      "name": "compendium-folders",
+      "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/master/module.json"
+    }
+  ],
+  "gridDistance": 1.0,
+  "gridUnits": "m",
+  "url": "https://github.com/marcoswalker/tagmar",
+  "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmar/master/system.json",
+  "download": "https://codeload.github.com/marcoswalker/tagmar/zip/master"
+}
