@@ -1,6 +1,6 @@
 {
   "name": "tagmar_rpg",
-  "title": "Tagmar RPG",
+  "title": "Tagmar XXX",
   "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
   "version": "0.1.7",
   "templateVersion": 2,
@@ -133,7 +133,7 @@
   ],
   "gridDistance": 1.0,
   "gridUnits": "m",
-  "url": "https://github.com/marcoswalker/tagmar",
-  "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmar/master/system.json",
-  "download": "https://codeload.github.com/marcoswalker/tagmar/zip/master"
+  "url": "https://github.com/marcoswalker/tagmar_rpg",
+  "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmar_rpg/master/system.json",
+  "download": "https://codeload.github.com/marcoswalker/tagmar_rpg/zip/master"
 }
