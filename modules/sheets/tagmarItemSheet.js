@@ -25,7 +25,7 @@ export default class tagmarItemSheet extends ItemSheet {
     }
 
     get template() {
-        return 'systems/tagmar/templates/sheets/'+ this.item.data.type.toLowerCase() +'-sheet.hbs';
+        return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-sheet.hbs';
     }
 
     getData() {

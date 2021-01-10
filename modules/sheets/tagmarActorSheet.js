@@ -13,7 +13,7 @@ export default class tagmarActorSheet extends ActorSheet {
         });
     }
     get template() {
-        return 'systems/tagmar/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
+        return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
     }
     getData() {
         const data = super.getData();
