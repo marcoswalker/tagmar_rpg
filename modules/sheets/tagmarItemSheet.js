@@ -134,7 +134,12 @@ export default class tagmarItemSheet extends ItemSheet {
         const nivel = $(".nivel").val();
         const penal = $(".penal").val();
         const bonus = $(".bonus").val();
-        let soma = parseInt(ajuste) + parseInt(nivel) + parseInt(penal) + parseInt(bonus);
+        let soma = 0;
+        if (nivel > 0) { 
+            soma = parseInt(ajuste) + parseInt(nivel) + parseInt(penal) + parseInt(bonus);
+        } else {
+            soma = parseInt(ajuste) - 7 + parseInt(penal) + parseInt(bonus);
+        }
         $(".totalInput2").val(soma);
     }
 
