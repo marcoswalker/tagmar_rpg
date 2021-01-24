@@ -94,3 +94,8 @@
     color: black;
 }
 }
+.bg-img {
+    background-image: url('/systems/tagmar_rpg/templates/sheets/img/fundo_ficha_y.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+}

@@ -13,7 +13,16 @@ export default class tagmarActorSheet extends ActorSheet {
         });
     }
     get template() {
-        return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
+        let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
+        if (this.actor.data.type == "Personagem" && layout == "tagmar3") {
+            return 'systems/tagmar_rpg/templates/sheets/personagem-ficha.hbs';
+        } else if (this.actor.data.type == "NPC" && layout == "tagmar3") {
+            return 'systems/tagmar_rpg/templates/sheets/npc-ficha.hbs';
+        } else if (this.actor.data.type == "Inventario" && layout == "tagmar3") {
+            return 'systems/tagmar_rpg/templates/sheets/inventario-ficha.hbs';
+        } else {
+            return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
+        }
     }
     getData() {
         const data = super.getData();

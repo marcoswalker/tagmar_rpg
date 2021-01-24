@@ -1,6 +1,8 @@
 import tagmarItemSheet from "./sheets/tagmarItemSheet.js";
 import tagmarActorSheet from "./sheets/tagmarActorSheet.js";
 import { tagmarItem } from "./tagmarItem.js";
+import { preloadHandlebarsTemplates } from "./templates.js";
+import { SystemSettings } from "./settings.js";
 
 Hooks.once("init", function(){
 
@@ -14,6 +16,8 @@ Hooks.once("init", function(){
     decimals: 2
   };
   CONFIG.Item.entityClass = tagmarItem;
+  // Register System Settings
+  SystemSettings();
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("tagmar", tagmarItemSheet, {makeDefault: true});
 
@@ -29,6 +33,7 @@ Hooks.once("init", function(){
     if (a != b) { return options.fn(this); }
     return options.inverse(this);
   });
+  preloadHandlebarsTemplates();
   
 });
 
