@@ -10,7 +10,8 @@ export const SystemSettings = function() {
         type: String,
         choices: {
           "base": "Sem Imagem (padrão)",
-          "tagmar3": "Fundo do Livro (Tagmar 3.0)"
+          "tagmar3": "Fundo do Livro (Tagmar 3.0)",
+          "tagmar3anao": "Fundo do Livro (Tagmar 3.0) + Anão"
         }
       });
 

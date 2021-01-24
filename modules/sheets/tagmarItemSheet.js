@@ -25,7 +25,12 @@ export default class tagmarItemSheet extends ItemSheet {
     }
 
     get template() {
-        return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-sheet.hbs';
+        let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
+        if (layout != "base") {
+            return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-ficha.hbs';
+        } else {
+            return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-sheet.hbs';
+        }
     }
 
     getData() {

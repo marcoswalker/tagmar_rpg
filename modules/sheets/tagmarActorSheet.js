@@ -16,9 +16,11 @@ export default class tagmarActorSheet extends ActorSheet {
         let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
         if (this.actor.data.type == "Personagem" && layout == "tagmar3") {
             return 'systems/tagmar_rpg/templates/sheets/personagem-ficha.hbs';
-        } else if (this.actor.data.type == "NPC" && layout == "tagmar3") {
+        } else if (this.actor.data.type == "Personagem" && layout == "tagmar3anao") {
+            return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-anao.hbs';
+        } else if (this.actor.data.type == "NPC" && layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/npc-ficha.hbs';
-        } else if (this.actor.data.type == "Inventario" && layout == "tagmar3") {
+        } else if (this.actor.data.type == "Inventario" && layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/inventario-ficha.hbs';
         } else {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';

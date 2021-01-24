@@ -99,3 +99,13 @@
     background-repeat: no-repeat;
     background-size:cover;
 }
+.bg-img-anao {
+    background-image: url('/systems/tagmar_rpg/templates/sheets/img/fundo_ficha_anao.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.bg-img-items {
+    background-image: url('/systems/tagmar_rpg/templates/sheets/img/fundo_items.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+}
