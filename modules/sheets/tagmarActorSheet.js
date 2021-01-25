@@ -14,10 +14,53 @@ export default class tagmarActorSheet extends ActorSheet {
     }
     get template() {
         let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
-        if (this.actor.data.type == "Personagem" && layout == "tagmar3") {
-            return 'systems/tagmar_rpg/templates/sheets/personagem-ficha.hbs';
-        } else if (this.actor.data.type == "Personagem" && layout == "tagmar3anao") {
-            return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-anao.hbs';
+        if (this.actor.data.type == "Personagem" && layout != "base") {
+            if (layout == 'tagmar3anao') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-anao.hbs';
+            } else if (layout == 'tagmar3barda') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-barda.hbs';
+            } else if (layout == 'tagmar3bardo') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-bardo.hbs';
+            } else if (layout == 'tagmar3gana') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-gana.hbs';
+            } else if (layout == 'tagmar3ghuma') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-ghuma.hbs';
+            } else if (layout == 'tagmar3ghumk') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-ghumk.hbs';
+            } else if (layout == 'tagmar3lhuma') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-lhuma.hbs';
+            } else if (layout == 'tagmar3lpeqa') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-lpeqa.hbs';
+            } else if (layout == 'tagmar3lpeq') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-lpeq.hbs';
+            } else if (layout == 'tagmar3lhum') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-lhum.hbs';
+            } else if (layout == 'tagmar3melfa') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-melfa.hbs';
+            } else if (layout == 'tagmar3mhuma') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-mhuma.hbs';
+            } else if (layout == 'tagmar3melfo') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-melfo.hbs';
+            } else if (layout == 'tagmar3pap') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-pap.hbs';
+            } else if (layout == 'tagmar3relf') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-relf.hbs';
+            } else if (layout == 'tagmar3rhuma') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-rhuma.hbs';
+            } else if (layout == 'tagmar3shum') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-shum.hbs';
+            } else if (layout == 'tagmar3shumv') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-shumv.hbs';
+            } else if (layout == 'tagmar3selfa') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-selfa.hbs';
+            } else if (layout == 'tagmar3shum1') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-shum1.hbs';
+            } else if (layout == 'tagmar3shum2') {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-shum2.hbs';
+            } else {
+                return 'systems/tagmar_rpg/templates/sheets/personagem-ficha.hbs';
+            }
+            
         } else if (this.actor.data.type == "NPC" && layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/npc-ficha.hbs';
         } else if (this.actor.data.type == "Inventario" && layout != "base") {

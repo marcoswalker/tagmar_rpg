@@ -13,125 +13,95 @@
                 <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
                 <h1 class="fairyDust"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
             </div>
-            <div class="container container_dados">
-                <div class="row dados">
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Custo:</h4></label>
+            <div class="row container_dados">
+                <div class="container">
+                    <div class="row dados">
+                        <div class="col-md-2">
+                            <label><h4 class="mediaeval">Custo:</h4></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input name="data.custo" type="number" value="{{data.custo}}" height="30" class="custoInput"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label><h4 class="mediaeval">Nível:</h4></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input name="data.nivel" type="number" value="{{data.nivel}}" height="30" class="nivelInput"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label><h4 class="mediaeval">Total:</h4></label>
+                        </div>
+                        <div class="col-md-2">
+                            <input name="data.total" type="number" value="{{data.total}}" height="30" class="totalInput"/>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <input name="data.custo" type="number" value="{{data.custo}}" height="30" class="custoInput"/>
-                    </div>
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Nível:</h4></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input name="data.nivel" type="number" value="{{data.nivel}}" height="30" class="nivelInput"/>
-                    </div>
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Total:</h4></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input name="data.total" type="number" value="{{data.total}}" height="30" class="totalInput"/>
-                    </div>
-                </div>
 
-                <!--div class="row dados">
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Restrição:</h4></label>
+                    <div class="row dados">
+                        <div class="col-md-2">
+                            <label><h4 class="mediaeval">Categoria:</h4></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input name="data.categoria" type="text" list="categorias" value="{{data.categoria}}" height="30"/>
+                            <datalist id="categorias">
+                                <option value="Perícia"></option>
+                                <option value="Postura"></option>
+                                <option value="Ataque"></option>
+                                <option value="Precisão"></option>
+                                <option value="Agressão"></option>
+                                <option value="Proteção"></option>
+                                <option value="Suporte"></option>
+                            </datalist>
+                        </div>
+                        <div class="col-md-2">
+                            {{#ifeq data.categoria "Postura"}}
+                                <i class="far fa-hand-paper"></i>
+                            {{/ifeq}}
+                            {{#ifeq data.categoria "Ataque"}}
+                                <i class="fas fa-gavel"></i>
+                            {{/ifeq}}
+                            {{#ifeq data.categoria "Precisão"}}
+                                <i class="fas fa-bullseye"></i>
+                            {{/ifeq}}
+                            {{#ifeq data.categoria "Agressão"}}
+                                <i class="fas fa-skull-crossbones"></i>
+                            {{/ifeq}}
+                            {{#ifeq data.categoria "Proteção"}}
+                                <i class="fas fa-shield-alt"></i>
+                            {{/ifeq}}
+                            {{#ifeq data.categoria "Suporte"}}
+                                <i class="fas fa-chess-rook"></i>
+                            {{/ifeq}}
+                        </div>
+                        <div class="col-md-2">
+                            <label><h4 class="mediaeval">Ajuste:</h4></label>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="mediaeval" style="font-size: 90%;" name="data.ajuste.atributo" type="text" value="{{data.ajuste.atributo}}" data-dtype="String" height="30">
+                                {{#select data.ajuste.atributo}}
+                                <option value=""></option>
+                                <option value="INT">INT</option>
+                                <option value="CAR">CAR</option>
+                                <option value="AUR">AUR</option>
+                                <option value="FOR">FOR</option>
+                                <option value="FIS">FIS</option>
+                                <option value="AGI">AGI</option>
+                                <option value="PER">PER</option>
+                                {{/select}}
+                            </select>         
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <input name="data.restricaoP" type="text" list="profissoes" value="{{data.restricaoP}}" height="30"/>
-                        <datalist id="profissoes">
-                            <option value="Bardo"></option>
-                            <option value="Guerreiro"></option>
-                            <option value="Ladino"></option>
-                            <option value="Mago"></option>
-                            <option value="Rastreador"></option>
-                            <option value="Sacerdote"></option>
-                        </datalist>
-                    </div>
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Ajuste:</h4></label>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="mediaeval" style="font-size: 90%;" name="data.ajuste.atributo" type="text" value="{{data.ajuste.atributo}}" data-dtype="String" height="30">
-                            {{#select data.ajuste.atributo}}
-                            <option value="INT">INT</option>
-                            <option value="CAR">CAR</option>
-                            <option value="AUR">AUR</option>
-                            <option value="FOR">FOR</option>
-                            <option value="FIS">FIS</option>
-                            <option value="AGI">AGI</option>
-                            <option value="PER">PER</option>
-                            {{/select}}
-                        </select>         
-                    </div>
-                </div-->
-                <div class="row dados">
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Categoria:</h4></label>
-                    </div>
-                    <div class="col-md-4">
-                        <input name="data.categoria" type="text" list="categorias" value="{{data.categoria}}" height="30"/>
-                        <datalist id="categorias">
-                            <option value="Perícia"></option>
-                            <option value="Postura"></option>
-                            <option value="Ataque"></option>
-                            <option value="Precisão"></option>
-                            <option value="Agressão"></option>
-                            <option value="Proteção"></option>
-                            <option value="Suporte"></option>
-                        </datalist>
-                    </div>
-                    <div class="col-md-2">
-                        {{#ifeq data.categoria "Postura"}}
-                            <i class="far fa-hand-paper"></i>
-                        {{/ifeq}}
-                        {{#ifeq data.categoria "Ataque"}}
-                            <i class="fas fa-gavel"></i>
-                        {{/ifeq}}
-                        {{#ifeq data.categoria "Precisão"}}
-                            <i class="fas fa-bullseye"></i>
-                        {{/ifeq}}
-                        {{#ifeq data.categoria "Agressão"}}
-                            <i class="fas fa-skull-crossbones"></i>
-                        {{/ifeq}}
-                        {{#ifeq data.categoria "Proteção"}}
-                            <i class="fas fa-shield-alt"></i>
-                        {{/ifeq}}
-                        {{#ifeq data.categoria "Suporte"}}
-                            <i class="fas fa-chess-rook"></i>
-                        {{/ifeq}}
-                    </div>
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Ajuste:</h4></label>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="mediaeval" style="font-size: 90%;" name="data.ajuste.atributo" type="text" value="{{data.ajuste.atributo}}" data-dtype="String" height="30">
-                            {{#select data.ajuste.atributo}}
-                            <option value=""></option>
-                            <option value="INT">INT</option>
-                            <option value="CAR">CAR</option>
-                            <option value="AUR">AUR</option>
-                            <option value="FOR">FOR</option>
-                            <option value="FIS">FIS</option>
-                            <option value="AGI">AGI</option>
-                            <option value="PER">PER</option>
-                            {{/select}}
-                        </select>         
-                    </div>
-                </div>
 
-                <div class="row dados">
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Descrição:</h4></label>
+                    <div class="row dados">
+                        <div class="col-md-2">
+                            <label><h4 class="mediaeval">Descrição:</h4></label>
+                        </div>
+                        <div class="col-md-10">
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;">{{data.descricao}}</textarea>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;">{{data.descricao}}</textarea>
+                    <div class="row hidden">
+                        <input name="data.ajuste.valor" type="number" value="{{data.ajuste.valor}}"/>
                     </div>
-                </div>
-                <div class="row hidden">
-                    <input name="data.ajuste.valor" type="number" value="{{data.ajuste.valor}}"/>
                 </div>
             </div>
         </div>   
