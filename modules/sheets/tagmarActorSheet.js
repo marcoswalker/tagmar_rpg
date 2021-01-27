@@ -75,7 +75,6 @@ export default class tagmarActorSheet extends ActorSheet {
          // Prepare items.
         if (this.actor.data.type == "Inventario") {
             this._prepareInventarioItems(data);
-            console.log(data);
         } else if (this.actor.data.type == 'Personagem' || this.actor.data.type == "NPC") {
             this._prepareCharacterItems(data);
             this._prepareValorTeste(data);
@@ -481,13 +480,19 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _combateImg(event) {
         const actorData = this.actor.data.data;
-        if (actorData.combos == "") {
+        const grupo = $(event.currentTarget).data("itemId");
+        let combos = actorData.combos;
+        let com_list = combos.split(',');
+        const found = com_list.find(element => element == grupo);
+        if (found) {
+            com_list.splice(com_list.indexOf(grupo),1);
             this.actor.update({
-                "data.combos": "Apareca"
+                "data.combos": com_list.join(',')
             });
         } else {
+            com_list.push(grupo);
             this.actor.update({
-                "data.combos": ""
+                "data.combos": com_list.join(',')
             });
         }
     }

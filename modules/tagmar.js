@@ -33,6 +33,25 @@ Hooks.once("init", function(){
     if (a != b) { return options.fn(this); }
     return options.inverse(this);
   });
+
+  Handlebars.registerHelper('ifind', function (a, b, options) {
+    const a_list = a.split(',');
+    const found = a_list.find(element => element == b);
+    if (found) {
+      return options.fn(this);
+    } 
+    return options.inverse(this);
+  });
+
+  Handlebars.registerHelper('idfind', function (a, b, options) {
+    const a_list = a.split(',');
+    const found = a_list.find(element => element == b);
+    if (!found) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   preloadHandlebarsTemplates();
   
 });
