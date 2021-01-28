@@ -1,4 +1,4 @@
-<form class="{{cssClass}}" autocomplete="off" id="form_persona">
+<form class="{{cssClass}}" autocomplete="off" id="form_npc">
     <header class="sheet-header">
         <div class='container'>
             <div class="row container_dados">
@@ -357,7 +357,7 @@
                                 <tr>
                                     <td></td>
                                     <th class="mediaeval">F.Ataque:</th>
-                                    <td><input class="F_Ataque" type="number" title="Força de Ataque para Teste de Resistência Física ou Magía."/></td> 
+                                    <td><input class="F_Ataque" type="number" name='data.forca_ataque' value="{{data.forca_ataque}}" title="Força de Ataque para Teste de Resistência Física ou Magía."/></td> 
                                 </tr>
                             </table>
                     </div>
@@ -368,7 +368,7 @@
                         <label><h4 class="mediaeval">Descrição:</h4></label>
                     </div>
                     <div class="col-md-10">
-                        <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 220px;font-size: 100%;" title="Escreve bastante ai.">{{data.descricao}}</textarea>
+                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;resize: vertical;" title="Escreve bastante ai." data-dtype="String">{{data.descricao}}</textarea>
                     </div>
                 </div>
                 <div class="row">

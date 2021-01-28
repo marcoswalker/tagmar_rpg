@@ -644,8 +644,13 @@ export default class tagmarActorSheet extends ActorSheet {
                 }
             }
         }
-        $(".valord10EH").val("");
-        this.render();
+        if (this.actor.data.data.valor_dado_eh) {
+            this.actor.update({
+                "data.valor_dado_eh": null
+            });
+        }
+        //$(".valord10EH").val("");
+        //this.render();
     }
 
     _attProxEstag(event) {
