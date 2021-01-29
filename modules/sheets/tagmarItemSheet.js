@@ -79,6 +79,42 @@ export default class tagmarItemSheet extends ItemSheet {
         html.find(".bonus").change(this._attTotalHab(this));
         html.find(".bAddEspec").click(this._addEspec.bind(this));
         html.find(".bApagaEspec").click(this._deleteEspec.bind(this));
+        html.find(".ativaDesc").click(this._edtDesc.bind(this));
+    }
+
+    _edtDesc(event) {
+        const itemData = this.item.data.data;
+        if (this.item.data.type == "Habilidade") {
+            if (itemData.hab_nata) {
+                this.item.update({
+                    'data.hab_nata': false
+                });
+            } else {
+                this.item.update({
+                    'data.hab_nata': true
+                });
+            }
+        } else if (this.item.data.type == "Magia") {
+            if (itemData.duracao != "") {
+                this.item.update({
+                    'data.duracao': ""
+                });
+            } else {
+                this.item.update({
+                    'data.duracao': "Abemus"
+                });
+            }
+        } else if (this.item.data.type == "Combate") {
+            if (itemData.preco != "") {
+                this.item.update({
+                    'data.preco': ""
+                });
+            } else {
+                this.item.update({
+                    'data.preco': "vainenem"
+                });
+            }
+        }
     }
 
     _sendMessage(event) {

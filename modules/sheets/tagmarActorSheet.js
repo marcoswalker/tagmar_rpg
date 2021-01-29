@@ -321,6 +321,9 @@ export default class tagmarActorSheet extends ActorSheet {
         if (this.actor.data.type != "Inventario") {
             if (!this.options.editable) return;
         }
+
+        //Ativa edição de descricao
+        html.find('.ativaDesc').click(this._edtDesc.bind(this));
         
         // Update Inventory Item
         html.find('.item-edit').click(ev => {
@@ -478,6 +481,19 @@ export default class tagmarActorSheet extends ActorSheet {
         }
     }
 
+    _edtDesc(event) {
+        const actorData = this.actor.data.data;
+            if (actorData.v_base == 0) {
+                this.actor.update({
+                    'data.v_base': 1
+                });
+            } else {
+                this.actor.update({
+                    'data.v_base': 0
+                });
+            }
+    }
+
     _combateImg(event) {
         const actorData = this.actor.data.data;
         const grupo = $(event.currentTarget).data("itemId");
@@ -565,6 +581,11 @@ export default class tagmarActorSheet extends ActorSheet {
             flavor: `<h2 class="mediaeval rola">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Magía: ${valorDefI}</h3>${stringSucesso}`
         });
         $(".F_Ataque").val("");
+        if (this.actor.data.data.forca_ataque) {
+            this.actor.update({
+                "data.forca_ataque": null
+            });
+        }
     }
 
     _rolaRFIS(event) {
@@ -611,6 +632,11 @@ export default class tagmarActorSheet extends ActorSheet {
             flavor: `<h2 class="mediaeval rola">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Física: ${valorDefI}</h3>${stringSucesso}`
         });
         $(".F_Ataque").val("");
+        if (this.actor.data.data.forca_ataque) {
+            this.actor.update({
+                "data.forca_ataque": null
+            });
+        }
     }
     _passandoEH(event) {
         let estagio_atual = this.actor.data.data.estagio;

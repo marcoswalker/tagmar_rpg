@@ -364,12 +364,22 @@
                     <div class="col-md-6"></div>
                 </div>
                 <div class="row dados">
+                    {{#ifdf data.v_base 0}}
                     <div class="col-md-2">
-                        <label><h4 class="mediaeval">Descrição:</h4></label>
+                        <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>
                     </div>
                     <div class="col-md-10">
-                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;resize: vertical;" title="Escreve bastante ai." data-dtype="String">{{data.descricao}}</textarea>
+                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String">{{data.descricao}}</textarea>
                     </div>
+                    {{/ifdf}}
+                    {{#ifeq data.v_base 0}}
+                    <div class="col-md-2">
+                        <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String" disabled>{{data.descricao}}</textarea>
+                    </div>
+                    {{/ifeq}}
                 </div>
                 <div class="row">
                     <div class="col-md-7" style="height: 5px;"></div>

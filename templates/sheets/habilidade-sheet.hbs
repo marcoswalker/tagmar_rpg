@@ -99,12 +99,21 @@
                     </div>
 
                     <div class="row dados">
+                        {{#if data.hab_nata}}
                         <div class="col-md-2">
-                            <label><h4 class="mediaeval">Descrição:</h4></label>  
+                            <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>  
                         </div>
                         <div class="col-md-10">
                             <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;">{{data.descricao}}</textarea>
                         </div>
+                        {{else}}
+                        <div class="col-md-2">
+                            <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>  
+                        </div>
+                        <div class="col-md-10">
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.descricao}}</textarea>
+                        </div>
+                        {{/if}}
                     </div>
 
                 </div>
