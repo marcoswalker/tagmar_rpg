@@ -1108,10 +1108,12 @@ export default class tagmarActorSheet extends ActorSheet {
         else if (ajusteTecnica.atributo == "AGI") total = actorData.atributos.AGI + nivel_tecnica;
         else if (ajusteTecnica.atributo == "PER") total = actorData.atributos.PER + nivel_tecnica;
         else total = nivel_tecnica;
-        tecnica.update({
-            "data.total": total
-        });
-        tecnica.render();
+        if (tecnica.data.data.total != total) {
+            tecnica.update({
+                "data.total": total
+            });
+            tecnica.render();
+        }
     }
 
     updateMagiasTotal(item_id, actor = null){
@@ -1124,10 +1126,13 @@ export default class tagmarActorSheet extends ActorSheet {
         const aura = actorData.atributos.AUR;
         const m_nivel = magia.data.data.nivel;
         const m_karma = magia.data.data.total.valorKarma;
-        magia.update({
-            "data.total.valor": aura + m_nivel + m_karma
-        });
-        magia.render();
+        let total = aura + m_nivel + m_karma;
+        if (magia.data.data.total != total) {
+            magia.update({
+                "data.total.valor": total
+            });
+            magia.render();
+        }
     }
 
     updateHabAjuste(item_id, actor = null){
@@ -1199,21 +1204,23 @@ export default class tagmarActorSheet extends ActorSheet {
         const p_250 = ItemData.dano_base.d250;
         const p_275 = ItemData.dano_base.d275;
         const p_300 = ItemData.dano_base.d300;
-        item_comb.update({
-            "data.dano.d25": p_25 + bonus_valor + bonus_magico,
-            "data.dano.d50": p_50 + bonus_valor + bonus_magico,
-            "data.dano.d75": p_75 + bonus_valor + bonus_magico,
-            "data.dano.d100": p_100 + bonus_valor + bonus_magico,
-            "data.dano.d125": p_125 + bonus_valor + bonus_magico,
-            "data.dano.d150": p_150 + bonus_valor + bonus_magico,
-            "data.dano.d175": p_175 + bonus_valor + bonus_magico,
-            "data.dano.d200": p_200 + bonus_valor + bonus_magico,
-            "data.dano.d225": p_225 + bonus_valor + bonus_magico,
-            "data.dano.d250": p_250 + bonus_valor + bonus_magico,
-            "data.dano.d275": p_275 + bonus_valor + bonus_magico,
-            "data.dano.d300": p_300 + bonus_valor + bonus_magico
-        });
-        item_comb.render();
+        if (item_comb.data.data.dano.d25 != p_25 + bonus_valor + bonus_magico) {
+            item_comb.update({
+                "data.dano.d25": p_25 + bonus_valor + bonus_magico,
+                "data.dano.d50": p_50 + bonus_valor + bonus_magico,
+                "data.dano.d75": p_75 + bonus_valor + bonus_magico,
+                "data.dano.d100": p_100 + bonus_valor + bonus_magico,
+                "data.dano.d125": p_125 + bonus_valor + bonus_magico,
+                "data.dano.d150": p_150 + bonus_valor + bonus_magico,
+                "data.dano.d175": p_175 + bonus_valor + bonus_magico,
+                "data.dano.d200": p_200 + bonus_valor + bonus_magico,
+                "data.dano.d225": p_225 + bonus_valor + bonus_magico,
+                "data.dano.d250": p_250 + bonus_valor + bonus_magico,
+                "data.dano.d275": p_275 + bonus_valor + bonus_magico,
+                "data.dano.d300": p_300 + bonus_valor + bonus_magico
+            });
+            item_comb.render();
+        } 
     }
     _attDefesaNPC(data) {
         var absorcao = 0;
@@ -1518,22 +1525,24 @@ export default class tagmarActorSheet extends ActorSheet {
         const p_250 = ItemData.dano_base.d250;
         const p_275 = ItemData.dano_base.d275;
         const p_300 = ItemData.dano_base.d300;
-        item_comb.update({
-            "data.nivel": valor_n,
-            "data.dano.d25": p_25 + bonus_valor + bonus_magico,
-            "data.dano.d50": p_50 + bonus_valor + bonus_magico,
-            "data.dano.d75": p_75 + bonus_valor + bonus_magico,
-            "data.dano.d100": p_100 + bonus_valor + bonus_magico,
-            "data.dano.d125": p_125 + bonus_valor + bonus_magico,
-            "data.dano.d150": p_150 + bonus_valor + bonus_magico,
-            "data.dano.d175": p_175 + bonus_valor + bonus_magico,
-            "data.dano.d200": p_200 + bonus_valor + bonus_magico,
-            "data.dano.d225": p_225 + bonus_valor + bonus_magico,
-            "data.dano.d250": p_250 + bonus_valor + bonus_magico,
-            "data.dano.d275": p_275 + bonus_valor + bonus_magico,
-            "data.dano.d300": p_300 + bonus_valor + bonus_magico
-        });
-        item_comb.render();
+        if (item_comb.data.data.nivel != valor_n || item_comb.data.data.dano.d25 != p_25 + bonus_valor + bonus_magico) {
+            item_comb.update({
+                "data.nivel": valor_n,
+                "data.dano.d25": p_25 + bonus_valor + bonus_magico,
+                "data.dano.d50": p_50 + bonus_valor + bonus_magico,
+                "data.dano.d75": p_75 + bonus_valor + bonus_magico,
+                "data.dano.d100": p_100 + bonus_valor + bonus_magico,
+                "data.dano.d125": p_125 + bonus_valor + bonus_magico,
+                "data.dano.d150": p_150 + bonus_valor + bonus_magico,
+                "data.dano.d175": p_175 + bonus_valor + bonus_magico,
+                "data.dano.d200": p_200 + bonus_valor + bonus_magico,
+                "data.dano.d225": p_225 + bonus_valor + bonus_magico,
+                "data.dano.d250": p_250 + bonus_valor + bonus_magico,
+                "data.dano.d275": p_275 + bonus_valor + bonus_magico,
+                "data.dano.d300": p_300 + bonus_valor + bonus_magico
+            });
+            item_comb.render();
+        }
     }
     _rolarMoral(event) {
         const tabela_resol = this.tabela_resol;
@@ -2034,10 +2043,12 @@ export default class tagmarActorSheet extends ActorSheet {
             if (municao > 0) {
                 muni_usada = 1;
                 municao -= 1;
-                item.update({
-                    "data.municao": municao
-                });
-                item.render();
+                if (item.data.data.municao != municao) {
+                    item.update({
+                        "data.municao": municao
+                    });
+                    item.render();
+                }
             }
             if (muni_usada == 1) municao_text = "<h4 class='mediaeval rola'>Munição gasta: " + muni_usada + " Restam: " + municao + "</h4>";
             else municao_text = "";
