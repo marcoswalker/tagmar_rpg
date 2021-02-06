@@ -99,6 +99,10 @@ export default class tagmarActorSheet extends ActorSheet {
             if (data.actor.raca && data.actor.profissao) {
                 this._attEfEhVB(data); 
             }
+            this._attProximoEstag(data);
+            this._attKarmaMax(data);
+            this._attRM(data);
+            this._attRF(data);
         }
         return data;
     }
@@ -164,13 +168,6 @@ export default class tagmarActorSheet extends ActorSheet {
                 }
             }
         });
-        html.find(".ipAtrAUR").change(this._attKarmaMax(this));
-        html.find(".ipEstagio").change(this._attKarmaMax(this));
-        html.find(".ipEstagio").change(this._attRF(this));
-        html.find(".ipAtrFIS").change(this._attRF(this));
-        html.find(".ipEstagio").change(this._attRM(this));
-        html.find(".ipAtrAUR").change(this._attRM(this));
-        html.find(".ipEstagio").change(this._attProxEstag(this));
         html.find(".carac_sortINT").change(ev => {
             let soma = parseInt($(html.find(".carac_sortINT")).val()) + parseInt($(html.find(".mod_racialINT")).val());
             $(html.find(".car_finINT")).val(soma);
@@ -466,37 +463,43 @@ export default class tagmarActorSheet extends ActorSheet {
         //this.render();
     }
 
-    _attProxEstag(event) {
-        let estagio_atual = parseInt($(".ipEstagio").val());
+    _attProximoEstag(data) {
+        let estagio_atual = this.actor.data.data.estagio;
         let prox_est = [0, 11, 21, 31, 46, 61, 76, 96, 116, 136, 166, 196, 226 , 266, 306, 346, 386, 436, 486, 536, 586, 646, 706, 766, 826, 896, 966, 1036, 1106, 1186, 1266, 
-        1346, 1426, 1516, 1606, 1696, 1786, 1886, 1986, 2086];
-        if (estagio_atual < 40) {
+            1346, 1426, 1516, 1606, 1696, 1786, 1886, 1986, 2086];
+        if (estagio_atual < 40 && this.actor.data.data.pontos_estagio.next != prox_est[estagio_atual]) {
             this.actor.update({
                 "data.pontos_estagio.next": prox_est[estagio_atual]
             });
         }
     }
 
-    _attRM(event) {
+    _attRM(data) {
         let rm = this.actor.data.data.estagio + this.actor.data.data.atributos.AUR;
-        this.actor.update({
-            "data.rm": rm
-        });
+        if (this.actor.data.data.rm != rm) {
+            this.actor.update({
+                "data.rm": rm
+            });
+        }
     }
 
-    _attRF(event) {
+    _attRF(data) {
         let rf = this.actor.data.data.estagio + this.actor.data.data.atributos.FIS;
-        this.actor.update({
-            "data.rf": rf
-        });
+        if (this.actor.data.data.rf != rf) {
+            this.actor.update({
+                "data.rf": rf
+            });
+        } 
     }
 
-    _attKarmaMax(event) {
+    _attKarmaMax(data) {
         let karma = ((this.actor.data.data.atributos.AUR) + 1 ) * ((this.actor.data.data.estagio) + 1);
         if (karma < 0) karma = 0;
-        this.actor.update({
-            "data.karma.max": karma
-        });
+        if (this.actor.data.data.karma.max != karma) {
+            this.actor.update({
+                "data.karma.max": karma
+            });
+        }
     }
     _addGrupoArmas(event) {
         const grupo = $(event.currentTarget).data("itemId");
