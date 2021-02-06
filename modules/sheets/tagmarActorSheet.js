@@ -863,37 +863,37 @@ export default class tagmarActorSheet extends ActorSheet {
         else if (carac_finalAGI >= 36) carac_finalAGI = 36;
         else if (carac_finalPER >= 36) carac_finalPER = 36;
         let valores = [0,-2,-2,-2,-1,-1,-1,-1,-1,0,0,0,0,1,1,1,2,2,3,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-        if (carac_finalINT > 0) {
+        if (carac_finalINT > 0 && actorData.data.atributos.INT != valores[carac_finalINT]) {
             this.actor.update({
                 "data.atributos.INT": valores[carac_finalINT]
             });
         }
-        if (carac_finalAUR > 0) {
+        if (carac_finalAUR > 0 && actorData.data.atributos.AUR != valores[carac_finalAUR]) {
             this.actor.update({
                 "data.atributos.AUR": valores[carac_finalAUR]
             });
         }
-        if (carac_finalCAR > 0) {
+        if (carac_finalCAR > 0 && actorData.data.atributos.CAR != valores[carac_finalCAR]) {
             this.actor.update({
                 "data.atributos.CAR": valores[carac_finalCAR]
             });
         }  
-        if (carac_finalFOR > 0) {
+        if (carac_finalFOR > 0 && actorData.data.atributos.FOR != valores[carac_finalFOR]) {
             this.actor.update({
                 "data.atributos.FOR": valores[carac_finalFOR]
             });
         }  
-        if (carac_finalFIS > 0) {
+        if (carac_finalFIS > 0 && actorData.data.atributos.FIS != valores[carac_finalFIS]) {
             this.actor.update({
                 "data.atributos.FIS": valores[carac_finalFIS]
             });
         } 
-        if (carac_finalAGI > 0) {
+        if (carac_finalAGI > 0 && actorData.data.atributos.AGI != valores[carac_finalAGI]) {
             this.actor.update({
                 "data.atributos.AGI": valores[carac_finalAGI]
             });
         } 
-        if (carac_finalPER > 0) {
+        if (carac_finalPER > 0 && actorData.data.atributos.PER != valores[carac_finalPER]) {
             this.actor.update({
                 "data.atributos.PER": valores[carac_finalPER]
             });
@@ -902,15 +902,17 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _prepareValorTeste(sheetData){
         const actorData = sheetData.actor;
-        this.actor.update({
-            "data.valor_teste.INT": actorData.data.atributos.INT*4,
-            "data.valor_teste.AUR": actorData.data.atributos.AUR*4,
-            "data.valor_teste.CAR": actorData.data.atributos.CAR*4,
-            "data.valor_teste.FOR": actorData.data.atributos.FOR*4,
-            "data.valor_teste.FIS": actorData.data.atributos.FIS*4,
-            "data.valor_teste.AGI": actorData.data.atributos.AGI*4,
-            "data.valor_teste.PER": actorData.data.atributos.PER*4
-        });
+        if (actorData.data.valor_teste.INT != actorData.data.atributos.INT*4 || actorData.data.valor_teste.AUR != actorData.data.atributos.AUR*4 || actorData.data.valor_teste.CAR != actorData.data.atributos.CAR*4 || actorData.data.valor_teste.FOR != actorData.data.atributos.FOR*4 || actorData.data.valor_teste.FIS != actorData.data.atributos.FIS*4 || actorData.data.valor_teste.AGI != actorData.data.atributos.AGI*4 || actorData.data.valor_teste.PER != actorData.data.atributos.PER*4) {
+            this.actor.update({
+                "data.valor_teste.INT": actorData.data.atributos.INT*4,
+                "data.valor_teste.AUR": actorData.data.atributos.AUR*4,
+                "data.valor_teste.CAR": actorData.data.atributos.CAR*4,
+                "data.valor_teste.FOR": actorData.data.atributos.FOR*4,
+                "data.valor_teste.FIS": actorData.data.atributos.FIS*4,
+                "data.valor_teste.AGI": actorData.data.atributos.AGI*4,
+                "data.valor_teste.PER": actorData.data.atributos.PER*4
+            });
+        }
     }
 
     SortByName(a, b){
@@ -1212,13 +1214,16 @@ export default class tagmarActorSheet extends ActorSheet {
             });
         }
         var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
-        this.actor.update({
-            "data.d_passiva.valor": def_pasVal,
-            "data.d_passiva.categoria": def_pasCat,
-            "data.d_ativa.categoria": def_pasCat,
-            "data.d_ativa.valor": def_atiVal,
-            "data.absorcao.max": absorcao
-        });
+        const actorData = this.actor.data.data;
+        if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.absorcao.max != absorcao) {
+            this.actor.update({
+                "data.d_passiva.valor": def_pasVal,
+                "data.d_passiva.categoria": def_pasCat,
+                "data.d_ativa.categoria": def_pasCat,
+                "data.d_ativa.valor": def_atiVal,
+                "data.absorcao.max": absorcao
+            });
+        }
     }
     _attCargaAbsorcaoDefesa(data) {
         var actor_carga = 0;    // Atualiza Carga e verifica Sobrecarga
@@ -1255,51 +1260,66 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         
         var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
-        this.actor.update({
-            "data.d_passiva.valor": def_pasVal,
-            "data.d_passiva.categoria": def_pasCat,
-            "data.d_ativa.categoria": def_pasCat,
-            "data.d_ativa.valor": def_atiVal,
-            "data.carga_transp.value": cap_usada,
-            "data.carga_transp.max": cap_transp,
-            "data.carga.value": actor_carga,
-            "data.absorcao.max": absorcao
-        });
+        const actorData = this.actor.data.data;
+        if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao) {
+            this.actor.update({
+                "data.d_passiva.valor": def_pasVal,
+                "data.d_passiva.categoria": def_pasCat,
+                "data.d_ativa.categoria": def_pasCat,
+                "data.d_ativa.valor": def_atiVal,
+                "data.carga_transp.value": cap_usada,
+                "data.carga_transp.max": cap_transp,
+                "data.carga.value": actor_carga,
+                "data.absorcao.max": absorcao
+            });
+        }
         if (cap_transp > 0 && cap_usada < cap_transp) {
-            this.actor.update({
-                "data.carga_transp.hasTransp": true
-            });
+            if (!actorData.carga_transp.hasTransp) {
+                this.actor.update({
+                    "data.carga_transp.hasTransp": true
+                });
+            }
         } else {
-            this.actor.update({
-                "data.carga_transp.hasTransp": false
-            });
+            if (actorData.carga_transp.hasTransp) {
+                this.actor.update({
+                    "data.carga_transp.hasTransp": false
+                });
+            }
         }
         let carga_max = 0;
         if (data.actor.data.atributos.FOR >= 1) {
             carga_max = data.actor.data.atributos.FOR * 20;
             if (data.actor.data.carga.value > carga_max) {
-                this.actor.update({
-                    "data.carga.sobrecarga": true,
-                    "data.carga.valor_s": data.actor.data.carga.value - carga_max
-                });
+                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != data.actor.data.carga.value - carga_max) {
+                    this.actor.update({
+                        "data.carga.sobrecarga": true,
+                        "data.carga.valor_s": data.actor.data.carga.value - carga_max
+                    });
+                }
             } else {
-                this.actor.update({
-                    "data.carga.sobrecarga": false,
-                    "data.carga.valor_s": 0
-                });
+                if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
+                    this.actor.update({
+                        "data.carga.sobrecarga": false,
+                        "data.carga.valor_s": 0
+                    });
+                }
             }
         } else {
             carga_max = 20;
             if (data.actor.data.carga.value > carga_max) {
-                this.actor.update({
-                    "data.carga.sobrecarga": true,
-                    "data.carga.valor_s": data.actor.data.carga.value - carga_max
-                });
+                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != data.actor.data.carga.value - carga_max) {
+                    this.actor.update({
+                        "data.carga.sobrecarga": true,
+                        "data.carga.valor_s": data.actor.data.carga.value - carga_max
+                    });
+                }
             } else {
-                this.actor.update({
-                    "data.carga.sobrecarga": false,
-                    "data.carga.valor_s": 0
-                });
+                if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
+                    this.actor.update({
+                        "data.carga.sobrecarga": false,
+                        "data.carga.valor_s": 0
+                    });
+                }
             }
         }
     }
