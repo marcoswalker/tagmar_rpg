@@ -75,7 +75,14 @@ export default class tagmarActorSheet extends ActorSheet {
          // Prepare items.
         if (this.actor.data.type == "Inventario") {
             this._prepareInventarioItems(data);
-        } else if (this.actor.data.type == 'Personagem' || this.actor.data.type == "NPC") {
+        } else if (this.actor.data.type == 'NPC') {
+            this._prepareCharacterItems(data);
+            this._prepareValorTeste(data);
+            this._attGruposArmas(data);
+            this._attHabilidades(data);
+            this._attMagiasTecnicasTotal(data);
+            this._attDefesaNPC(data);
+        } else if (this.actor.data.type == 'Personagem') {
             this._prepareCharacterItems(data);
             this._prepareValorTeste(data);
             this._calculaAjuste(data);
@@ -85,234 +92,14 @@ export default class tagmarActorSheet extends ActorSheet {
             if (data.actor.profissao) {
                 this._attProfissao(data);
             }
-            const isso = this;
-            var actor_carga = 0;    // Atualiza Carga e verifica Sobrecarga
-            var cap_transp = 0;
-            var cap_usada = 0;
-            var absorcao = 0;
-            var def_pasVal = 0;
-            var def_pasCat = "";
-            var valor_n = 0;
-            if (data.actor.combate.length > 0){
-                data.actor.combate.forEach(function(item){
-                    //actor_carga += item.data.peso;
-                    if (item.data.tipo == "CD") {
-                        valor_n = data.actor.data.grupos.CD;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CI") {
-                        valor_n = data.actor.data.grupos.CI;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CI") {
-                        valor_n = data.actor.data.grupos.CI;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CL") {
-                        valor_n = data.actor.data.grupos.CL;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CLD") {
-                        valor_n = data.actor.data.grupos.CLD;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "EL") {
-                        valor_n = data.actor.data.grupos.EL;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CmE") {
-                        valor_n = data.actor.data.grupos.CmE;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CmM") {
-                        valor_n = data.actor.data.grupos.CmM;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "EM") {
-                        valor_n = data.actor.data.grupos.EM;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PmA") {
-                        valor_n = data.actor.data.grupos.PmA;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PmL") {
-                        valor_n = data.actor.data.grupos.PmL;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CpE") {
-                        valor_n = data.actor.data.grupos.CpE;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CpM") {
-                        valor_n = data.actor.data.grupos.CpM;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "EP") {
-                        valor_n = data.actor.data.grupos.EP;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PP") {
-                        valor_n = data.actor.data.grupos.PP;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PpA") {
-                        valor_n = data.actor.data.grupos.PpA;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PpB") {
-                        valor_n = data.actor.data.grupos.PpB;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    } else if (item.data.tipo == "") {
-                        isso.updateCombateNivel(item._id, isso.actor);
-                    }
-                });
-            }
-            if (data.actor.h_prof.length > 0){
-                data.actor.h_prof.forEach(function(item){
-                    isso.updateHabAjuste(item._id, isso.actor);
-                });
-            }
-            if (data.actor.h_man.length > 0){
-                data.actor.h_man.forEach(function(item){
-                    isso.updateHabAjuste(item._id, isso.actor);
-                });
-            }
-            if (data.actor.h_con.length > 0){
-                data.actor.h_con.forEach(function(item){
-                    isso.updateHabAjuste(item._id, isso.actor);
-                });
-            }
-            if (data.actor.h_sub.length > 0){
-                data.actor.h_sub.forEach(function(item){
-                    isso.updateHabAjuste(item._id, isso.actor);
-                });
-            }
-            if (data.actor.h_inf.length > 0){
-                data.actor.h_inf.forEach(function(item){
-                    isso.updateHabAjuste(item._id, isso.actor);
-                });
-            }
-            if (data.actor.h_geral.length > 0){
-                data.actor.h_geral.forEach(function(item){
-                    isso.updateHabAjuste(item._id, isso.actor);
-                });
-            }
-            if (data.actor.defesas.length > 0){
-                data.actor.defesas.forEach(function(item){
-                    //actor_carga += item.data.peso;
-                    absorcao += item.data.absorcao;
-                    def_pasVal += item.data.defesa_base.valor;
-                    if (item.data.defesa_base.tipo != ""){
-                        def_pasCat = item.data.defesa_base.tipo;
-                    }
-                });
-            }
-            if (data.actor.pertences.length > 0){
-                data.actor.pertences.forEach(function(item){
-                    actor_carga += item.data.peso * item.data.quant;
-                });
-            }
-            if (data.actor.transportes.length > 0){
-                data.actor.transportes.forEach(function(item){
-                    cap_transp += item.data.capacidade.carga;
-                });
-            }
-            if (data.actor.pertences_transporte.length > 0){
-                data.actor.pertences_transporte.forEach(function(item){
-                    cap_usada += item.data.peso * item.data.quant;
-                });
-            }
-            if (data.actor.magias.length > 0) {
-                data.actor.magias.forEach(function(item){
-                    isso.updateMagiasTotal(item._id, isso.actor);
-                });
-            }
-            if (data.actor.tecnicas.length > 0) {
-                data.actor.tecnicas.forEach(function(item){
-                    isso.updateTecnicasTotal(item._id, isso.actor);
-                });
-            }
-            var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
-            this.actor.update({
-                "data.d_passiva.valor": def_pasVal,
-                "data.d_passiva.categoria": def_pasCat,
-                "data.d_ativa.categoria": def_pasCat,
-                "data.d_ativa.valor": def_atiVal,
-                "data.carga_transp.value": cap_usada,
-                "data.carga_transp.max": cap_transp,
-                "data.carga.value": actor_carga,
-                "data.absorcao.max": absorcao
-            });
-            if (cap_transp > 0 && cap_usada < cap_transp) {
-                this.actor.update({
-                    "data.carga_transp.hasTransp": true
-                });
-            } else {
-                this.actor.update({
-                    "data.carga_transp.hasTransp": false
-                });
-            }
-            let carga_max = 0;
-            if (data.actor.data.atributos.FOR >= 1) {
-                carga_max = data.actor.data.atributos.FOR * 20;
-                if (data.actor.data.carga.value > carga_max) {
-                    this.actor.update({
-                        "data.carga.sobrecarga": true,
-                        "data.carga.valor_s": data.actor.data.carga.value - carga_max
-                    });
-                } else {
-                    this.actor.update({
-                        "data.carga.sobrecarga": false,
-                        "data.carga.valor_s": 0
-                    });
-                }
-            } else 
-            {
-                carga_max = 20;
-                if (data.actor.data.carga.value > carga_max) {
-                    this.actor.update({
-                        "data.carga.sobrecarga": true,
-                        "data.carga.valor_s": data.actor.data.carga.value - carga_max
-                    });
-                } else {
-                    this.actor.update({
-                        "data.carga.sobrecarga": false,
-                        "data.carga.valor_s": 0
-                    });
-                }
-            }
+            this._attGruposArmas(data);
+            this._attHabilidades(data);
+            this._attMagiasTecnicasTotal(data);
+            this._attCargaAbsorcaoDefesa(data);
             if (data.actor.raca && data.actor.profissao) {
-                let ef_base = 0;
-                let vb_base = 0;
-                let eh_base = 0;
-            
-                ef_base = data.actor.raca.data.ef_base;
-                vb_base = data.actor.raca.data.vb;
-                eh_base = data.actor.profissao.data.eh_base;
-                
-                let efMax = this.actor.data.data.atributos.FOR + this.actor.data.data.atributos.FIS + ef_base;
-                let vbTotal = this.actor.data.data.atributos.FIS + vb_base;
-                if (this.actor.data.data.ef.max != efMax) {
-                    this.actor.update({
-                        "data.ef.max": efMax,
-                        "data.vb": vbTotal
-                    });
-                }
-                if (this.actor.data.data.estagio == 1){
-                    let ehMax = eh_base + this.actor.data.data.atributos.FIS;
-                    if (this.actor.data.data.eh.max != ehMax) {
-                        this.actor.update({
-                            "data.eh.max": ehMax
-                        });
-                    }
-                }
-                
+                this._attEfEhVB(data); 
             }
-
         }
-        
-
         return data;
     }
 
@@ -1330,6 +1117,12 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         const item_hab = actor.getOwnedItem(item_id);
         const atributo = item_hab.data.data.ajuste.atributo;
+        let hab_nivel = 0;
+        let hab_penal = 0;
+        let hab_bonus = 0;
+        if (item_hab.data.data.nivel) hab_nivel = item_hab.data.data.nivel
+        if (item_hab.data.data.penalidade) hab_penal = item_hab.data.data.penalidade;
+        if (item_hab.data.data.bonus) hab_bonus = item_hab.data.data.bonus;
         let valor_atrib = 0;
         const actorData = actor.data.data;
         if (atributo == "INT") valor_atrib = actorData.atributos.INT;
@@ -1339,9 +1132,21 @@ export default class tagmarActorSheet extends ActorSheet {
         else if (atributo == "FIS") valor_atrib = actorData.atributos.FIS;
         else if (atributo == "AGI") valor_atrib = actorData.atributos.AGI;
         else if (atributo == "PER") valor_atrib = actorData.atributos.PER;
+        let total = 0;
+        if (hab_nivel > 0) {
+            total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
+        } else {
+            total = parseInt(valor_atrib) - 7 + parseInt(hab_penal) + parseInt(hab_bonus);
+        }
         if (item_hab.data.data.ajuste.valor != valor_atrib) {
             item_hab.update({
                 "data.ajuste.valor": valor_atrib
+            });
+            item_hab.render();
+        }
+        if (item_hab.data.data.total != total) {
+            item_hab.update({
+                "data.total": total
             });
             item_hab.render();
         }
@@ -1389,6 +1194,263 @@ export default class tagmarActorSheet extends ActorSheet {
             "data.dano.d300": p_300 + bonus_valor + bonus_magico
         });
         item_comb.render();
+    }
+    _attDefesaNPC(data) {
+        var absorcao = 0;
+        var def_pasVal = 0;
+        var def_pasCat = "";
+        if (data.actor.defesas.length > 0){
+            data.actor.defesas.forEach(function(item){
+                absorcao += item.data.absorcao;
+                def_pasVal += item.data.defesa_base.valor;
+                if (item.data.defesa_base.tipo != ""){
+                    def_pasCat = item.data.defesa_base.tipo;
+                }
+            });
+        }
+        var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
+        this.actor.update({
+            "data.d_passiva.valor": def_pasVal,
+            "data.d_passiva.categoria": def_pasCat,
+            "data.d_ativa.categoria": def_pasCat,
+            "data.d_ativa.valor": def_atiVal,
+            "data.absorcao.max": absorcao
+        });
+    }
+    _attCargaAbsorcaoDefesa(data) {
+        var actor_carga = 0;    // Atualiza Carga e verifica Sobrecarga
+        var cap_transp = 0;
+        var cap_usada = 0;
+        var absorcao = 0;
+        var def_pasVal = 0;
+        var def_pasCat = "";
+        
+        if (data.actor.defesas.length > 0){
+            data.actor.defesas.forEach(function(item){
+                //actor_carga += item.data.peso;
+                absorcao += item.data.absorcao;
+                def_pasVal += item.data.defesa_base.valor;
+                if (item.data.defesa_base.tipo != ""){
+                    def_pasCat = item.data.defesa_base.tipo;
+                }
+            });
+        }
+        if (data.actor.pertences.length > 0){
+            data.actor.pertences.forEach(function(item){
+                actor_carga += item.data.peso * item.data.quant;
+            });
+        }
+        if (data.actor.transportes.length > 0){
+            data.actor.transportes.forEach(function(item){
+                cap_transp += item.data.capacidade.carga;
+            });
+        }
+        if (data.actor.pertences_transporte.length > 0){
+            data.actor.pertences_transporte.forEach(function(item){
+                cap_usada += item.data.peso * item.data.quant;
+            });
+        }
+        
+        var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
+        this.actor.update({
+            "data.d_passiva.valor": def_pasVal,
+            "data.d_passiva.categoria": def_pasCat,
+            "data.d_ativa.categoria": def_pasCat,
+            "data.d_ativa.valor": def_atiVal,
+            "data.carga_transp.value": cap_usada,
+            "data.carga_transp.max": cap_transp,
+            "data.carga.value": actor_carga,
+            "data.absorcao.max": absorcao
+        });
+        if (cap_transp > 0 && cap_usada < cap_transp) {
+            this.actor.update({
+                "data.carga_transp.hasTransp": true
+            });
+        } else {
+            this.actor.update({
+                "data.carga_transp.hasTransp": false
+            });
+        }
+        let carga_max = 0;
+        if (data.actor.data.atributos.FOR >= 1) {
+            carga_max = data.actor.data.atributos.FOR * 20;
+            if (data.actor.data.carga.value > carga_max) {
+                this.actor.update({
+                    "data.carga.sobrecarga": true,
+                    "data.carga.valor_s": data.actor.data.carga.value - carga_max
+                });
+            } else {
+                this.actor.update({
+                    "data.carga.sobrecarga": false,
+                    "data.carga.valor_s": 0
+                });
+            }
+        } else {
+            carga_max = 20;
+            if (data.actor.data.carga.value > carga_max) {
+                this.actor.update({
+                    "data.carga.sobrecarga": true,
+                    "data.carga.valor_s": data.actor.data.carga.value - carga_max
+                });
+            } else {
+                this.actor.update({
+                    "data.carga.sobrecarga": false,
+                    "data.carga.valor_s": 0
+                });
+            }
+        }
+    }
+    _attMagiasTecnicasTotal(data) {
+        const isso = this;
+        if (data.actor.magias.length > 0) {
+            data.actor.magias.forEach(function(item){
+                isso.updateMagiasTotal(item._id, isso.actor);
+            });
+        }
+        if (data.actor.tecnicas.length > 0) {
+            data.actor.tecnicas.forEach(function(item){
+                isso.updateTecnicasTotal(item._id, isso.actor);
+            });
+        }
+    }
+
+    _attHabilidades(data) {
+        const isso = this;
+        if (data.actor.h_prof.length > 0){
+            data.actor.h_prof.forEach(function(item){
+                isso.updateHabAjuste(item._id, isso.actor);
+            });
+        }
+        if (data.actor.h_man.length > 0){
+            data.actor.h_man.forEach(function(item){
+                isso.updateHabAjuste(item._id, isso.actor);
+            });
+        }
+        if (data.actor.h_con.length > 0){
+            data.actor.h_con.forEach(function(item){
+                isso.updateHabAjuste(item._id, isso.actor);
+            });
+        }
+        if (data.actor.h_sub.length > 0){
+            data.actor.h_sub.forEach(function(item){
+                isso.updateHabAjuste(item._id, isso.actor);
+            });
+        }
+        if (data.actor.h_inf.length > 0){
+            data.actor.h_inf.forEach(function(item){
+                isso.updateHabAjuste(item._id, isso.actor);
+            });
+        }
+        if (data.actor.h_geral.length > 0){
+            data.actor.h_geral.forEach(function(item){
+                isso.updateHabAjuste(item._id, isso.actor);
+            });
+        }
+    }
+    _attEfEhVB(data) {
+        let ef_base = 0;
+        let vb_base = 0;
+        let eh_base = 0;
+    
+        ef_base = data.actor.raca.data.ef_base;
+        vb_base = data.actor.raca.data.vb;
+        eh_base = data.actor.profissao.data.eh_base;
+        
+        let efMax = this.actor.data.data.atributos.FOR + this.actor.data.data.atributos.FIS + ef_base;
+        let vbTotal = this.actor.data.data.atributos.FIS + vb_base;
+        if (this.actor.data.data.ef.max != efMax) {
+            this.actor.update({
+                "data.ef.max": efMax,
+                "data.vb": vbTotal
+            });
+        }
+        if (this.actor.data.data.estagio == 1){
+            let ehMax = eh_base + this.actor.data.data.atributos.FIS;
+            if (this.actor.data.data.eh.max != ehMax) {
+                this.actor.update({
+                    "data.eh.max": ehMax
+                });
+            }
+        }
+    }
+    _attGruposArmas(data) {
+        const isso = this;
+        var valor_n = 0;
+            if (data.actor.combate.length > 0){
+                data.actor.combate.forEach(function(item){
+                    //actor_carga += item.data.peso;
+                    if (item.data.tipo == "CD") {
+                        valor_n = data.actor.data.grupos.CD;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CI") {
+                        valor_n = data.actor.data.grupos.CI;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CI") {
+                        valor_n = data.actor.data.grupos.CI;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CL") {
+                        valor_n = data.actor.data.grupos.CL;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CLD") {
+                        valor_n = data.actor.data.grupos.CLD;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "EL") {
+                        valor_n = data.actor.data.grupos.EL;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CmE") {
+                        valor_n = data.actor.data.grupos.CmE;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CmM") {
+                        valor_n = data.actor.data.grupos.CmM;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "EM") {
+                        valor_n = data.actor.data.grupos.EM;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "PmA") {
+                        valor_n = data.actor.data.grupos.PmA;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "PmL") {
+                        valor_n = data.actor.data.grupos.PmL;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CpE") {
+                        valor_n = data.actor.data.grupos.CpE;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "CpM") {
+                        valor_n = data.actor.data.grupos.CpM;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "EP") {
+                        valor_n = data.actor.data.grupos.EP;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "PP") {
+                        valor_n = data.actor.data.grupos.PP;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "PpA") {
+                        valor_n = data.actor.data.grupos.PpA;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    }
+                    else if (item.data.tipo == "PpB") {
+                        valor_n = data.actor.data.grupos.PpB;
+                        isso.updateItemNivel(valor_n, item._id, isso.actor);
+                    } else if (item.data.tipo == "") {
+                        isso.updateCombateNivel(item._id, isso.actor);
+                    }
+                });
+            }
     }
     
     updateItemNivel(valor_n , item_id, actor = null) {
