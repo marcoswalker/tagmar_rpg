@@ -1047,6 +1047,24 @@ export default class tagmarActorSheet extends ActorSheet {
         if (profissoes[0]) {
             especializacoes = profissoes[0].data.especializacoes.split(",");
         }
+        if (h_prof.length > 1) h_prof.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (h_man.length > 1) h_man.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (h_con.length > 1) h_con.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (h_sub.length > 1) h_sub.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (h_inf.length > 1) h_inf.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (h_geral.length > 1) h_geral.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
         if (magias.length > 1) magias.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
