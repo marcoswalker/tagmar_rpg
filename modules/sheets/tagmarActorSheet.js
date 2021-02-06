@@ -1046,7 +1046,7 @@ export default class tagmarActorSheet extends ActorSheet {
         ];
         if (profissoes[0]) {
             especializacoes = profissoes[0].data.especializacoes.split(",");
-        }
+        } // Alow
         if (h_prof.length > 1) h_prof.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
