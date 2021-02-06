@@ -914,12 +914,6 @@ export default class tagmarActorSheet extends ActorSheet {
             });
         }
     }
-
-    SortByName(a, b){
-        var aName = a.name.toLowerCase();
-        var bName = b.name.toLowerCase(); 
-        return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
-    }
     //Exclusivo para Inventário
     _prepareInventarioItems(sheetData) { 
         const actorData = sheetData.actor;
@@ -933,6 +927,12 @@ export default class tagmarActorSheet extends ActorSheet {
             } else if (item.type == "Transporte") {
                 transportes.push(item);
             }
+        });
+        if (pertences.length > 1) pertences.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (transportes.length > 1) transportes.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
         });
         actorData.pertences = pertences;
         actorData.transportes = transportes;
@@ -1047,12 +1047,27 @@ export default class tagmarActorSheet extends ActorSheet {
         if (profissoes[0]) {
             especializacoes = profissoes[0].data.especializacoes.split(",");
         }
-        if (magias.length > 1) magias.sort(this.SortByName);
-        if (combate.length > 1) combate.sort(this.SortByName);
-        if (tecnicas.length > 1) tecnicas.sort(this.SortByName);
-        if (defesas.length > 1) defesas.sort(this.SortByName);
-        if (pertences.length > 1) pertences.sort(this.SortByName);
-        if (transportes.length > 1) transportes.sort(this.SortByName);
+        if (magias.length > 1) magias.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (combate.length > 1) combate.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (defesas.length > 1) defesas.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (pertences.length > 1) pertences.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (transportes.length > 1) transportes.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
+        if (pertences_transporte.length > 1) pertences_transporte.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
         this.table_resFisMag = table_resFisMag;
         this.tabela_resol = tabela_resol;
         actorData.especializacoes = especializacoes;
