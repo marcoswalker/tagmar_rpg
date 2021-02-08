@@ -263,6 +263,70 @@ export default class tagmarActorSheet extends ActorSheet {
         });
         }
         }
+        if (this.actor.data.type == "Inventario") {
+            html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
+        } else if (this.actor.data.type == "Personagem") {
+            html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
+            html.find('.searchMagia').keyup(this._realcaMagia.bind(this));
+            html.find('.searchCombate').keyup(this._realcaCombate.bind(this));
+            html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
+        } 
+    }
+
+    _realcaHablidade(event) {
+        const search = $(event.target).val();
+        let search_down = search.toLowerCase();
+        $(".habName").each(function(this_td, element) {
+            let pertence = $(element).html();
+            pertence = pertence.toLowerCase();
+            if (pertence.includes(search_down) && search_down.length > 0) {
+                $(element).addClass('Negrito');
+            } else {
+                $(element).removeClass('Negrito');
+            }
+        });
+    }
+
+    _realcaCombate(event) {
+        const search = $(event.target).val();
+        let search_down = search.toLowerCase();
+        $(".combateName").each(function(this_td, element) {
+            let pertence = $(element).html();
+            pertence = pertence.toLowerCase();
+            if (pertence.includes(search_down) && search_down.length > 0) {
+                $(element).addClass('Negrito');
+            } else {
+                $(element).removeClass('Negrito');
+            }
+        });
+    }
+
+    _realcaMagia(event) {
+        const search = $(event.target).val();
+        let search_down = search.toLowerCase();
+        $(".magiaName").each(function(this_td, element) {
+            let pertence = $(element).html();
+            pertence = pertence.toLowerCase();
+            if (pertence.includes(search_down) && search_down.length > 0) {
+                $(element).addClass('Negrito');
+            } else {
+                $(element).removeClass('Negrito');
+            }
+        });
+    }
+
+    _realcaPertence(event) {
+        const search = $(event.target).val();
+        let search_down = search.toLowerCase();
+        $(".pertenceName").each(function(this_td, element) {
+            let pertence = $(element).html();
+            pertence = pertence.toLowerCase();
+            if (pertence.includes(search_down) && search_down.length > 0) {
+                $(element).addClass('Negrito');
+            } else {
+                $(element).removeClass('Negrito');
+            }
+        });
     }
 
     _edtDesc(event) {

@@ -489,6 +489,15 @@
                     </div>
                 </div>
                 <div class="row dados">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <label><h4 class="mediaeval">Procurar:</h4></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="searchHabilidade mediaeval" type="text" placeholder="Digite para realçar a habilidade."/>
+                    </div>
+                </div>
+                <div class="row dados">
                     <div class="col-md-4" style="text-align: center;"><h2 class="fairyDust">Profissional</h2></div>
                     <div class="col-md-4" style="text-align: center;"><h2 class="fairyDust">Manobra</h2></div>
                     <div class="col-md-4" style="text-align: center;"><h2 class="fairyDust">Conhecimento</h2></div>
@@ -503,7 +512,7 @@
                             </tr>
                             {{#each actor.h_prof as |h_prof|}}      <!--Habilidades Profissionais-->
                             <tr class="item" data-item-id="{{h_prof._id}}">
-                                <td class="mediaeval"><a class="rollable mediaeval dragable" data-item-id="{{h_prof._id}}" title="Rolar Habilidade">{{h_prof.name}}</a></td>
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_prof._id}}" title="Rolar Habilidade">{{h_prof.name}}</a></td>
                                 <td class="mediaeval">{{h_prof.data.total}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -524,7 +533,7 @@
                             </tr>
                             {{#each actor.h_man as |h_man|}}        <!--Habilidades Manuais-->
                             <tr class="item" data-item-id="{{h_man._id}}">
-                                <td class="mediaeval"><a class="rollable mediaeval dragable" data-roll="{{h_man.total}}" data-item-id="{{h_man._id}}" title="Rolar Habilidade">{{h_man.name}}</a></td>
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-roll="{{h_man.total}}" data-item-id="{{h_man._id}}" title="Rolar Habilidade">{{h_man.name}}</a></td>
                                 <td class="mediaeval">{{h_man.data.total}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -545,7 +554,7 @@
                             </tr>
                             {{#each actor.h_con as |h_con|}}        <!--Habilidades de Conhecimento-->
                             <tr class="item" data-item-id="{{h_con._id}}">
-                                <td class="mediaeval"><a class="rollable mediaeval dragable" data-item-id="{{h_con._id}}" title="Rolar Habilidade">{{h_con.name}}</a></td>
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_con._id}}" title="Rolar Habilidade">{{h_con.name}}</a></td>
                                 <td class="mediaeval">{{h_con.data.total}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -573,7 +582,7 @@
                             </tr>
                             {{#each actor.h_sub as |h_sub|}}    <!--Habilidades de Subterfúgio-->
                             <tr class="item" data-item-id="{{h_sub._id}}">
-                                <td class="mediaeval"><a class="rollable mediaeval dragable" data-item-id="{{h_sub._id}}" title="Rolar Habilidade">{{h_sub.name}}</a></td>
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_sub._id}}" title="Rolar Habilidade">{{h_sub.name}}</a></td>
                                 <td class="mediaeval">{{h_sub.data.total}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -594,7 +603,7 @@
                             </tr>
                             {{#each actor.h_inf as |h_inf|}}    <!--Habilidades de Influência-->
                             <tr class="item" data-item-id="{{h_inf._id}}">
-                                <td class="mediaeval"><a class="rollable mediaeval dragable" data-item-id="{{h_inf._id}}" title="Rolar Habilidade">{{h_inf.name}}</a></td>
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_inf._id}}" title="Rolar Habilidade">{{h_inf.name}}</a></td>
                                 <td class="mediaeval">{{h_inf.data.total}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -615,7 +624,7 @@
                             </tr>
                             {{#each actor.h_geral as |h_geral|}}        <!--Habilidades Gerais-->
                             <tr class="item" data-item-id="{{h_geral._id}}">
-                                <td class="mediaeval"><a class="rollable mediaeval dragable" data-item-id="{{h_geral._id}}" title="Rolar Habilidade">{{h_geral.name}}</a></td>
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_geral._id}}" title="Rolar Habilidade">{{h_geral.name}}</a></td>
                                 <td class="mediaeval">{{h_geral.data.total}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -657,6 +666,15 @@
                         <input title="Bônus/Penalidade será aplicado a todos os ataques.(Nenhum valor, preencher zero)" name="data.inf_ataque.bonus" type="number" value="{{data.inf_ataque.bonus}}" height="30"/>
                     </div>
                 </div>
+                <div class="row dados">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <label><h4 class="mediaeval">Procurar:</h4></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="searchCombate mediaeval" type="text" placeholder="Digite para realçar o item."/>
+                    </div>
+                </div>
                 <div class="row dados"> <!--Tabela Armas-->
                     <div class="col-md-12">
                         <table>
@@ -679,7 +697,7 @@
                                             <img class="imgItem" src="{{combate.img}}"/>
                                         </a>
                                     </td>
-                                    <td class="mediaeval"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
+                                    <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
                                     <td class="mediaeval">{{combate.data.municao}}</td>
                                     <td class="mediaeval">{{combate.data.alcance}}</td>
                                     <td class="mediaeval">{{combate.data.def_l}}</td>
@@ -708,7 +726,7 @@
                                 </tr>
                                 {{#each actor.combate as |combate|}}
                                 <tr class="item" data-item-id="{{combate._id}}">
-                                    <td class="mediaeval"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
+                                    <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
                                     <td class="mediaeval">{{combate.data.municao}}</td>
                                     <td class="mediaeval">{{combate.data.alcance}}</td>
                                     <td class="mediaeval">{{combate.data.def_l}}</td>
@@ -743,7 +761,7 @@
                                 <td class="mediaeval">
                                     <img class="imgItem" src="{{defesa.img}}"/> 
                                 </td>
-                                <td class="mediaeval">{{defesa.name}}</td>
+                                <td class="mediaeval combateName">{{defesa.name}}</td>
                                 <td class="mediaeval">{{defesa.data.defesa_base.tipo}}{{defesa.data.defesa_base.valor}}</td>
                                 <td class="mediaeval">{{defesa.data.absorcao}}</td>
                                 <td>
@@ -764,7 +782,7 @@
                             </tr>
                             {{#each actor.defesas as |defesa|}}
                             <tr class="item" data-item-id="{{defesa._id}}">
-                                <td class="mediaeval">{{defesa.name}}</td>
+                                <td class="mediaeval combateName">{{defesa.name}}</td>
                                 <td class="mediaeval">{{defesa.data.defesa_base.tipo}}{{defesa.data.defesa_base.valor}}</td>
                                 <td class="mediaeval">{{defesa.data.absorcao}}</td>
                                 <td>
@@ -795,7 +813,7 @@
                                         <img class="imgItem" src="{{tecnica.img}}"/>
                                     </a>
                                 </td>
-                                <td class="mediaeval"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
+                                <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
                                 <td class="mediaeval">{{tecnica.data.total}}</td>
                                 <td class="mediaeval">{{tecnica.data.categoria}}</td>
                                 <td>
@@ -816,7 +834,7 @@
                             </tr>
                             {{#each actor.tecnicas as |tecnica|}}
                             <tr class="item" data-item-id="{{tecnica._id}}">
-                                <td class="mediaeval"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
+                                <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
                                 <td class="mediaeval">{{tecnica.data.total}}</td>
                                 <td class="mediaeval">{{tecnica.data.categoria}}</td>
                                 <td>
@@ -844,6 +862,15 @@
                     <div class="col-md-4"></div>
                 </div>
                 <div class="row dados">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <label><h4 class="mediaeval">Procurar:</h4></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="searchMagia mediaeval" type="text" placeholder="Digite para realçar a magia."/>
+                    </div>
+                </div>
+                <div class="row dados">
                     <div class="col-md-12">
                         <table>                             <!--Tabela de Magias-->
                             <tr style="text-align: left;">
@@ -860,7 +887,7 @@
                                         <img class="imgItem" src="{{magia.img}}"/>
                                     </a>
                                 </td>
-                                <td class="mediaeval">
+                                <td class="mediaeval magiaName">
                                     <a class="rollable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">{{magia.name}}</a>
                                 </td>
                                 <td class="mediaeval">{{magia.data.nivel}}</td>
@@ -878,6 +905,15 @@
                 </div>
             </div>
             <div class="tab pertences container" data-group="primary" data-tab="pertences">     <!--Tab Pertences-->
+                <div class='row dados'>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <label><h4 class="mediaeval">Procurar:</h4></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="searchPertence mediaeval" type="text" placeholder="Digite para realçar o item."/>
+                    </div>
+                </div>
                 <div class="row dados">
                     <div class="col-md-12"> <!--Tabela Pertences-->
                         <table>
@@ -894,7 +930,7 @@
                                 <td class="mediaeval">
                                     <img class="imgItem" src="{{pertence.img}}"/>
                                 </td>
-                                <td class="mediaeval">{{pertence.name}}</td>
+                                <td class="mediaeval pertenceName">{{pertence.name}}</td>
                                 <td class="mediaeval">{{pertence.data.quant}}</td>
                                 <td class="mediaeval">{{pertence.data.peso}}</td>
                                 <td>
@@ -936,7 +972,7 @@
                             </tr>
                             {{#each actor.transportes as |transporte|}}
                             <tr class="item" data-item-id="{{transporte._id}}">
-                                <td class="mediaeval">{{transporte.name}}</td>
+                                <td class="mediaeval pertenceName">{{transporte.name}}</td>
                                 <td class="mediaeval">{{transporte.data.capacidade.carga}}</td>
                                 <td class="mediaeval">{{transporte.data.capacidade.pessoas}}</td>
                                 <td>
@@ -960,7 +996,7 @@
                             </tr>
                             {{#each actor.pertences_transporte as |pertence|}}
                             <tr class="item" data-item-id="{{pertence._id}}">
-                                <td class="mediaeval">{{pertence.name}}</td>
+                                <td class="mediaeval pertenceName">{{pertence.name}}</td>
                                 <td class="mediaeval">{{pertence.data.quant}}</td>
                                 <td class="mediaeval">{{pertence.data.peso}}</td>
                                 <td class="mediaeval">

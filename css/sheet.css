@@ -76,6 +76,11 @@
     color:rgb(94, 8, 8);
     font-size: 105%;
 }
+.Negrito {
+    color:rgb(94, 8, 8);
+    font-size: 120%;
+    font-weight: bolder;
+}
 .rola_desc u {
     color:rgb(94, 8, 8);
     font-size: 105%;
