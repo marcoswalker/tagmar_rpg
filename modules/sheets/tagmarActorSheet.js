@@ -264,6 +264,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         }
         if (this.actor.data.type == "Inventario") {
+            $('.searchPertence').prop( "disabled", false );
             html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
         } else if (this.actor.data.type == "Personagem") {
             html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
