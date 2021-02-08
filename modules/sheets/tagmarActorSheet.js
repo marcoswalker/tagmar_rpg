@@ -1328,7 +1328,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         let carga_max = 0;
         if (data.actor.data.atributos.FOR >= 1) {
-            carga_max = data.actor.data.atributos.FOR * 20;
+            carga_max = (data.actor.data.atributos.FOR * 20) + 20;
             if (data.actor.data.carga.value > carga_max) {
                 if (!actorData.carga.sobrecarga || actorData.carga.valor_s != data.actor.data.carga.value - carga_max) {
                     this.actor.update({
