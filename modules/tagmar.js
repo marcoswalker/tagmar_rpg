@@ -96,7 +96,7 @@ function rollItemMacro(itemName, extra) {
   let actor;
   if (speaker.token) actor = game.actors.tokens[speaker.token];
   if (!actor) actor = game.actors.get(speaker.actor);
-  const item = actor ? actor.items.find(i => i.name === itemName) : null;
+  const item = actor ? actor.items.find(i => i.name === itemName && i.type != "Pertence" && i.type != "Transporte" && i.type != "Defesa") : null;
   if (!item) return ui.notifications.warn(`O personagem selecionado não possui um Item chamado ${itemName}`);
   // console.log(item);
   // Trigger the item roll
