@@ -112,10 +112,7 @@ export default class tagmarActorSheet extends ActorSheet {
         if (this.actor.data.type != "Inventario") {
             if (!this.options.editable) return;
         }
-
-        //Ativa edição de descricao
-        html.find('.ativaDesc').click(this._edtDesc.bind(this));
-        
+  
         // Update Inventory Item
         html.find('.item-edit').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
@@ -123,33 +120,15 @@ export default class tagmarActorSheet extends ActorSheet {
             item.sheet.render(true);
         });
   
+        if (this.actor.data.type != "Inventario") {
+        //Ativa edição de descricao
+        html.find('.ativaDesc').click(this._edtDesc.bind(this));
         // Delete Inventory Item
         html.find('.item-delete').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             this.actor.deleteOwnedItem(li.data("itemId"));
             li.slideUp(200, () => this.render(false));
         });
-        html.find('.item-cesto').click(ev => {
-            const actors = game.actors;
-            let personagem;
-            let inventario;
-            let bau;
-            actors.forEach(function (actor){
-                if (actor.owner && actor.data.type == "Personagem") personagem = actor;
-                if (actor.owner && actor.data.type == "Inventario") {
-                    bau = actor;
-                    inventario = actor;
-                }
-                else if (actor.data.type == "Inventario") inventario = actor;
-            });
-            const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.getOwnedItem(li.data("itemId"));
-            personagem.createOwnedItem(item);
-            if (bau) {
-                bau.deleteOwnedItem(item._id);
-            }
-        });
-        if (this.actor.data.type != "Inventario") {
 
         html.find('.rollable').click(this._onItemRoll.bind(this));
 
@@ -266,6 +245,26 @@ export default class tagmarActorSheet extends ActorSheet {
         if (this.actor.data.type == "Inventario") {
             $('.searchPertence').prop( "disabled", false );
             html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
+            html.find('.item-cesto').click(ev => {
+                const actors = game.actors;
+                let personagem;
+                let inventario;
+                let bau;
+                actors.forEach(function (actor){
+                    if (actor.owner && actor.data.type == "Personagem") personagem = actor;
+                    if (actor.owner && actor.data.type == "Inventario") {
+                        bau = actor;
+                        inventario = actor;
+                    }
+                    else if (actor.data.type == "Inventario") inventario = actor;
+                });
+                const li = $(ev.currentTarget).parents(".item");
+                const item = this.actor.getOwnedItem(li.data("itemId"));
+                personagem.createOwnedItem(item);
+                if (bau) {
+                    bau.deleteOwnedItem(item._id);
+                }
+            });
         } else if (this.actor.data.type == "Personagem") {
             html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
             html.find('.searchMagia').keyup(this._realcaMagia.bind(this));
@@ -529,6 +528,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _attProximoEstag(data) {
+        if (!this.options.editable) return;
         let estagio_atual = this.actor.data.data.estagio;
         let prox_est = [0, 11, 21, 31, 46, 61, 76, 96, 116, 136, 166, 196, 226 , 266, 306, 346, 386, 436, 486, 536, 586, 646, 706, 766, 826, 896, 966, 1036, 1106, 1186, 1266, 
             1346, 1426, 1516, 1606, 1696, 1786, 1886, 1986, 2086];
@@ -540,6 +540,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _attRM(data) {
+        if (!this.options.editable) return;
         let rm = this.actor.data.data.estagio + this.actor.data.data.atributos.AUR;
         if (this.actor.data.data.rm != rm) {
             this.actor.update({
@@ -549,6 +550,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _attRF(data) {
+        if (!this.options.editable) return;
         let rf = this.actor.data.data.estagio + this.actor.data.data.atributos.FIS;
         if (this.actor.data.data.rf != rf) {
             this.actor.update({
@@ -558,6 +560,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _attKarmaMax(data) {
+        if (!this.options.editable) return;
         let karma = ((this.actor.data.data.atributos.AUR) + 1 ) * ((this.actor.data.data.estagio) + 1);
         if (karma < 0) karma = 0;
         if (this.actor.data.data.karma.max != karma) {
@@ -740,6 +743,7 @@ export default class tagmarActorSheet extends ActorSheet {
         
     }
     _attProfissao(sheetData) {
+        if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.profissao) {
             const profissaoData = actorData.profissao;
@@ -892,6 +896,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _preparaCaracRaciais(sheetData) {
+        if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.raca) {
             const racaData = actorData.raca.data;
@@ -912,6 +917,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _calculaAjuste(sheetData) {
+        if (!this.options.editable) return;
         const actorData = sheetData.actor;
         let carac_finalINT = actorData.data.carac_final.INT;
         let carac_finalAUR = actorData.data.carac_final.AUR;
@@ -966,6 +972,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _prepareValorTeste(sheetData){
+        if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.data.valor_teste.INT != actorData.data.atributos.INT*4 || actorData.data.valor_teste.AUR != actorData.data.atributos.AUR*4 || actorData.data.valor_teste.CAR != actorData.data.atributos.CAR*4 || actorData.data.valor_teste.FOR != actorData.data.atributos.FOR*4 || actorData.data.valor_teste.FIS != actorData.data.atributos.FIS*4 || actorData.data.valor_teste.AGI != actorData.data.atributos.AGI*4 || actorData.data.valor_teste.PER != actorData.data.atributos.PER*4) {
             this.actor.update({
@@ -1306,6 +1313,7 @@ export default class tagmarActorSheet extends ActorSheet {
         } 
     }
     _attDefesaNPC(data) {
+        if (!this.options.editable) return;
         var absorcao = 0;
         var def_pasVal = 0;
         var def_pasCat = "";
@@ -1331,6 +1339,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
     }
     _attCargaAbsorcaoDefesa(data) {
+        if (!this.options.editable) return;
         var actor_carga = 0;    // Atualiza Carga e verifica Sobrecarga
         var cap_transp = 0;
         var cap_usada = 0;
@@ -1429,6 +1438,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
     }
     _attMagiasTecnicasTotal(data) {
+        if (!this.options.editable) return;
         const isso = this;
         if (data.actor.magias.length > 0) {
             data.actor.magias.forEach(function(item){
@@ -1443,6 +1453,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _attHabilidades(data) {
+        if (!this.options.editable) return;
         const isso = this;
         if (data.actor.h_prof.length > 0){
             data.actor.h_prof.forEach(function(item){
@@ -1476,6 +1487,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
     }
     _attEfEhVB(data) {
+        if (!this.options.editable) return;
         let ef_base = 0;
         let vb_base = 0;
         let eh_base = 0;
@@ -1502,6 +1514,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
     }
     _attGruposArmas(data) {
+        if (!this.options.editable) return;
         const isso = this;
         var valor_n = 0;
             if (data.actor.combate.length > 0){
