@@ -281,8 +281,13 @@ export default class tagmarActorSheet extends ActorSheet {
             pertence = pertence.toLowerCase();
             if (pertence.includes(search_down) && search_down.length > 0) {
                 $(element).addClass('Negrito');
-            } else {
+            } else if (search_down.length > 0) {
                 $(element).removeClass('Negrito');
+                $(element).addClass('hide');
+            }
+            else {
+                $(element).removeClass('Negrito');
+                $(element).removeClass('hide');
             }
         });
     }
@@ -295,8 +300,13 @@ export default class tagmarActorSheet extends ActorSheet {
             pertence = pertence.toLowerCase();
             if (pertence.includes(search_down) && search_down.length > 0) {
                 $(element).addClass('Negrito');
-            } else {
+            } else if (search_down.length > 0) {
                 $(element).removeClass('Negrito');
+                $(element).addClass('hide');
+            }
+            else {
+                $(element).removeClass('Negrito');
+                $(element).removeClass('hide');
             }
         });
     }
@@ -309,8 +319,13 @@ export default class tagmarActorSheet extends ActorSheet {
             pertence = pertence.toLowerCase();
             if (pertence.includes(search_down) && search_down.length > 0) {
                 $(element).addClass('Negrito');
-            } else {
+            } else if (search_down.length > 0) {
                 $(element).removeClass('Negrito');
+                $(element).addClass('hide');
+            }
+            else {
+                $(element).removeClass('Negrito');
+                $(element).removeClass('hide');
             }
         });
     }
@@ -323,8 +338,15 @@ export default class tagmarActorSheet extends ActorSheet {
             pertence = pertence.toLowerCase();
             if (pertence.includes(search_down) && search_down.length > 0) {
                 $(element).addClass('Negrito');
-            } else {
+                $(element).removeClass('hide');
+            } 
+            else if (search_down.length > 0) {
                 $(element).removeClass('Negrito');
+                $(element).addClass('hide');
+            }
+            else {
+                $(element).removeClass('Negrito');
+                $(element).removeClass('hide');
             }
         });
     }
