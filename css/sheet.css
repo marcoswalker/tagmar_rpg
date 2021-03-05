@@ -59,6 +59,9 @@
 .hide {
     color: transparent !important;
 }
+.esconde {
+    display: none !important;
+}
 .imgItem {
     height: 30px;
     width: 30px;

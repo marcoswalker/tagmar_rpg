@@ -274,79 +274,78 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _realcaHablidade(event) {
+        event.preventDefault();
         const search = $(event.target).val();
         let search_down = search.toLowerCase();
         $(".habName").each(function(this_td, element) {
             let pertence = $(element).html();
             pertence = pertence.toLowerCase();
+            let parente = $(element).closest('tr');
             if (pertence.includes(search_down) && search_down.length > 0) {
-                $(element).addClass('Negrito');
+                $(parente).removeClass('esconde');
             } else if (search_down.length > 0) {
-                $(element).removeClass('Negrito');
-                $(element).addClass('hide');
+                $(parente).addClass('esconde');
             }
             else {
-                $(element).removeClass('Negrito');
-                $(element).removeClass('hide');
+                $(parente).removeClass('esconde');
             }
         });
     }
 
     _realcaCombate(event) {
+        event.preventDefault();
         const search = $(event.target).val();
         let search_down = search.toLowerCase();
         $(".combateName").each(function(this_td, element) {
             let pertence = $(element).html();
             pertence = pertence.toLowerCase();
+            let parente = $(element).closest('tr');
             if (pertence.includes(search_down) && search_down.length > 0) {
-                $(element).addClass('Negrito');
+                $(parente).removeClass('esconde');
             } else if (search_down.length > 0) {
-                $(element).removeClass('Negrito');
-                $(element).addClass('hide');
+                $(parente).addClass('esconde');
             }
             else {
-                $(element).removeClass('Negrito');
-                $(element).removeClass('hide');
+                $(parente).removeClass('esconde');
             }
         });
     }
 
     _realcaMagia(event) {
+        event.preventDefault();
         const search = $(event.target).val();
         let search_down = search.toLowerCase();
         $(".magiaName").each(function(this_td, element) {
             let pertence = $(element).html();
             pertence = pertence.toLowerCase();
+            let parente = $(element).closest('tr');
             if (pertence.includes(search_down) && search_down.length > 0) {
-                $(element).addClass('Negrito');
+                $(parente).removeClass('esconde');
             } else if (search_down.length > 0) {
-                $(element).removeClass('Negrito');
-                $(element).addClass('hide');
+                $(parente).addClass('esconde');
             }
             else {
-                $(element).removeClass('Negrito');
-                $(element).removeClass('hide');
+                $(parente).removeClass('esconde');
             }
         });
     }
 
     _realcaPertence(event) {
+        event.preventDefault();
         const search = $(event.target).val();
         let search_down = search.toLowerCase();
         $(".pertenceName").each(function(this_td, element) {
             let pertence = $(element).html();
             pertence = pertence.toLowerCase();
+            let parente = $(element).closest('tr');
             if (pertence.includes(search_down) && search_down.length > 0) {
-                $(element).addClass('Negrito');
-                $(element).removeClass('hide');
+                $(parente).removeClass('esconde');
             } 
             else if (search_down.length > 0) {
-                $(element).removeClass('Negrito');
-                $(element).addClass('hide');
+                $(parente).addClass('esconde');
             }
             else {
-                $(element).removeClass('Negrito');
-                $(element).removeClass('hide');
+                $(parente).removeClass('esconde');
             }
         });
     }
