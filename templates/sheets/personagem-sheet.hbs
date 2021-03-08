@@ -35,6 +35,7 @@
                         <label class="mediaeval" style="border:black double 1px; text-align: center;"><a class="item" data-tab="combate" title="Combate">Combate</a></label>
                         <label class="mediaeval" style="border:black double 1px; text-align: center;"><a class="item" data-tab="magia" title="Magia">Magia</a></label>
                         <label class="mediaeval" style="border:black double 1px; text-align: center;"><a class="item" data-tab="pertences" title="Pertences">Pertences</a></label>
+                        <label class="mediaeval" style="border:black double 1px; text-align: center;"><a class="item" data-tab="efeitos" title="Efeitos">Efeitos</a></label>
                     </nav>
                 </div>
             </div>
@@ -1014,7 +1015,56 @@
                     </div>
                 </div>
             </div>
-
+            <div class="tab efeitos container" data-group="primary" data-tab="efeitos">     <!--Tab Efeitos-->
+                <div class='row dados'>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <label><h4 class="mediaeval">Procurar:</h4></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="searchEfeito mediaeval" type="text" placeholder="Digite para realçar o efeito."/>
+                    </div>
+                </div>
+                <div class="row dados">
+                    <div class="col-md-12">
+                        <table>
+                            <tr style="text-align: left;">
+                                <th width="50px"></th>
+                                <th class="mediaeval">Efeito</th>
+                                <th class="mediaeval">Atributo</th>
+                                <th class="mediaeval">Tipo</th>
+                                <th class="mediaeval">Valor</th>
+                                <th class="mediaeval">Ativo</th>
+                                <th class="mediaeval">Editar</th>
+                            </tr>
+                            {{#each actor.efeitos as |efeito|}}
+                            <tr class="item" data-item-id="{{efeito._id}}">
+                                <td class="mediaeval">
+                                    <img class="imgItem" src="{{efeito.img}}"/>
+                                </td>
+                                <td class="mediaeval efeitoName">{{efeito.name}}</td>
+                                <td class="mediaeval">{{efeito.data.atributo}}</td>
+                                <td class="mediaeval">{{efeito.data.tipo}}</td>
+                                <td class="mediaeval">{{efeito.data.valor}}</td>
+                                <td class="mediaeval">
+                                {{#if efeito.data.ativo}}
+                                    <a class="ativaEfeito" title="Desativar"><i class="fas fa-check"></i></a>
+                                {{else}}
+                                    <a class="ativaEfeito" title="Ativar"><i class="fas fa-times"></i></a>
+                                {{/if}}
+                                </td>    
+                                <td>
+                                    <div class="item-controls">
+                                        <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <a class="item-control item-delete" title="Deletar"><i class="fas fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </section> 
 </form>

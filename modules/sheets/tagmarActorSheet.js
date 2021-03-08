@@ -147,6 +147,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 }
             }
         });
+        html.find(".ativaEfeito").click(this._ativaEfeito.bind(this));
         html.find(".carac_sortINT").change(ev => {
             let soma = parseInt($(html.find(".carac_sortINT")).val()) + parseInt($(html.find(".mod_racialINT")).val());
             $(html.find(".car_finINT")).val(soma);
@@ -270,7 +271,27 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchMagia').keyup(this._realcaMagia.bind(this));
             html.find('.searchCombate').keyup(this._realcaCombate.bind(this));
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
+            html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _realcaEfeito(event) {
+        event.preventDefault();
+        const search = $(event.target).val();
+        let search_down = search.toLowerCase();
+        $(".efeitoName").each(function(this_td, element) {
+            let efeito = $(element).html();
+            efeito = efeito.toLowerCase();
+            let parente = $(element).closest('tr');
+            if (efeito.includes(search_down) && search_down.length > 0) {
+                $(parente).removeClass('esconde');
+            } else if (search_down.length > 0) {
+                $(parente).addClass('esconde');
+            }
+            else {
+                $(parente).removeClass('esconde');
+            }
+        });
     }
 
     _realcaHablidade(event) {
@@ -563,6 +584,21 @@ export default class tagmarActorSheet extends ActorSheet {
     _attRM(data) {
         if (!this.options.editable) return;
         let rm = this.actor.data.data.estagio + this.actor.data.data.atributos.AUR;
+        if (this.efeitos.length > 0) {
+            for (let efeito of this.efeitos) {
+                if (efeito.data.atributo == "RMAG" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        rm += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        rm -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        rm = rm * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        rm = rm / efeito.data.valor;
+                    }
+                }
+            }
+        }
         if (this.actor.data.data.rm != rm) {
             this.actor.update({
                 "data.rm": rm
@@ -573,6 +609,21 @@ export default class tagmarActorSheet extends ActorSheet {
     _attRF(data) {
         if (!this.options.editable) return;
         let rf = this.actor.data.data.estagio + this.actor.data.data.atributos.FIS;
+        if (this.efeitos.length > 0) {
+            for (let efeito of this.efeitos){
+                if (efeito.data.atributo == "RFIS" && efeito.data.ativo){
+                    if (efeito.data.tipo == "+") {
+                        rf += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        rf -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        rf = rf / efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        rf = rf * efeito.data.valor;
+                    }
+                }
+            }
+        }
         if (this.actor.data.data.rf != rf) {
             this.actor.update({
                 "data.rf": rf
@@ -584,6 +635,21 @@ export default class tagmarActorSheet extends ActorSheet {
         if (!this.options.editable) return;
         let karma = ((this.actor.data.data.atributos.AUR) + 1 ) * ((this.actor.data.data.estagio) + 1);
         if (karma < 0) karma = 0;
+        if (this.efeitos.length > 0){
+            for (let efeito of this.efeitos) {
+                if (efeito.data.atributo == "KMA" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        karma += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        karma -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        karma = karma * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        karma = karma / efeito.data.valor;
+                    }
+                }
+            }
+        }
         if (this.actor.data.data.karma.max != karma) {
             this.actor.update({
                 "data.karma.max": karma
@@ -955,39 +1021,121 @@ export default class tagmarActorSheet extends ActorSheet {
         else if (carac_finalAGI >= 36) carac_finalAGI = 36;
         else if (carac_finalPER >= 36) carac_finalPER = 36;
         let valores = [0,-2,-2,-2,-1,-1,-1,-1,-1,0,0,0,0,1,1,1,2,2,3,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-        if (carac_finalINT > 0 && actorData.data.atributos.INT != valores[carac_finalINT]) {
+        let somaINT = valores[carac_finalINT];
+        let somaAUR = valores[carac_finalAUR];
+        let somaCAR = valores[carac_finalCAR];
+        let somaFOR = valores[carac_finalFOR];
+        let somaFIS = valores[carac_finalFIS];
+        let somaAGI = valores[carac_finalAGI];
+        let somaPER = valores[carac_finalPER];
+        if (this.efeitos.length > 0){
+            for (let efeito of this.efeitos) {
+                if (efeito.data.atributo == "INT" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        somaINT += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        somaINT -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        somaINT = somaINT * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        somaINT = somaINT / efeito.data.valor;
+                    }
+                } else if (efeito.data.atributo == "AUR" && efeito.data.ativo) {
+                   if (efeito.data.tipo == "+") {
+                       somaAUR += efeito.data.valor;
+                   } else if (efeito.data.tipo == "-") {
+                       somaAUR -= efeito.data.valor;
+                   } else if (efeito.data.tipo == "*") {
+                       somaAUR = somaAUR * efeito.data.valor;
+                   } else if (efeito.data.tipo == "/") {
+                       somaAUR = somaAUR / efeito.data.valor;
+                   }
+                } else if (efeito.data.atributo == "CAR" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        somaCAR += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        somaCAR -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        somaCAR = somaCAR * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        somaCAR = somaCAR / efeito.data.valor;
+                    }
+                } else if (efeito.data.atributo == "FOR" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        somaFOR += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        somaFOR -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        somaFOR = somaFOR * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        somaFOR = somaFOR / efeito.data.valor;
+                    }
+                } else if (efeito.data.atributo == "FIS" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        somaFIS += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        somaFIS -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        somaFIS = somaFIS * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        somaFIS = somaFIS / efeito.data.valor;
+                    }
+                } else if (efeito.data.atributo == "AGI" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        somaAGI += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        somaAGI -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        somaAGI = somaAGI * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        somaAGI = somaAGI / efeito.data.valor;
+                    }
+                } else if (efeito.data.atributo == "PER" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        somaPER += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        somaPER -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        somaPER = somaPER * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        somaPER = somaPER / efeito.data.valor;
+                    }
+                }
+            }
+        }
+        if (carac_finalINT > 0 && actorData.data.atributos.INT != somaINT) {
             this.actor.update({
-                "data.atributos.INT": valores[carac_finalINT]
+                "data.atributos.INT": somaINT
             });
         }
-        if (carac_finalAUR > 0 && actorData.data.atributos.AUR != valores[carac_finalAUR]) {
+        if (carac_finalAUR > 0 && actorData.data.atributos.AUR != somaAUR) {
             this.actor.update({
-                "data.atributos.AUR": valores[carac_finalAUR]
+                "data.atributos.AUR": somaAUR
             });
         }
-        if (carac_finalCAR > 0 && actorData.data.atributos.CAR != valores[carac_finalCAR]) {
+        if (carac_finalCAR > 0 && actorData.data.atributos.CAR != somaCAR) {
             this.actor.update({
-                "data.atributos.CAR": valores[carac_finalCAR]
+                "data.atributos.CAR": somaCAR
             });
         }  
-        if (carac_finalFOR > 0 && actorData.data.atributos.FOR != valores[carac_finalFOR]) {
+        if (carac_finalFOR > 0 && actorData.data.atributos.FOR != somaFOR) {
             this.actor.update({
-                "data.atributos.FOR": valores[carac_finalFOR]
+                "data.atributos.FOR": somaFOR
             });
         }  
-        if (carac_finalFIS > 0 && actorData.data.atributos.FIS != valores[carac_finalFIS]) {
+        if (carac_finalFIS > 0 && actorData.data.atributos.FIS != somaFIS) {
             this.actor.update({
-                "data.atributos.FIS": valores[carac_finalFIS]
+                "data.atributos.FIS": somaFIS
             });
         } 
-        if (carac_finalAGI > 0 && actorData.data.atributos.AGI != valores[carac_finalAGI]) {
+        if (carac_finalAGI > 0 && actorData.data.atributos.AGI != somaAGI) {
             this.actor.update({
-                "data.atributos.AGI": valores[carac_finalAGI]
+                "data.atributos.AGI": somaAGI
             });
         } 
-        if (carac_finalPER > 0 && actorData.data.atributos.PER != valores[carac_finalPER]) {
+        if (carac_finalPER > 0 && actorData.data.atributos.PER != somaPER) {
             this.actor.update({
-                "data.atributos.PER": valores[carac_finalPER]
+                "data.atributos.PER": somaPER
             });
         } 
     }
@@ -1052,6 +1200,7 @@ export default class tagmarActorSheet extends ActorSheet {
         const profissoes = [];
         var especializacoes = [];
         const itens = sheetData.items;
+        const efeitos = []
         itens.forEach(function(item, indice, array) {
             if (item.type == "Combate"){
                 combate.push(item);
@@ -1080,6 +1229,8 @@ export default class tagmarActorSheet extends ActorSheet {
             } else if (item.type == "Profissao") {
                 if (profissoes.length >= 1) this.actor.deleteOwnedItem(item._id);
                 else profissoes.push(item);
+            } else if (item.type == "Efeito") {
+                efeitos.push(item);
             }
         });
         const tabela_resol = [
@@ -1179,6 +1330,8 @@ export default class tagmarActorSheet extends ActorSheet {
         if (pertences_transporte.length > 1) pertences_transporte.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
+        actorData.efeitos = efeitos;
+        this.efeitos = efeitos;
         this.table_resFisMag = table_resFisMag;
         this.tabela_resol = tabela_resol;
         actorData.especializacoes = especializacoes;
@@ -1395,6 +1548,35 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         
         var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
+        if (this.efeitos.length > 0) {
+            for (let efeito of this.efeitos) {
+                if (efeito.data.atributo == "DEF" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        def_pasVal += efeito.data.valor;
+                        def_atiVal += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        def_pasVal -= efeito.data.valor;
+                        def_atiVal -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        def_pasVal = def_pasVal * efeito.data.valor;
+                        def_atiVal = def_atiVal * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        def_pasVal = def_pasVal / efeito.data.valor;
+                        def_atiVal = def_atiVal / efeito.data.valor;
+                    }
+                } else if (efeito.data.atributo == "ABS" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        absorcao += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        absorcao -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        absorcao = absorcao * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        absorcao = absorcao / efeito.data.valor;
+                    }
+                }
+            }
+        }
         const actorData = this.actor.data.data;
         if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao) {
             this.actor.update({
@@ -1519,7 +1701,32 @@ export default class tagmarActorSheet extends ActorSheet {
         
         let efMax = this.actor.data.data.atributos.FOR + this.actor.data.data.atributos.FIS + ef_base;
         let vbTotal = this.actor.data.data.atributos.FIS + vb_base;
-        if (this.actor.data.data.ef.max != efMax) {
+        if (this.efeitos.length > 0) {
+            for (let efeito of this.efeitos) {
+                if (efeito.data.atributo == "VB" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        vbTotal += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        vbTotal -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        vbTotal = vbTotal * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        vbTotal = vbTotal / efeito.data.valor;
+                    }
+                } else if (efeito.data.atributo == "EF" && efeito.data.ativo) {
+                    if (efeito.data.tipo == "+") {
+                        efMax += efeito.data.valor;
+                    } else if (efeito.data.tipo == "-") {
+                        efMax -= efeito.data.valor;
+                    } else if (efeito.data.tipo == "*") {
+                        efMax = efMax * efeito.data.valor;
+                    } else if (efeito.data.tipo == "/") {
+                        efMax = efMax / efeito.data.valor;
+                    }
+                }
+            }
+        }
+        if (this.actor.data.data.ef.max != efMax || this.actor.data.data.vb != vbTotal) {
             this.actor.update({
                 "data.ef.max": efMax,
                 "data.vb": vbTotal
@@ -1913,6 +2120,23 @@ export default class tagmarActorSheet extends ActorSheet {
                 }
             }
         }
+    }
+
+    _ativaEfeito(event) {
+        event.preventDefault();
+        let button = $(event.currentTarget);
+        const li = button.parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        let ativo = item.data.data.ativo;
+        let ativa;
+        if (ativo) {
+            ativa = false;
+        } else {
+            ativa = true;
+        }
+        item.update({
+            "data.ativo": ativa
+        });
     }
 
     _onItemRoll(event) {

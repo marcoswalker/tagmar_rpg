@@ -181,7 +181,7 @@
     }
   },
   "Item": {
-    "types": ["Combate", "Magia", "TecnicasCombate","Habilidade","Defesa","Transporte","Pertence", "Profissao", "Raca"],
+    "types": ["Combate", "Magia", "TecnicasCombate","Habilidade","Defesa","Transporte","Pertence", "Profissao", "Raca", "Efeito"],
     "templates": {
       "base": {
         "alcance": "",
@@ -340,6 +340,12 @@
       },
       "ef_base": 0,
       "vb": 0
+    },
+    "Efeito": {
+      "atributo": "",
+      "tipo": "",
+      "valor": 0,
+      "ativo": false
     }
   }
 }

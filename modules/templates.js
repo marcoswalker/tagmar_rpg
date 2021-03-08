@@ -18,6 +18,7 @@ export const preloadHandlebarsTemplates = async function() {
         "systems/tagmar_rpg/templates/sheets/profissao-sheet.hbs",
         "systems/tagmar_rpg/templates/sheets/raca-sheet.hbs",
         "systems/tagmar_rpg/templates/sheets/tecnicascombate-sheet.hbs",
-        "systems/tagmar_rpg/templates/sheets/transporte-sheet.hbs"
+        "systems/tagmar_rpg/templates/sheets/transporte-sheet.hbs",
+        "systems/tagmar_rpg/templates/sheets/efeito-sheet.hbs"
 	]);
 };
