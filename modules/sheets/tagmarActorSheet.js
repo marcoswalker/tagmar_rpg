@@ -430,6 +430,10 @@ export default class tagmarActorSheet extends ActorSheet {
     _rolaRMAG(event) {
         const table_resFisMag = this.table_resFisMag;
         const forcAtaqueI = parseInt($(".F_Ataque").val());
+        if (!forcAtaqueI) {
+            ui.notifications.warn("Preencha um valor maior que zero no campo F.Ataque.");
+            return;
+        }
         const valorDefI = this.actor.data.data.rm;
         let forcAtaque = forcAtaqueI;
         let valorDef = valorDefI;
@@ -481,6 +485,10 @@ export default class tagmarActorSheet extends ActorSheet {
     _rolaRFIS(event) {
         const table_resFisMag = this.table_resFisMag;
         const forcAtaqueI = parseInt($(".F_Ataque").val());
+        if (!forcAtaqueI) {
+            ui.notifications.warn("Preencha um valor maior que zero no campo F.Ataque.");
+            return;
+        }
         const valorDefI = this.actor.data.data.rf;
         let forcAtaque = forcAtaqueI;
         let valorDef = valorDefI;
@@ -530,7 +538,11 @@ export default class tagmarActorSheet extends ActorSheet {
     }
     _passandoEH(event) {
         let estagio_atual = this.actor.data.data.estagio;
-        let valord10 = parseInt($(".valord10EH").val())
+        let valord10 = parseInt($(".valord10EH").val());
+        if (!valord10 && estagio_atual > 1) {
+            ui.notifications.warn("Clique em '1d10' para rolar o dado ou preencha o valor no campo.");
+            return;
+        }
         let raca_list = [];
         let nova_eh = 0;
         let eh_atual = this.actor.data.data.eh.max;

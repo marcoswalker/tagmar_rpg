@@ -61,6 +61,21 @@ Hooks.once("ready", async function () {
   Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
 });
 
+Hooks.on("createToken", async function(scene, token) {
+  if (!token.actorLink) {
+    let tokenA = canvas.tokens.get(token._id);
+    let tokenactor = tokenA.actor;
+    await tokenactor.update({
+      'name': tokenA.actor.name + " Cópia"
+    });
+    let actor = await Actor.create(tokenactor);
+    tokenA.update({
+      'actorId': actor._id,
+      'actorLink': true
+    });
+  }
+});
+
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Magias e Poderes. Você pode referenciar atributos e perícias com @. Ex.: @for ou @luta");
