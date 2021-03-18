@@ -76,33 +76,41 @@ export default class tagmarActorSheet extends ActorSheet {
         if (this.actor.data.type == "Inventario") {
             this._prepareInventarioItems(data);
         } else if (this.actor.data.type == 'NPC') {
+            let updateNpc = {};
             this._prepareCharacterItems(data);
-            this._prepareValorTeste(data);
+            this._prepareValorTeste(data, updateNpc);
             this._attGruposArmas(data);
             this._attHabilidades(data);
             this._attMagiasTecnicasTotal(data);
-            this._attDefesaNPC(data);
+            this._attDefesaNPC(data, updateNpc);
+            if (Object.keys(updateNpc).length > 0) {
+                this.actor.update(updateNpc);
+            }
         } else if (this.actor.data.type == 'Personagem') {
+            let updatePers = {};
             this._prepareCharacterItems(data);
-            this._prepareValorTeste(data);
-            this._calculaAjuste(data);
+            this._prepareValorTeste(data, updatePers);
+            this._calculaAjuste(data, updatePers);
             if (data.actor.raca) {
-                this._preparaCaracRaciais(data);
+                this._preparaCaracRaciais(data, updatePers);
             }
             if (data.actor.profissao) {
-                this._attProfissao(data);
+                this._attProfissao(data, updatePers);
             }
             this._attGruposArmas(data);
             this._attHabilidades(data);
             this._attMagiasTecnicasTotal(data);
-            this._attCargaAbsorcaoDefesa(data);
+            this._attCargaAbsorcaoDefesa(data, updatePers);
             if (data.actor.raca && data.actor.profissao) {
-                this._attEfEhVB(data); 
+                this._attEfEhVB(data, updatePers); 
             }
-            this._attProximoEstag(data);
-            this._attKarmaMax(data);
-            this._attRM(data);
-            this._attRF(data);
+            this._attProximoEstag(data, updatePers);
+            this._attKarmaMax(data, updatePers);
+            this._attRM(data, updatePers);
+            this._attRF(data, updatePers);
+            if (Object.keys(updatePers).length > 0) {
+                this.actor.update(updatePers);
+            }
         }
         return data;
     }
@@ -581,19 +589,17 @@ export default class tagmarActorSheet extends ActorSheet {
         //this.render();
     }
 
-    _attProximoEstag(data) {
+    _attProximoEstag(data, updatePers) {
         if (!this.options.editable) return;
         let estagio_atual = this.actor.data.data.estagio;
         let prox_est = [0, 11, 21, 31, 46, 61, 76, 96, 116, 136, 166, 196, 226 , 266, 306, 346, 386, 436, 486, 536, 586, 646, 706, 766, 826, 896, 966, 1036, 1106, 1186, 1266, 
             1346, 1426, 1516, 1606, 1696, 1786, 1886, 1986, 2086];
         if (estagio_atual < 40 && this.actor.data.data.pontos_estagio.next != prox_est[estagio_atual]) {
-            this.actor.update({
-                "data.pontos_estagio.next": prox_est[estagio_atual]
-            });
+            updatePers["data.pontos_estagio.next"] = prox_est[estagio_atual];
         }
     }
 
-    _attRM(data) {
+    _attRM(data, updatePers) {
         if (!this.options.editable) return;
         let rm = this.actor.data.data.estagio + this.actor.data.data.atributos.AUR;
         if (this.efeitos.length > 0) {
@@ -612,13 +618,14 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
         if (this.actor.data.data.rm != rm) {
+            updatePers["data.rm"] = rm;
             this.actor.update({
                 "data.rm": rm
             });
         }
     }
 
-    _attRF(data) {
+    _attRF(data, updatePers) {
         if (!this.options.editable) return;
         let rf = this.actor.data.data.estagio + this.actor.data.data.atributos.FIS;
         if (this.efeitos.length > 0) {
@@ -637,13 +644,11 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
         if (this.actor.data.data.rf != rf) {
-            this.actor.update({
-                "data.rf": rf
-            });
+            updatePers["data.rf"] = rf;
         } 
     }
 
-    _attKarmaMax(data) {
+    _attKarmaMax(data, updatePers) {
         if (!this.options.editable) return;
         let karma = ((this.actor.data.data.atributos.AUR) + 1 ) * ((this.actor.data.data.estagio) + 1);
         if (karma < 0) karma = 0;
@@ -663,9 +668,7 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
         if (this.actor.data.data.karma.max != karma) {
-            this.actor.update({
-                "data.karma.max": karma
-            });
+            updatePers["data.karma.max"] = karma;
         }
     }
     _addGrupoArmas(event) {
@@ -841,7 +844,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         
     }
-    _attProfissao(sheetData) {
+    _attProfissao(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.profissao) {
@@ -855,9 +858,7 @@ export default class tagmarActorSheet extends ActorSheet {
             let pontos_mag = 0;
             let pontos_gra = profissaoData.data.p_aquisicao.p_gra * actorData.data.estagio;
             if (max_hab != actorData.data.max_hab) {
-                this.actor.update({
-                    "data.max_hab": max_hab
-                });
+                updatePers["data.max_hab"] = max_hab;
             }
             if (pontos_gra > 0) {
                 pontos_gra -= actorData.data.grupos.CD;
@@ -967,55 +968,43 @@ export default class tagmarActorSheet extends ActorSheet {
                 }
             }
             if (pontos_hab != actorData.data.pontos_aqui) {
-                this.actor.update({
-                    "data.pontos_aqui": pontos_hab
-                });
+                updatePers["data.pontos_aqui"] = pontos_hab;
             }
             if (pontos_tec != actorData.data.pontos_tec) {
-                this.actor.update({
-                    "data.pontos_tec": pontos_tec
-                });
+                updatePers["data.pontos_tec"] = pontos_tec;
             }
             if (pontos_gra != actorData.data.pontos_comb) {
-                this.actor.update({
-                    "data.pontos_comb": pontos_gra
-                });
+                updatePers["data.pontos_comb"] = pontos_gra;
             }
             if (pontos_mag != actorData.data.pontos_mag) {
-                this.actor.update({
-                    "data.pontos_mag": pontos_mag
-                });
+                updatePers["data.pontos_mag"] = pontos_mag;
             }
             if  (profissaoData.name != actorData.data.profissao) {
-                this.actor.update({
-                    "data.profissao": profissaoData.name
-                });
+                updatePers["data.profissao"] = profissaoData.name;
             }
         }
     }
 
-    _preparaCaracRaciais(sheetData) {
+    _preparaCaracRaciais(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.raca) {
             const racaData = actorData.raca.data;
             if (actorData.data.raca != actorData.raca.name)
             {
-                this.actor.update({
-                "data.raca": actorData.raca.name,
-                "data.mod_racial.INT": racaData.mod_racial.INT,
-                "data.mod_racial.AUR": racaData.mod_racial.AUR,
-                "data.mod_racial.CAR": racaData.mod_racial.CAR,
-                "data.mod_racial.FOR": racaData.mod_racial.FOR,
-                "data.mod_racial.FIS": racaData.mod_racial.FIS,
-                "data.mod_racial.AGI": racaData.mod_racial.AGI,
-                "data.mod_racial.PER": racaData.mod_racial.PER
-                });
+                updatePers['data.raca'] = actorData.raca.name;
+                updatePers['data.mod_racial.INT'] = racaData.mod_racial.INT;
+                updatePers['data.mod_racial.AUR'] = racaData.mod_racial.AUR;
+                updatePers['data.mod_racial.CAR'] = racaData.mod_racial.CAR;
+                updatePers['data.mod_racial.FOR'] = racaData.mod_racial.FOR;
+                updatePers['data.mod_racial.FIS'] = racaData.mod_racial.FIS;
+                updatePers['data.mod_racial.AGI'] = racaData.mod_racial.AGI;
+                updatePers['data.mod_racial.PER'] = racaData.mod_racial.PER;
             } 
         }
     }
 
-    _calculaAjuste(sheetData) {
+    _calculaAjuste(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         let carac_finalINT = actorData.data.carac_final.INT;
@@ -1116,55 +1105,39 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
         if (carac_finalINT > 0 && actorData.data.atributos.INT != somaINT) {
-            this.actor.update({
-                "data.atributos.INT": somaINT
-            });
+            updatePers["data.atributos.INT"] = somaINT;
         }
         if (carac_finalAUR > 0 && actorData.data.atributos.AUR != somaAUR) {
-            this.actor.update({
-                "data.atributos.AUR": somaAUR
-            });
+            updatePers["data.atributos.AUR"] = somaAUR;
         }
         if (carac_finalCAR > 0 && actorData.data.atributos.CAR != somaCAR) {
-            this.actor.update({
-                "data.atributos.CAR": somaCAR
-            });
+            updatePers["data.atributos.CAR"] = somaCAR;
         }  
         if (carac_finalFOR > 0 && actorData.data.atributos.FOR != somaFOR) {
-            this.actor.update({
-                "data.atributos.FOR": somaFOR
-            });
+            updatePers["data.atributos.FOR"] = somaFOR;
         }  
         if (carac_finalFIS > 0 && actorData.data.atributos.FIS != somaFIS) {
-            this.actor.update({
-                "data.atributos.FIS": somaFIS
-            });
+            updatePers["data.atributos.FIS"] = somaFIS;
         } 
         if (carac_finalAGI > 0 && actorData.data.atributos.AGI != somaAGI) {
-            this.actor.update({
-                "data.atributos.AGI": somaAGI
-            });
+            updatePers["data.atributos.AGI"] = somaAGI;
         } 
         if (carac_finalPER > 0 && actorData.data.atributos.PER != somaPER) {
-            this.actor.update({
-                "data.atributos.PER": somaPER
-            });
+            updatePers["data.atributos.PER"] = somaPER;
         } 
     }
 
-    _prepareValorTeste(sheetData){
+    _prepareValorTeste(sheetData, updatePers){
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.data.valor_teste.INT != actorData.data.atributos.INT*4 || actorData.data.valor_teste.AUR != actorData.data.atributos.AUR*4 || actorData.data.valor_teste.CAR != actorData.data.atributos.CAR*4 || actorData.data.valor_teste.FOR != actorData.data.atributos.FOR*4 || actorData.data.valor_teste.FIS != actorData.data.atributos.FIS*4 || actorData.data.valor_teste.AGI != actorData.data.atributos.AGI*4 || actorData.data.valor_teste.PER != actorData.data.atributos.PER*4) {
-            this.actor.update({
-                "data.valor_teste.INT": actorData.data.atributos.INT*4,
-                "data.valor_teste.AUR": actorData.data.atributos.AUR*4,
-                "data.valor_teste.CAR": actorData.data.atributos.CAR*4,
-                "data.valor_teste.FOR": actorData.data.atributos.FOR*4,
-                "data.valor_teste.FIS": actorData.data.atributos.FIS*4,
-                "data.valor_teste.AGI": actorData.data.atributos.AGI*4,
-                "data.valor_teste.PER": actorData.data.atributos.PER*4
-            });
+            updatePers["data.valor_teste.INT"] = actorData.data.atributos.INT*4;
+            updatePers["data.valor_teste.AUR"] = actorData.data.atributos.AUR*4;
+            updatePers["data.valor_teste.CAR"] = actorData.data.atributos.CAR*4;
+            updatePers["data.valor_teste.FOR"] = actorData.data.atributos.FOR*4;
+            updatePers["data.valor_teste.FIS"] = actorData.data.atributos.FIS*4;
+            updatePers["data.valor_teste.AGI"] = actorData.data.atributos.AGI*4;
+            updatePers["data.valor_teste.PER"] = actorData.data.atributos.PER*4;
         }
     }
     //Exclusivo para Inventário
@@ -1498,7 +1471,7 @@ export default class tagmarActorSheet extends ActorSheet {
             item_comb.render();
         } 
     }
-    _attDefesaNPC(data) {
+    _attDefesaNPC(data, updateNpc) {
         if (!this.options.editable) return;
         var absorcao = 0;
         var def_pasVal = 0;
@@ -1515,16 +1488,14 @@ export default class tagmarActorSheet extends ActorSheet {
         var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
         const actorData = this.actor.data.data;
         if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.absorcao.max != absorcao) {
-            this.actor.update({
-                "data.d_passiva.valor": def_pasVal,
-                "data.d_passiva.categoria": def_pasCat,
-                "data.d_ativa.categoria": def_pasCat,
-                "data.d_ativa.valor": def_atiVal,
-                "data.absorcao.max": absorcao
-            });
+            updateNpc["data.d_passiva.valor"] = def_pasVal;
+            updateNpc["data.d_passiva.categoria"] = def_pasCat;
+            updateNpc["data.d_ativa.categoria"] = def_pasCat;
+            updateNpc["data.d_ativa.valor"] = def_atiVal;
+            updateNpc["data.absorcao.max"] = absorcao;
         }
     }
-    _attCargaAbsorcaoDefesa(data) {
+    _attCargaAbsorcaoDefesa(data, updatePers) {
         if (!this.options.editable) return;
         var actor_carga = 0;    // Atualiza Carga e verifica Sobrecarga
         var cap_transp = 0;
@@ -1591,28 +1562,22 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         const actorData = this.actor.data.data;
         if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao) {
-            this.actor.update({
-                "data.d_passiva.valor": def_pasVal,
-                "data.d_passiva.categoria": def_pasCat,
-                "data.d_ativa.categoria": def_pasCat,
-                "data.d_ativa.valor": def_atiVal,
-                "data.carga_transp.value": cap_usada,
-                "data.carga_transp.max": cap_transp,
-                "data.carga.value": actor_carga,
-                "data.absorcao.max": absorcao
-            });
+            updatePers["data.d_passiva.valor"] = def_pasVal;
+            updatePers["data.d_passiva.categoria"] = def_pasCat;
+            updatePers["data.d_ativa.categoria"] = def_pasCat;
+            updatePers["data.d_ativa.valor"] = def_atiVal;
+            updatePers["data.carga_transp.value"] = cap_usada;
+            updatePers["data.carga_transp.max"] = cap_transp;
+            updatePers["data.carga.value"] = actor_carga;
+            updatePers["data.absorcao.max"] = absorcao;
         }
         if (cap_transp > 0 && cap_usada < cap_transp) {
             if (!actorData.carga_transp.hasTransp) {
-                this.actor.update({
-                    "data.carga_transp.hasTransp": true
-                });
+                updatePers["data.carga_transp.hasTransp"] = true;
             }
         } else {
             if (actorData.carga_transp.hasTransp) {
-                this.actor.update({
-                    "data.carga_transp.hasTransp": false
-                });
+                updatePers["data.carga_transp.hasTransp"] = false;
             }
         }
         let carga_max = 0;
@@ -1620,34 +1585,26 @@ export default class tagmarActorSheet extends ActorSheet {
             carga_max = (data.actor.data.atributos.FOR * 20) + 20;
             if (data.actor.data.carga.value > carga_max) {
                 if (!actorData.carga.sobrecarga || actorData.carga.valor_s != data.actor.data.carga.value - carga_max) {
-                    this.actor.update({
-                        "data.carga.sobrecarga": true,
-                        "data.carga.valor_s": data.actor.data.carga.value - carga_max
-                    });
+                    updatePers["data.carga.sobrecarga"] = true;
+                    updatePers["data.carga.valor_s"] = data.actor.data.carga.value - carga_max;
                 }
             } else {
                 if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
-                    this.actor.update({
-                        "data.carga.sobrecarga": false,
-                        "data.carga.valor_s": 0
-                    });
+                    updatePers["data.carga.sobrecarga"] = false;
+                    updatePers["data.carga.valor_s"] = 0;
                 }
             }
         } else {
             carga_max = 20;
             if (data.actor.data.carga.value > carga_max) {
                 if (!actorData.carga.sobrecarga || actorData.carga.valor_s != data.actor.data.carga.value - carga_max) {
-                    this.actor.update({
-                        "data.carga.sobrecarga": true,
-                        "data.carga.valor_s": data.actor.data.carga.value - carga_max
-                    });
+                    updatePers["data.carga.sobrecarga"] = true;
+                    updatePers["data.carga.valor_s"] = data.actor.data.carga.value - carga_max;
                 }
             } else {
                 if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
-                    this.actor.update({
-                        "data.carga.sobrecarga": false,
-                        "data.carga.valor_s": 0
-                    });
+                    updatePers["data.carga.sobrecarga"] = false;
+                    updatePers["data.carga.valor_s"] = 0;
                 }
             }
         }
@@ -1701,7 +1658,7 @@ export default class tagmarActorSheet extends ActorSheet {
             });
         }
     }
-    _attEfEhVB(data) {
+    _attEfEhVB(data, updatePers) {
         if (!this.options.editable) return;
         let ef_base = 0;
         let vb_base = 0;
@@ -1739,17 +1696,13 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
         if (this.actor.data.data.ef.max != efMax || this.actor.data.data.vb != vbTotal) {
-            this.actor.update({
-                "data.ef.max": efMax,
-                "data.vb": vbTotal
-            });
+            updatePers["data.ef.max"] = efMax;
+            updatePers["data.vb"] = vbTotal
         }
         if (this.actor.data.data.estagio == 1){
             let ehMax = eh_base + this.actor.data.data.atributos.FIS;
             if (this.actor.data.data.eh.max != ehMax) {
-                this.actor.update({
-                    "data.eh.max": ehMax
-                });
+                updatePers["data.eh.max"] = ehMax;
             }
         }
     }
