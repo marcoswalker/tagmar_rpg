@@ -1,6 +1,7 @@
 export default class tagmarActorSheet extends ActorSheet {
     
     static get defaultOptions() {
+        this.lastUpdate = {};
         return mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "actor"],
         //width: 900,
@@ -108,8 +109,21 @@ export default class tagmarActorSheet extends ActorSheet {
             this._attKarmaMax(data, updatePers);
             this._attRM(data, updatePers);
             this._attRF(data, updatePers);
+            if (updatePers.hasOwnProperty('_id')) delete updatePers['_id'];
+            if (this.lastUpdate) {
+                if (this.lastUpdate.hasOwnProperty('_id')) delete this.lastUpdate['_id'];
+            }
             if (Object.keys(updatePers).length > 0) {
-                this.actor.update(updatePers);
+                if (!this.lastUpdate) {
+                    this.lastUpdate = updatePers;
+                    this.actor.update(updatePers);
+                    ui.notifications.info("Ficha atualizada.");
+                }
+                else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
+                    this.lastUpdate = updatePers;
+                    this.actor.update(updatePers);
+                    ui.notifications.info("Ficha atualizada.");
+                }
             }
         }
         return data;
@@ -562,21 +576,25 @@ export default class tagmarActorSheet extends ActorSheet {
                     this.actor.update({
                         "data.eh.max": eh_atual + nova_eh + attFIS
                     });
+                    ui.notifications.info("Nova EH calculada.");
                 } else if (valord10 >= 3 && valord10 <= 5) {
                     nova_eh = this.profissao.data.lista_eh.v2;
                     this.actor.update({
                         "data.eh.max": eh_atual + nova_eh + attFIS
                     });
+                    ui.notifications.info("Nova EH calculada.");
                 } else if (valord10 >= 6 && valord10 <= 8) {
                     nova_eh = this.profissao.data.lista_eh.v3;
                     this.actor.update({
                         "data.eh.max": eh_atual + nova_eh + attFIS
                     });
+                    ui.notifications.info("Nova EH calculada.");
                 } else if (valord10 >= 9 && valord10 <= 10) {
                     nova_eh = this.profissao.data.lista_eh.v4;
                     this.actor.update({
                         "data.eh.max": eh_atual + nova_eh + attFIS
                     });
+                    ui.notifications.info("Nova EH calculada.");
                 }
             }
         }
@@ -1361,7 +1379,7 @@ export default class tagmarActorSheet extends ActorSheet {
             tecnica.update({
                 "data.total": total
             });
-            tecnica.render();
+            //tecnica.render();
         }
     }
 
@@ -1380,7 +1398,7 @@ export default class tagmarActorSheet extends ActorSheet {
             magia.update({
                 "data.total.valor": total
             });
-            magia.render();
+            //magia.render();
         }
     }
 
@@ -1416,13 +1434,13 @@ export default class tagmarActorSheet extends ActorSheet {
             item_hab.update({
                 "data.ajuste.valor": valor_atrib
             });
-            item_hab.render();
+            //item_hab.render();
         }
         if (item_hab.data.data.total != total) {
             item_hab.update({
                 "data.total": total
             });
-            item_hab.render();
+            //item_hab.render();
         }
     }
 
@@ -1468,7 +1486,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 "data.dano.d275": p_275 + bonus_valor + bonus_magico,
                 "data.dano.d300": p_300 + bonus_valor + bonus_magico
             });
-            item_comb.render();
+            //item_comb.render();
         } 
     }
     _attDefesaNPC(data, updateNpc) {
@@ -1830,7 +1848,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 "data.dano.d275": p_275 + bonus_valor + bonus_magico,
                 "data.dano.d300": p_300 + bonus_valor + bonus_magico
             });
-            item_comb.render();
+            //item_comb.render();
         }
     }
     _rolarMoral(event) {
@@ -2353,7 +2371,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     item.update({
                         "data.municao": municao
                     });
-                    item.render();
+                    //item.render();
                 }
             }
             if (muni_usada == 1) municao_text = "<h4 class='mediaeval rola'>Munição gasta: " + muni_usada + " Restam: " + municao + "</h4>";
