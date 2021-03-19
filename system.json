@@ -6,7 +6,7 @@
   "version": "0.3.9",
   "dependencies": [
     {
-      "name": "compendium-folders",
+      "name": "vtt-compendium-folders",
       "type": "module",
       "manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/master/module.json"
     }
