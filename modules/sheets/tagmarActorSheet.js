@@ -80,9 +80,6 @@ export default class tagmarActorSheet extends ActorSheet {
             let updateNpc = {};
             this._prepareCharacterItems(data);
             this._prepareValorTeste(data, updateNpc);
-            this._attGruposArmas(data);
-            this._attHabilidades(data);
-            this._attMagiasTecnicasTotal(data);
             this._attDefesaNPC(data, updateNpc);
             if (Object.keys(updateNpc).length > 0) {
                 this.actor.update(updateNpc);
@@ -98,9 +95,6 @@ export default class tagmarActorSheet extends ActorSheet {
             if (data.actor.profissao) {
                 this._attProfissao(data, updatePers);
             }
-            this._attGruposArmas(data);
-            this._attHabilidades(data);
-            this._attMagiasTecnicasTotal(data);
             this._attCargaAbsorcaoDefesa(data, updatePers);
             if (data.actor.raca && data.actor.profissao) {
                 this._attEfEhVB(data, updatePers); 
@@ -1357,138 +1351,6 @@ export default class tagmarActorSheet extends ActorSheet {
         actorData.magias = magias;
     }
 
-    updateTecnicasTotal(item_id, actor = null){
-        actor = !actor ? this.actor : actor;
-        if (!actor.data) {
-            return;
-        }
-        const tecnica = actor.getOwnedItem(item_id);
-        const actorData = actor.data.data;
-        const ajusteTecnica = tecnica.data.data.ajuste;
-        const nivel_tecnica = tecnica.data.data.nivel;
-        let total = 0;
-        if (ajusteTecnica.atributo == "INT") total = actorData.atributos.INT + nivel_tecnica;
-        else if (ajusteTecnica.atributo == "CAR") total = actorData.atributos.CAR + nivel_tecnica;
-        else if (ajusteTecnica.atributo == "AUR") total = actorData.atributos.AUR + nivel_tecnica;
-        else if (ajusteTecnica.atributo == "FOR") total = actorData.atributos.FOR + nivel_tecnica;
-        else if (ajusteTecnica.atributo == "FIS") total = actorData.atributos.FIS + nivel_tecnica;
-        else if (ajusteTecnica.atributo == "AGI") total = actorData.atributos.AGI + nivel_tecnica;
-        else if (ajusteTecnica.atributo == "PER") total = actorData.atributos.PER + nivel_tecnica;
-        else total = nivel_tecnica;
-        if (tecnica.data.data.total != total) {
-            tecnica.update({
-                "data.total": total
-            });
-            //tecnica.render();
-        }
-    }
-
-    updateMagiasTotal(item_id, actor = null){
-        actor = !actor ? this.actor : actor;
-        if (!actor.data) {
-            return;
-        }
-        const magia = actor.getOwnedItem(item_id);
-        const actorData = actor.data.data;
-        const aura = actorData.atributos.AUR;
-        const m_nivel = magia.data.data.nivel;
-        const m_karma = magia.data.data.total.valorKarma;
-        let total = aura + m_nivel + m_karma;
-        if (magia.data.data.total != total) {
-            magia.update({
-                "data.total.valor": total
-            });
-            //magia.render();
-        }
-    }
-
-    updateHabAjuste(item_id, actor = null){
-        actor = !actor ? this.actor : actor;
-        if (!actor.data) {
-            return;
-        }
-        const item_hab = actor.getOwnedItem(item_id);
-        const atributo = item_hab.data.data.ajuste.atributo;
-        let hab_nivel = 0;
-        let hab_penal = 0;
-        let hab_bonus = 0;
-        if (item_hab.data.data.nivel) hab_nivel = item_hab.data.data.nivel
-        if (item_hab.data.data.penalidade) hab_penal = item_hab.data.data.penalidade;
-        if (item_hab.data.data.bonus) hab_bonus = item_hab.data.data.bonus;
-        let valor_atrib = 0;
-        const actorData = actor.data.data;
-        if (atributo == "INT") valor_atrib = actorData.atributos.INT;
-        else if (atributo == "AUR") valor_atrib = actorData.atributos.AUR;
-        else if (atributo == "CAR") valor_atrib = actorData.atributos.CAR;
-        else if (atributo == "FOR") valor_atrib = actorData.atributos.FOR;
-        else if (atributo == "FIS") valor_atrib = actorData.atributos.FIS;
-        else if (atributo == "AGI") valor_atrib = actorData.atributos.AGI;
-        else if (atributo == "PER") valor_atrib = actorData.atributos.PER;
-        let total = 0;
-        if (hab_nivel > 0) {
-            total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
-        } else {
-            total = parseInt(valor_atrib) - 7 + parseInt(hab_penal) + parseInt(hab_bonus);
-        }
-        if (item_hab.data.data.ajuste.valor != valor_atrib) {
-            item_hab.update({
-                "data.ajuste.valor": valor_atrib
-            });
-            //item_hab.render();
-        }
-        if (item_hab.data.data.total != total) {
-            item_hab.update({
-                "data.total": total
-            });
-            //item_hab.render();
-        }
-    }
-
-    updateCombateNivel(item_id, actor = null) {
-        actor = !actor ? this.actor : actor;
-        if (!actor.data) {
-            return;
-        }
-        const actorData = this.actor.data.data;
-        const item_comb = actor.getOwnedItem(item_id);
-        const ItemData = item_comb.data.data;
-        const bonus_magico = item_comb.data.data.bonus_magico;
-        const bonus_dano = item_comb.data.data.bonus_dano;
-        let bonus_valor = 0;
-        if (bonus_dano == "AUR") bonus_valor = actorData.atributos.AUR;
-        else if (bonus_dano == "FOR") bonus_valor = actorData.atributos.FOR;
-        else if (bonus_dano == "AGI") bonus_valor = actorData.atributos.AGI;
-        else if (bonus_dano == "PER") bonus_valor = actorData.atributos.PER;
-        const p_25 = ItemData.dano_base.d25;
-        const p_50 = ItemData.dano_base.d50;
-        const p_75 = ItemData.dano_base.d75;
-        const p_100 = ItemData.dano_base.d100;
-        const p_125 = ItemData.dano_base.d125;
-        const p_150 = ItemData.dano_base.d150;
-        const p_175 = ItemData.dano_base.d175;
-        const p_200 = ItemData.dano_base.d200;
-        const p_225 = ItemData.dano_base.d225;
-        const p_250 = ItemData.dano_base.d250;
-        const p_275 = ItemData.dano_base.d275;
-        const p_300 = ItemData.dano_base.d300;
-        if (item_comb.data.data.dano.d25 != p_25 + bonus_valor + bonus_magico) {
-            item_comb.update({
-                "data.dano.d25": p_25 + bonus_valor + bonus_magico,
-                "data.dano.d50": p_50 + bonus_valor + bonus_magico,
-                "data.dano.d75": p_75 + bonus_valor + bonus_magico,
-                "data.dano.d100": p_100 + bonus_valor + bonus_magico,
-                "data.dano.d125": p_125 + bonus_valor + bonus_magico,
-                "data.dano.d150": p_150 + bonus_valor + bonus_magico,
-                "data.dano.d175": p_175 + bonus_valor + bonus_magico,
-                "data.dano.d200": p_200 + bonus_valor + bonus_magico,
-                "data.dano.d225": p_225 + bonus_valor + bonus_magico,
-                "data.dano.d250": p_250 + bonus_valor + bonus_magico,
-                "data.dano.d275": p_275 + bonus_valor + bonus_magico,
-                "data.dano.d300": p_300 + bonus_valor + bonus_magico
-            });
-            //item_comb.render();
-        } 
-    }
     _attDefesaNPC(data, updateNpc) {
         if (!this.options.editable) return;
         var absorcao = 0;
@@ -1627,55 +1489,7 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
     }
-    _attMagiasTecnicasTotal(data) {
-        if (!this.options.editable) return;
-        const isso = this;
-        if (data.actor.magias.length > 0) {
-            data.actor.magias.forEach(function(item){
-                isso.updateMagiasTotal(item._id, isso.actor);
-            });
-        }
-        if (data.actor.tecnicas.length > 0) {
-            data.actor.tecnicas.forEach(function(item){
-                isso.updateTecnicasTotal(item._id, isso.actor);
-            });
-        }
-    }
 
-    _attHabilidades(data) {
-        if (!this.options.editable) return;
-        const isso = this;
-        if (data.actor.h_prof.length > 0){
-            data.actor.h_prof.forEach(function(item){
-                isso.updateHabAjuste(item._id, isso.actor);
-            });
-        }
-        if (data.actor.h_man.length > 0){
-            data.actor.h_man.forEach(function(item){
-                isso.updateHabAjuste(item._id, isso.actor);
-            });
-        }
-        if (data.actor.h_con.length > 0){
-            data.actor.h_con.forEach(function(item){
-                isso.updateHabAjuste(item._id, isso.actor);
-            });
-        }
-        if (data.actor.h_sub.length > 0){
-            data.actor.h_sub.forEach(function(item){
-                isso.updateHabAjuste(item._id, isso.actor);
-            });
-        }
-        if (data.actor.h_inf.length > 0){
-            data.actor.h_inf.forEach(function(item){
-                isso.updateHabAjuste(item._id, isso.actor);
-            });
-        }
-        if (data.actor.h_geral.length > 0){
-            data.actor.h_geral.forEach(function(item){
-                isso.updateHabAjuste(item._id, isso.actor);
-            });
-        }
-    }
     _attEfEhVB(data, updatePers) {
         if (!this.options.editable) return;
         let ef_base = 0;
@@ -1724,133 +1538,7 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
     }
-    _attGruposArmas(data) {
-        if (!this.options.editable) return;
-        const isso = this;
-        var valor_n = 0;
-            if (data.actor.combate.length > 0){
-                data.actor.combate.forEach(function(item){
-                    //actor_carga += item.data.peso;
-                    if (item.data.tipo == "CD") {
-                        valor_n = data.actor.data.grupos.CD;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CI") {
-                        valor_n = data.actor.data.grupos.CI;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CI") {
-                        valor_n = data.actor.data.grupos.CI;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CL") {
-                        valor_n = data.actor.data.grupos.CL;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CLD") {
-                        valor_n = data.actor.data.grupos.CLD;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "EL") {
-                        valor_n = data.actor.data.grupos.EL;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CmE") {
-                        valor_n = data.actor.data.grupos.CmE;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CmM") {
-                        valor_n = data.actor.data.grupos.CmM;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "EM") {
-                        valor_n = data.actor.data.grupos.EM;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PmA") {
-                        valor_n = data.actor.data.grupos.PmA;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PmL") {
-                        valor_n = data.actor.data.grupos.PmL;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CpE") {
-                        valor_n = data.actor.data.grupos.CpE;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "CpM") {
-                        valor_n = data.actor.data.grupos.CpM;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "EP") {
-                        valor_n = data.actor.data.grupos.EP;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PP") {
-                        valor_n = data.actor.data.grupos.PP;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PpA") {
-                        valor_n = data.actor.data.grupos.PpA;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    }
-                    else if (item.data.tipo == "PpB") {
-                        valor_n = data.actor.data.grupos.PpB;
-                        isso.updateItemNivel(valor_n, item._id, isso.actor);
-                    } else if (item.data.tipo == "") {
-                        isso.updateCombateNivel(item._id, isso.actor);
-                    }
-                });
-            }
-    }
     
-    updateItemNivel(valor_n , item_id, actor = null) {
-        actor = !actor ? this.actor : actor;
-        if (!actor.data) {
-            return;
-        }
-        const actorData = this.actor.data.data;
-        const item_comb = actor.getOwnedItem(item_id);
-        const ItemData = item_comb.data.data;
-        const bonus_magico = item_comb.data.data.bonus_magico;
-        const bonus_dano = item_comb.data.data.bonus_dano;
-        let bonus_valor = 0;
-        if (bonus_dano == "AUR") bonus_valor = actorData.atributos.AUR;
-        else if (bonus_dano == "FOR") bonus_valor = actorData.atributos.FOR;
-        else if (bonus_dano == "AGI") bonus_valor = actorData.atributos.AGI;
-        else if (bonus_dano == "PER") bonus_valor = actorData.atributos.PER;
-        const p_25 = ItemData.dano_base.d25;
-        const p_50 = ItemData.dano_base.d50;
-        const p_75 = ItemData.dano_base.d75;
-        const p_100 = ItemData.dano_base.d100;
-        const p_125 = ItemData.dano_base.d125;
-        const p_150 = ItemData.dano_base.d150;
-        const p_175 = ItemData.dano_base.d175;
-        const p_200 = ItemData.dano_base.d200;
-        const p_225 = ItemData.dano_base.d225;
-        const p_250 = ItemData.dano_base.d250;
-        const p_275 = ItemData.dano_base.d275;
-        const p_300 = ItemData.dano_base.d300;
-        if (item_comb.data.data.nivel != valor_n || item_comb.data.data.dano.d25 != p_25 + bonus_valor + bonus_magico) {
-            item_comb.update({
-                "data.nivel": valor_n,
-                "data.dano.d25": p_25 + bonus_valor + bonus_magico,
-                "data.dano.d50": p_50 + bonus_valor + bonus_magico,
-                "data.dano.d75": p_75 + bonus_valor + bonus_magico,
-                "data.dano.d100": p_100 + bonus_valor + bonus_magico,
-                "data.dano.d125": p_125 + bonus_valor + bonus_magico,
-                "data.dano.d150": p_150 + bonus_valor + bonus_magico,
-                "data.dano.d175": p_175 + bonus_valor + bonus_magico,
-                "data.dano.d200": p_200 + bonus_valor + bonus_magico,
-                "data.dano.d225": p_225 + bonus_valor + bonus_magico,
-                "data.dano.d250": p_250 + bonus_valor + bonus_magico,
-                "data.dano.d275": p_275 + bonus_valor + bonus_magico,
-                "data.dano.d300": p_300 + bonus_valor + bonus_magico
-            });
-            //item_comb.render();
-        }
-    }
     _rolarMoral(event) {
         const tabela_resol = this.tabela_resol;
         let moral = this.actor.data.data.moral;
