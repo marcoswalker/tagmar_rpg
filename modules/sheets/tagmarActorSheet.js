@@ -240,6 +240,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 flavor: ``
             });
             $(html.find(".valord10EH")).val(r.total);
+            $('.calculaNovaEH').css('color', 'rgb(94, 8, 8)');
         });
         html.find(".showImg").click(this._combateImg.bind(this));
         html.find(".displayRaca").click(this._displayRaca.bind(this));
@@ -448,6 +449,7 @@ export default class tagmarActorSheet extends ActorSheet {
         const forcAtaqueI = parseInt($(".F_Ataque").val());
         if (!forcAtaqueI) {
             ui.notifications.warn("Preencha um valor maior que zero no campo F.Ataque.");
+            $('.F_Ataque').css('background-color','Orange');
             return;
         }
         const valorDefI = this.actor.data.data.rm;
@@ -503,6 +505,7 @@ export default class tagmarActorSheet extends ActorSheet {
         const forcAtaqueI = parseInt($(".F_Ataque").val());
         if (!forcAtaqueI) {
             ui.notifications.warn("Preencha um valor maior que zero no campo F.Ataque.");
+            $('.F_Ataque').css('background-color','Orange');
             return;
         }
         const valorDefI = this.actor.data.data.rf;
@@ -557,6 +560,7 @@ export default class tagmarActorSheet extends ActorSheet {
         let valord10 = parseInt($(".valord10EH").val());
         if (!valord10 && estagio_atual > 1) {
             ui.notifications.warn("Clique em '1d10' para rolar o dado ou preencha o valor no campo.");
+            $('.roll1d10').css('color', 'rgb(94, 8, 8)');
             return;
         }
         let raca_list = [];
