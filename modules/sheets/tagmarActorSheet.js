@@ -1331,6 +1331,9 @@ export default class tagmarActorSheet extends ActorSheet {
         if (pertences_transporte.length > 1) pertences_transporte.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
+        if (efeitos.length > 1) efeitos.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        });
         actorData.efeitos = efeitos;
         this.efeitos = efeitos;
         this.table_resFisMag = table_resFisMag;
