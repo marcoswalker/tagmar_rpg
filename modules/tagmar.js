@@ -74,16 +74,20 @@ Hooks.once("ready", async function () {
 Hooks.on("createToken", async function(scene, token) {
   if (!game.user.isGM) return;
   if (!token.actorLink) {
-    let tokenA = canvas.tokens.get(token._id);
-    let tokenactor = tokenA.actor;
-    await tokenactor.update({
-      'name': tokenA.actor.name + " Cópia"
-    });
-    let actor = await Actor.create(tokenactor);
-    tokenA.update({
-      'actorId': actor._id,
-      'actorLink': true
-    });
+    try {
+      let tokenA = canvas.tokens.get(token._id);
+      let tokenactor = tokenA.actor;
+      await tokenactor.update({
+        'name': tokenA.actor.name + " Cópia"
+      });
+      let actor = await Actor.create(tokenactor);
+      tokenA.update({
+        'actorId': actor._id,
+        'actorLink': true
+      });
+    } catch (e) {
+      ui.notifications.error(e);
+    }
   }
 });
 
