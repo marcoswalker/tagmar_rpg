@@ -221,6 +221,11 @@ export default class tagmarActorSheet extends ActorSheet {
             $(html.find(".car_finPER")).val(soma);
         });
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
+        html.find(".rollAtributos").hover(function (){
+            $(".rollAtributos").html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
+        }, function () {
+            $(".rollAtributos").html("Característica Sorteada");
+        });
         html.find(".rollAtributos").click(ev => {
             let formula = "{3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl}";
             let r = new Roll(formula);
