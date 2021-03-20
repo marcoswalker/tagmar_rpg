@@ -70,8 +70,9 @@ Hooks.once("ready", async function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
 });
-
+// Como Player da um erro, user laks permission to update token
 Hooks.on("createToken", async function(scene, token) {
+  if (!game.user.isGM) return;
   if (!token.actorLink) {
     let tokenA = canvas.tokens.get(token._id);
     let tokenactor = tokenA.actor;
@@ -87,6 +88,7 @@ Hooks.on("createToken", async function(scene, token) {
 });
 
 Hooks.on("preCreateToken", function(_scene, data) {
+  if (!game.user.isGM) return;
   const setting = game.settings.get("tagmar_rpg", "autoBars");
   const actor = game.actors.get(data.actorId);
   if (setting == "barra_pers") {
