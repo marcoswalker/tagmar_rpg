@@ -86,6 +86,174 @@ Hooks.on("createToken", async function(scene, token) {
   }
 });
 
+Hooks.on("preCreateToken", function(_scene, data) {
+  const setting = game.settings.get("tagmar_rpg", "autoBars");
+  const actor = game.actors.get(data.actorId);
+  if (setting == "barra_pers") {
+    if (actor.data.type == "Personagem") {
+      setProperty(data, "flags.barbrawl.resourceBars", {
+        "bar1": {
+            id: "bar1",
+            mincolor: "#fbff00",
+            maxcolor: "#00ff08",
+            position: "top-outer",
+            attribute: "eh",
+            visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar2": {
+          id: "bar2",
+          mincolor: "#fbff00",
+          maxcolor: "#6b6b6b",
+          position: "top-outer",
+          attribute: "absorcao",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar3": {
+          id: "bar3",
+          mincolor: "#fbff00",
+          maxcolor: "#ff0000",
+          position: "top-outer",
+          attribute: "ef",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar4": {
+          id: "bar4",
+          mincolor: "#fbff00",
+          maxcolor: "#a600ff",
+          position: "bottom-outer",
+          attribute: "karma",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar5": {
+          id: "bar5",
+          mincolor: "#fbff00",
+          maxcolor: "#003399",
+          position: "bottom-outer",
+          attribute: "focus",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        }
+      });
+    }
+  } else if (setting == "barra_npc") {
+    if (actor.data.type == "NPC") {
+      setProperty(data, "flags.barbrawl.resourceBars", {
+        "bar1": {
+            id: "bar1",
+            mincolor: "#fbff00",
+            maxcolor: "#00ff08",
+            position: "bottom-outer",
+            attribute: "eh_npc",
+            visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar2": {
+          id: "bar2",
+          mincolor: "#fbff00",
+          maxcolor: "#6b6b6b",
+          position: "bottom-outer",
+          attribute: "absorcao",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar3": {
+          id: "bar3",
+          mincolor: "#fbff00",
+          maxcolor: "#ff0000",
+          position: "bottom-outer",
+          attribute: "ef_npc",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar4": {
+          id: "bar4",
+          mincolor: "#fbff00",
+          maxcolor: "#a600ff",
+          position: "bottom-outer",
+          attribute: "karma_npc",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        }
+      });
+    }
+  } else if (setting == "barra_both") {
+    if (actor.data.type == "Personagem") {
+      setProperty(data, "flags.barbrawl.resourceBars", {
+        "bar1": {
+            id: "bar1",
+            mincolor: "#fbff00",
+            maxcolor: "#00ff08",
+            position: "top-outer",
+            attribute: "eh",
+            visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar2": {
+          id: "bar2",
+          mincolor: "#fbff00",
+          maxcolor: "#6b6b6b",
+          position: "top-outer",
+          attribute: "absorcao",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar3": {
+          id: "bar3",
+          mincolor: "#fbff00",
+          maxcolor: "#ff0000",
+          position: "top-outer",
+          attribute: "ef",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar4": {
+          id: "bar4",
+          mincolor: "#fbff00",
+          maxcolor: "#a600ff",
+          position: "bottom-outer",
+          attribute: "karma",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar5": {
+          id: "bar5",
+          mincolor: "#fbff00",
+          maxcolor: "#003399",
+          position: "bottom-outer",
+          attribute: "focus",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        }
+      });
+    } else if (actor.data.type == "NPC") {
+      setProperty(data, "flags.barbrawl.resourceBars", {
+        "bar1": {
+            id: "bar1",
+            mincolor: "#fbff00",
+            maxcolor: "#00ff08",
+            position: "bottom-outer",
+            attribute: "eh_npc",
+            visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar2": {
+          id: "bar2",
+          mincolor: "#fbff00",
+          maxcolor: "#6b6b6b",
+          position: "bottom-outer",
+          attribute: "absorcao",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar3": {
+          id: "bar3",
+          mincolor: "#fbff00",
+          maxcolor: "#ff0000",
+          position: "bottom-outer",
+          attribute: "ef_npc",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        },
+        "bar4": {
+          id: "bar4",
+          mincolor: "#fbff00",
+          maxcolor: "#a600ff",
+          position: "bottom-outer",
+          attribute: "karma_npc",
+          visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+        }
+      });
+    }
+  }
+});
+
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Magias e Poderes. Você pode referenciar atributos e perícias com @. Ex.: @for ou @luta");

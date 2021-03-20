@@ -4,7 +4,7 @@ export const SystemSettings = function() {
     game.settings.register("tagmar_rpg", "sheetTemplate", {
         name: "Ficha",
         hint: "Opção de imagem de fundo da ficha, padrão ou fundo do livro",
-        scope: "user",
+        scope: "client",
         config: true,
         default: "base",
         type: String,
@@ -34,5 +34,19 @@ export const SystemSettings = function() {
           "tagmar3shum2": "Borda Dos Livros Tagmar 3.0 + Sacerdotiza Humana (Sergio Artigas)"
         }
       });
+      game.settings.register("tagmar_rpg", "autoBars", {
+        name: "Barras automaticas (Bar Brawl)",
+        hint: "Opção para criar barras automaticamente ao criar um token.(Nescessário módulo Bar Brawl)",
+        scope: "world",
+        config: true,
+        default: "no",
+        type: String,
+        choices: {
+          "no": "Não criar barras automaticamente.",
+          "barra_pers": "Criar barras para tokens de Personagem.",
+          "barra_npc": "Criar barras para tokens de NPC.",
+          "barra_both": "Criar barras para tokens de Personagem e NPC."
+        }
+      })
 
 }
