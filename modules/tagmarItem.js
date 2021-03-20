@@ -1,6 +1,7 @@
 export class tagmarItem extends Item {
 
     prepareData() {
+        if (this.ower) return;
         super.prepareData();
     
         // Get the Item's data
