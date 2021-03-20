@@ -2,7 +2,6 @@ export class tagmarItem extends Item {
 
     prepareData() {
         if (!this.owner) return;
-        console.log(this);
         super.prepareData();
     
         // Get the Item's data
