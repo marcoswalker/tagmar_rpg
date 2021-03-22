@@ -2,24 +2,24 @@
     <header class="sheet-header">
         <div class='container'>
             <div class="row container_dados">
-                <div class="col-md-4">
+                <div class="col-md-4 col-4">
                     <img class="tagmarLogo" src="systems/tagmar_rpg/templates/sheets/img/logo.png"/> 
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 col-8">
                     <h1 class="fairyDust" style="text-align: center; padding-top:20px;">{{actor.type}}</h1>
                 </div>
             </div>
             <div class="row container_dados">
-                <div class="col-md-2" style="padding-top: 3px;">
+                <div class="col-md-2 col-4" style="padding-top: 3px;">
                     <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="64" width="64"/>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-8">
                     <h1 class="fairyDust"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
                 </div>
-                <div class="col-md-2" style="text-align: center;">
+                <div class="col-md-2 col-4" style="text-align: center;">
                     <label><h1 class="fairyDust" style="padding-top: 15px;">Estágio:</h1></label>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 col-8">
                     <h1 class="fairyDust"><input class="ipEstagio" name="data.estagio" type="number" value="{{data.estagio}}" style="text-align: center";/></h1>
                 </div>  
             </div>
@@ -39,96 +39,20 @@
                 </div>
             </div>
             <div class="tab basico container" data-group="primary" data-tab="basico"> <!--Tab Básico-->
-                <!--div class="row dados">         
-                    <div class="col-md-1">
-                        <label><h4 class="mediaeval">Raça:</h4></label>
-                    </div>
-                    <div class="col-md-3">
-                        <input name="data.raca" type="text" list="racas" value="{{data.raca}}" height="30" title="Escolha uma raça ou crie a sua." readonly/>
-                    </div>
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Profissão:</h4></label>
-                    </div>
-                    <div class="col-md-3">
-                        <input class="profissao" name="data.profissao" type="text" value="{{data.profissao}}" height="30" title="Uma profissão diz muito sobre o herói." readonly/>
-                    </div>
-                    <div class="col-md-1">
-                        <label><h4 class="mediaeval">Deus:</h4></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input name="data.deus" type="text" list="deuses" value="{{data.deus}}" height="30" title="Tem uns que acreditam, outros não."/>
-                        <datalist id="deuses">
-                            <option value="Blator"></option>
-                            <option value="Cambu"></option>
-                            <option value="Crezir"></option>
-                            <option value="Crisagom"></option>
-                            <option value="Cruine"></option>
-                            <option value="Ganis"></option>
-                            <option value="Lena"></option>
-                            <option value="Liris"></option>
-                            <option value="Maira"></option>
-                            <option value="Palier"></option>
-                            <option value="Parom"></option>
-                            <option value="Plandis"></option>
-                            <option value="Quiris"></option>
-                            <option value="Selimon"></option>
-                            <option value="Sevides"></option>
-                        </datalist>
-                    </div>
-                </div-->
-                <!--div class="row dados">         
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Classe Social:</h4></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input name="data.classe_social" type="text" value="{{data.classe_social}}" height="30" title="Suas atitutes demonstram sua falta de classe."/>
-                    </div>
-                    <div class="col-md-2">
-                        <label><h4 class="mediaeval">Especialização:</h4></label>
-                    </div>
-                    <div class="col-md-4">
-                        <select name="data.especializacao" type="text" data-dtype="String" value="{{data.especializacao}}" height="30" title="Caia na real, você não tem nada de especial. Se você escolheu uma profissão, pode escolher algo aqui tambem."/>
-                            {{#select data.especializacao}}
-                                {{#each actor.especializacoes as |especializacao|}}
-                                    <option value="{{especializacao}}">{{especializacao}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                    </div>
-                    <div class="col-md-1">
-                        <label><h4 class="mediaeval">Idade:</h4></label>
-                    </div>
-                    <div class="col-md-1">
-                        <input name="data.idade" type="number" value="{{data.idade}}" height="30" title="Só isso? Parece bem mais velho."/>
-                    </div>
-                </div-->
                 <div class="row dados">         <!--Terceira Linha-->
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-4">
                         <label><h4 class="mediaeval">Altura(m):</h4></label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-8">
                         <input name="data.altura" type="text" value="{{data.altura}}" height="30" title="Altura do personagem, não a sua."/>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-4">
                         <label><h4 class="mediaeval">Peso(Kg):</h4></label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-8">
                         <input name="data.peso" type="number" value="{{data.peso}}" height="30" title="Não adianta encolher a barriga."/>
                     </div>
                     <div class="col-md-5"></div>
-                    <!--div class="col-md-2" style="text-align: right;">
-                        <label><h4 class="mediaeval">Carga(Kg):</h4></label>
-                    </div>
-                    <div class="col-md-2">
-                        <input title="Carga Máxima: 20Kg p/ ponto de FOR" name="data.carga.value" type="number" value="{{data.carga.value}}" height="30" readonly/>
-                    </div>
-                    <div class="col-md-1">
-                        {{#if actor.data.carga.sobrecarga}}
-                            <i class="fas fa-weight-hanging sobrepeso"><h4 class="mediaeval">+{{actor.data.carga.valor_s}}Kg</h4></i>
-                        {{else}}
-                            <i class="fas fa-weight-hanging sobrepeso hidden"></i>
-                        {{/if}}
-                    </div-->
                 </div>
                 <div class="row dados">  <!-- Table Atributos -->       <!--Quarta Linha-->
                     <div class="col-md-12">
@@ -143,36 +67,6 @@
                                 <th class="mediaeval"><a class="rolarAtt" data-item-id="AGI" title="Já entendeu né?">AGI</a></th>
                                 <th class="mediaeval"><a class="rolarAtt" data-item-id="PER" title="Clique para rolar Teste.">PER</a></th>
                             </tr>
-                            <!--tr>
-                                <td class="mediaeval"><a class="rollAtributos" title="Rolar dados. Clica pra ver.">Característica Sorteada</a></td>
-                                <td><input title="Valor sorteado." class="carac_sortINT" name="data.carac_sort.INT" type="number" value="{{data.carac_sort.INT}}"/></td>
-                                <td><input title="Valor sorteado." class="carac_sortAUR" name="data.carac_sort.AUR" type="number" value="{{data.carac_sort.AUR}}"/></td>
-                                <td><input title="Valor sorteado." class="carac_sortCAR" name="data.carac_sort.CAR" type="number" value="{{data.carac_sort.CAR}}"/></td>
-                                <td><input title="Valor sorteado." class="carac_sortFOR" name="data.carac_sort.FOR" type="number" value="{{data.carac_sort.FOR}}"/></td>
-                                <td><input title="Valor sorteado." class="carac_sortFIS" name="data.carac_sort.FIS" type="number" value="{{data.carac_sort.FIS}}"/></td>
-                                <td><input title="Valor sorteado." class="carac_sortAGI" name="data.carac_sort.AGI" type="number" value="{{data.carac_sort.AGI}}"/></td>
-                                <td><input title="Valor sorteado." class="carac_sortPER" name="data.carac_sort.PER" type="number" value="{{data.carac_sort.PER}}"/></td>
-                            </tr>
-                            <tr>
-                                <td class="mediaeval">Modificador Racial</td>
-                                <td><input title="Ajuste de INT da raça." class="mod_racialINT" name="data.mod_racial.INT" type="number" value="{{data.mod_racial.INT}}"/></td>
-                                <td><input title="Ajuste de AUR da raça." class="mod_racialAUR" name="data.mod_racial.AUR" type="number" value="{{data.mod_racial.AUR}}"/></td>
-                                <td><input title="Ajuste de CAR da raça." class="mod_racialCAR" name="data.mod_racial.CAR" type="number" value="{{data.mod_racial.CAR}}"/></td>
-                                <td><input title="Ajuste de FOR da raça." class="mod_racialFOR" name="data.mod_racial.FOR" type="number" value="{{data.mod_racial.FOR}}"/></td>
-                                <td><input title="Ajuste de FIS da raça." class="mod_racialFIS" name="data.mod_racial.FIS" type="number" value="{{data.mod_racial.FIS}}"/></td>
-                                <td><input title="Ajuste de AGI da raça." class="mod_racialAGI" name="data.mod_racial.AGI" type="number" value="{{data.mod_racial.AGI}}"/></td>
-                                <td><input title="Ajuste de PER da raça." class="mod_racialPER" name="data.mod_racial.PER" type="number" value="{{data.mod_racial.PER}}"/></td>
-                            </tr>
-                            <tr>
-                                <td class="mediaeval">Características Finais</td>
-                                <td><input title="Aqui não precisa mexer." class="car_finINT" name="data.carac_final.INT" type="number" value="{{data.carac_final.INT}}"/></td>
-                                <td><input title="Não faça isso." class="car_finAUR" name="data.carac_final.AUR" type="number" value="{{data.carac_final.AUR}}"/></td>
-                                <td><input title="Eu sei que você está com vontade." class="car_finCAR" name="data.carac_final.CAR" type="number" value="{{data.carac_final.CAR}}"/></td>
-                                <td><input title="Mas eu já avisei." class="car_finFOR" name="data.carac_final.FOR" type="number" value="{{data.carac_final.FOR}}"/></td>
-                                <td><input title="Tá, vai, pode mexer. Não vou lhe julgar." class="car_finFIS" name="data.carac_final.FIS" type="number" value="{{data.carac_final.FIS}}"/></td>
-                                <td><input title="Quê? Está com medo agora?" class="car_finAGI" name="data.carac_final.AGI" type="number" value="{{data.carac_final.AGI}}"/></td>
-                                <td><input title="Caramba, eu falei pra você não mexer, arruma isso logo!" class="car_finPER" name="data.carac_final.PER" type="number" value="{{data.carac_final.PER}}"/></td>
-                            </tr-->
                             <tr>
                                 <td class="mediaeval">Ajuste</td>
                                 <td><input title="Atributo final do personagem." name="data.atributos.INT" type="number" value="{{data.atributos.INT}}"/></td>
@@ -398,10 +292,10 @@
                     <div class="col-md-2 hidden">
                         <input name="data.pontos_aqui" type="number" value="{{data.pontos_aqui}}" height="30" readonly/>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-6">
                         <label><h4 class="mediaeval">Bônus/Penalidade:</h4></label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-6">
                         <input name="data.bonus_habil" type="number" value="{{data.bonus_habil}}" height="30" title="Bônus/Penalidade será aplicado a todas as habilidades.(Nenhum valor, preencher zero)"/>
                     </div>
                 </div>
@@ -587,8 +481,8 @@
                     <div class="col-md-2 hidden">
                         <input name="data.pontos_tec" type="number" value="{{data.pontos_tec}}" height="30" readonly/>
                     </div>
-                    <div class="col-md-2 mediaeval">Def. Oponente:</div>
-                    <div class="col-md-1">
+                    <div class="col-md-2 col-3 mediaeval">Def. Oponente:</div>
+                    <div class="col-md-1 col-2">
                         <select title="Tipo da defesa do oponente." class="mediaeval" name="data.inf_ataque.cat_def" type="text" value="{{data.inf_ataque.cat_def}}" data-dtype="String" height="30" style="font-size: 110%;">
                             {{#select data.inf_ataque.cat_def}}
                                 <option value="L">L</option>
@@ -597,13 +491,13 @@
                             {{/select}}
                         </select>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-2">
                         <input title="Valor da defesa do oponente." name="data.inf_ataque.valor_def" type="number" value="{{data.inf_ataque.valor_def}}" height="30"/>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-3">
                         <label><h4 class="mediaeval">Bônus/Penalidade:</h4></label>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-1 col-2">
                         <input title="Bônus/Penalidade será aplicado a todos os ataques.(Nenhum valor, preencher zero)" name="data.inf_ataque.bonus" type="number" value="{{data.inf_ataque.bonus}}" height="30"/>
                     </div>
                 </div>
@@ -770,14 +664,14 @@
                 </div>
                 <div class="row dados">
                     <div class="col-md-2"></div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-7">
                         <label><h4 class="mediaeval">Carga no transporte(Kg):</h4></label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-2">
                         <input name="data.carga_transp.value" type="number" value="{{data.carga_transp.value}}" height="30" title="Carga em transporte." readonly/>
                     </div>
-                    <div class="col-md-1"><h4 class="mediaeval">/</h4></div>
-                    <div class="col-md-2">
+                    <div class="col-md-1 col-1"><h4 class="mediaeval">/</h4></div>
+                    <div class="col-md-2 col-2">
                         <input name="data.carga_transp.max" type="number" value="{{data.carga_transp.max}}" height="30" title="Carga máxima suportada em seus transportes." readonly/>
                     </div>
                     <div class="col-md-2"></div>
