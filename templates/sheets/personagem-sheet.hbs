@@ -701,7 +701,7 @@
                                     <th class="mediaeval">L</th>
                                     <th class="mediaeval">M</th>
                                     <th class="mediaeval">P</th>
-                                    <th class="mediaeval">Dano 100%</th>
+                                    <th class="mediaeval">100%</th>
                                     <th class="mediaeval">Editar</th>
                                 </tr>
                                 {{#each actor.combate as |combate|}}
@@ -735,7 +735,12 @@
                                     <th class="mediaeval">L</th>
                                     <th class="mediaeval">M</th>
                                     <th class="mediaeval">P</th>
-                                    <th class="mediaeval">Dano 100%</th>
+                                    <th class="mediaeval">|</th>
+                                    <th class="mediaeval">25%</th>
+                                    <th class="mediaeval">50%</th>
+                                    <th class="mediaeval">75%</th>
+                                    <th class="mediaeval">100%</th>
+                                    <th class="mediaeval">125%</th>
                                     <th class="mediaeval">Editar</th>
                                 </tr>
                                 {{#each actor.combate as |combate|}}
@@ -746,7 +751,12 @@
                                     <td class="mediaeval">{{combate.data.def_l}}</td>
                                     <td class="mediaeval">{{combate.data.def_m}}</td>
                                     <td class="mediaeval">{{combate.data.def_p}}</td>
+                                    <td></td>
+                                    <td class="mediaeval">{{combate.data.dano.d25}}</td>
+                                    <td class="mediaeval">{{combate.data.dano.d50}}</td>
+                                    <td class="mediaeval">{{combate.data.dano.d75}}</td>
                                     <td class="mediaeval">{{combate.data.dano.d100}}</td>
+                                    <td class="mediaeval">{{combate.data.dano.d125}}</td>
                                     <td>
                                         <div class="item-controls">
                                             <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -850,7 +860,27 @@
                             <tr class="item" data-item-id="{{tecnica._id}}">
                                 <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
                                 <td class="mediaeval">{{tecnica.data.total}}</td>
-                                <td class="mediaeval">{{tecnica.data.categoria}}</td>
+                                {{#ifeq tecnica.data.categoria "Perícia"}}
+                                    <td class="mediaeval">{{tecnica.data.categoria}}</td>
+                                {{/ifeq}}
+                                {{#ifeq tecnica.data.categoria "Postura"}}
+                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="far fa-hand-paper" style='margin-left:5px;'></i></td>
+                                {{/ifeq}}
+                                {{#ifeq tecnica.data.categoria "Ataque"}}
+                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-gavel" style='margin-left:5px;'></i></td>
+                                {{/ifeq}}
+                                {{#ifeq tecnica.data.categoria "Precisão"}}
+                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-bullseye" style='margin-left:5px;'></i></td>
+                                {{/ifeq}}
+                                {{#ifeq tecnica.data.categoria "Agressão"}}
+                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-skull-crossbones" style='margin-left:5px;'></i></td>
+                                {{/ifeq}}
+                                {{#ifeq tecnica.data.categoria "Proteção"}}
+                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-shield-alt" style='margin-left:5px;'></i></td>
+                                {{/ifeq}}
+                                {{#ifeq tecnica.data.categoria "Suporte"}}
+                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-chess-rook" style='margin-left:5px;'></i></td>
+                                {{/ifeq}}
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
