@@ -524,9 +524,9 @@
                                 <td class="mediaeval"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
                                 <td class="mediaeval">{{combate.data.municao}}</td>
                                 <td class="mediaeval">{{combate.data.alcance}}</td>
-                                <td class="mediaeval">{{combate.data.def_l}}</td>
-                                <td class="mediaeval">{{combate.data.def_m}}</td>
-                                <td class="mediaeval">{{combate.data.def_p}}</td>
+                                <td class="mediaeval">{{soma combate.data.def_l combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
+                                <td class="mediaeval">{{soma combate.data.def_m combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
+                                <td class="mediaeval">{{soma combate.data.def_p combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
                                 <td></td>
                                 <td class="mediaeval">{{combate.data.dano.d25}}</td>
                                 <td class="mediaeval">{{combate.data.dano.d50}}</td>

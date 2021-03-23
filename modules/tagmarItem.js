@@ -126,7 +126,8 @@ export class tagmarItem extends Item {
                         "data.dano.d225": p_225 + bonus_valor + bonus_magico,
                         "data.dano.d250": p_250 + bonus_valor + bonus_magico,
                         "data.dano.d275": p_275 + bonus_valor + bonus_magico,
-                        "data.dano.d300": p_300 + bonus_valor + bonus_magico
+                        "data.dano.d300": p_300 + bonus_valor + bonus_magico,
+                        'data.custo': bonus_valor
                     });
                 }
             } else if (this.data.type == "Habilidade") {

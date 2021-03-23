@@ -62,6 +62,11 @@ Hooks.once("init", function(){
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper('soma', function(a, b, c, d, options) {
+    let soma = a + b + c + d;
+    return soma;
+  });
+
   preloadHandlebarsTemplates();
   
 });
