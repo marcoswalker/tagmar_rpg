@@ -3,11 +3,6 @@ export class tagmarItem extends Item {
     prepareData() {
         if (!this.owner) return;
         super.prepareData();
-        if (this.actor !== null) {
-            if (this.actor.compendium !== null) {
-                return;
-            }
-        }
         // Get the Item's data
         const itemData = this.data;
         const actorData = this.actor ? this.actor.data : {};
@@ -43,11 +38,6 @@ export class tagmarItem extends Item {
             [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
         ];
         this.tabela_resol = tabela_resol;
-        if (this.hasOwnProperty('actor')) {
-            if (this.actor.hasOwnProperty('compendium')) return;
-        } else {
-            return;
-        }
         if (actorData && this.isOwned && actorData._id == this.actor._id) {
             if (this.data.type == "Combate") {
                 let nivel_comb = 0;
