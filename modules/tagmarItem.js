@@ -4,6 +4,7 @@ export class tagmarItem extends Item {
         if (!this.owner) return;
         super.prepareData();
         // Get the Item's data
+        // Arrumar erro que da no compendium
         const itemData = this.data;
         const actorData = this.actor ? this.actor.data : {};
         const data = itemData.data;
