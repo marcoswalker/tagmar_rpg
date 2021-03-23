@@ -521,13 +521,14 @@
                         <table>
                             <tr style="text-align: left;">
                                 <th class="mediaeval">Habilidade</th>
-                                <th class="mediaeval">Total</th>
+                                <th class="mediaeval"><a class="clickHab">Total</a></th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_prof as |h_prof|}}      <!--Habilidades Profissionais-->
                             <tr class="item" data-item-id="{{h_prof._id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_prof._id}}" title="Rolar Habilidade">{{h_prof.name}}</a></td>
-                                <td class="mediaeval">{{h_prof.data.total}}</td>
+                                <td class="mediaeval habTotal">{{h_prof.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_prof.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -542,13 +543,14 @@
                         <table>
                             <tr style="text-align: left;">
                                 <th class="mediaeval">Habilidade</th>
-                                <th class="mediaeval">Total</th>
+                                <th class="mediaeval"><a class="clickHab">Total</a></th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_man as |h_man|}}        <!--Habilidades Manuais-->
                             <tr class="item" data-item-id="{{h_man._id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-roll="{{h_man.total}}" data-item-id="{{h_man._id}}" title="Rolar Habilidade">{{h_man.name}}</a></td>
-                                <td class="mediaeval">{{h_man.data.total}}</td>
+                                <td class="mediaeval habTotal">{{h_man.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_man.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -563,13 +565,14 @@
                         <table>
                             <tr style="text-align: left;">
                                 <th class="mediaeval">Habilidade</th>
-                                <th class="mediaeval">Total</th>
+                                <th class="mediaeval"><a class="clickHab">Total</a></th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_con as |h_con|}}        <!--Habilidades de Conhecimento-->
                             <tr class="item" data-item-id="{{h_con._id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_con._id}}" title="Rolar Habilidade">{{h_con.name}}</a></td>
-                                <td class="mediaeval">{{h_con.data.total}}</td>
+                                <td class="mediaeval habTotal">{{h_con.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_con.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -591,13 +594,14 @@
                         <table>
                             <tr style="text-align: left;">
                                 <th class="mediaeval">Habilidade</th>
-                                <th class="mediaeval">Total</th>
+                                <th class="mediaeval"><a class="clickHab">Total</a></th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_sub as |h_sub|}}    <!--Habilidades de Subterfúgio-->
                             <tr class="item" data-item-id="{{h_sub._id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_sub._id}}" title="Rolar Habilidade">{{h_sub.name}}</a></td>
-                                <td class="mediaeval">{{h_sub.data.total}}</td>
+                                <td class="mediaeval habTotal">{{h_sub.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_sub.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -612,13 +616,14 @@
                         <table>
                             <tr style="text-align: left;">
                                 <th class="mediaeval">Habilidade</th>
-                                <th class="mediaeval">Total</th>
+                                <th class="mediaeval"><a class="clickHab">Total</a></th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_inf as |h_inf|}}    <!--Habilidades de Influência-->
                             <tr class="item" data-item-id="{{h_inf._id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_inf._id}}" title="Rolar Habilidade">{{h_inf.name}}</a></td>
-                                <td class="mediaeval">{{h_inf.data.total}}</td>
+                                <td class="mediaeval habTotal">{{h_inf.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_inf.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -633,13 +638,14 @@
                         <table>
                             <tr style="text-align: left;">
                                 <th class="mediaeval">Habilidade</th>
-                                <th class="mediaeval">Total</th>
+                                <th class="mediaeval"><a class="clickHab">Total</a></th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_geral as |h_geral|}}        <!--Habilidades Gerais-->
                             <tr class="item" data-item-id="{{h_geral._id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_geral._id}}" title="Rolar Habilidade">{{h_geral.name}}</a></td>
-                                <td class="mediaeval">{{h_geral.data.total}}</td>
+                                <td class="mediaeval habTotal">{{h_geral.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_geral.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>

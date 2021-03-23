@@ -247,6 +247,16 @@ export default class tagmarActorSheet extends ActorSheet {
             $(html.find(".valord10EH")).val(r.total);
             $('.calculaNovaEH').css('color', 'rgb(94, 8, 8)');
         });
+        html.find(".clickHab").mousedown( function (event) {
+            $('.clickHab').html("Nível");
+            $('.habNivel').removeClass('esconde');
+            $('.habTotal').addClass('esconde');
+        });
+        html.find(".clickHab").mouseup( function (event) {
+            $('.clickHab').html("Total");
+            $('.habNivel').addClass('esconde');
+            $('.habTotal').removeClass('esconde');
+        });
         html.find(".showImg").click(this._combateImg.bind(this));
         html.find(".displayRaca").click(this._displayRaca.bind(this));
         html.find(".displayProf").click(this._displayProf.bind(this));
