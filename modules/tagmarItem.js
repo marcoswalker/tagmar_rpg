@@ -44,11 +44,17 @@ export class tagmarItem extends Item {
                 let nivel_comb = 0;
                 const bonus_magico = this.data.data.bonus_magico;
                 const bonus_dano = this.data.data.bonus_dano;
+                const bonus = this.data.data.bonus;
+                let bonus_normal = 0;
                 let bonus_valor = 0;
                 if (bonus_dano == "AUR") bonus_valor = actorData.data.atributos.AUR;
                 else if (bonus_dano == "FOR") bonus_valor = actorData.data.atributos.FOR;
                 else if (bonus_dano == "AGI") bonus_valor = actorData.data.atributos.AGI;
                 else if (bonus_dano == "PER") bonus_valor = actorData.data.atributos.PER;
+                if (bonus == "AUR") bonus_normal = actorData.data.atributos.AUR;
+                else if (bonus == "FOR") bonus_normal = actorData.data.atributos.FOR;
+                else if (bonus == "AGI") bonus_normal = actorData.data.atributos.AGI;
+                else if (bonus == "PER") bonus_normal = actorData.data.atributos.PER;
                 const p_25 = this.data.data.dano_base.d25;
                 const p_50 = this.data.data.dano_base.d50;
                 const p_75 = this.data.data.dano_base.d75;
@@ -112,7 +118,7 @@ export class tagmarItem extends Item {
                 else if (this.data.data.tipo == "") {
                     nivel_comb = this.data.data.nivel;
                 }
-                if (this.data.data.nivel != nivel_comb || this.data.data.dano.d25 != p_25 + bonus_valor + bonus_magico) {
+                if (this.data.data.nivel != nivel_comb || this.data.data.dano.d25 != p_25 + bonus_valor + bonus_magico || this.data.data.custo != bonus_normal) {
                     this.update({
                         'data.nivel': nivel_comb,
                         "data.dano.d25": p_25 + bonus_valor + bonus_magico,
@@ -127,7 +133,7 @@ export class tagmarItem extends Item {
                         "data.dano.d250": p_250 + bonus_valor + bonus_magico,
                         "data.dano.d275": p_275 + bonus_valor + bonus_magico,
                         "data.dano.d300": p_300 + bonus_valor + bonus_magico,
-                        'data.custo': bonus_valor
+                        'data.custo': bonus_normal
                     });
                 }
             } else if (this.data.type == "Habilidade") {
