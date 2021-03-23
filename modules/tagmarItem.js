@@ -7,6 +7,7 @@ export class tagmarItem extends Item {
         // Get the Item's data
         const itemData = this.data;
         const actorData = this.actor ? this.actor.data : {};
+        if (this.actor.compendium) return;
         const data = itemData.data;
         const tabela_resol = [
             [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
