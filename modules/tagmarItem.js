@@ -5,6 +5,7 @@ export class tagmarItem extends Item {
         super.prepareData();
         // Get the Item's data
         // Arrumar erro que da no compendium
+         // Arrumar erro que da no compendium
         const itemData = this.data;
         const actorData = this.actor ? this.actor.data : {};
         const data = itemData.data;
