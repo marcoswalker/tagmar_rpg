@@ -3,7 +3,11 @@ export class tagmarItem extends Item {
     prepareData() {
         if (!this.owner) return;
         super.prepareData();
-    
+        if (this.actor !== null) {
+            if (this.actor.compendium !== null) {
+                return;
+            }
+        }
         // Get the Item's data
         const itemData = this.data;
         const actorData = this.actor ? this.actor.data : {};
