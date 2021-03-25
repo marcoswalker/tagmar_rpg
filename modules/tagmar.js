@@ -75,7 +75,7 @@ Hooks.once("ready", async function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
 });
-// Como Player da um erro, user laks permission to update token
+
 Hooks.on("createToken", async function(scene, token) {
   if (!game.user.isGM) return;
   if (!token.actorLink) {
@@ -263,6 +263,31 @@ Hooks.on("preCreateToken", function(_scene, data) {
       });
     }
   }
+});
+
+Hooks.once("dragRuler.ready", (SpeedProvider) => {
+  class TagmarSpeedProvider extends SpeedProvider {
+      get colors() {
+          return [
+              {id: "walk", default: 0xFFFF00, name: "tagmar_rpg.speeds.walk"},
+              {id: "dash", default: 0x00FF00, name: "tagmar_rpg.speeds.dash"},
+              {id: "run", default: 0xFF8000, name: "tagmar_rpg.speeds.run"}
+          ];
+      }
+
+      getRanges(token) {
+          const baseSpeed = token.actor.data.data.vb;
+
+    // A character can always walk it's base speed and dash twice it's base speed
+    const ranges = [
+      {range: baseSpeed, color: "walk"},
+      {range: baseSpeed / 2, color: "dash"}
+    ];
+          return ranges;
+      }
+  }
+
+  dragRuler.registerSystem("tagmar_rpg", TagmarSpeedProvider);
 });
 
 async function createTagmarMacro(data, slot) {
