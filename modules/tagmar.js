@@ -290,6 +290,17 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
   dragRuler.registerSystem("tagmar_rpg", TagmarSpeedProvider);
 });
 
+Hooks.on('targetToken', function (user, token, targeted) {
+  if (canvas.tokens.controlled.length > 0 && targeted) {
+    for (let tokenC of canvas.tokens.controlled) {
+      tokenC.actor.update({
+        'data.inf_ataque.cat_def': token.actor.data.data.d_ativa.categoria,
+        'data.inf_ataque.valor_def': token.actor.data.data.d_ativa.valor
+      });
+    }
+  }
+});
+
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Magias e Poderes. Você pode referenciar atributos e perícias com @. Ex.: @for ou @luta");
