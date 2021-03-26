@@ -297,7 +297,17 @@ Hooks.on('targetToken', function (user, token, targeted) {
         'data.inf_ataque.cat_def': token.actor.data.data.d_ativa.categoria,
         'data.inf_ataque.valor_def': token.actor.data.data.d_ativa.valor
       });
-    }
+      //const mensage = new ChatMessage();
+      let chatData = {
+        user: game.user._id,
+        speaker: ChatMessage.getSpeaker({
+            actor: tokenC.actor
+          })
+      };
+      let target_def = token.actor.data.data.d_ativa;
+      chatData.content = "<p class='rola_desc'><b>Target: </b>" + token.actor.data.name + "<br><b>Bônus de Ataque: </b>"+ String(tokenC.actor.data.data.inf_ataque.bonus) +"<br><b>Tipo Defesa: </b>"+ target_def.categoria +"<br><b>Valor Defesa: </b>"+ String(target_def.valor) +"</p>";
+      ChatMessage.create(chatData);
+      }
   }
 });
 
