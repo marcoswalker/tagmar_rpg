@@ -299,7 +299,7 @@ function setInf_ataque(target_token, user) {
   if (user == game.user) {
     const speaker = ChatMessage.getSpeaker();
     let actor = game.actors.get(speaker.actor);
-    if (!actor) return ui.notifications.error("Selecione um Token para setar Def. Oponente!");
+    if (!actor) return ui.notifications.warn("Selecione um Token para setar Def. Oponente!");
     if (actor.data.type == "Inventario") return ui.notifications.error("Não é possível atacar com um Inventário.");
     actor.update({
       'data.inf_ataque.cat_def': target_token.actor.data.data.d_ativa.categoria,
