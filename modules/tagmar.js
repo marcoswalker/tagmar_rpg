@@ -310,7 +310,7 @@ function setInf_ataque(target_token, user) {
         })
     };
     let target_def = target_token.actor.data.data.d_ativa;
-    chatData.content = "<p class='rola_desc'><b>Target: </b>" + target_token.actor.data.name + "<br><b>Bônus de Ataque: </b>"+ String(actor.data.data.inf_ataque.bonus) +"<br><b>Tipo Defesa: </b>"+ target_def.categoria +"<br><b>Valor Defesa: </b>"+ String(target_def.valor) +"</p>";
+    chatData.content = "<p class='rola_desc'><img src='"+ actor.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><b>Target: </b>" + target_token.actor.data.name + "<br><b>Bônus de Ataque: </b>"+ String(actor.data.data.inf_ataque.bonus) +"<br><b>Tipo Defesa: </b>"+ target_def.categoria +"<br><b>Valor Defesa: </b>"+ String(target_def.valor) +"</p>";
     ChatMessage.create(chatData);
   }
 }
