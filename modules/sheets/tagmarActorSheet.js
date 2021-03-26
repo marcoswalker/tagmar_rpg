@@ -1216,7 +1216,7 @@ export default class tagmarActorSheet extends ActorSheet {
         const profissoes = [];
         var especializacoes = [];
         const itens = sheetData.items;
-        const efeitos = []
+        const efeitos = [];
         itens.forEach(function(item, indice, array) {
             if (item.type == "Combate"){
                 combate.push(item);
