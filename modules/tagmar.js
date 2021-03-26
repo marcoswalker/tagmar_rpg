@@ -8,7 +8,8 @@ Hooks.once("init", function(){
 
   game.tagmar = {
     tagmarItem,
-    rollItemMacro
+    rollItemMacro,
+    setInf_ataque
   };
 
   CONFIG.Combat.initiative = {
@@ -291,25 +292,29 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
 });
 
 Hooks.on('targetToken', function (user, token, targeted) {
-  if (canvas.tokens.controlled.length > 0 && targeted) {
-    for (let tokenC of canvas.tokens.controlled) {
-      tokenC.actor.update({
-        'data.inf_ataque.cat_def': token.actor.data.data.d_ativa.categoria,
-        'data.inf_ataque.valor_def': token.actor.data.data.d_ativa.valor
-      });
-      //const mensage = new ChatMessage();
-      let chatData = {
-        user: game.user._id,
-        speaker: ChatMessage.getSpeaker({
-            actor: tokenC.actor
-          })
-      };
-      let target_def = token.actor.data.data.d_ativa;
-      chatData.content = "<p class='rola_desc'><b>Target: </b>" + token.actor.data.name + "<br><b>Bônus de Ataque: </b>"+ String(tokenC.actor.data.data.inf_ataque.bonus) +"<br><b>Tipo Defesa: </b>"+ target_def.categoria +"<br><b>Valor Defesa: </b>"+ String(target_def.valor) +"</p>";
-      ChatMessage.create(chatData);
-      }
-  }
+  if (targeted) setInf_ataque(token, user);
 });
+
+function setInf_ataque(target_token, user) {
+  if (user == game.user) {
+    const speaker = ChatMessage.getSpeaker();
+    let actor = game.actors.get(speaker.actor);
+    if (!actor) return;
+    actor.update({
+      'data.inf_ataque.cat_def': target_token.actor.data.data.d_ativa.categoria,
+      'data.inf_ataque.valor_def': target_token.actor.data.data.d_ativa.valor
+    });
+    let chatData = {
+      user: game.user._id,
+      speaker: ChatMessage.getSpeaker({
+          actor: actor
+        })
+    };
+    let target_def = target_token.actor.data.data.d_ativa;
+    chatData.content = "<p class='rola_desc'><b>Target: </b>" + target_token.actor.data.name + "<br><b>Bônus de Ataque: </b>"+ String(actor.data.data.inf_ataque.bonus) +"<br><b>Tipo Defesa: </b>"+ target_def.categoria +"<br><b>Valor Defesa: </b>"+ String(target_def.valor) +"</p>";
+    ChatMessage.create(chatData);
+  }
+}
 
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
