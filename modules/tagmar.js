@@ -8,8 +8,7 @@ Hooks.once("init", function(){
 
   game.tagmar = {
     tagmarItem,
-    rollItemMacro,
-    setInf_ataque
+    rollItemMacro
   };
 
   CONFIG.Combat.initiative = {
@@ -299,7 +298,7 @@ function setInf_ataque(target_token, user) {
   if (user == game.user) {
     const speaker = ChatMessage.getSpeaker();
     let actor = game.actors.get(speaker.actor);
-    if (!actor) return;
+    if (!actor) return ui.notifications.error("Selecione um Token para setar Def. Oponente!");
     actor.update({
       'data.inf_ataque.cat_def': target_token.actor.data.data.d_ativa.categoria,
       'data.inf_ataque.valor_def': target_token.actor.data.data.d_ativa.valor
