@@ -291,7 +291,8 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
 });
 
 Hooks.on('targetToken', function (user, token, targeted) {
-  if (targeted) setInf_ataque(token, user);
+  const setting_target = game.settings.get("tagmar_rpg", "autoTarget");
+  if (targeted && setting_target == "yes") setInf_ataque(token, user);
 });
 
 function setInf_ataque(target_token, user) {
@@ -299,6 +300,7 @@ function setInf_ataque(target_token, user) {
     const speaker = ChatMessage.getSpeaker();
     let actor = game.actors.get(speaker.actor);
     if (!actor) return ui.notifications.error("Selecione um Token para setar Def. Oponente!");
+    if (actor.data.type == "Inventario") return ui.notifications.error("Não é possível atacar com um Inventário.");
     actor.update({
       'data.inf_ataque.cat_def': target_token.actor.data.data.d_ativa.categoria,
       'data.inf_ataque.valor_def': target_token.actor.data.data.d_ativa.valor

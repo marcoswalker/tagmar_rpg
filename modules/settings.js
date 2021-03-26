@@ -47,6 +47,18 @@ export const SystemSettings = function() {
           "barra_npc": "Criar barras para tokens de NPC.",
           "barra_both": "Criar barras para tokens de Personagem e NPC."
         }
-      })
+      });
+      game.settings.register("tagmar_rpg", "autoTarget", {
+        name: "Setar Def. Oponente ao marcar target",
+        hint: "Com o token controlado selecionado, marcar target no token que deseja atacar.",
+        scope: "world",
+        config: true,
+        default: "yes",
+        type: String,
+        choices: {
+          "yes": "Setar Def. Oponente automaticamente.",
+          "no": "Desativar essa opção."
+        }
+      });
 
 }
