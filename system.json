@@ -2,8 +2,8 @@
   "name": "tagmar_rpg",
   "title": "Tagmar XXX",
   "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
-  "semanticVersion": "0.6.2",
-  "version": "0.6.2",
+  "semanticVersion": "0.6.3",
+  "version": "0.6.3",
   "dependencies": [
     {
       "name": "compendium-folders",
