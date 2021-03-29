@@ -290,6 +290,16 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
   dragRuler.registerSystem("tagmar_rpg", TagmarSpeedProvider);
 });
 
+document.addEventListener('keydown', function (event) {
+  if (event.key == "t" || event.key == "T" && game.user.isGM) {
+    const hoveredToken = canvas.tokens._hover;
+    if (hoveredToken !== null) {
+      if (!hoveredToken.isTargeted) hoveredToken.setTarget(true, game.user, true, false);
+      else hoveredToken.setTarget(false);
+    }
+  }
+});
+
 Hooks.on('targetToken', function (user, token, targeted) {
   const setting_target = game.settings.get("tagmar_rpg", "autoTarget");
   if (targeted && setting_target == "yes") setInf_ataque(token, user);
