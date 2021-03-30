@@ -891,6 +891,60 @@ export default class tagmarActorSheet extends ActorSheet {
             if (max_hab != actorData.data.max_hab) {
                 updatePers["data.max_hab"] = max_hab;
             }
+            if (atrib_magia != "") {
+                if (atrib_magia == "INT") pontos_mag = ((2 * actorData.data.atributos.INT) + 7) * actorData.data.estagio;
+                else if (atrib_magia == "AUR") pontos_mag = ((2 * actorData.data.atributos.AUR) + 7) * actorData.data.estagio;
+                else if (atrib_magia == "CAR") pontos_mag = ((2 * actorData.data.atributos.CAR) + 7) * actorData.data.estagio;
+                else if (atrib_magia == "FOR") pontos_mag = ((2 * actorData.data.atributos.FOR) + 7) * actorData.data.estagio;
+                else if (atrib_magia == "FIS") pontos_mag = ((2 * actorData.data.atributos.FIS) + 7)  * actorData.data.estagio;
+                else if (atrib_magia == "AGI") pontos_mag = ((2 * actorData.data.atributos.AGI) + 7) * actorData.data.estagio;
+                else if (atrib_magia == "PER") pontos_mag = ((2 * actorData.data.atributos.PER) + 7) * actorData.data.estagio;
+            } else pontos_mag = 0;
+            if (this.efeitos.length > 0){
+                for (let efeito of this.efeitos) {
+                    if (efeito.data.atributo == "PHAB" && efeito.data.ativo) {
+                        if (efeito.data.tipo == "+") {
+                            pontos_hab += efeito.data.valor;
+                        } else if (efeito.data.tipo == "-") {
+                            pontos_hab -= efeito.data.valor;
+                        } else if (efeito.data.tipo == "*") {
+                            pontos_hab = pontos_hab * efeito.data.valor;
+                        } else if (efeito.data.tipo == "/") {
+                            pontos_hab = pontos_hab / efeito.data.valor;
+                        }
+                    } else if (efeito.data.atributo == "PTEC" && efeito.data.ativo) {
+                        if (efeito.data.tipo == "+") {
+                            pontos_tec += efeito.data.valor;
+                        } else if (efeito.data.tipo == "-") {
+                            pontos_tec -= efeito.data.valor;
+                        } else if (efeito.data.tipo == "*") {
+                            pontos_tec = pontos_tec * efeito.data.valor;
+                        } else if (efeito.data.tipo == "/") {
+                            pontos_tec = pontos_tec / efeito.data.valor;
+                        }
+                    } else if (efeito.data.atributo == "PARM" && efeito.data.ativo) {
+                        if (efeito.data.tipo == "+") {
+                            pontos_gra += efeito.data.valor;
+                        } else if (efeito.data.tipo == "-") {
+                            pontos_gra -= efeito.data.valor;
+                        } else if (efeito.data.tipo == "*") {
+                            pontos_gra = pontos_gra * efeito.data.valor;
+                        } else if (efeito.data.tipo == "/") {
+                            pontos_gra = pontos_gra / efeito.data.valor;
+                        }
+                    } else if (efeito.data.atributo == "PMAG" && efeito.data.ativo) {
+                        if (efeito.data.tipo == "+") {
+                            pontos_mag += efeito.data.valor;
+                        } else if (efeito.data.tipo == "-") {
+                            pontos_mag -= efeito.data.valor;
+                        } else if (efeito.data.tipo == "*") {
+                            pontos_mag = pontos_mag * efeito.data.valor;
+                        } else if (efeito.data.tipo == "/") {
+                            pontos_mag = pontos_mag / efeito.data.valor;
+                        }
+                    }
+                }
+            }
             if (pontos_gra > 0) {
                 pontos_gra -= actorData.data.grupos.CD;
                 pontos_gra -= actorData.data.grupos.CI;
@@ -913,15 +967,6 @@ export default class tagmarActorSheet extends ActorSheet {
             for (let i = 0; i < actorData.tecnicas.length; i++) {
                 pontos_tec -= actorData.tecnicas[i].data.custo * actorData.tecnicas[i].data.nivel;
             }
-            if (atrib_magia != "") {
-                if (atrib_magia == "INT") pontos_mag = ((2 * actorData.data.atributos.INT) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "AUR") pontos_mag = ((2 * actorData.data.atributos.AUR) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "CAR") pontos_mag = ((2 * actorData.data.atributos.CAR) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "FOR") pontos_mag = ((2 * actorData.data.atributos.FOR) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "FIS") pontos_mag = ((2 * actorData.data.atributos.FIS) + 7)  * actorData.data.estagio;
-                else if (atrib_magia == "AGI") pontos_mag = ((2 * actorData.data.atributos.AGI) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "PER") pontos_mag = ((2 * actorData.data.atributos.PER) + 7) * actorData.data.estagio;
-            } else pontos_mag = 0;
             for (let i = 0; i < actorData.magias.length; i++) {
                 pontos_mag -= actorData.magias[i].data.custo * actorData.magias[i].data.nivel;
             }

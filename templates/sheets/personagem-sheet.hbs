@@ -1093,13 +1093,26 @@
                                 </td>
                                 <td class="mediaeval efeitoName">{{efeito.name}}</td>
                                 <td class="mediaeval">{{efeito.data.atributo}}</td>
-                                <td class="mediaeval">{{efeito.data.tipo}}</td>
+                                <td class="mediaeval">
+                                    {{#ifeq efeito.data.tipo "+"}}
+                                        <i class="fas fa-plus"></i>
+                                    {{/ifeq}}
+                                    {{#ifeq efeito.data.tipo "-"}}
+                                        <i class="fas fa-minus"></i>
+                                    {{/ifeq}}
+                                    {{#ifeq efeito.data.tipo "*"}}
+                                        <i class="fas fa-times"></i>
+                                    {{/ifeq}}
+                                    {{#ifeq efeito.data.tipo "/"}}
+                                        <i class="fas fa-divide"></i>
+                                    {{/ifeq}}
+                                </td>
                                 <td class="mediaeval">{{efeito.data.valor}}</td>
                                 <td class="mediaeval">
                                 {{#if efeito.data.ativo}}
-                                    <a class="ativaEfeito" title="Desativar"><i class="fas fa-check"></i></a>
+                                    <a class="ativaEfeito" title="Desativar"><i class="fas fa-check-circle"></i></a>
                                 {{else}}
-                                    <a class="ativaEfeito" title="Ativar"><i class="fas fa-times"></i></a>
+                                    <a class="ativaEfeito" title="Ativar"><i class="far fa-times-circle"></i></a>
                                 {{/if}}
                                 </td>    
                                 <td>
