@@ -1919,7 +1919,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         r.toMessage({
                             user: game.user._id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                            flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name} - ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
+                            flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name}: ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
                           });
                     }
                 }
@@ -1946,7 +1946,7 @@ export default class tagmarActorSheet extends ActorSheet {
                                 dados[x].toMessage({
                                     user: game.user._id,
                                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name} - ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
+                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name}: ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
                                   });
                             }
                         }
@@ -1973,7 +1973,7 @@ export default class tagmarActorSheet extends ActorSheet {
                                 dados[x].toMessage({
                                     user: game.user._id,
                                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola'>${item.name} - ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
+                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola'>${item.name}: ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
                                   });
                             }
                         }
@@ -1995,7 +1995,7 @@ export default class tagmarActorSheet extends ActorSheet {
                             dado.toMessage({
                                 user: game.user._id,
                                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name} - ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
+                                flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name}: ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
                               });
                         }
                     }
@@ -2032,7 +2032,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         r.toMessage({
                             user: game.user._id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                            flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name} - ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
+                            flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name}: ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
                         });
                     }
                 }
@@ -2059,7 +2059,7 @@ export default class tagmarActorSheet extends ActorSheet {
                                 dados[x].toMessage({
                                     user: game.user._id,
                                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name} - ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
+                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name}: ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
                                   });
                             }
                         }
@@ -2086,7 +2086,7 @@ export default class tagmarActorSheet extends ActorSheet {
                                 dados[x].toMessage({
                                     user: game.user._id,
                                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name} - ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
+                                    flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name}: ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
                                   });
                             }
                         }
@@ -2108,7 +2108,7 @@ export default class tagmarActorSheet extends ActorSheet {
                             dado.toMessage({
                                 user: game.user._id,
                                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name} - ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
+                                flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${item.name}: ${item.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
                               });
                         }
                     }
@@ -2266,7 +2266,7 @@ export default class tagmarActorSheet extends ActorSheet {
                             r.toMessage({
                             user: game.user._id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                            flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name} - ${valor_tabela} - ${item.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}`
+                            flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name}: ${valor_tabela} - ${item.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}`
                           });
                     }
                 }
@@ -2432,7 +2432,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         r.toMessage({
                         user: game.user._id,
                         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                        flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name} - ${valor_tabela} - ${item.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}`
+                        flavor: `<img src="${item.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${item.name}: ${valor_tabela} - ${item.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}`
                         });
                     }
                 }
