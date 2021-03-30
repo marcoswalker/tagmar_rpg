@@ -80,6 +80,34 @@ export default class tagmarItemSheet extends ItemSheet {
         html.find(".bAddEspec").click(this._addEspec.bind(this));
         html.find(".bApagaEspec").click(this._deleteEspec.bind(this));
         html.find(".ativaDesc").click(this._edtDesc.bind(this));
+        html.find(".armPen25").click(function (event) {
+            if (event.currentTarget.checked) {
+                $('.armPen50').attr('checked', false);
+                $('.armPen75').attr('checked', false);
+                $('.armPen100').attr('checked', false);
+            }
+        });
+        html.find(".armPen50").click(function (event) {
+            if (event.currentTarget.checked) {
+                $('.armPen25').attr('checked', false);
+                $('.armPen75').attr('checked', false);
+                $('.armPen100').attr('checked', false);
+            }
+        });
+        html.find(".armPen75").click(function (event) {
+            if (event.currentTarget.checked) {
+                $('.armPen25').attr('checked', false);
+                $('.armPen50').attr('checked', false);
+                $('.armPen100').attr('checked', false);
+            }
+        });
+        html.find(".armPen100").click(function (event) {
+            if (event.currentTarget.checked) {
+                $('.armPen25').attr('checked', false);
+                $('.armPen50').attr('checked', false);
+                $('.armPen75').attr('checked', false);
+            }
+        });
     }
 
     _edtDesc(event) {
