@@ -60,5 +60,13 @@ export const SystemSettings = function() {
           "no": "Desativar essa opção."
         }
       });
+      game.settings.register("tagmar_rpg", "atalhoTarget", {
+        name: "Atalho para marcar Target",
+        hint: "Escolha tecla de atalho para dar target (apenas a letra)",
+        scope: "world",
+        config: true,
+        default: 't',
+        type: String
+      });
 
 }

@@ -291,7 +291,8 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
 });
 
 document.addEventListener('keydown', function (event) {
-  if (event.key == "t" || event.key == "T" && game.user.isGM) {
+  const atalhoTarget = game.settings.get("tagmar_rpg", "atalhoTarget");
+  if (event.key == atalhoTarget.toLowerCase() || event.key == atalhoTarget.toUpperCase() && game.user.isGM) {
     const hoveredToken = canvas.tokens._hover;
     if (hoveredToken !== null) {
       if (!hoveredToken.isTargeted) hoveredToken.setTarget(true, game.user, true, false);
