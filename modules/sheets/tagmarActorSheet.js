@@ -2155,6 +2155,7 @@ export default class tagmarActorSheet extends ActorSheet {
             } else {
                 valor_tabela = -7;
             }
+            if (valor_tabela < -7) valor_tabela = -7; // Abaixo da Tabela
             formulaD = "1d20";
             conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + item.data.data.descricao + "</h4>";
             r = new Roll(formulaD);

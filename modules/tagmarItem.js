@@ -240,9 +240,14 @@ export class tagmarItem extends Item {
             let dano_text = "";
             const cat_def = actorData.inf_ataque.cat_def;
             let valor_tabela = 0;
-            if (cat_def == "L") valor_tabela = total_l + actorData.inf_ataque.bonus - actorData.inf_ataque.valor_def;
-            else if (cat_def == "M") valor_tabela = total_m + actorData.inf_ataque.bonus - actorData.inf_ataque.valor_def;
-            else if (cat_def == "P") valor_tabela = total_p + actorData.inf_ataque.bonus - actorData.inf_ataque.valor_def;
+            if (itemData.nivel > 0) {
+                if (cat_def == "L") valor_tabela = total_l + actorData.inf_ataque.bonus - actorData.inf_ataque.valor_def;
+                else if (cat_def == "M") valor_tabela = total_m + actorData.inf_ataque.bonus - actorData.inf_ataque.valor_def;
+                else if (cat_def == "P") valor_tabela = total_p + actorData.inf_ataque.bonus - actorData.inf_ataque.valor_def;
+            } else {
+                valor_tabela = -7;
+            }
+            if (valor_tabela < -7) valor_tabela = -7; // Abaixo da Tabela
             formulaD = "1d20";
             conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + itemData.descricao + "</h4>";
             r = new Roll(formulaD);

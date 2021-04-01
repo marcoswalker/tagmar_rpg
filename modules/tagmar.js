@@ -67,6 +67,15 @@ Hooks.once("init", function(){
     return soma;
   });
 
+  Handlebars.registerHelper('multiplica', function(a, b, options) {
+    let mult = a * b;
+    return mult.toFixed(2);
+  });
+
+  Handlebars.registerHelper('toFixed', function(value, decimal, options) {
+    return value.toFixed(decimal);
+  });
+
   preloadHandlebarsTemplates();
   
 });

@@ -130,11 +130,11 @@
                         <label><h4 class="mediaeval">Carga(Kg):</h4></label>
                     </div>
                     <div class="col-md-2 col-6">
-                        <input title="Carga Máxima: 20Kg p/ ponto de FOR" name="data.carga.value" type="number" value="{{data.carga.value}}" height="30" readonly/>
+                        <input title="Carga Máxima: 20Kg p/ ponto de FOR" name="data.carga.value" type="number" value="{{toFixed data.carga.value 2}}" height="30" readonly/>
                     </div>
                     <div class="col-md-1 col-2">
                         {{#if actor.data.carga.sobrecarga}}
-                            <i class="fas fa-weight-hanging sobrepeso"><h4 class="mediaeval">+{{actor.data.carga.valor_s}}Kg</h4></i>
+                            <i class="fas fa-weight-hanging sobrepeso"><h4 class="mediaeval">+{{toFixed actor.data.carga.valor_s 2}}Kg</h4></i>
                         {{else}}
                             <i class="fas fa-weight-hanging sobrepeso hidden"></i>
                         {{/if}}
@@ -972,6 +972,7 @@
                                 <th class="mediaeval">Pertence</th>
                                 <th class="mediaeval">Quantidade</th>
                                 <th class="mediaeval">Peso(Kg)</th>
+                                <th class="mediaeval">Total(Kg)</th>
                                 <th class="mediaeval">Mover</th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
@@ -983,6 +984,7 @@
                                 <td class="mediaeval pertenceName">{{pertence.name}}</td>
                                 <td class="mediaeval">{{pertence.data.quant}}</td>
                                 <td class="mediaeval">{{pertence.data.peso}}</td>
+                                <td class="mediaeval">{{multiplica pertence.data.quant pertence.data.peso}}</td>
                                 <td>
                                     <a class="movePertence" title="Mover para Transporte" data-item-id="{{pertence._id}}"><i class="fas fa-horse"></i></a>
                                 </td>
@@ -1003,11 +1005,11 @@
                         <label><h4 class="mediaeval">Carga no transporte(Kg):</h4></label>
                     </div>
                     <div class="col-md-2 col-2">
-                        <input name="data.carga_transp.value" type="number" value="{{data.carga_transp.value}}" height="30" title="Carga em transporte." readonly/>
+                        <input name="data.carga_transp.value" type="number" value="{{toFixed data.carga_transp.value 2}}" height="30" title="Carga em transporte." readonly/>
                     </div>
                     <div class="col-md-1 col-1"><h4 class="mediaeval">/</h4></div>
                     <div class="col-md-2 col-2">
-                        <input name="data.carga_transp.max" type="number" value="{{data.carga_transp.max}}" height="30" title="Carga máxima suportada em seus transportes." readonly/>
+                        <input name="data.carga_transp.max" type="number" value="{{toFixed data.carga_transp.max 2}}" height="30" title="Carga máxima suportada em seus transportes." readonly/>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
