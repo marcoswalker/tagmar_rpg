@@ -505,41 +505,37 @@
                     <div class="col-md-12">
                         <table>
                             <tr style="text-align: left;">
-                                <th class="mediaeval">Arma</th>
-                                <th class="mediaeval">Munição</th>
-                                <th class="mediaeval">Alcance</th>
-                                <th class="mediaeval">L</th>
-                                <th class="mediaeval">M</th>
-                                <th class="mediaeval">P</th>
-                                <th class="mediaeval">|</th>
-                                <th class="mediaeval">25%</th>
-                                <th class="mediaeval">50%</th>
-                                <th class="mediaeval">75%</th>
-                                <th class="mediaeval">100%</th>
-                                <th class="mediaeval">125%</th>
-                                <th class="mediaeval">Editar</th>
-                            </tr>
-                            {{#each actor.combate as |combate|}}
-                            <tr class="item" data-item-id="{{combate._id}}">
-                                <td class="mediaeval"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
-                                <td class="mediaeval">{{combate.data.municao}}</td>
-                                <td class="mediaeval">{{combate.data.alcance}}</td>
-                                <td class="mediaeval">{{soma combate.data.def_l combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                <td class="mediaeval">{{soma combate.data.def_m combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                <td class="mediaeval">{{soma combate.data.def_p combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                <td></td>
-                                <td class="mediaeval">{{combate.data.dano.d25}}</td>
-                                <td class="mediaeval">{{combate.data.dano.d50}}</td>
-                                <td class="mediaeval">{{combate.data.dano.d75}}</td>
-                                <td class="mediaeval">{{combate.data.dano.d100}}</td>
-                                <td class="mediaeval">{{combate.data.dano.d125}}</td>
-                                <td>
-                                    <div class="item-controls">
-                                        <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
-                                        <a class="item-control item-delete" title="Deletar"><i class="fas fa-trash"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
+                                    <th width="50px"></th>
+                                    <th class="mediaeval">Ataque</th>
+                                    <th class="mediaeval">Munição</th>
+                                    <th class="mediaeval">Alcance</th>
+                                    <th class="mediaeval">L</th>
+                                    <th class="mediaeval">M</th>
+                                    <th class="mediaeval">P</th>
+                                    <th class="mediaeval">100%</th>
+                                    <th class="mediaeval">Editar</th>
+                                </tr>
+                                {{#each actor.combate as |combate|}}
+                                <tr class="item" data-item-id="{{combate._id}}">
+                                    <td class="mediaeval">
+                                        <a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar.">
+                                            <img class="imgItem" src="{{combate.img}}"/>
+                                        </a>
+                                    </td>
+                                    <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
+                                    <td class="mediaeval">{{combate.data.municao}}</td>
+                                    <td class="mediaeval">{{combate.data.alcance}}</td>
+                                    <td class="mediaeval">{{soma combate.data.def_l combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
+                                    <td class="mediaeval">{{soma combate.data.def_m combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
+                                    <td class="mediaeval">{{soma combate.data.def_p combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
+                                    <td class="mediaeval">{{combate.data.dano.d100}}</td>
+                                    <td>
+                                        <div class="item-controls">
+                                            <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a class="item-control item-delete" title="Deletar"><i class="fas fa-trash"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
                             {{/each}}
                         </table>
                     </div>
@@ -548,14 +544,18 @@
                     <div class="col-md-6"> <!--Tabela Defesas-->
                         <table>
                             <tr style="text-align: left;">
-                                <th class="mediaeval">Equipamento De Defesa</th>
+                                <th width="50px"></th>
+                                <th class="mediaeval">Equip. De Defesa</th>
                                 <th class="mediaeval">Def. Base</th>
                                 <th class="mediaeval">Absorção</th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.defesas as |defesa|}}
                             <tr class="item" data-item-id="{{defesa._id}}">
-                                <td class="mediaeval">{{defesa.name}}</td>
+                                <td class="mediaeval">
+                                    <img class="imgItem" src="{{defesa.img}}"/> 
+                                </td>
+                                <td class="mediaeval combateName">{{defesa.name}}</td>
                                 <td class="mediaeval">{{defesa.data.defesa_base.tipo}}{{defesa.data.defesa_base.valor}}</td>
                                 <td class="mediaeval">{{defesa.data.absorcao}}</td>
                                 <td>
@@ -571,36 +571,22 @@
                     <div class="col-md-6"> <!--Tabela Tecnicas Combate-->
                         <table>
                             <tr style="text-align: left;">
-                                <th class="mediaeval">Técnicas de Combate</th>
+                                <th width="50px"></th>
+                                <th class="mediaeval">Técnica de Combate</th>
                                 <th class="mediaeval">Total</th>
                                 <th class="mediaeval">Categoria</th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.tecnicas as |tecnica|}}
                             <tr class="item" data-item-id="{{tecnica._id}}">
-                                <td class="mediaeval"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
+                                <td class="mediaeval">
+                                    <a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar.">
+                                        <img class="imgItem" src="{{tecnica.img}}"/>
+                                    </a>
+                                </td>
+                                <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
                                 <td class="mediaeval">{{tecnica.data.total}}</td>
-                                {{#ifeq tecnica.data.categoria "Perícia"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}</td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Postura"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="far fa-hand-paper" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Ataque"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-gavel" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Precisão"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-bullseye" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Agressão"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-skull-crossbones" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Proteção"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-shield-alt" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Suporte"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-chess-rook" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
+                                <td class="mediaeval">{{tecnica.data.categoria}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
