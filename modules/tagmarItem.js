@@ -208,6 +208,7 @@ export class tagmarItem extends Item {
         var PrintResult = "";
         var r;
         const tabela_resol = this.tabela_resol;
+        Hooks.callAll('tagmar_itemRoll', ItemUpdate, game.user);
         if (item.type == "Combate") {  //  Rolagem de Combate
             let punicaoText = "";
             let municao_text = "";

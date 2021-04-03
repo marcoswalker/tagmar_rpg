@@ -1888,7 +1888,7 @@ export default class tagmarActorSheet extends ActorSheet {
         var resultado = "";
         var PrintResult = "";
         var r;
-        
+        Hooks.callAll('tagmar_itemRoll', item, game.user);
         
         if (item.data.type == "Habilidade") {
             let bonus_hab = this.actor.data.data.bonus_habil;

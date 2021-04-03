@@ -44,6 +44,7 @@ export default class tagmarItemSheet extends ItemSheet {
     activateListeners(html) {
         super.activateListeners(html);
         if (!this.options.editable) return;
+        html.find(".ativaDescT").click(this._ativaTextTec.bind(this))
 
         html.find(".dano25").change(event => {
             const dano25Input = html.find(".dano25");
@@ -108,6 +109,18 @@ export default class tagmarItemSheet extends ItemSheet {
                 $('.armPen75').attr('checked', false);
             }
         });
+    }
+
+    _ativaTextTec(event) {
+        if (this.item.data.data.ativaText) {
+            this.item.update({
+                'data.ativaText': false
+            });
+        } else {
+            this.item.update({
+                'data.ativaText': true
+            });
+        }
     }
 
     _edtDesc(event) {
