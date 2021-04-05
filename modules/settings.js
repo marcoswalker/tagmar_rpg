@@ -68,5 +68,12 @@ export const SystemSettings = function() {
         default: 't',
         type: String
       });
-
+      game.settings.register('tagmar_rpg', 'fonteMsg', {
+        name: 'Tamanho da fonte do chat',
+        hint: 'Porcentagem do tamanho original (100%)',
+        scope: 'client',
+        config: true,
+        default: 100,
+        type: Number
+      });
 }
