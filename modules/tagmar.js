@@ -339,7 +339,8 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
 Hooks.on('renderChatMessage', function (message, jq, messageData) {
   const fonte_size = game.settings.get('tagmar_rpg', 'fonteMsg');
   const rola_desc = jq.find('.rola_desc');
-  $(rola_desc).css('font-size', fonte_size.toString()+'%');
+  if (fonte_size > 0) $(rola_desc).css('font-size', fonte_size.toString()+'%');
+  else $(rola_desc).css('font-size', '100%');
 });
 
 document.addEventListener('keydown', function (event) {
