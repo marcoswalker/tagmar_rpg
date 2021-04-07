@@ -88,6 +88,7 @@ export default class tagmarActorSheet extends ActorSheet {
             let updatePers = {};
             this._prepareCharacterItems(data);
             this._prepareValorTeste(data, updatePers);
+            this._caracSort(data, updatePers);
             this._calculaAjuste(data, updatePers);
             if (data.actor.raca) {
                 this._preparaCaracRaciais(data, updatePers);
@@ -164,62 +165,6 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         });
         html.find(".ativaEfeito").click(this._ativaEfeito.bind(this));
-        html.find(".carac_sortINT").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortINT")).val()) + parseInt($(html.find(".mod_racialINT")).val());
-            $(html.find(".car_finINT")).val(soma);
-        });
-        html.find(".mod_racialINT").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortINT")).val()) + parseInt($(html.find(".mod_racialINT")).val());
-            $(html.find(".car_finINT")).val(soma);
-        });
-        html.find(".carac_sortAUR").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortAUR")).val()) + parseInt($(html.find(".mod_racialAUR")).val());
-            $(html.find(".car_finAUR")).val(soma);
-        });
-        html.find(".mod_racialAUR").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortAUR")).val()) + parseInt($(html.find(".mod_racialAUR")).val());
-            $(html.find(".car_finAUR")).val(soma);
-        });
-        html.find(".carac_sortCAR").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortCAR")).val()) + parseInt($(html.find(".mod_racialCAR")).val());
-            $(html.find(".car_finCAR")).val(soma);
-        });
-        html.find(".mod_racialCAR").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortCAR")).val()) + parseInt($(html.find(".mod_racialCAR")).val());
-            $(html.find(".car_finCAR")).val(soma);
-        });
-        html.find(".carac_sortFOR").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortFOR")).val()) + parseInt($(html.find(".mod_racialFOR")).val());
-            $(html.find(".car_finFOR")).val(soma);
-        });
-        html.find(".mod_racialFOR").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortFOR")).val()) + parseInt($(html.find(".mod_racialFOR")).val());
-            $(html.find(".car_finFOR")).val(soma);
-        });
-        html.find(".carac_sortFIS").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortFIS")).val()) + parseInt($(html.find(".mod_racialFIS")).val());
-            $(html.find(".car_finFIS")).val(soma);
-        });
-        html.find(".mod_racialFIS").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortFIS")).val()) + parseInt($(html.find(".mod_racialFIS")).val());
-            $(html.find(".car_finFIS")).val(soma);
-        });
-        html.find(".carac_sortAGI").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortAGI")).val()) + parseInt($(html.find(".mod_racialAGI")).val());
-            $(html.find(".car_finAGI")).val(soma);
-        });
-        html.find(".mod_racialAGI").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortAGI")).val()) + parseInt($(html.find(".mod_racialAGI")).val());
-            $(html.find(".car_finAGI")).val(soma);
-        });
-        html.find(".carac_sortPER").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortPER")).val()) + parseInt($(html.find(".mod_racialPER")).val());
-            $(html.find(".car_finPER")).val(soma);
-        });
-        html.find(".mod_racialPER").change(ev => {
-            let soma = parseInt($(html.find(".carac_sortPER")).val()) + parseInt($(html.find(".mod_racialPER")).val());
-            $(html.find(".car_finPER")).val(soma);
-        });
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
         html.find(".rollAtributos").hover(function (){
             $(".rollAtributos").html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
@@ -305,6 +250,33 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _caracSort(data, updatePers) {
+        const sort_INT = data.data.carac_sort.INT;
+        const sort_AUR = data.data.carac_sort.AUR;
+        const sort_CAR = data.data.carac_sort.CAR;
+        const sort_FIS = data.data.carac_sort.FIS;
+        const sort_FOR = data.data.carac_sort.FOR;
+        const sort_AGI = data.data.carac_sort.AGI;
+        const sort_PER = data.data.carac_sort.PER;
+        let final_INT = sort_INT + data.data.mod_racial.INT;
+        let final_AUR = sort_AUR + data.data.mod_racial.AUR;
+        let final_CAR = sort_CAR + data.data.mod_racial.CAR;
+        let final_FIS = sort_FIS + data.data.mod_racial.FIS;
+        let final_FOR = sort_FOR + data.data.mod_racial.FOR;
+        let final_AGI = sort_AGI + data.data.mod_racial.AGI;
+        let final_PER = sort_PER + data.data.mod_racial.PER;
+        const final_actor = this.actor.data.data.carac_final;
+        if (final_INT != final_actor.INT || final_AUR != final_actor.AUR || final_CAR != final_actor.CAR || final_FIS != final_actor.FIS || final_FOR != final_actor.FOR || final_AGI != final_actor.AGI || final_PER != final_actor.PER) {
+            updatePers['data.carac_final.AGI'] = final_AGI;
+            updatePers['data.carac_final.AUR'] = final_AUR;
+            updatePers['data.carac_final.CAR'] = final_CAR;
+            updatePers['data.carac_final.FIS'] = final_FIS;
+            updatePers['data.carac_final.FOR'] = final_FOR;
+            updatePers['data.carac_final.INT'] = final_INT;
+            updatePers['data.carac_final.PER'] = final_PER;
+        }
     }
 
     _realcaEfeito(event) {
