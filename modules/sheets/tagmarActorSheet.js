@@ -108,7 +108,7 @@ export default class tagmarActorSheet extends ActorSheet {
             if (this.lastUpdate) {
                 if (this.lastUpdate.hasOwnProperty('_id')) delete this.lastUpdate['_id'];
             }
-            if (Object.keys(updatePers).length > 0) {
+            if (Object.keys(updatePers).length > 0 && this.options.editable) {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
                     this.actor.update(updatePers);
