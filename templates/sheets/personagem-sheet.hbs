@@ -183,6 +183,19 @@
                                 <td><input title="Quê? Está com medo agora?" class="car_finAGI" name="data.carac_final.AGI" type="number" value="{{data.carac_final.AGI}}" readonly/></td>
                                 <td><input title="Caramba, eu falei pra você não mexer, arruma isso logo!" class="car_finPER" name="data.carac_final.PER" type="number" value="{{data.carac_final.PER}}" readonly/></td>
                             </tr>
+                            {{#settingTrue 'ajusteManual'}}
+                            <tr>
+                                <td class="mediaeval">Ajuste</td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.INT" type="number" value="{{data.atributos.INT}}" /></td>
+                                <td><input title="Atributo final do personagem." class="ipAtrAUR" name="data.atributos.AUR" type="number" value="{{data.atributos.AUR}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.CAR" type="number" value="{{data.atributos.CAR}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.FOR" type="number" value="{{data.atributos.FOR}}" /></td>
+                                <td><input title="Atributo final do personagem." class="ipAtrFIS" name="data.atributos.FIS" type="number" value="{{data.atributos.FIS}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.AGI" type="number" value="{{data.atributos.AGI}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.PER" type="number" value="{{data.atributos.PER}}" /></td>
+                            </tr>
+                            {{/settingTrue}}
+                            {{#settingFalse 'ajusteManual'}}
                             <tr>
                                 <td class="mediaeval">Ajuste</td>
                                 <td><input title="Atributo final do personagem." name="data.atributos.INT" type="number" value="{{data.atributos.INT}}" readonly/></td>
@@ -193,6 +206,7 @@
                                 <td><input title="Atributo final do personagem." name="data.atributos.AGI" type="number" value="{{data.atributos.AGI}}" readonly/></td>
                                 <td><input title="Atributo final do personagem." name="data.atributos.PER" type="number" value="{{data.atributos.PER}}" readonly/></td>
                             </tr>
+                            {{/settingFalse}}
                             <tr>
                                 <td class="mediaeval">Valor Para Teste</td>
                                 <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.INT" type="number" value="{{data.valor_teste.INT}}" readonly/></td>

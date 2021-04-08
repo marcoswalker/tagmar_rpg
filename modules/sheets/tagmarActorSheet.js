@@ -89,7 +89,7 @@ export default class tagmarActorSheet extends ActorSheet {
             this._prepareCharacterItems(data);
             this._prepareValorTeste(data, updatePers);
             this._caracSort(data, updatePers);
-            this._calculaAjuste(data, updatePers);
+            if (!game.settings.get('tagmar_rpg', 'ajusteManual')) this._calculaAjuste(data, updatePers);
             if (data.actor.raca) {
                 this._preparaCaracRaciais(data, updatePers);
             }

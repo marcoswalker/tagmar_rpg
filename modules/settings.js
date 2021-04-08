@@ -76,4 +76,12 @@ export const SystemSettings = function() {
         default: 100,
         type: Number
       });
+      game.settings.register('tagmar_rpg', 'ajusteManual', {
+        name: 'Modificar ajuste manualmente',
+        hint: 'Quando ativo, desativa alguns cálculos da ficha, possibilitando modificar os valores de ajuste',
+        scope: 'world',
+        config: true,
+        default: false,
+        type: Boolean
+      });
 }

@@ -76,6 +76,20 @@ Hooks.once("init", function(){
     return value.toFixed(decimal);
   });
 
+  Handlebars.registerHelper('settingTrue', function(setting, options) {
+    if (game.settings.get('tagmar_rpg', setting)) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
+  Handlebars.registerHelper('settingFalse', function(setting, options) {
+    if (!game.settings.get('tagmar_rpg', setting)) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
   preloadHandlebarsTemplates();
   
 });
