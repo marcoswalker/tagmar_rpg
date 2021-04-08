@@ -153,6 +153,7 @@
                                 <th class="mediaeval"><a class="rolarAtt" data-item-id="AGI" title="Já entendeu né?">AGI</a></th>
                                 <th class="mediaeval"><a class="rolarAtt" data-item-id="PER" title="Clique para rolar Teste.">PER</a></th>
                             </tr>
+                            {{#settingFalse 'ajusteManual'}}
                             <tr>
                                 <td class="mediaeval"><a class="rollAtributos" title="Rolar dados.{3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl}">Característica Sorteada</a></td>
                                 <td><input title="Valor sorteado." class="carac_sortINT" name="data.carac_sort.INT" type="number" value="{{data.carac_sort.INT}}"/></td>
@@ -163,6 +164,7 @@
                                 <td><input title="Valor sorteado." class="carac_sortAGI" name="data.carac_sort.AGI" type="number" value="{{data.carac_sort.AGI}}"/></td>
                                 <td><input title="Valor sorteado." class="carac_sortPER" name="data.carac_sort.PER" type="number" value="{{data.carac_sort.PER}}"/></td>
                             </tr>
+                            {{/settingFalse}}
                             <tr>
                                 <td class="mediaeval">Modificador Racial</td>
                                 <td><input title="Ajuste de INT da raça." class="mod_racialINT" name="data.mod_racial.INT" type="number" value="{{data.mod_racial.INT}}" readonly/></td>
@@ -173,6 +175,7 @@
                                 <td><input title="Ajuste de AGI da raça." class="mod_racialAGI" name="data.mod_racial.AGI" type="number" value="{{data.mod_racial.AGI}}" readonly/></td>
                                 <td><input title="Ajuste de PER da raça." class="mod_racialPER" name="data.mod_racial.PER" type="number" value="{{data.mod_racial.PER}}" readonly/></td>
                             </tr>
+                            {{#settingFalse 'ajusteManual'}}
                             <tr>
                                 <td class="mediaeval">Características Finais</td>
                                 <td><input title="Aqui não precisa mexer." class="car_finINT" name="data.carac_final.INT" type="number" value="{{data.carac_final.INT}}" readonly/></td>
@@ -183,6 +186,7 @@
                                 <td><input title="Quê? Está com medo agora?" class="car_finAGI" name="data.carac_final.AGI" type="number" value="{{data.carac_final.AGI}}" readonly/></td>
                                 <td><input title="Caramba, eu falei pra você não mexer, arruma isso logo!" class="car_finPER" name="data.carac_final.PER" type="number" value="{{data.carac_final.PER}}" readonly/></td>
                             </tr>
+                            {{/settingFalse}}
                             {{#settingTrue 'ajusteManual'}}
                             <tr>
                                 <td class="mediaeval">Ajuste</td>
