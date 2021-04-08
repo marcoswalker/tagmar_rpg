@@ -78,7 +78,7 @@ export const SystemSettings = function() {
       });
       game.settings.register('tagmar_rpg', 'ajusteManual', {
         name: 'Modificar ajuste manualmente',
-        hint: 'Quando ativo, desativa alguns cálculos da ficha, possibilitando modificar os valores de ajuste',
+        hint: 'Quando ativado, deixa de calcular os valores de ajuste da ficha de Personagem',
         scope: 'world',
         config: true,
         default: false,
