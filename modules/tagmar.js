@@ -404,16 +404,15 @@ async function rolarCritico(coluna, tabela_resol, user, actor) {
   }
 }
 
-document.addEventListener('keydown', function (event) {
-  const atalhoTarget = game.settings.get("tagmar_rpg", "atalhoTarget");
-  if ((event.key == atalhoTarget.toLowerCase() || event.key == atalhoTarget.toUpperCase()) && game.user.isGM && event.ctrlKey) {
+document.addEventListener('auxclick', function (event) {
+  if (event.button == 1 && game.user.isGM) {
     const hoveredToken = canvas.tokens._hover;
     if (hoveredToken !== null) {
       if (!hoveredToken.isTargeted) hoveredToken.setTarget(true, game.user, true, false);
       else hoveredToken.setTarget(false);
     }
   }
-});
+})
 
 Hooks.on('targetToken', function (user, token, targeted) {
   if (!(token.actor.data.type === "Personagem" || token.actor.data.type === "NPC")) return;
