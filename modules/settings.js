@@ -61,7 +61,7 @@ export const SystemSettings = function() {
         }
       });
       game.settings.register("tagmar_rpg", "atalhoTarget", {
-        name: "Atalho para marcar Target",
+        name: "Atalho para marcar Target, Ctrl +",
         hint: "Escolha tecla de atalho para dar target (apenas a letra)",
         scope: "world",
         config: true,
