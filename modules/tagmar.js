@@ -442,6 +442,142 @@ function setInf_ataque(target_token, user) {
   }
 }
 
+Hooks.on("getSceneControlButtons", (controls) => {
+  if (!game.user.isGM) return;
+  const bar = controls.find(c => c.name === "token");
+  bar.tools.push({
+    name: "Rolar direto na tabela ou Teste de Resistência",
+    icon: "fas fa-dice-d20",
+    title: "Rolagem do Mestre",
+    onClick: async () => rollDialog(),
+    button: true
+  });
+});
+
+async function rollDialog() {
+  $.get("systems/tagmar_rpg/templates/roll_dialog.hbs", function (data) {
+    let dialog = new Dialog({
+      title: "Rolagem do Mestre",
+      content: data,
+      buttons: {},
+      render: (html) => {
+        html.find(".rollResist").click(async function (event) {
+          let resist = html.find('.ip_resist').val();
+          let f_ataque = html.find(".ip_fAtaque").val();
+          if (resist > 0 && f_ataque > 0) await rollResistencia(resist, f_ataque);
+          html.find('.ip_resist').val("");
+          html.find(".ip_fAtaque").val("");
+        });
+        html.find(".rollTabela").click(async function (event) {
+          let coluna = html.find(".ip_coluna").val();
+          if (coluna >= -7 && coluna <= 20) await rollTabela(coluna);
+          html.find(".ip_coluna").val("");
+        });
+      }
+    });
+    dialog.render(true);
+  });
+}
+
+async function rollTabela(colunaR) {
+  const tabela_resol = [
+    [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
+    [-6, "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
+    [-5, "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "azul", "cinza"],
+    [-4, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "azul", "cinza"],
+    [-3, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "azul", "cinza"],
+    [-2, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "vermelho", "azul", "cinza"],
+    [-1, "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "azul", "cinza"],
+    [0, "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "cinza"],
+    [1, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "cinza"],
+    [2, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "azul", "azul", "cinza"],
+    [3, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
+    [4, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
+    [5, "verde", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
+    [6, "verde", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
+    [7, "verde", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
+    [8, "verde", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
+    [9, "verde", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
+    [10, "verde", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "cinza"],
+    [11, "verde", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
+    [12, "verde", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
+    [13, "verde", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
+    [14, "verde", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "cinza"],
+    [15, "verde", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
+    [16, "verde", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
+    [17, "verde", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
+    [18, "verde", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
+    [19, "verde", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"],
+    [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
+  ];
+  let r = new Roll("1d20");
+  let resultado = "";
+  let PrintResult = "";
+  r.evaluate();
+  var Dresult = r.total;
+  for (let i = 0; i < tabela_resol.length; i++) {
+    if (tabela_resol[i][0] == colunaR) {
+        resultado = tabela_resol[i][Dresult];
+        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
+        else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
+        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:yellow;'>Amarelo - Fácil</h1>";
+        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:orange;'>Laranja - Médio</h1>";
+        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:red;'>Vermelho - Difícil</h1>";
+        else if (resultado == "azul" ) PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:blue;'>Azul - Muito Difícil</h1>";
+        else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:rgb(2,9,37);'>Azul Escuro - Muito Difícil</h1>";
+        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
+        let coluna = "<h4 class='mediaeval rola'>Coluna:" + tabela_resol[i][0] + "</h4>";
+        r.toMessage({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker({ user: game.user }),
+            flavor: `<h2 class='mediaeval rola'>Rolagem - ${colunaR}</h2>${coluna}${PrintResult}`
+          });
+    }
+  }
+}
+
+async function rollResistencia(resist, f_ataque) {
+  let forcAtaque = f_ataque;
+  let valorDef = resist;
+  let def_ataq = valorDef - forcAtaque;
+  let stringSucesso = "";
+  let valorSucess = 0;
+  if (def_ataq == 0) valorSucess = 11;
+  else if (def_ataq == 1) valorSucess = 10;
+  else if (def_ataq == 2) valorSucess = 9;
+  else if (def_ataq == 3) valorSucess = 8;
+  else if (def_ataq == 4 || def_ataq == 5) valorSucess = 7;
+  else if (def_ataq == 6 || def_ataq == 7) valorSucess = 6;
+  else if (def_ataq == 8 || def_ataq == 9) valorSucess = 5;
+  else if (def_ataq == 10 || def_ataq == 11) valorSucess = 4;
+  else if (def_ataq == 12 || def_ataq == 13) valorSucess = 3;
+  else if (def_ataq == 14 || def_ataq == 15) valorSucess = 2;
+  else if (def_ataq >= 16) valorSucess = 1;
+  else if (def_ataq == -1) valorSucess = 11;
+  else if (def_ataq == -2) valorSucess = 12;
+  else if (def_ataq == -3) valorSucess = 13;
+  else if (def_ataq == -4 || def_ataq == -5) valorSucess = 14;
+  else if (def_ataq == -6 || def_ataq == -7) valorSucess = 15;
+  else if (def_ataq == -8 || def_ataq == -9) valorSucess = 16;
+  else if (def_ataq == -10 || def_ataq == -11) valorSucess = 17;
+  else if (def_ataq == -12 || def_ataq == -13) valorSucess = 18;
+  else if (def_ataq == -14 || def_ataq == -15) valorSucess = 19;
+  else if (def_ataq <= -16) valorSucess = 20;
+  const r = new Roll("1d20");
+  r.evaluate();
+  const Dresult = r.total;
+  if (Dresult >= valorSucess) { // Sucesso
+      stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:blue;'>SUCESSO</h1>";
+  } else {    // Insucesso
+      stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:red;'>FRACASSO</h1>";
+  }  
+  r.toMessage({
+      user: game.user._id,
+      speaker: ChatMessage.getSpeaker({ user: game.user }),
+      flavor: `<h2 class="mediaeval rola">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaque}</h3><h3 class="mediaeval rola">Resistência: ${valorDef}</h3>${stringSucesso}`
+  });
+}
+
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Magias e Poderes. Você pode referenciar atributos e perícias com @. Ex.: @for ou @luta");
