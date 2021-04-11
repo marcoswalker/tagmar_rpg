@@ -97,7 +97,23 @@ Hooks.once("init", function(){
 Hooks.once("ready", async function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
+  boasVindas();
 });
+
+function boasVindas () {
+  if(!game.user.getFlag("tagmar_rpg","boasVindas")) {
+    let content = '<img src="/systems/tagmar_rpg/assets/TAGMAR FOUNDRY.png" style="display: block; margin-left: auto; margin-right: auto;" /><h1 class="fairyDust rola" style="text-align:center;">Tagmar RPG</h1>';
+    let text = '<p class="rola_desc mediaeval">Conheça sobre o <a href="https://tagmar.com.br/" title="Acessar o site de Tagmar">Projeto Tagmar</a>.</p>';
+    let sys_text = '<p class="rola_desc mediaeval">Saiba mais sobre o sistema <a href="https://foundryvtt.com/packages/tagmar">Tagmar RPG no Foundry</a> e também no <a href="https://github.com/marcoswalker/tagmar">GitHub</a>.</p>';
+    let credits = '<p class="rola_desc"><span class="creditos mediaeval">por Vinicius Fernandez (Pirata) e Marcos Walker</span></p>'
+    let options = {
+      whisper:[game.user.id],
+      content: content + text + sys_text + credits
+    };
+    ChatMessage.create(options);
+    game.user.setFlag("tagmar_rpg", "boasVindas", true);
+  }
+}
 
 Hooks.on("createToken", async function(scene, token) {
   if (!game.user.isGM) return;
