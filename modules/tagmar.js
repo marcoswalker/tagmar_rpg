@@ -617,5 +617,5 @@ function rollItemMacro(itemName, extra) {
   if (!item) return ui.notifications.warn(`O personagem selecionado não possui um Item chamado ${itemName}`);
   // console.log(item);
   // Trigger the item roll
-  return item.roll(actor, extra);
+  return item.rollTagmarItem();
 }
