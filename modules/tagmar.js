@@ -462,10 +462,10 @@ Hooks.on("getSceneControlButtons", (controls) => {
   const bar = controls.find(c => c.name === "token");
   if (game.user.isGM) {
     bar.tools.push({
-      name: "Centralizar Canvas",
+      name: "Centralizar Canvas no token selecionado",
       icon: "fas fa-anchor",
-      title: "Centralizar Canvas",
-      onClick: async () => canvas.recenter(),
+      title: "Centralizar Canvas no token selecionado",
+      onClick: async () => await canvas.animatePan({x: canvas.tokens.controlled[0].position.x, y: canvas.tokens.controlled[0].position.y}),
       button: true
     });
     bar.tools.push({
@@ -477,10 +477,10 @@ Hooks.on("getSceneControlButtons", (controls) => {
     });
   } else {
     bar.tools.push({
-      name: "Centralizar Canvas",
+      name: "Centralizar Canvas no token selecionado",
       icon: "fas fa-anchor",
-      title: "Centralizar Canvas",
-      onClick: async () => canvas.recenter(),
+      title: "Centralizar Canvas no token selecionado",
+      onClick: async () => await canvas.animatePan({x: canvas.tokens.controlled[0].position.x, y: canvas.tokens.controlled[0].position.y}),
       button: true
     });
   }
