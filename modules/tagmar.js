@@ -459,15 +459,31 @@ function setInf_ataque(target_token, user) {
 }
 
 Hooks.on("getSceneControlButtons", (controls) => {
-  if (!game.user.isGM) return;
   const bar = controls.find(c => c.name === "token");
-  bar.tools.push({
-    name: "Rolar direto na tabela ou Teste de Resistência",
-    icon: "fas fa-dice-d20",
-    title: "Rolagem do Mestre",
-    onClick: async () => rollDialog(),
-    button: true
-  });
+  if (game.user.isGM) {
+    bar.tools.push({
+      name: "Centralizar Canvas",
+      icon: "fas fa-anchor",
+      title: "Centralizar Canvas",
+      onClick: async () => canvas.recenter(),
+      button: true
+    });
+    bar.tools.push({
+      name: "Rolar direto na tabela ou Teste de Resistência",
+      icon: "fas fa-dice-d20",
+      title: "Rolagem do Mestre",
+      onClick: async () => rollDialog(),
+      button: true
+    });
+  } else {
+    bar.tools.push({
+      name: "Centralizar Canvas",
+      icon: "fas fa-anchor",
+      title: "Centralizar Canvas",
+      onClick: async () => canvas.recenter(),
+      button: true
+    });
+  }
 });
 
 async function rollDialog() {
