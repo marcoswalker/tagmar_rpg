@@ -2,8 +2,8 @@
   "name": "tagmar_rpg",
   "title": "Tagmar XXX",
   "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
-  "semanticVersion": "0.9.4",
-  "version": "0.9.4",
+  "semanticVersion": "0.9.5",
+  "version": "0.9.5",
   "dependencies": [
     {
       "name": "compendium-folders",
@@ -135,6 +135,13 @@
       "system": "tagmar_rpg",
       "path": "./packs/magias-perdidas.db",
       "entity": "Item"
+    },
+    {
+      "label": "Registros",
+      "entity": "JournalEntry",
+      "name": "registros",
+      "path": "./packs/registros.db",
+      "system": "tagmar_rpg"
     }
   ],
   "languages": [

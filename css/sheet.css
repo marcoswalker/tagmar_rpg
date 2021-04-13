@@ -1,17 +1,19 @@
 @font-face {
     font-family: 'FairyDustB';
-    src: url('../fonts/FairyDustB.ttf') format('truetype');
+    src: url('../fonts/PrinceValiant.ttf') format('truetype');
 }
 @font-face {
     font-family: 'GoudyMediaeval';
-    src: url('../fonts/Baskerville_Old_Face.ttf') format('truetype');
+    src: url('../fonts/NewRocker-Regular.ttf') format('truetype');
 }
 .fairyDust{
     font-family: "FairyDustB";
+    font-size: 205%;
+    font-weight: bolder;
 }
 .mediaeval {
     font-family: "GoudyMediaeval";
-    font-size: 105%;
+    font-size: 95%;
 }
 .dados {
     padding: 2px 0;
@@ -105,6 +107,9 @@
     background-color: #ffffff;
     color: black;
 }
+}
+.item-copy {
+    margin-right: 2px;
 }
 .borda-m .container_dados {
     border-image-source: url(/systems/tagmar_rpg/templates/sheets/img/panel2.png);

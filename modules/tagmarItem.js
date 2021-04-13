@@ -198,7 +198,7 @@ export class tagmarItem extends Item {
     }
 
     async habToChat(resultado, r, h_total, colunarolada) {
-        let conteudo = "<h3 class='mediaeval rola'>Tarefas Aperfeiçoadas: </h3>" + "<h4 class='mediaeval rola rola_desc'>" + this.data.data.tarefAperf + "</h4>";
+        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<h4 class='mediaeval rola rola_desc'>" + this.data.data.tarefAperf + "</h4>";
         let PrintResult = "";
         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";

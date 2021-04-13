@@ -136,16 +136,37 @@ export default class tagmarActorSheet extends ActorSheet {
             const item = this.actor.getOwnedItem(li.data("itemId"));
             item.sheet.render(true);
         });
+
+        html.find('.item-delete').click(ev => {
+            const li = $(ev.currentTarget).parents(".item");
+            let dialog = new Dialog({
+                title: "Tem certeza que deseja deletar?",
+                content: "<p class='rola_desc mediaeval'>Deseja mesmo <b>deletar</b> esse item?</p>",
+                buttons: {
+                    sim: {
+                        icon: "<i class='fas fa-check'></i>",
+                        label: "Confirmar",
+                        callback: () => {
+                            this.actor.deleteOwnedItem(li.data("itemId"));
+                            li.slideUp(200, () => this.render(false));
+                        }
+                    },
+                    nao: {
+                        icon: '<i class="fas fa-times"></i>',
+                        label: "Cancelar",
+                        callback: () => {}
+                    }
+                },
+                default: "nao"
+            });
+            dialog.render(true);
+        });
   
         if (this.actor.data.type != "Inventario") {
         //Ativa edição de descricao
         html.find('.ativaDesc').click(this._edtDesc.bind(this));
-        // Delete Inventory Item
-        html.find('.item-delete').click(ev => {
-            const li = $(ev.currentTarget).parents(".item");
-            this.actor.deleteOwnedItem(li.data("itemId"));
-            li.slideUp(200, () => this.render(false));
-        });
+
+        html.find('.item-copy').click(this._duplicateItem.bind(this));
 
         html.find('.rollable').click(this._onItemRoll.bind(this));
 
@@ -277,6 +298,14 @@ export default class tagmarActorSheet extends ActorSheet {
             updatePers['data.carac_final.INT'] = final_INT;
             updatePers['data.carac_final.PER'] = final_PER;
         }
+    }
+
+    _duplicateItem(event) {
+        const li = $(event.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(li.data("itemId"));
+        let dupi = duplicate(item);
+        dupi.name = dupi.name + "(Cópia)";
+        this.actor.createOwnedItem(dupi);
     }
 
     _realcaEfeito(event) {
@@ -622,9 +651,6 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         if (this.actor.data.data.rm != rm) {
             updatePers["data.rm"] = rm;
-            this.actor.update({
-                "data.rm": rm
-            });
         }
     }
 
@@ -1747,7 +1773,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         r.toMessage({
                             user: game.user._id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                            flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} - ${habil}</h2>${coluna}${PrintResult}`
+                            flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                         });
                     }
                 }
@@ -1774,7 +1800,7 @@ export default class tagmarActorSheet extends ActorSheet {
                                 dados[x].toMessage({
                                     user: game.user._id,
                                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                    flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} - ${habil}</h2>${coluna}${PrintResult}`
+                                    flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                                 });
                             }
                         }
@@ -1801,7 +1827,7 @@ export default class tagmarActorSheet extends ActorSheet {
                                 dados[x].toMessage({
                                     user: game.user._id,
                                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                    flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} - ${habil}</h2>${coluna}${PrintResult}`
+                                    flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                                 });
                             }
                         }
@@ -1823,7 +1849,7 @@ export default class tagmarActorSheet extends ActorSheet {
                             dado.toMessage({
                                 user: game.user._id,
                                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} - ${habil}</h2>${coluna}${PrintResult}`
+                                flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                             });
                         }
                     }
