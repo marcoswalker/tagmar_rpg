@@ -92,6 +92,21 @@ Hooks.once("init", function(){
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper('pontos_carac', function(estagio) {
+    let pontos = 3;
+    if (estagio > 0) {
+      if (estagio == 1) return pontos;
+      else {
+        for (let x = 2; x <= estagio; x++) {
+          if ((x % 2) != 0) {
+            pontos += 1;
+          }
+        }
+        return pontos;
+      }
+    } else return 0;
+  });
+
   preloadHandlebarsTemplates();
   
 });

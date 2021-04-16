@@ -448,7 +448,18 @@
                 <div class="row dados">
                     {{#ifdf data.v_base 0}}
                     <div class="col-md-2">
-                        <label><h4 class="mediaeval">Caracteriz.: <a class='ativaDesc' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><h4 class="mediaeval">Caract: <a class='ativaDesc' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><h4 class="mediaeval">Pontos: {{pontos_carac data.estagio}}</h4></label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-10">
                         <textarea class="mediaeval" name="data.descricao" style="height: 80px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String">{{data.descricao}}</textarea>
@@ -456,7 +467,18 @@
                     {{/ifdf}}
                     {{#ifeq data.v_base 0}}
                     <div class="col-md-2">
-                        <label><h4 class="mediaeval">Caracteriz.: <a class='ativaDesc' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><h4 class="mediaeval">Caract: <a class='ativaDesc' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label><h4 class="mediaeval">Pontos: {{pontos_carac data.estagio}}</h4></label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-10">
                         <textarea class="mediaeval" name="data.descricao" style="height: 80px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String" disabled>{{data.descricao}}</textarea>
