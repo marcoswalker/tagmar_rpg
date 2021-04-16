@@ -9,6 +9,7 @@ export const preloadHandlebarsTemplates = async function() {
         "systems/tagmar_rpg/templates/sheets/personagem-sheet.hbs",
         "systems/tagmar_rpg/templates/sheets/npc-sheet.hbs",
         "systems/tagmar_rpg/templates/sheets/inventario-sheet.hbs",
+        "systems/tagmar_rpg/templates/sheetsPoints/personagem-sheet.hbs",
 
         "systems/tagmar_rpg/templates/sheets/combate-sheet.hbs",
         "systems/tagmar_rpg/templates/sheets/defesa-sheet.hbs",

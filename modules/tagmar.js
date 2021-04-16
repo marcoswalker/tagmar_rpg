@@ -1,5 +1,6 @@
 import tagmarItemSheet from "./sheets/tagmarItemSheet.js";
 import tagmarActorSheet from "./sheets/tagmarActorSheet.js";
+import tagmarAltSheet from "./sheets/tagmarAltSheet.js";
 import { tagmarItem } from "./tagmarItem.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { SystemSettings } from "./settings.js";
@@ -23,6 +24,7 @@ Hooks.once("init", function(){
 
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("tagmar", tagmarActorSheet, {makeDefault: true});
+  Actors.registerSheet("tagmar", tagmarAltSheet, {makeDefault: false});
 
   Handlebars.registerHelper('ifeq', function (a, b, options) {
     if (a == b) { return options.fn(this); }
