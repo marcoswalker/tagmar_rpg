@@ -438,8 +438,8 @@ async function rolarCritico(coluna, tabela_resol, user, actor) {
   }
 }
 
-document.addEventListener('auxclick', function (event) {
-  if (event.button == 1 && game.user.isGM) {
+document.addEventListener('mousedown', function (event) {
+  if ((event.button == 1 || event.button == 4) && game.user.isGM) {
     const hoveredToken = canvas.tokens._hover;
     if (hoveredToken !== null) {
       event.preventDefault();
