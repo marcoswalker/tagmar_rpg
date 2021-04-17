@@ -442,6 +442,7 @@ document.addEventListener('auxclick', function (event) {
   if (event.button == 1 && game.user.isGM) {
     const hoveredToken = canvas.tokens._hover;
     if (hoveredToken !== null) {
+      event.preventDefault();
       if (!hoveredToken.isTargeted) hoveredToken.setTarget(true, game.user, true, false);
       else hoveredToken.setTarget(false);
     }
