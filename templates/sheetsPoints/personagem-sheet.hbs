@@ -946,12 +946,12 @@
                             {{#each actor.magias as |magia|}}
                             <tr class="item" data-item-id="{{magia._id}}">
                                 <td class="mediaeval">
-                                    <a class="rollable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">
+                                    <a class="rollable dragable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">
                                         <img class="imgItem" src="{{magia.img}}"/>
                                     </a>
                                 </td>
                                 <td class="mediaeval magiaName">
-                                    <a class="rollable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">{{magia.name}}</a>
+                                    <a class="rollable dragable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">{{magia.name}}</a>
                                 </td>
                                 <td class="mediaeval">{{magia.data.nivel}}</td>
                                 <td class="mediaeval">{{magia.data.total.valor}}</td>
@@ -974,7 +974,7 @@
                             {{#each actor.magias as |magia|}}
                             <tr class="item" data-item-id="{{magia._id}}">
                                 <td class="mediaeval magiaName">
-                                    <a class="rollable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">{{magia.name}}</a>
+                                    <a class="rollable dragable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">{{magia.name}}</a>
                                 </td>
                                 <td class="mediaeval">{{magia.data.nivel}}</td>
                                 <td class="mediaeval">{{magia.data.total.valor}}</td>

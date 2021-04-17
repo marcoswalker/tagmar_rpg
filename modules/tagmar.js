@@ -624,7 +624,7 @@ async function rollResistencia(resist, f_ataque) {
 
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
-  if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Técnicas de Combate e Habilidades.");
+  if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Técnicas de Combate, Habilidades e Magias.");
   const item = data.data;
   // const actor = getItemOwner(item);
   // Create the macro command
