@@ -640,12 +640,13 @@ export class tagmarItem extends Item {
         let municao = this.data.data.municao;
         let muni_usada = 0;
         if (municao > 0) {
-            muni_usada = 1;
-            municao -= 1;
+            if (this.data.data.tipo == "")  muni_usada = this.data.data.nivel;
+            else muni_usada = 1;
+            municao -= muni_usada;
             if (this.data.data.municao != municao) await this.update({"data.municao": municao});
         }
         let municao_text = "";
-        if (muni_usada == 1) municao_text = "<h4 class='mediaeval rola'>Munição gasta: " + muni_usada + " Restam: " + municao + "</h4>";
+        if (muni_usada >= 1) municao_text = "<h4 class='mediaeval rola'>Munição gasta: " + muni_usada + " Restam: " + municao + "</h4>";
         else municao_text = "";
         let bonus_cat = this.data.data.bonus;
         let bonus_ajustev = 0;
