@@ -1657,6 +1657,9 @@ export default class tagmarAltSheet extends ActorSheet {
         if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
+        if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
+            return a.data.categoria.localeCompare(b.data.categoria);
+        });
         if (defesas.length > 1) defesas.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
