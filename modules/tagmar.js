@@ -492,11 +492,21 @@ Hooks.on("getSceneControlButtons", (controls) => {
       name: "Centralizar Canvas no Token",
       icon: "fas fa-anchor",
       title: "Centralizar Canvas no Token",
-      onClick: async () => await canvas.animatePan({x: canvas.tokens.ownedTokens[0].position.x, y: canvas.tokens.ownedTokens[0].position.y}),
+      onClick: async () => centralizaToken(),
       button: true
     });
   }
 });
+
+async function centralizaToken () {
+  if (canvas.tokens.controlled.length) {
+    await canvas.animatePan({x: canvas.tokens.controlled[0].position.x, y: canvas.tokens.controlled[0].position.y});
+  } else if (canvas.tokens.ownedTokens.length) {
+    await canvas.animatePan({x: canvas.tokens.ownedTokens[0].position.x, y: canvas.tokens.ownedTokens[0].position.y});
+  } else {
+    ui.notifications.warn("Você não possui nenhum token na cena!");
+  }
+}
 
 async function rollDialog() {
   $.get("systems/tagmar_rpg/templates/roll_dialog.hbs", function (data) {
