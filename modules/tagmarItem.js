@@ -119,6 +119,9 @@ export class tagmarItem extends Item {
                 }
                 else if (this.data.data.tipo == "") {
                     nivel_comb = this.data.data.nivel;
+                } 
+                else if (this.data.data.tipo == "MAG") {
+                    nivel_comb = this.data.data.nivel;
                 }
                 if (this.data.data.nivel != nivel_comb || this.data.data.dano.d25 != p_25 + bonus_valor + bonus_danomais || this.data.data.custo != bonus_normal) {
                     this.update({
@@ -665,6 +668,15 @@ export class tagmarItem extends Item {
             else if (cat_def == "P") valor_tabela = total_p + this.actor.data.data.inf_ataque.bonus - this.actor.data.data.inf_ataque.valor_def;
         } else {
             valor_tabela = -7;
+        }
+        if (this.data.data.tipo == "") valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus; // Magia de Ataque
+        else if (this.data.data.tipo == "MAG") {
+            valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus;
+            if (this.actor.data.type == "Personagem") {
+                await this.actor.update({'data.karma.value': this.actor.data.data.karma.value - this.data.data.nivel});
+            } else if (this.actor.data.type == "NPC") {
+                await this.actor.update({'data.karma_npc.value': this.actor.data.data.karma_npc.value - this.data.data.nivel});
+            }
         }
         if (valor_tabela < -7) valor_tabela = -7; // Abaixo da Tabela
         let r = new Roll("1d20");

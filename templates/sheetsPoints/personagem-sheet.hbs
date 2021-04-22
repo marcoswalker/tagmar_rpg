@@ -115,26 +115,26 @@
                 </div>
                 <div class="row dados">         <!--Terceira Linha-->
                     <div class="col-md-2 col-4">
-                        <label><h4 class="mediaeval">Altura(m):</h4></label>
+                        <h4 class="mediaeval">Altura(m):</h4>
                     </div>
                     <div class="col-md-2 col-8">
                         <input name="data.altura" type="text" value="{{data.altura}}" height="30" title="Altura do personagem, não a sua."/>
                     </div>
                     <div class="col-md-1 col-4">
-                        <label><h4 class="mediaeval">Peso(Kg):</h4></label>
+                        <h4 class="mediaeval">Peso(Kg):</h4>
                     </div>
                     <div class="col-md-2 col-8">
-                        <input name="data.peso" type="number" value="{{data.peso}}" height="30" title="Não adianta encolher a barriga."/>
+                        <input style="margin-left: 25px;"  name="data.peso" type="number" value="{{data.peso}}" height="30" title="Não adianta encolher a barriga."/>
                     </div>
                     <div class="col-md-2 col-4" style="text-align: right;">
-                        <label><h4 class="mediaeval">Carga(Kg):</h4></label>
+                        <h4 class="mediaeval">Carga(Kg):</h4>
                     </div>
                     <div class="col-md-2 col-6">
                         <input title="Carga Máxima: 20Kg p/ ponto de FOR" name="data.carga.value" type="number" value="{{toFixed data.carga.value 2}}" height="30" readonly/>
                     </div>
                     <div class="col-md-1 col-2">
                         {{#if actor.data.carga.sobrecarga}}
-                            <i class="fas fa-weight-hanging sobrepeso"><h4 class="mediaeval">+{{toFixed actor.data.carga.valor_s 2}}Kg</h4></i>
+                            <i class="fas fa-weight-hanging sobrepeso" style="text-align: center;"><h4 class="mediaeval">+{{toFixed actor.data.carga.valor_s 2}}Kg</h4></i>
                         {{else}}
                             <i class="fas fa-weight-hanging sobrepeso hidden"></i>
                         {{/if}}

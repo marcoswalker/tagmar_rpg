@@ -5,7 +5,7 @@ export default class tagmarActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "actor"],
         //width: 900,
-        height: 990,
+        height: 992,
         tabs: [{
             navSelector: ".prim-tabs",
             contentSelector: ".sheet-primary",
@@ -112,7 +112,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
                     this.actor.update(updatePers);
-                    ui.notifications.info("Ficha atualizada.");
+                    //ui.notifications.info("Ficha atualizada.");
                 }
                 else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
                     this.lastUpdate = updatePers;
