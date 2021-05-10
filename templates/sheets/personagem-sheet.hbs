@@ -136,7 +136,7 @@
                         {{#if actor.data.carga.sobrecarga}}
                             <i class="fas fa-weight-hanging sobrepeso" style="text-align: center;"><h4 class="mediaeval">+{{toFixed actor.data.carga.valor_s 2}}Kg</h4></i>
                         {{else}}
-                            <i class="fas fa-weight-hanging sobrepeso hidden"></i>
+                            <i class="fas fa-weight-hanging sobrepeso hiddenT"></i>
                         {{/if}}
                     </div>
                 </div>
@@ -332,7 +332,7 @@
                                 </table>
                                 {{/ifgr}}
                                 {{#ifle data.estagio 1}}
-                                <table class='table_novaEH hidden'>
+                                <table class='table_novaEH hiddenT'>
                                     <caption class="mediaeval">Nova EH</caption>
                                     <tr style="text-align: center;">
                                         <th class="mediaeval"><a title="Clique para rolar 1d10." class="roll1d10" style="margin-right: 10px;"><i class="fas fa-dice-d20"></i></a> <a class="calculaNovaEH" title="Calcular EH"><i class="fas fa-calculator"></i></a></th>

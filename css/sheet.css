@@ -55,7 +55,7 @@
 .armaImg:focus {
     cursor: pointer;
 }
-.hidden {
+.hiddenT {
     visibility: hidden;
 }
 .hide {
