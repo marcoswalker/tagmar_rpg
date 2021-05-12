@@ -133,7 +133,7 @@ export default class tagmarActorSheet extends ActorSheet {
         // Update Inventory Item
         html.find('.item-edit').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.getOwnedItem(li.data("itemId"));
+            const item = this.actor.items.get(li.data('itemId'));
             item.sheet.render(true);
         });
 
@@ -147,7 +147,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         icon: "<i class='fas fa-check'></i>",
                         label: "Confirmar",
                         callback: () => {
-                            this.actor.deleteOwnedItem(li.data("itemId"));
+                            this.actor.deleteEmbeddedEntity("OwnedItem", li.data("itemId"));
                             li.slideUp(200, () => this.render(false));
                         }
                     },
@@ -172,7 +172,7 @@ export default class tagmarActorSheet extends ActorSheet {
 
         html.find(".movePertence").click(ev => {
             const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.getOwnedItem(li.data("itemId"));
+            const item = this.actor.items.get(li.data('itemId')); 
             if (this.actor.data.data.carga_transp.hasTransp){
                 if (!item.data.data.inTransport) {
                     item.update({
@@ -258,10 +258,10 @@ export default class tagmarActorSheet extends ActorSheet {
                     else if (actor.data.type == "Inventario") inventario = actor;
                 });
                 const li = $(ev.currentTarget).parents(".item");
-                const item = this.actor.getOwnedItem(li.data("itemId"));
-                personagem.createOwnedItem(item);
+                const item = this.actor.items.get(li.data('itemId')); 
+                personagem.createEmbeddedEntity("OwnedItem", item); 
                 if (bau) {
-                    bau.deleteOwnedItem(item._id);
+                    bau.deleteEmbeddedEntity("OwnedItem", item._id); 
                 }
             });
         } else if (this.actor.data.type == "Personagem") {
@@ -302,10 +302,10 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _duplicateItem(event) {
         const li = $(event.currentTarget).parents(".item");
-        const item = this.actor.getOwnedItem(li.data("itemId"));
+        const item =  this.actor.items.get(li.data('itemId')); 
         let dupi = duplicate(item);
         dupi.name = dupi.name + "(Cópia)";
-        this.actor.createOwnedItem(dupi);
+        this.actor.createEmbeddedEntity("OwnedItem", dupi); 
     }
 
     _realcaEfeito(event) {
@@ -873,7 +873,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         
     }
-    _attProfissao(sheetData, updatePers) {
+    async _attProfissao(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.profissao) {
@@ -973,8 +973,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_prof[i].data.custo + 1) * actorData.h_prof[i].data.nivel;
                 } else if (hab_nata == actorData.h_prof[i].name) {
                     //pontos_hab -= 0;
-                    let habilidade = this.actor.getOwnedItem(actorData.h_prof[i]._id);
-                    habilidade.update({
+                    let habilidade = this.actor.items.get(actorData.h_prof[i]._id);
+                    await habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -985,8 +985,8 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (grupo_pen == "manobra") {
                     pontos_hab -= (actorData.h_man[i].data.custo + 1) * actorData.h_man[i].data.nivel;
                 } else if (hab_nata == actorData.h_man[i].name) {
-                    const habilidade = this.actor.getOwnedItem(actorData.h_man[i]._id);
-                    habilidade.update({
+                    const habilidade =  this.actor.items.get(actorData.h_man[i]._id);
+                    await habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -997,8 +997,8 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (grupo_pen == "conhecimento") {
                     pontos_hab -= (actorData.h_con[i].data.custo + 1) * actorData.h_con[i].data.nivel;
                 } else if (hab_nata == actorData.h_con[i].name) {
-                    const habilidade = this.actor.getOwnedItem(actorData.h_con[i]._id);
-                    habilidade.update({
+                    const habilidade = this.actor.items.get(actorData.h_con[i]._id);
+                    await habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -1009,8 +1009,8 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (grupo_pen == "subterfugio") {
                     pontos_hab -= (actorData.h_sub[i].data.custo + 1) * actorData.h_sub[i].data.nivel;
                 } else if (hab_nata == actorData.h_sub[i].name) {
-                    const habilidade = this.actor.getOwnedItem(actorData.h_sub[i]._id);
-                    habilidade.update({
+                    const habilidade =  this.actor.items.get(actorData.h_sub[i]._id);
+                    await habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -1021,8 +1021,8 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (grupo_pen == "influencia") {
                     pontos_hab -= (actorData.h_inf[i].data.custo + 1) * actorData.h_inf[i].data.nivel;
                 } else if (hab_nata == actorData.h_inf[i].name) {
-                    const habilidade = this.actor.getOwnedItem(actorData.h_inf[i]._id);
-                    habilidade.update({
+                    const habilidade =  this.actor.items.get(actorData.h_inf[i]._id);
+                    await habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -1033,8 +1033,8 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (grupo_pen == "geral") {
                     pontos_hab -= (actorData.h_geral[i].data.custo + 1) * actorData.h_geral[i].data.nivel;
                 } else if (hab_nata == actorData.h_geral[i].name) {
-                    const habilidade = this.actor.getOwnedItem(actorData.h_geral[i]._id);
-                    habilidade.update({
+                    const habilidade = this.actor.items.get(actorData.h_geral[i]._id);
+                    await habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -1282,11 +1282,11 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (item.data.inTransport) pertences_transporte.push(item);
                 else pertences.push(item);
             } else if (item.type == "Raca") {
-                if (racas.length >= 1) this.actor.deleteOwnedItem(item._id);
+                if (racas.length >= 1) this.actor.deleteEmbeddedEntity("OwnedItem", item._id);
                 else racas.push(item);
                 
             } else if (item.type == "Profissao") {
-                if (profissoes.length >= 1) this.actor.deleteOwnedItem(item._id);
+                if (profissoes.length >= 1) this.actor.deleteEmbeddedEntity("OwnedItem", item._id);
                 else profissoes.push(item);
             } else if (item.type == "Efeito") {
                 efeitos.push(item);
@@ -1818,11 +1818,11 @@ export default class tagmarActorSheet extends ActorSheet {
         }
     }
 
-    _ativaEfeito(event) {
+    async _ativaEfeito(event) {
         event.preventDefault();
         let button = $(event.currentTarget);
         const li = button.parents(".item");
-        const item = this.actor.getOwnedItem(li.data("itemId"));
+        const item = this.actor.items.get(li.data("itemId"));
         let ativo = item.data.data.ativo;
         let ativa;
         if (ativo) {
@@ -1830,7 +1830,7 @@ export default class tagmarActorSheet extends ActorSheet {
         } else {
             ativa = true;
         }
-        item.update({
+        await item.update({
             "data.ativo": ativa
         });
     }
@@ -1838,7 +1838,7 @@ export default class tagmarActorSheet extends ActorSheet {
     _onItemRoll (event) {
         let button = $(event.currentTarget);
         const li = button.parents(".item");
-        const item = this.actor.getOwnedItem(li.data("itemId"));
+        const item = this.actor.items.get(li.data("itemId"));
         item.rollTagmarItem();
     }
 

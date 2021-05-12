@@ -160,7 +160,7 @@ export default class tagmarItemSheet extends ItemSheet {
 
     _sendMessage(event) {
         if (this.item.isOwned) {
-            let itemActor = this.item.actor.getOwnedItem(this.item._id);
+            let itemActor = this.actor.items.get(this.item._id);
             Item.create(itemActor).then(function(value){
                 let chatData = {};
                 chatData.content = '@Item['+value._id+']';
