@@ -671,15 +671,7 @@ export class tagmarItem extends Item {
         } else {
             valor_tabela = -7;
         }
-        if (this.data.data.tipo == "") valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus; // Magia de Ataque
-        else if (this.data.data.tipo == "MAG") {
-            valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus;
-            if (this.actor.data.type == "Personagem") {
-                await this.actor.update({'data.karma.value': this.actor.data.data.karma.value - this.data.data.nivel});
-            } else if (this.actor.data.type == "NPC") {
-                await this.actor.update({'data.karma_npc.value': this.actor.data.data.karma_npc.value - this.data.data.nivel});
-            }
-        }
+        if (this.data.data.tipo == "" || this.data.data.tipo == "MAG") valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus; // Magia de Ataque
         if (valor_tabela < -7) valor_tabela = -7; // Abaixo da Tabela
         let r = new Roll("1d20");
         r.evaluate();
