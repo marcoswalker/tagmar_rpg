@@ -635,17 +635,16 @@ export default class tagmarActorSheet extends ActorSheet {
         if (!this.options.editable) return;
         let rm = this.actor.data.data.estagio + this.actor.data.data.atributos.AUR;
         if (this.efeitos.length > 0) {
-            for (let efeito of this.efeitos) {
-                if (efeito.data.atributo == "RMAG" && efeito.data.ativo) {
-                    if (efeito.data.tipo == "+") {
-                        rm += efeito.data.valor;
-                    } else if (efeito.data.tipo == "-") {
-                        rm -= efeito.data.valor;
-                    } else if (efeito.data.tipo == "*") {
-                        rm = rm * efeito.data.valor;
-                    } else if (efeito.data.tipo == "/") {
-                        rm = rm / efeito.data.valor;
-                    }
+            let apl = this.efeitos.filter(e => e.data.atributo == "RMAG" && e.data.ativo);
+            for (let efeito of apl) {
+                if (efeito.data.tipo == "+") {
+                    rm += efeito.data.valor;
+                } else if (efeito.data.tipo == "-") {
+                    rm -= efeito.data.valor;
+                } else if (efeito.data.tipo == "*") {
+                    rm = rm * efeito.data.valor;
+                } else if (efeito.data.tipo == "/") {
+                    rm = rm / efeito.data.valor;
                 }
             }
         }
@@ -658,17 +657,16 @@ export default class tagmarActorSheet extends ActorSheet {
         if (!this.options.editable) return;
         let rf = this.actor.data.data.estagio + this.actor.data.data.atributos.FIS;
         if (this.efeitos.length > 0) {
-            for (let efeito of this.efeitos){
-                if (efeito.data.atributo == "RFIS" && efeito.data.ativo){
-                    if (efeito.data.tipo == "+") {
-                        rf += efeito.data.valor;
-                    } else if (efeito.data.tipo == "-") {
-                        rf -= efeito.data.valor;
-                    } else if (efeito.data.tipo == "/") {
-                        rf = rf / efeito.data.valor;
-                    } else if (efeito.data.tipo == "*") {
-                        rf = rf * efeito.data.valor;
-                    }
+            let apl = this.efeitos.filter(e => e.data.atributo == "RFIS" && e.data.ativo);
+            for (let efeito of apl){
+                if (efeito.data.tipo == "+") {
+                    rf += efeito.data.valor;
+                } else if (efeito.data.tipo == "-") {
+                    rf -= efeito.data.valor;
+                } else if (efeito.data.tipo == "/") {
+                    rf = rf / efeito.data.valor;
+                } else if (efeito.data.tipo == "*") {
+                    rf = rf * efeito.data.valor;
                 }
             }
         }
@@ -682,17 +680,16 @@ export default class tagmarActorSheet extends ActorSheet {
         let karma = ((this.actor.data.data.atributos.AUR) + 1 ) * ((this.actor.data.data.estagio) + 1);
         if (karma < 0) karma = 0;
         if (this.efeitos.length > 0){
-            for (let efeito of this.efeitos) {
-                if (efeito.data.atributo == "KMA" && efeito.data.ativo) {
-                    if (efeito.data.tipo == "+") {
-                        karma += efeito.data.valor;
-                    } else if (efeito.data.tipo == "-") {
-                        karma -= efeito.data.valor;
-                    } else if (efeito.data.tipo == "*") {
-                        karma = karma * efeito.data.valor;
-                    } else if (efeito.data.tipo == "/") {
-                        karma = karma / efeito.data.valor;
-                    }
+            let apl = this.efeitos.filter(e => e.data.atributo == "KMA" && e.data.ativo);
+            for (let efeito of apl) {
+                if (efeito.data.tipo == "+") {
+                    karma += efeito.data.valor;
+                } else if (efeito.data.tipo == "-") {
+                    karma -= efeito.data.valor;
+                } else if (efeito.data.tipo == "*") {
+                    karma = karma * efeito.data.valor;
+                } else if (efeito.data.tipo == "/") {
+                    karma = karma / efeito.data.valor;
                 }
             }
         }
@@ -899,8 +896,9 @@ export default class tagmarActorSheet extends ActorSheet {
                 else if (atrib_magia == "PER") pontos_mag = ((2 * actorData.data.atributos.PER) + 7) * actorData.data.estagio;
             } else pontos_mag = 0;
             if (this.efeitos.length > 0){
-                for (let efeito of this.efeitos) {
-                    if (efeito.data.atributo == "PHAB" && efeito.data.ativo) {
+                let apl = this.efeitos.filter(e => (e.data.atributo == "PHAB" || e.data.atributo == "PTEC" || e.data.atributo == "PARM" || e.data.atributo == "PMAG") && e.data.ativo);
+                for (let efeito of apl) {
+                    if (efeito.data.atributo == "PHAB") {
                         if (efeito.data.tipo == "+") {
                             pontos_hab += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -910,7 +908,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         } else if (efeito.data.tipo == "/") {
                             pontos_hab = pontos_hab / efeito.data.valor;
                         }
-                    } else if (efeito.data.atributo == "PTEC" && efeito.data.ativo) {
+                    } else if (efeito.data.atributo == "PTEC") {
                         if (efeito.data.tipo == "+") {
                             pontos_tec += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -920,7 +918,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         } else if (efeito.data.tipo == "/") {
                             pontos_tec = pontos_tec / efeito.data.valor;
                         }
-                    } else if (efeito.data.atributo == "PARM" && efeito.data.ativo) {
+                    } else if (efeito.data.atributo == "PARM") {
                         if (efeito.data.tipo == "+") {
                             pontos_gra += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -930,7 +928,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         } else if (efeito.data.tipo == "/") {
                             pontos_gra = pontos_gra / efeito.data.valor;
                         }
-                    } else if (efeito.data.atributo == "PMAG" && efeito.data.ativo) {
+                    } else if (efeito.data.atributo == "PMAG") {
                         if (efeito.data.tipo == "+") {
                             pontos_mag += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -1104,8 +1102,9 @@ export default class tagmarActorSheet extends ActorSheet {
         let somaAGI = valores[carac_finalAGI];
         let somaPER = valores[carac_finalPER];
         if (this.efeitos.length > 0){
-            for (let efeito of this.efeitos) {
-                if (efeito.data.atributo == "INT" && efeito.data.ativo) {
+            let apl = this.efeitos.filter(e => (e.data.atributo == "INT" || e.data.atributo == "AUR" || e.data.atributo == "CAR" || e.data.atributo == "FOR" || e.data.atributo == "FIS" || e.data.atributo == "AGI" || e.data.atributo == "PER") && e.data.ativo);
+            for (let efeito of apl) {
+                if (efeito.data.atributo == "INT") {
                     if (efeito.data.tipo == "+") {
                         somaINT += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1115,7 +1114,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     } else if (efeito.data.tipo == "/") {
                         somaINT = somaINT / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "AUR" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "AUR") {
                    if (efeito.data.tipo == "+") {
                        somaAUR += efeito.data.valor;
                    } else if (efeito.data.tipo == "-") {
@@ -1125,7 +1124,7 @@ export default class tagmarActorSheet extends ActorSheet {
                    } else if (efeito.data.tipo == "/") {
                        somaAUR = somaAUR / efeito.data.valor;
                    }
-                } else if (efeito.data.atributo == "CAR" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "CAR") {
                     if (efeito.data.tipo == "+") {
                         somaCAR += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1135,7 +1134,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     } else if (efeito.data.tipo == "/") {
                         somaCAR = somaCAR / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "FOR" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "FOR") {
                     if (efeito.data.tipo == "+") {
                         somaFOR += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1145,7 +1144,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     } else if (efeito.data.tipo == "/") {
                         somaFOR = somaFOR / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "FIS" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "FIS") {
                     if (efeito.data.tipo == "+") {
                         somaFIS += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1155,7 +1154,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     } else if (efeito.data.tipo == "/") {
                         somaFIS = somaFIS / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "AGI" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "AGI") {
                     if (efeito.data.tipo == "+") {
                         somaAGI += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1165,7 +1164,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     } else if (efeito.data.tipo == "/") {
                         somaAGI = somaAGI / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "PER" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "PER") {
                     if (efeito.data.tipo == "+") {
                         somaPER += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1480,8 +1479,9 @@ export default class tagmarActorSheet extends ActorSheet {
         
         var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
         if (this.efeitos.length > 0) {
-            for (let efeito of this.efeitos) {
-                if (efeito.data.atributo == "DEF" && efeito.data.ativo) {
+            let apl = this.efeitos.filter(e => (e.data.atributo == "DEF" || e.data.atributo == "ABS") && e.data.ativo);
+            for (let efeito of apl) {
+                if (efeito.data.atributo == "DEF") {
                     if (efeito.data.tipo == "+") {
                         def_pasVal += efeito.data.valor;
                         def_atiVal += efeito.data.valor;
@@ -1495,7 +1495,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         def_pasVal = def_pasVal / efeito.data.valor;
                         def_atiVal = def_atiVal / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "ABS" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "ABS") {
                     if (efeito.data.tipo == "+") {
                         absorcao += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1571,8 +1571,9 @@ export default class tagmarActorSheet extends ActorSheet {
         let efMax = this.actor.data.data.atributos.FOR + this.actor.data.data.atributos.FIS + ef_base;
         let vbTotal = this.actor.data.data.atributos.FIS + vb_base;
         if (this.efeitos.length > 0) {
-            for (let efeito of this.efeitos) {
-                if (efeito.data.atributo == "VB" && efeito.data.ativo) {
+            let apl = this.efeitos.filter(e => (e.data.atributo == "VB" || e.data.atributo == "EF") && e.data.ativo);
+            for (let efeito of apl) {
+                if (efeito.data.atributo == "VB") {
                     if (efeito.data.tipo == "+") {
                         vbTotal += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1582,7 +1583,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     } else if (efeito.data.tipo == "/") {
                         vbTotal = vbTotal / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "EF" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "EF") {
                     if (efeito.data.tipo == "+") {
                         efMax += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
