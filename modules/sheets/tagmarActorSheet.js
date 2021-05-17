@@ -70,7 +70,7 @@ export default class tagmarActorSheet extends ActorSheet {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
         }
     }
-    getData() {
+    async getData() {
         const data = super.getData();
         data.dtypes = ["String", "Number", "Boolean"];
          // Prepare items.
@@ -111,12 +111,12 @@ export default class tagmarActorSheet extends ActorSheet {
             if (Object.keys(updatePers).length > 0 && this.options.editable) {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
-                    this.actor.update(updatePers);
+                    await this.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
                 else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
                     this.lastUpdate = updatePers;
-                    this.actor.update(updatePers);
+                    await this.actor.update(updatePers);
                     ui.notifications.info("Ficha atualizada.");
                 }
             }
@@ -870,7 +870,7 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         
     }
-    async _attProfissao(sheetData, updatePers) {
+    _attProfissao(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         if (actorData.profissao) {
@@ -971,8 +971,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_prof[i].data.custo + 1) * actorData.h_prof[i].data.nivel;
                 } else if (hab_nata == actorData.h_prof[i].name) {
                     //pontos_hab -= 0;
-                    let habilidade = this.actor.items.get(actorData.h_prof[i]._id);
-                    await habilidade.update({
+                    const habilidade = this.actor.items.get(actorData.h_prof[i]._id);
+                    habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -984,7 +984,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_man[i].data.custo + 1) * actorData.h_man[i].data.nivel;
                 } else if (hab_nata == actorData.h_man[i].name) {
                     const habilidade =  this.actor.items.get(actorData.h_man[i]._id);
-                    await habilidade.update({
+                    habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -996,7 +996,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_con[i].data.custo + 1) * actorData.h_con[i].data.nivel;
                 } else if (hab_nata == actorData.h_con[i].name) {
                     const habilidade = this.actor.items.get(actorData.h_con[i]._id);
-                    await habilidade.update({
+                    habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -1008,7 +1008,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_sub[i].data.custo + 1) * actorData.h_sub[i].data.nivel;
                 } else if (hab_nata == actorData.h_sub[i].name) {
                     const habilidade =  this.actor.items.get(actorData.h_sub[i]._id);
-                    await habilidade.update({
+                    habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -1020,7 +1020,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_inf[i].data.custo + 1) * actorData.h_inf[i].data.nivel;
                 } else if (hab_nata == actorData.h_inf[i].name) {
                     const habilidade =  this.actor.items.get(actorData.h_inf[i]._id);
-                    await habilidade.update({
+                    habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
@@ -1032,7 +1032,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_geral[i].data.custo + 1) * actorData.h_geral[i].data.nivel;
                 } else if (hab_nata == actorData.h_geral[i].name) {
                     const habilidade = this.actor.items.get(actorData.h_geral[i]._id);
-                    await habilidade.update({
+                    habilidade.update({
                         "data.nivel": actorData.data.estagio
                     });
                 } else {
