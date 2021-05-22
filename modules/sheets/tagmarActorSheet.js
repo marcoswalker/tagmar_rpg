@@ -70,7 +70,7 @@ export default class tagmarActorSheet extends ActorSheet {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
         }
     }
-    async getData() {
+    getData() {
         const data = super.getData();
         data.dtypes = ["String", "Number", "Boolean"];
          // Prepare items.
@@ -111,12 +111,12 @@ export default class tagmarActorSheet extends ActorSheet {
             if (Object.keys(updatePers).length > 0 && this.options.editable) {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
-                    await this.actor.update(updatePers);
+                    this.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
                 else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
                     this.lastUpdate = updatePers;
-                    await this.actor.update(updatePers);
+                    this.actor.update(updatePers);
                     ui.notifications.info("Ficha atualizada.");
                 }
             }
