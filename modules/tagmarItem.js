@@ -455,6 +455,8 @@ export class tagmarItem extends Item {
         }
         let coluna = "<h4 class='mediaeval rola'>Coluna: " + coluna_rolada + "</h4>";
         let dano_text = "<h2 class='mediaeval rola rola_dano' style='text-align: center;'>Dano: " + dano_total + "</h2>";
+        let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
+        if (critico) dano_text = table_dano;
         await r.toMessage({
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -475,7 +477,7 @@ export class tagmarItem extends Item {
             critico = true;
         }
         else if (resultado == "branco") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Errou</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -628,6 +630,8 @@ export class tagmarItem extends Item {
         let coluna = "<h4 class='mediaeval rola'>Coluna: " + coluna_rolada + "</h4>";
         let ajuste_text = "<h1 class='mediaeval rola' style='text-align: center;'>AAC20: " + ajusteDano + "%</h1>";
         let dano_text = "<h1 class='mediaeval rola rola_dano' style='text-align: center;'>Dano: " + dano_novo + "</h1>";
+        let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
+        if (critico) dano_text = table_dano;
         await r.toMessage({
         user: game.user._id,
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
