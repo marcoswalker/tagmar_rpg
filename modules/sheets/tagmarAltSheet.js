@@ -661,7 +661,7 @@ export default class tagmarAltSheet extends ActorSheet {
         const r = new Roll("1d20");
         r.evaluate();
         const Dresult = r.total;
-        if (Dresult >= valorSucess) { // Sucesso
+        if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:blue;'>SUCESSO</h1>";
         } else {    // Insucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:red;'>FRACASSO</h1>";
@@ -717,7 +717,7 @@ export default class tagmarAltSheet extends ActorSheet {
         const r = new Roll("1d20");
         r.evaluate();
         const Dresult = r.total;
-        if (Dresult >= valorSucess) { // Sucesso
+        if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:blue;'>SUCESSO</h1>";
         } else {    // Insucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:red;'>FRACASSO</h1>";
