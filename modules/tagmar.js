@@ -333,33 +333,7 @@ Hooks.on("preCreateToken", function(_scene, data) {
     }
   }
 });
-
-let dragRulerApi;
-
-export function tagmarGetColorForDistance(startDistance, subDistance=0) {
-	if (!this.isDragRuler)
-		return this.color;
-	// Tagmar Changes
-  if (!((this.draggedToken.actor.data.type === "Personagem" || this.draggedToken.actor.data.type === "NPC") && game.settings.get('drag-ruler', "alwaysShowSpeedForPCs")))
-			return this.color;
-	const distance = startDistance + subDistance;
-	const ranges = dragRulerApi.getRangesFromSpeedProvider(this.draggedToken);
-	if (ranges.length === 0)
-		return this.color;
-	const currentRange = ranges.reduce((minRange, currentRange) => {
-		if (distance <= currentRange.range && currentRange.range < minRange.range)
-			return currentRange;
-		return minRange;
-	}, {range: Infinity, color: dragRulerApi.getUnreachableColorFromSpeedProvider()})
-	return currentRange.color;
-}
-
 Hooks.once("dragRuler.ready", (SpeedProvider) => {
-  import('/modules/drag-ruler/src/api.js')
-  .then((module) => {
-    dragRulerApi = module;
-  });
-  dragRuler.getColorForDistance = tagmarGetColorForDistance;
   class TagmarSpeedProvider extends SpeedProvider {
       get colors() {
           return [
