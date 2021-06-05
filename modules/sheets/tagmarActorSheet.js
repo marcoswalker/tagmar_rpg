@@ -1202,6 +1202,7 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _prepareValorTeste(sheetData, updatePers){
         if (!this.options.editable) return;
+        console.log(sheetData);
         const actorData = sheetData.actor;
         if (actorData.data.valor_teste.INT != actorData.data.atributos.INT*4 || actorData.data.valor_teste.AUR != actorData.data.atributos.AUR*4 || actorData.data.valor_teste.CAR != actorData.data.atributos.CAR*4 || actorData.data.valor_teste.FOR != actorData.data.atributos.FOR*4 || actorData.data.valor_teste.FIS != actorData.data.atributos.FIS*4 || actorData.data.valor_teste.AGI != actorData.data.atributos.AGI*4 || actorData.data.valor_teste.PER != actorData.data.atributos.PER*4) {
             updatePers["data.valor_teste.INT"] = actorData.data.atributos.INT*4;
