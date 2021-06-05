@@ -40,7 +40,7 @@ export class tagmarItem extends Item {
             [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
         ];
         this.tabela_resol = tabela_resol;
-        if (actorData && this.isOwned && actorData._id == this.actor._id) {
+        if (actorData && this.isOwned) {
             if (this.data.type == "Combate") {
                 let nivel_comb = 0;
                 const bonus_magico = this.data.data.bonus_magico;
