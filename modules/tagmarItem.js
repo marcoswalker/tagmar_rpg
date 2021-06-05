@@ -1,7 +1,7 @@
 export class tagmarItem extends Item {
 
     prepareData() {
-        if (!this.owner) return;
+        if (!this.isOwned) return;
         super.prepareData();
         // Get the Item's data
         // Arrumar erro que da no compendium
