@@ -75,8 +75,8 @@ export default class tagmarAltSheet extends ActorSheet {
         }
     }
 
-    getData() {
-        const data = super.getData();
+    getData(options) {
+        const data = super.getData(options);
         data.dtypes = ["String", "Number", "Boolean"];
 
         if (this.actor.data.type == 'Personagem') {
@@ -154,7 +154,7 @@ export default class tagmarAltSheet extends ActorSheet {
                         icon: "<i class='fas fa-check'></i>",
                         label: "Confirmar",
                         callback: () => {
-                            this.actor.deleteEmbeddedEntity("OwnedItem", li.data("itemId"));
+                            this.actor.deleteEmbeddedDocuments("Item", [li.data("itemId")]);
                             li.slideUp(200, () => this.render(false));
                         }
                     },
@@ -197,9 +197,9 @@ export default class tagmarAltSheet extends ActorSheet {
         html.find(".roll1d10").click(ev => {
             let formula = "1d10";
             let r = new Roll(formula);
-            r.evaluate();
+            r.evaluate({async: false});
             r.toMessage({
-                user: game.user._id,
+                user: game.user.id,
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                 flavor: ``
             });
@@ -225,7 +225,7 @@ export default class tagmarAltSheet extends ActorSheet {
         html.find(".rolaR_Fis").click(this._rolaRFIS.bind(this));
         html.find(".rolaR_Mag").click(this._rolaRMAG.bind(this));
         html.find(".rolarAtt").click(this._rolarAtt.bind(this));
-        if (this.actor.owner) {
+        if (this.actor.isOwner) {
         let handler = ev => this._onDragStart(ev);
         html.find('.dragable').each((i, li) => {
             if (li.classList.contains("inventory-header")) return;
@@ -241,20 +241,21 @@ export default class tagmarAltSheet extends ActorSheet {
                 const actors = game.actors;
                 let personagem;
                 let inventario;
-                let bau;
+                let bau = null;
                 actors.forEach(function (actor){
-                    if (actor.owner && actor.data.type == "Personagem") personagem = actor;
-                    if (actor.owner && actor.data.type == "Inventario") {
+                    if (actor.isOwner && actor.data.type == "Personagem") personagem = actor;
+                    if (actor.isOwner && actor.data.type == "Inventario") {
+                        console.log(actor);
                         bau = actor;
                         inventario = actor;
                     }
                     else if (actor.data.type == "Inventario") inventario = actor;
                 });
                 const li = $(ev.currentTarget).parents(".item");
-                const item = this.actor.items.get(li.data("itemId"));
-                personagem.createEmbeddedEntity("OwnedItem", item);
-                if (bau) {
-                    bau.deleteEmbeddedEntity("OwnedItem", item._id);
+                const item = this.actor.items.get(li.data('itemId')); 
+                personagem.createEmbeddedDocuments("Item", [item.data]); 
+                if (bau == this.actor) {
+                    bau.deleteEmbeddedDocuments("Item", [item.id]); 
                 }
             });
         } else if (this.actor.data.type == "Personagem") {
@@ -275,7 +276,7 @@ export default class tagmarAltSheet extends ActorSheet {
         let resultado = "";
         let col_tab = [];
         let PrintResult = "";
-        await r.evaluate();
+        await r.evaluate({async: false});
         let Dresult = r.total;
         if (moral <= 20) {
             col_tab = tabela_resol.find(h => h[0] == moral);
@@ -289,7 +290,7 @@ export default class tagmarAltSheet extends ActorSheet {
             else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
             let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
             await r.toMessage({
-                user: game.user._id,
+                user: game.user.id,
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                 flavor: `<h2 class='mediaeval rola'>Moral - ${moral}</h2>${coluna}${PrintResult}`
             });
@@ -298,7 +299,7 @@ export default class tagmarAltSheet extends ActorSheet {
             if (valor_hab == 0) {
                 let vezes = moral / 20;
                 for (let x = 0; x < vezes; x++){
-                    let ds = await new Roll("1d20").evaluate();
+                    let ds = await new Roll("1d20").evaluate({async: false});
                     col_tab = tabela_resol.find(h => h[0] == 20);
                     resultado = col_tab[ds.total];
                     if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
@@ -310,7 +311,7 @@ export default class tagmarAltSheet extends ActorSheet {
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     await ds.toMessage({
-                        user: game.user._id,
+                        user: game.user.id,
                         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                         flavor: `<h2 class='mediaeval rola'>Moral - ${moral}</h2>${coluna}${PrintResult}`
                     });
@@ -319,7 +320,7 @@ export default class tagmarAltSheet extends ActorSheet {
                     let vezes = parseInt(moral / 20);
                     let sobra = moral % 20;
                     for (let x = 0; x < vezes; x++){
-                        let ds = await new Roll("1d20").evaluate();
+                        let ds = await new Roll("1d20").evaluate({async: false});
                         col_tab = tabela_resol.find(h => h[0] == 20);
                         resultado = col_tab[ds.total];
                         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
@@ -331,12 +332,12 @@ export default class tagmarAltSheet extends ActorSheet {
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         await ds.toMessage({
-                            user: game.user._id,
+                            user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                             flavor: `<h2 class='mediaeval rola'>Moral - ${moral}</h2>${coluna}${PrintResult}`
                         });
                     }
-                    let dado = await new Roll(formulaD).evaluate();
+                    let dado = await new Roll(formulaD).evaluate({async: false});
                     col_tab = tabela_resol.find(h => h[0] == sobra);
                     resultado = col_tab[dado.total];
                     if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
@@ -348,7 +349,7 @@ export default class tagmarAltSheet extends ActorSheet {
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     await dado.toMessage({
-                        user: game.user._id,
+                        user: game.user.id,
                         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                         flavor: `<h2 class='mediaeval rola'>Moral - ${moral}</h2>${coluna}${PrintResult}`
                     });
@@ -543,7 +544,7 @@ export default class tagmarAltSheet extends ActorSheet {
         if (valor_teste < -7) valor_teste = -7;
         if (valor_teste >= -7) {
             if (valor_teste <= 20) {
-                let r = await new Roll("1d20").evaluate();
+                let r = await new Roll("1d20").evaluate({async: false});
                 let col_tab = tabela_resol.find(h => h[0] == valor_teste);
                 let resultado = col_tab[r.total];
                 if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
@@ -555,7 +556,7 @@ export default class tagmarAltSheet extends ActorSheet {
                 else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
                 let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                 await r.toMessage({
-                    user: game.user._id,
+                    user: game.user.id,
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                     flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                 });
@@ -564,7 +565,7 @@ export default class tagmarAltSheet extends ActorSheet {
                 if (valor_hab == 0) {
                     let vezes = valor_teste / 20;
                     for (let x = 0; x < vezes; x++){
-                        let r = await new Roll("1d20").evaluate();
+                        let r = await new Roll("1d20").evaluate({async: false});
                         let col_tab = tabela_resol.find(h => h[0] == 20);
                         let resultado = col_tab[r.total];
                         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
@@ -576,7 +577,7 @@ export default class tagmarAltSheet extends ActorSheet {
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         await r.toMessage({
-                            user: game.user._id,
+                            user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                             flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                         });
@@ -585,7 +586,7 @@ export default class tagmarAltSheet extends ActorSheet {
                     let vezes = parseInt(valor_teste / 20);
                     let sobra = valor_teste % 20;
                     for (let x = 0; x < vezes; x++){
-                        let r = await new Roll("1d20").evaluate();
+                        let r = await new Roll("1d20").evaluate({async: false});
                         let col_tab = tabela_resol.find(h => h[0] == 20);
                         let resultado = col_tab[r.total];
                         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
@@ -597,12 +598,12 @@ export default class tagmarAltSheet extends ActorSheet {
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         await r.toMessage({
-                            user: game.user._id,
+                            user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                             flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                         });
                     }
-                    let r = await new Roll("1d20").evaluate();
+                    let r = await new Roll("1d20").evaluate({async: false});
                     let col_tab = tabela_resol.find(h => h[0] == sobra);
                     let resultado = col_tab[r.total];
                     if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
@@ -614,7 +615,7 @@ export default class tagmarAltSheet extends ActorSheet {
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     await r.toMessage({
-                        user: game.user._id,
+                        user: game.user.id,
                         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                         flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                     });
@@ -659,7 +660,7 @@ export default class tagmarAltSheet extends ActorSheet {
         else if (def_ataq == -14 || def_ataq == -15) valorSucess = 19;
         else if (def_ataq <= -16) valorSucess = 20;
         const r = new Roll("1d20");
-        r.evaluate();
+        r.evaluate({async: false});
         const Dresult = r.total;
         if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:blue;'>SUCESSO</h1>";
@@ -667,7 +668,7 @@ export default class tagmarAltSheet extends ActorSheet {
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:red;'>FRACASSO</h1>";
         }  
         r.toMessage({
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<h2 class="mediaeval rola">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Magía: ${valorDefI}</h3>${stringSucesso}`
         });
@@ -715,7 +716,7 @@ export default class tagmarAltSheet extends ActorSheet {
         else if (def_ataq == -14 || def_ataq == -15) valorSucess = 19;
         else if (def_ataq <= -16) valorSucess = 20;
         const r = new Roll("1d20");
-        r.evaluate();
+        r.evaluate({async: false});
         const Dresult = r.total;
         if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:blue;'>SUCESSO</h1>";
@@ -723,7 +724,7 @@ export default class tagmarAltSheet extends ActorSheet {
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:red;'>FRACASSO</h1>";
         }  
         r.toMessage({
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<h2 class="mediaeval rola">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Física: ${valorDefI}</h3>${stringSucesso}`
         });
@@ -912,7 +913,7 @@ export default class tagmarAltSheet extends ActorSheet {
     _displayRaca(event) {
         const racaData = this.raca;
         let chatData = {
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({
                 actor: this.actor
               })
@@ -924,7 +925,7 @@ export default class tagmarAltSheet extends ActorSheet {
     _displayProf(event) {
         const profData = this.profissao;
         let chatData = {
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({
                 actor: this.actor
               })
@@ -1031,7 +1032,7 @@ export default class tagmarAltSheet extends ActorSheet {
         const item = this.actor.items.get(li.data("itemId"));
         let dupi = duplicate(item);
         dupi.name = dupi.name + "(Cópia)";
-        this.actor.createEmbeddedEntity("OwnedItem", dupi);
+        this.actor.createEmbeddedDocuments("Item", [dupi]);
     }
 
     _edtDesc(event) {
@@ -1178,6 +1179,7 @@ export default class tagmarAltSheet extends ActorSheet {
 
     _attCargaAbsorcaoDefesa(data, updatePers) {
         if (!this.options.editable) return;
+        const actorSheet = data.actor;
         var actor_carga = 0;    // Atualiza Carga e verifica Sobrecarga
         var cap_transp = 0;
         var cap_usada = 0;
@@ -1185,8 +1187,8 @@ export default class tagmarAltSheet extends ActorSheet {
         var def_pasVal = 0;
         var def_pasCat = "";
         
-        if (data.actor.defesas.length > 0){
-            data.actor.defesas.forEach(function(item){
+        if (actorSheet.defesas.length > 0){
+            actorSheet.defesas.forEach(function(item){
                 //actor_carga += item.data.peso;
                 absorcao += item.data.absorcao;
                 def_pasVal += item.data.defesa_base.valor;
@@ -1195,26 +1197,27 @@ export default class tagmarAltSheet extends ActorSheet {
                 }
             });
         }
-        if (data.actor.pertences.length > 0){
-            data.actor.pertences.forEach(function(item){
+        if (actorSheet.pertences.length > 0){
+            actorSheet.pertences.forEach(function(item){
                 actor_carga += item.data.peso * item.data.quant;
             });
         }
-        if (data.actor.transportes.length > 0){
-            data.actor.transportes.forEach(function(item){
+        if (actorSheet.transportes.length > 0){
+            actorSheet.transportes.forEach(function(item){
                 cap_transp += item.data.capacidade.carga;
             });
         }
-        if (data.actor.pertences_transporte.length > 0){
-            data.actor.pertences_transporte.forEach(function(item){
+        if (actorSheet.pertences_transporte.length > 0){
+            actorSheet.pertences_transporte.forEach(function(item){
                 cap_usada += item.data.peso * item.data.quant;
             });
         }
         
         var def_atiVal = def_pasVal + this.actor.data.data.atributos.AGI;
         if (this.efeitos.length > 0) {
-            for (let efeito of this.efeitos) {
-                if (efeito.data.atributo == "DEF" && efeito.data.ativo) {
+            let apl = this.efeitos.filter(e => (e.data.atributo == "DEF" || e.data.atributo == "ABS") && e.data.ativo);
+            for (let efeito of apl) {
+                if (efeito.data.atributo == "DEF") {
                     if (efeito.data.tipo == "+") {
                         def_pasVal += efeito.data.valor;
                         def_atiVal += efeito.data.valor;
@@ -1228,7 +1231,7 @@ export default class tagmarAltSheet extends ActorSheet {
                         def_pasVal = def_pasVal / efeito.data.valor;
                         def_atiVal = def_atiVal / efeito.data.valor;
                     }
-                } else if (efeito.data.atributo == "ABS" && efeito.data.ativo) {
+                } else if (efeito.data.atributo == "ABS") {
                     if (efeito.data.tipo == "+") {
                         absorcao += efeito.data.valor;
                     } else if (efeito.data.tipo == "-") {
@@ -1242,6 +1245,7 @@ export default class tagmarAltSheet extends ActorSheet {
             }
         }
         const actorData = this.actor.data.data;
+        const actorSheetData = actorSheet.data;
         if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao) {
             updatePers["data.d_passiva.valor"] = def_pasVal;
             updatePers["data.d_passiva.categoria"] = def_pasCat;
@@ -1262,12 +1266,12 @@ export default class tagmarAltSheet extends ActorSheet {
             }
         }
         let carga_max = 0;
-        if (data.actor.data.atributos.FOR >= 1) {
-            carga_max = (data.actor.data.atributos.FOR * 20) + 20;
-            if (data.actor.data.carga.value > carga_max) {
-                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != data.actor.data.carga.value - carga_max) {
+        if (actorSheetData.data.atributos.FOR >= 1) {
+            carga_max = (actorSheetData.data.atributos.FOR * 20) + 20;
+            if (actorSheetData.data.carga.value > carga_max) {
+                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != actorSheetData.data.carga.value - carga_max) {
                     updatePers["data.carga.sobrecarga"] = true;
-                    updatePers["data.carga.valor_s"] = data.actor.data.carga.value - carga_max;
+                    updatePers["data.carga.valor_s"] = actorSheetData.data.carga.value - carga_max;
                 }
             } else {
                 if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
@@ -1277,10 +1281,10 @@ export default class tagmarAltSheet extends ActorSheet {
             }
         } else {
             carga_max = 20;
-            if (data.actor.data.carga.value > carga_max) {
-                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != data.actor.data.carga.value - carga_max) {
+            if (actorSheetData.data.carga.value > carga_max) {
+                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != actorSheetData.data.carga.value - carga_max) {
                     updatePers["data.carga.sobrecarga"] = true;
-                    updatePers["data.carga.valor_s"] = data.actor.data.carga.value - carga_max;
+                    updatePers["data.carga.valor_s"] = actorSheetData.data.carga.value - carga_max;
                 }
             } else {
                 if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
@@ -1294,31 +1298,33 @@ export default class tagmarAltSheet extends ActorSheet {
     _attProfissao(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
+        const actorSheetData = sheetData.actor.data;
         if (actorData.profissao) {
             const profissaoData = actorData.profissao;
-            const max_hab = profissaoData.data.p_aquisicao.p_hab + Math.floor(actorData.data.estagio / 2);
+            const max_hab = profissaoData.data.p_aquisicao.p_hab + Math.floor(actorSheetData.data.estagio / 2);
             const atrib_magia = profissaoData.data.atrib_mag;
-            let pontos_hab = profissaoData.data.p_aquisicao.p_hab * actorData.data.estagio;
+            let pontos_hab = profissaoData.data.p_aquisicao.p_hab * actorSheetData.data.estagio;
             const grupo_pen = profissaoData.data.grupo_pen;
-            const hab_nata = actorData.data.hab_nata;
-            let pontos_tec = profissaoData.data.p_aquisicao.p_tec * actorData.data.estagio;
+            const hab_nata = actorSheetData.data.hab_nata;
+            let pontos_tec = profissaoData.data.p_aquisicao.p_tec * actorSheetData.data.estagio;
             let pontos_mag = 0;
-            let pontos_gra = profissaoData.data.p_aquisicao.p_gra * actorData.data.estagio;
-            if (max_hab != actorData.data.max_hab) {
+            let pontos_gra = profissaoData.data.p_aquisicao.p_gra * actorSheetData.data.estagio;
+            if (max_hab != actorSheetData.data.max_hab) {
                 updatePers["data.max_hab"] = max_hab;
             }
             if (atrib_magia != "") {
-                if (atrib_magia == "INT") pontos_mag = ((2 * actorData.data.atributos.INT) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "AUR") pontos_mag = ((2 * actorData.data.atributos.AUR) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "CAR") pontos_mag = ((2 * actorData.data.atributos.CAR) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "FOR") pontos_mag = ((2 * actorData.data.atributos.FOR) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "FIS") pontos_mag = ((2 * actorData.data.atributos.FIS) + 7)  * actorData.data.estagio;
-                else if (atrib_magia == "AGI") pontos_mag = ((2 * actorData.data.atributos.AGI) + 7) * actorData.data.estagio;
-                else if (atrib_magia == "PER") pontos_mag = ((2 * actorData.data.atributos.PER) + 7) * actorData.data.estagio;
+                if (atrib_magia == "INT") pontos_mag = ((2 * actorSheetData.data.atributos.INT) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "AUR") pontos_mag = ((2 * actorSheetData.data.atributos.AUR) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "CAR") pontos_mag = ((2 * actorSheetData.data.atributos.CAR) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "FOR") pontos_mag = ((2 * actorSheetData.data.atributos.FOR) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "FIS") pontos_mag = ((2 * actorSheetData.data.atributos.FIS) + 7)  * actorSheetData.data.estagio;
+                else if (atrib_magia == "AGI") pontos_mag = ((2 * actorSheetData.data.atributos.AGI) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "PER") pontos_mag = ((2 * actorSheetData.data.atributos.PER) + 7) * actorSheetData.data.estagio;
             } else pontos_mag = 0;
             if (this.efeitos.length > 0){
-                for (let efeito of this.efeitos) {
-                    if (efeito.data.atributo == "PHAB" && efeito.data.ativo) {
+                let apl = this.efeitos.filter(e => (e.data.atributo == "PHAB" || e.data.atributo == "PTEC" || e.data.atributo == "PARM" || e.data.atributo == "PMAG") && e.data.ativo);
+                for (let efeito of apl) {
+                    if (efeito.data.atributo == "PHAB") {
                         if (efeito.data.tipo == "+") {
                             pontos_hab += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -1328,7 +1334,7 @@ export default class tagmarAltSheet extends ActorSheet {
                         } else if (efeito.data.tipo == "/") {
                             pontos_hab = pontos_hab / efeito.data.valor;
                         }
-                    } else if (efeito.data.atributo == "PTEC" && efeito.data.ativo) {
+                    } else if (efeito.data.atributo == "PTEC") {
                         if (efeito.data.tipo == "+") {
                             pontos_tec += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -1338,7 +1344,7 @@ export default class tagmarAltSheet extends ActorSheet {
                         } else if (efeito.data.tipo == "/") {
                             pontos_tec = pontos_tec / efeito.data.valor;
                         }
-                    } else if (efeito.data.atributo == "PARM" && efeito.data.ativo) {
+                    } else if (efeito.data.atributo == "PARM") {
                         if (efeito.data.tipo == "+") {
                             pontos_gra += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -1348,7 +1354,7 @@ export default class tagmarAltSheet extends ActorSheet {
                         } else if (efeito.data.tipo == "/") {
                             pontos_gra = pontos_gra / efeito.data.valor;
                         }
-                    } else if (efeito.data.atributo == "PMAG" && efeito.data.ativo) {
+                    } else if (efeito.data.atributo == "PMAG") {
                         if (efeito.data.tipo == "+") {
                             pontos_mag += efeito.data.valor;
                         } else if (efeito.data.tipo == "-") {
@@ -1362,22 +1368,22 @@ export default class tagmarAltSheet extends ActorSheet {
                 }
             }
             if (pontos_gra > 0) {
-                pontos_gra -= actorData.data.grupos.CD;
-                pontos_gra -= actorData.data.grupos.CI;
-                pontos_gra -= actorData.data.grupos.CL;
-                pontos_gra -= actorData.data.grupos.CLD;
-                pontos_gra -= actorData.data.grupos.EL;
-                pontos_gra -= actorData.data.grupos.CmE * 2;
-                pontos_gra -= actorData.data.grupos.CmM * 2;
-                pontos_gra -= actorData.data.grupos.EM * 2;
-                pontos_gra -= actorData.data.grupos.PmA * 2;
-                pontos_gra -= actorData.data.grupos.PmL * 2;
-                pontos_gra -= actorData.data.grupos.CpE * 3;
-                pontos_gra -= actorData.data.grupos.CpM * 3;
-                pontos_gra -= actorData.data.grupos.EP * 3;
-                pontos_gra -= actorData.data.grupos.PP * 3;
-                pontos_gra -= actorData.data.grupos.PpA * 3;
-                pontos_gra -= actorData.data.grupos.PpB * 3;
+                pontos_gra -= actorSheetData.data.grupos.CD;
+                pontos_gra -= actorSheetData.data.grupos.CI;
+                pontos_gra -= actorSheetData.data.grupos.CL;
+                pontos_gra -= actorSheetData.data.grupos.CLD;
+                pontos_gra -= actorSheetData.data.grupos.EL;
+                pontos_gra -= actorSheetData.data.grupos.CmE * 2;
+                pontos_gra -= actorSheetData.data.grupos.CmM * 2;
+                pontos_gra -= actorSheetData.data.grupos.EM * 2;
+                pontos_gra -= actorSheetData.data.grupos.PmA * 2;
+                pontos_gra -= actorSheetData.data.grupos.PmL * 2;
+                pontos_gra -= actorSheetData.data.grupos.CpE * 3;
+                pontos_gra -= actorSheetData.data.grupos.CpM * 3;
+                pontos_gra -= actorSheetData.data.grupos.EP * 3;
+                pontos_gra -= actorSheetData.data.grupos.PP * 3;
+                pontos_gra -= actorSheetData.data.grupos.PpA * 3;
+                pontos_gra -= actorSheetData.data.grupos.PpB * 3;
 
             }
             for (let i = 0; i < actorData.tecnicas.length; i++) {
@@ -1391,9 +1397,9 @@ export default class tagmarAltSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_prof[i].data.custo + 1) * actorData.h_prof[i].data.nivel;
                 } else if (hab_nata == actorData.h_prof[i].name) {
                     //pontos_hab -= 0;
-                    let habilidade = this.actor.items.get(actorData.h_prof[i]._id);
+                    const habilidade = this.actor.items.get(actorData.h_prof[i]._id);
                     habilidade.update({
-                        "data.nivel": actorData.data.estagio
+                        "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
                     pontos_hab -= actorData.h_prof[i].data.custo * actorData.h_prof[i].data.nivel;
@@ -1403,9 +1409,9 @@ export default class tagmarAltSheet extends ActorSheet {
                 if (grupo_pen == "manobra") {
                     pontos_hab -= (actorData.h_man[i].data.custo + 1) * actorData.h_man[i].data.nivel;
                 } else if (hab_nata == actorData.h_man[i].name) {
-                    const habilidade = this.actor.items.get(actorData.h_man[i]._id);
+                    const habilidade =  this.actor.items.get(actorData.h_man[i]._id);
                     habilidade.update({
-                        "data.nivel": actorData.data.estagio
+                        "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
                     pontos_hab -= actorData.h_man[i].data.custo * actorData.h_man[i].data.nivel;
@@ -1417,7 +1423,7 @@ export default class tagmarAltSheet extends ActorSheet {
                 } else if (hab_nata == actorData.h_con[i].name) {
                     const habilidade = this.actor.items.get(actorData.h_con[i]._id);
                     habilidade.update({
-                        "data.nivel": actorData.data.estagio
+                        "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
                     pontos_hab -= actorData.h_con[i].data.custo * actorData.h_con[i].data.nivel;
@@ -1427,9 +1433,9 @@ export default class tagmarAltSheet extends ActorSheet {
                 if (grupo_pen == "subterfugio") {
                     pontos_hab -= (actorData.h_sub[i].data.custo + 1) * actorData.h_sub[i].data.nivel;
                 } else if (hab_nata == actorData.h_sub[i].name) {
-                    const habilidade = this.actor.items.get(actorData.h_sub[i]._id);
+                    const habilidade =  this.actor.items.get(actorData.h_sub[i]._id);
                     habilidade.update({
-                        "data.nivel": actorData.data.estagio
+                        "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
                     pontos_hab -= actorData.h_sub[i].data.custo * actorData.h_sub[i].data.nivel;
@@ -1439,9 +1445,9 @@ export default class tagmarAltSheet extends ActorSheet {
                 if (grupo_pen == "influencia") {
                     pontos_hab -= (actorData.h_inf[i].data.custo + 1) * actorData.h_inf[i].data.nivel;
                 } else if (hab_nata == actorData.h_inf[i].name) {
-                    const habilidade = this.actor.items.get(actorData.h_inf[i]._id);
+                    const habilidade =  this.actor.items.get(actorData.h_inf[i]._id);
                     habilidade.update({
-                        "data.nivel": actorData.data.estagio
+                        "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
                     pontos_hab -= actorData.h_inf[i].data.custo * actorData.h_inf[i].data.nivel;
@@ -1453,25 +1459,25 @@ export default class tagmarAltSheet extends ActorSheet {
                 } else if (hab_nata == actorData.h_geral[i].name) {
                     const habilidade = this.actor.items.get(actorData.h_geral[i]._id);
                     habilidade.update({
-                        "data.nivel": actorData.data.estagio
+                        "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
                     pontos_hab -= actorData.h_geral[i].data.custo * actorData.h_geral[i].data.nivel;
                 }
             }
-            if (pontos_hab != actorData.data.pontos_aqui) {
+            if (pontos_hab != actorSheetData.data.pontos_aqui) {
                 updatePers["data.pontos_aqui"] = pontos_hab;
             }
-            if (pontos_tec != actorData.data.pontos_tec) {
+            if (pontos_tec != actorSheetData.data.pontos_tec) {
                 updatePers["data.pontos_tec"] = pontos_tec;
             }
-            if (pontos_gra != actorData.data.pontos_comb) {
+            if (pontos_gra != actorSheetData.data.pontos_comb) {
                 updatePers["data.pontos_comb"] = pontos_gra;
             }
-            if (pontos_mag != actorData.data.pontos_mag) {
+            if (pontos_mag != actorSheetData.data.pontos_mag) {
                 updatePers["data.pontos_mag"] = pontos_mag;
             }
-            if  (profissaoData.name != actorData.data.profissao) {
+            if  (profissaoData.name != actorSheetData.data.profissao) {
                 updatePers["data.profissao"] = profissaoData.name;
             }
         }
@@ -1519,11 +1525,11 @@ export default class tagmarAltSheet extends ActorSheet {
                 if (item.data.inTransport) pertences_transporte.push(item);
                 else pertences.push(item);
             } else if (item.type == "Raca") {
-                if (racas.length >= 1) this.actor.deleteEmbeddedEntity("OwnedItem", item._id);
+                if (racas.length >= 1) this.actor.deleteEmbeddedDocuments("Item", [item._id]);
                 else racas.push(item);
                 
             } else if (item.type == "Profissao") {
-                if (profissoes.length >= 1) this.actor.deleteEmbeddedEntity("OwnedItem", item._id);
+                if (profissoes.length >= 1) this.actor.deleteEmbeddedDocuments("Item", [item._id]);
                 else profissoes.push(item);
             } else if (item.type == "Efeito") {
                 efeitos.push(item);
@@ -1661,7 +1667,7 @@ export default class tagmarAltSheet extends ActorSheet {
         const actorData = sheetData.actor;
         if (actorData.raca) {
             const racaData = actorData.raca.data;
-            if (actorData.data.raca != actorData.raca.name)
+            if (actorData.data.data.raca != actorData.raca.name)
             {
                 updatePers['data.raca'] = actorData.raca.name;
                 updatePers['data.mod_racial.INT'] = racaData.mod_racial.INT;
@@ -1689,7 +1695,7 @@ export default class tagmarAltSheet extends ActorSheet {
 
     _setPontosRaca(sheetData, updatePers){
         if (!this.options.editable) return;
-        const actorData = sheetData.actor;
+        const actorData = sheetData.actor.data;
         const raca = actorData.data.raca;
         const estagio = actorData.data.estagio;
         let pontos = 14;
@@ -1797,7 +1803,7 @@ export default class tagmarAltSheet extends ActorSheet {
 
     _prepareValorTeste(sheetData, updatePers){
         if (!this.options.editable) return;
-        const actorData = sheetData.actor;
+        const actorData = sheetData.actor.data;
         if (actorData.data.valor_teste.INT != actorData.data.atributos.INT*4 || actorData.data.valor_teste.AUR != actorData.data.atributos.AUR*4 || actorData.data.valor_teste.CAR != actorData.data.atributos.CAR*4 || actorData.data.valor_teste.FOR != actorData.data.atributos.FOR*4 || actorData.data.valor_teste.FIS != actorData.data.atributos.FIS*4 || actorData.data.valor_teste.AGI != actorData.data.atributos.AGI*4 || actorData.data.valor_teste.PER != actorData.data.atributos.PER*4) {
             updatePers["data.valor_teste.INT"] = actorData.data.atributos.INT*4;
             updatePers["data.valor_teste.AUR"] = actorData.data.atributos.AUR*4;

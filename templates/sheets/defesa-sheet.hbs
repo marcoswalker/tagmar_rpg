@@ -20,8 +20,8 @@
                             <label><h4 class="mediaeval">Defesa Base:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <select class="mediaeval" name="data.defesa_base.tipo" type="text" value="{{data.defesa_base.tipo}}" data-dtype="String" height="30" style="font-size: 110%;">
-                                {{#select data.defesa_base.tipo}}
+                            <select class="mediaeval" name="data.defesa_base.tipo" type="text" value="{{data.data.defesa_base.tipo}}" data-dtype="String" height="30" style="font-size: 110%;">
+                                {{#select data.data.defesa_base.tipo}}
                                 <option value=""></option>
                                 <option value="L">L</option>
                                 <option value="M">M</option>
@@ -30,13 +30,13 @@
                             </select>    
                         </div>
                         <div class="col-md-2">
-                            <input name="data.defesa_base.valor" type="number" value="{{data.defesa_base.valor}}" height="30"/>
+                            <input name="data.defesa_base.valor" type="number" value="{{data.data.defesa_base.valor}}" height="30"/>
                         </div>
                         <div class="col-md-3">
                             <label><h4 class="mediaeval">Físico Mín:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.fis_min" type="number" value="{{data.fis_min}}" height="30"/>
+                            <input name="data.fis_min" type="number" value="{{data.data.fis_min}}" height="30"/>
                         </div>
                         
                     </div>
@@ -47,13 +47,13 @@
                             <label><h4 class="mediaeval">Absorção:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.absorcao" type="number" value="{{data.absorcao}}" height="30"/>
+                            <input name="data.absorcao" type="number" value="{{data.data.absorcao}}" height="30"/>
                         </div>
                         <div class="col-md-3">
                             <label><h4 class="mediaeval">Força Mín:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.for_min" type="number" value="{{data.for_min}}" height="30"/>
+                            <input name="data.for_min" type="number" value="{{data.data.for_min}}" height="30"/>
                         </div>
                     </div>
 
@@ -62,7 +62,7 @@
                             <label><h4 class="mediaeval">Descrição:</h4></label>
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;">{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;">{{data.data.descricao}}</textarea>
                         </div>
                     </div>
 

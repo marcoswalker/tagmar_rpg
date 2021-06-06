@@ -20,7 +20,7 @@
                     <label><h1 class="fairyDust" style="padding-top: 15px;">Estágio:</h1></label>
                 </div>
                 <div class="col-md-2 col-8">
-                    <h1 class="fairyDust"><input class="ipEstagio" name="data.estagio" type="number" value="{{data.estagio}}" style="text-align: center";/></h1>
+                    <h1 class="fairyDust"><input class="ipEstagio" name="data.estagio" type="number" value="{{data.data.estagio}}" style="text-align: center";/></h1>
                 </div>  
             </div>
         </div>
@@ -44,13 +44,13 @@
                         <label><h4 class="mediaeval">Altura(m):</h4></label>
                     </div>
                     <div class="col-md-2 col-8">
-                        <input name="data.altura" type="text" value="{{data.altura}}" height="30" title="Altura do personagem, não a sua."/>
+                        <input name="data.altura" type="text" value="{{data.data.altura}}" height="30" title="Altura do personagem, não a sua."/>
                     </div>
                     <div class="col-md-1 col-4">
                         <label><h4 class="mediaeval">Peso(Kg):</h4></label>
                     </div>
                     <div class="col-md-2 col-8">
-                        <input style="margin-left: 25px;"  name="data.peso" type="number" value="{{data.peso}}" height="30" title="Não adianta encolher a barriga."/>
+                        <input style="margin-left: 25px;"  name="data.peso" type="number" value="{{data.data.peso}}" height="30" title="Não adianta encolher a barriga."/>
                     </div>
                     <div class="col-md-5"></div>
                 </div>
@@ -69,23 +69,23 @@
                             </tr>
                             <tr>
                                 <td class="mediaeval">Ajuste</td>
-                                <td><input title="Atributo final do personagem." name="data.atributos.INT" type="number" value="{{data.atributos.INT}}"/></td>
-                                <td><input title="Atributo final do personagem." class="ipAtrAUR" name="data.atributos.AUR" type="number" value="{{data.atributos.AUR}}"/></td>
-                                <td><input title="Atributo final do personagem." name="data.atributos.CAR" type="number" value="{{data.atributos.CAR}}" /></td>
-                                <td><input title="Atributo final do personagem." name="data.atributos.FOR" type="number" value="{{data.atributos.FOR}}" /></td>
-                                <td><input title="Atributo final do personagem." class="ipAtrFIS" name="data.atributos.FIS" type="number" value="{{data.atributos.FIS}}" /></td>
-                                <td><input title="Atributo final do personagem." name="data.atributos.AGI" type="number" value="{{data.atributos.AGI}}" /></td>
-                                <td><input title="Atributo final do personagem." name="data.atributos.PER" type="number" value="{{data.atributos.PER}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.INT" type="number" value="{{data.data.atributos.INT}}"/></td>
+                                <td><input title="Atributo final do personagem." class="ipAtrAUR" name="data.atributos.AUR" type="number" value="{{data.data.atributos.AUR}}"/></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.CAR" type="number" value="{{data.data.atributos.CAR}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.FOR" type="number" value="{{data.data.atributos.FOR}}" /></td>
+                                <td><input title="Atributo final do personagem." class="ipAtrFIS" name="data.atributos.FIS" type="number" value="{{data.data.atributos.FIS}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.AGI" type="number" value="{{data.data.atributos.AGI}}" /></td>
+                                <td><input title="Atributo final do personagem." name="data.atributos.PER" type="number" value="{{data.data.atributos.PER}}" /></td>
                             </tr>
                             <tr>
                                 <td class="mediaeval">Valor Para Teste</td>
-                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.INT" type="number" value="{{data.valor_teste.INT}}"/></td>
-                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.AUR" type="number" value="{{data.valor_teste.AUR}}"/></td>
-                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.CAR" type="number" value="{{data.valor_teste.CAR}}"/></td>
-                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.FOR" type="number" value="{{data.valor_teste.FOR}}"/></td>
-                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.FIS" type="number" value="{{data.valor_teste.FIS}}"/></td>
-                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.AGI" type="number" value="{{data.valor_teste.AGI}}"/></td>
-                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.PER" type="number" value="{{data.valor_teste.PER}}"/></td>
+                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.INT" type="number" value="{{data.data.valor_teste.INT}}"/></td>
+                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.AUR" type="number" value="{{data.data.valor_teste.AUR}}"/></td>
+                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.CAR" type="number" value="{{data.data.valor_teste.CAR}}"/></td>
+                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.FOR" type="number" value="{{data.data.valor_teste.FOR}}"/></td>
+                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.FIS" type="number" value="{{data.data.valor_teste.FIS}}"/></td>
+                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.AGI" type="number" value="{{data.data.valor_teste.AGI}}"/></td>
+                                <td><input title="Simplesmente 4 vezes o valor do atributo." name="data.valor_teste.PER" type="number" value="{{data.data.valor_teste.PER}}"/></td>
                             </tr>
                         </table>
                     </div>
@@ -131,22 +131,22 @@
                                 <td><a class="addGrupoArmas" data-item-id="PpB"><i class="fas fa-plus-circle"></i></a></td>
                             </tr>
                             <tr style="text-align: center;">
-                                <td><input title="Combate Desarmado" name="data.grupos.CD" type="number" value="{{data.grupos.CD}}" readonly/></td>
-                                <td><input title="Combate de Imobilização" name="data.grupos.CI" type="number" value="{{data.grupos.CI}}" readonly/></td>
-                                <td><input title="Corte Leve" name="data.grupos.CL" type="number" value="{{data.grupos.CL}}" readonly/></td>
-                                <td><input title="Combate Leve à Distância" name="data.grupos.CLD" type="number" value="{{data.grupos.CLD}}" readonly/></td>
-                                <td><input title="Esmagamento Leve" name="data.grupos.EL" type="number" value="{{data.grupos.EL}}"readonly /></td>
-                                <td><input title="Corte Médio Com Espadas" name="data.grupos.CmE" type="number" value="{{data.grupos.CmE}}" readonly/></td>
-                                <td><input title="Corte Médio Com Machados" name="data.grupos.CmM" type="number" value="{{data.grupos.CmM}}" readonly/></td>
-                                <td><input title="Esmagamento Médio" name="data.grupos.EM" type="number" value="{{data.grupos.EM}}" readonly/></td>
-                                <td><input title="Penetração Média Com Arcos" name="data.grupos.PmA" type="number" value="{{data.grupos.PmA}}" readonly/></td>
-                                <td><input title="Penetração Média Com Lanças" name="data.grupos.PmL" type="number" value="{{data.grupos.PmL}}" readonly/></td>
-                                <td><input title="Corte Pesado Com Espadas" name="data.grupos.CpE" type="number" value="{{data.grupos.CpE}}" readonly/></td>
-                                <td><input title="Corte Pesado Com Machados" name="data.grupos.CpM" type="number" value="{{data.grupos.CpM}}" readonly/></td>
-                                <td><input title="Esmagamento Pesado" name="data.grupos.EP" type="number" value="{{data.grupos.EP}}" readonly/></td>
-                                <td><input title="Penetração Pesada" name="data.grupos.PP" type="number" value="{{data.grupos.PP}}" readonly/></td>
-                                <td><input title="Pentração Pesado Com Arcos" name="data.grupos.PpA" type="number" value="{{data.grupos.PpA}}" readonly/></td>
-                                <td><input title="Pentração Pesado Com Bestas" name="data.grupos.PpB" type="number" value="{{data.grupos.PpB}}" readonly/></td>
+                                <td><input title="Combate Desarmado" name="data.grupos.CD" type="number" value="{{data.data.grupos.CD}}" readonly/></td>
+                                <td><input title="Combate de Imobilização" name="data.grupos.CI" type="number" value="{{data.data.grupos.CI}}" readonly/></td>
+                                <td><input title="Corte Leve" name="data.grupos.CL" type="number" value="{{data.data.grupos.CL}}" readonly/></td>
+                                <td><input title="Combate Leve à Distância" name="data.grupos.CLD" type="number" value="{{data.data.grupos.CLD}}" readonly/></td>
+                                <td><input title="Esmagamento Leve" name="data.grupos.EL" type="number" value="{{data.data.grupos.EL}}"readonly /></td>
+                                <td><input title="Corte Médio Com Espadas" name="data.grupos.CmE" type="number" value="{{data.data.grupos.CmE}}" readonly/></td>
+                                <td><input title="Corte Médio Com Machados" name="data.grupos.CmM" type="number" value="{{data.data.grupos.CmM}}" readonly/></td>
+                                <td><input title="Esmagamento Médio" name="data.grupos.EM" type="number" value="{{data.data.grupos.EM}}" readonly/></td>
+                                <td><input title="Penetração Média Com Arcos" name="data.grupos.PmA" type="number" value="{{data.data.grupos.PmA}}" readonly/></td>
+                                <td><input title="Penetração Média Com Lanças" name="data.grupos.PmL" type="number" value="{{data.data.grupos.PmL}}" readonly/></td>
+                                <td><input title="Corte Pesado Com Espadas" name="data.grupos.CpE" type="number" value="{{data.data.grupos.CpE}}" readonly/></td>
+                                <td><input title="Corte Pesado Com Machados" name="data.grupos.CpM" type="number" value="{{data.data.grupos.CpM}}" readonly/></td>
+                                <td><input title="Esmagamento Pesado" name="data.grupos.EP" type="number" value="{{data.data.grupos.EP}}" readonly/></td>
+                                <td><input title="Penetração Pesada" name="data.grupos.PP" type="number" value="{{data.data.grupos.PP}}" readonly/></td>
+                                <td><input title="Pentração Pesado Com Arcos" name="data.grupos.PpA" type="number" value="{{data.data.grupos.PpA}}" readonly/></td>
+                                <td><input title="Pentração Pesado Com Bestas" name="data.grupos.PpB" type="number" value="{{data.data.grupos.PpB}}" readonly/></td>
                             </tr>
                             <tr style="text-align: center;">
                                 <td><a class="subGrupoArmas" data-item-id="CD"><i class="fas fa-minus-circle"></i></a></td>
@@ -179,13 +179,13 @@
                                 </tr>
                                 <tr style="text-align: left;">
                                     <th class="mediaeval" width="80px">D.Ativa</th>
-                                    <td><input name="data.d_ativa.categoria" type="text" value="{{data.d_ativa.categoria}}" title="Tipo da defesa."/></td>
-                                    <td><input name="data.d_ativa.valor" type="number" value="{{data.d_ativa.valor}}" title="Valor da defesa ativa."/></td>
+                                    <td><input name="data.d_ativa.categoria" type="text" value="{{data.data.d_ativa.categoria}}" title="Tipo da defesa."/></td>
+                                    <td><input name="data.d_ativa.valor" type="number" value="{{data.data.d_ativa.valor}}" title="Valor da defesa ativa."/></td>
                                 </tr>
                                 <tr style="text-align: left;">
                                     <th class="mediaeval">D.Passiva</th>
-                                    <td><input name="data.d_passiva.categoria" type="text" value="{{data.d_passiva.categoria}}" title="Tipo da defesa."/></td>
-                                    <td><input name="data.d_passiva.valor" type="number" value="{{data.d_passiva.valor}}" title="Valor da defesa passiva."/></td>
+                                    <td><input name="data.d_passiva.categoria" type="text" value="{{data.data.d_passiva.categoria}}" title="Tipo da defesa."/></td>
+                                    <td><input name="data.d_passiva.valor" type="number" value="{{data.data.d_passiva.valor}}" title="Valor da defesa passiva."/></td>
                                 </tr>
                             </table>
                         </div>
@@ -201,19 +201,19 @@
                             </tr>
                             <tr>
                                 <th class="mediaeval">Valor Máximo</th>
-                                <td> <input name="data.ef_npc.max" type="number" value="{{data.ef_npc.max}}" title="Que EF mixuruca."/> </td>
-                                <td> <input name="data.eh_npc.max" type="number" value="{{data.eh_npc.max}}" title="Energia Heróica"/> </td>
-                                <td> <input class="ipKarmaMax" name="data.karma_npc.max" type="number" value="{{data.karma_npc.max}}" title="Karma"/> </td>
-                                <td> <input name="data.focus.max" type="number" value="{{data.focus.max}}" title="Você tem Focus?"/> </td>
-                                <td> <input name="data.absorcao.max" type="number" value="{{data.absorcao.max}}" title="Está naqueles dias? Para máxima absorção use absorvente Intimus."/> </td>
+                                <td> <input name="data.ef_npc.max" type="number" value="{{data.data.ef_npc.max}}" title="Que EF mixuruca."/> </td>
+                                <td> <input name="data.eh_npc.max" type="number" value="{{data.data.eh_npc.max}}" title="Energia Heróica"/> </td>
+                                <td> <input class="ipKarmaMax" name="data.karma_npc.max" type="number" value="{{data.data.karma_npc.max}}" title="Karma"/> </td>
+                                <td> <input name="data.focus.max" type="number" value="{{data.data.focus.max}}" title="Você tem Focus?"/> </td>
+                                <td> <input name="data.absorcao.max" type="number" value="{{data.data.absorcao.max}}" title="Está naqueles dias? Para máxima absorção use absorvente Intimus."/> </td>
                             </tr>
                             <tr>
                                 <th class="mediaeval">Valor Atual</th>
-                                <td> <input name="data.ef_npc.value" type="number" value="{{data.ef_npc.value}}" title="Cuidado com um crítico.Sê vai morrer eim!" />  </td>
-                                <td> <input name="data.eh_npc.value" type="number" value="{{data.eh_npc.value}}" title="Aqui tem corajem!"/> </td>
-                                <td> <input name="data.karma_npc.value" type="number" value="{{data.karma_npc.value}}" title="Karma ou carma é um termo de uso religioso dentro das doutrinas budista, xintoísta, hinduísta, jainista, sique e teosófica. Em cada uma dessas doutrinas, o termo tem um sentido próprio. -Wikipédia"/> </td>
-                                <td> <input name="data.focus.value" type="number" value="{{data.focus.value}}" title="Focus 2013 semi-novo R$39.900,00."/> </td>
-                                <td> <input name="data.absorcao.value" type="number" value="{{data.absorcao.value}}" title="No seu caso é melhor usar fraldas Pampers."/> </td>
+                                <td> <input name="data.ef_npc.value" type="number" value="{{data.data.ef_npc.value}}" title="Cuidado com um crítico.Sê vai morrer eim!" />  </td>
+                                <td> <input name="data.eh_npc.value" type="number" value="{{data.data.eh_npc.value}}" title="Aqui tem corajem!"/> </td>
+                                <td> <input name="data.karma_npc.value" type="number" value="{{data.data.karma_npc.value}}" title="Karma ou carma é um termo de uso religioso dentro das doutrinas budista, xintoísta, hinduísta, jainista, sique e teosófica. Em cada uma dessas doutrinas, o termo tem um sentido próprio. -Wikipédia"/> </td>
+                                <td> <input name="data.focus.value" type="number" value="{{data.data.focus.value}}" title="Focus 2013 semi-novo R$39.900,00."/> </td>
+                                <td> <input name="data.absorcao.value" type="number" value="{{data.data.absorcao.value}}" title="No seu caso é melhor usar fraldas Pampers."/> </td>
                             </tr>
                         </table>
                         </div>
@@ -223,7 +223,7 @@
                                     <th class="mediaeval">Moral</th>
                                 </tr>
                                 <tr style="text-align: center;">
-                                    <td><input name="data.moral" type="number" value="{{data.moral}}" /></td>
+                                    <td><input name="data.moral" type="number" value="{{data.data.moral}}" /></td>
                                 </tr>
                                 <tr style="text-align: center;">
                                     <td><a class="rolarMoral" title="Rolar Moral"><i class="fas fa-dice-d20"></i></a></td>
@@ -242,36 +242,36 @@
                                     <th class="mediaeval">Iniciativa</th>
                                 </tr>
                                 <tr>
-                                    <td><input title="Velocidade Base." name="data.vb" type="number" value="{{data.vb}}" /></td> 
-                                    <td><input name="data.vbe" type="number" value="{{data.vbe}}" title="Você voa? Você nada? Coloca ai e não enche o saco!" /></td>
-                                    <td><input name="data.rf" type="number" value="{{data.rf}}" title="Resistência Física."/></td>
-                                    <td><input name="data.rm" type="number" value="{{data.rm}}" title="Resistência Magía."/></td>
-                                    <td><input name="data.iniciativa" type="number" value="{{data.iniciativa}}" title="Valor para testar Iniciativa."/></td>
+                                    <td><input title="Velocidade Base." name="data.vb" type="number" value="{{data.data.vb}}" /></td> 
+                                    <td><input name="data.vbe" type="number" value="{{data.data.vbe}}" title="Você voa? Você nada? Coloca ai e não enche o saco!" /></td>
+                                    <td><input name="data.rf" type="number" value="{{data.data.rf}}" title="Resistência Física."/></td>
+                                    <td><input name="data.rm" type="number" value="{{data.data.rm}}" title="Resistência Magía."/></td>
+                                    <td><input name="data.iniciativa" type="number" value="{{data.data.iniciativa}}" title="Valor para testar Iniciativa."/></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <th class="mediaeval">F.Ataque:</th>
-                                    <td><input class="F_Ataque" type="number" name='data.forca_ataque' value="{{data.forca_ataque}}" title="Força de Ataque para Teste de Resistência Física ou Magía."/></td> 
+                                    <td><input class="F_Ataque" type="number" name='data.forca_ataque' value="{{data.data.forca_ataque}}" title="Força de Ataque para Teste de Resistência Física ou Magía."/></td> 
                                 </tr>
                             </table>
                     </div>
                     <div class="col-md-6"></div>
                 </div>
                 <div class="row dados">
-                    {{#ifdf data.v_base 0}}
+                    {{#ifdf data.data.v_base 0}}
                     <div class="col-md-2">
                         <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>
                     </div>
                     <div class="col-md-10">
-                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String">{{data.descricao}}</textarea>
+                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String">{{data.data.descricao}}</textarea>
                     </div>
                     {{/ifdf}}
-                    {{#ifeq data.v_base 0}}
+                    {{#ifeq data.data.v_base 0}}
                     <div class="col-md-2">
                         <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>
                     </div>
                     <div class="col-md-10">
-                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String" disabled>{{data.descricao}}</textarea>
+                        <textarea class="mediaeval" name="data.descricao" style="height: 220px;font-size: 100%;" title="Escreve bastante ai." data-dtype="String" disabled>{{data.data.descricao}}</textarea>
                     </div>
                     {{/ifeq}}
                 </div>
@@ -290,13 +290,13 @@
                         <label><h4 class="mediaeval">Pontos Para Habilidades:</h4></label>
                     </div>
                     <div class="col-md-2 hiddenT">
-                        <input name="data.pontos_aqui" type="number" value="{{data.pontos_aqui}}" height="30" readonly/>
+                        <input name="data.pontos_aqui" type="number" value="{{data.data.pontos_aqui}}" height="30" readonly/>
                     </div>
                     <div class="col-md-3 col-6">
                         <label><h4 class="mediaeval">Bônus/Penalidade:</h4></label>
                     </div>
                     <div class="col-md-2 col-6">
-                        <input name="data.bonus_habil" type="number" value="{{data.bonus_habil}}" height="30" title="Bônus/Penalidade será aplicado a todas as habilidades.(Nenhum valor, preencher zero)"/>
+                        <input name="data.bonus_habil" type="number" value="{{data.data.bonus_habil}}" height="30" title="Bônus/Penalidade será aplicado a todas as habilidades.(Nenhum valor, preencher zero)"/>
                     </div>
                 </div>
                 <div class="row dados">
@@ -304,8 +304,8 @@
                         <label><h4 class="mediaeval">Habilidade Nata(<span style="color: gray;">{{actor.profissao.data.hab_nata}}</span>):</h4></label>
                     </div>
                     <div class="col-md-4 hiddenT">
-                        <select class="mediaeval" name="data.hab_nata" type="text" data-dtype="String" value="{{data.hab_nata}}" height="30" title="Selecione sua Habilidade Nata."/>
-                            {{#select data.hab_nata}}
+                        <select class="mediaeval" name="data.hab_nata" type="text" data-dtype="String" value="{{data.data.hab_nata}}" height="30" title="Selecione sua Habilidade Nata."/>
+                            {{#select data.data.hab_nata}}
                                 <option value=""></option>
                                 {{#each actor.h_prof as |h_prof|}}
                                     <option value="{{h_prof.name}}">{{h_prof.name}}</option>
@@ -329,7 +329,7 @@
                         </select>
                     </div>
                     <div class="col-md-4 hiddenT">
-                        <label class="mediaeval" style="text-align: right;">Máximo de Habilidades: {{data.max_hab}}</label>
+                        <label class="mediaeval" style="text-align: right;">Máximo de Habilidades: {{data.data.max_hab}}</label>
                     </div>
                 </div>
                 <div class="row dados">
@@ -479,12 +479,12 @@
                         <label><h4 class="mediaeval">Pontos para Técnicas de Combate:</h4></label>
                     </div>
                     <div class="col-md-2 hiddenT">
-                        <input name="data.pontos_tec" type="number" value="{{data.pontos_tec}}" height="30" readonly/>
+                        <input name="data.pontos_tec" type="number" value="{{data.data.pontos_tec}}" height="30" readonly/>
                     </div>
                     <div class="col-md-2 col-3 mediaeval">Def. Oponente:</div>
                     <div class="col-md-1 col-2">
-                        <select title="Tipo da defesa do oponente." class="mediaeval" name="data.inf_ataque.cat_def" type="text" value="{{data.inf_ataque.cat_def}}" data-dtype="String" height="30" style="font-size: 110%;">
-                            {{#select data.inf_ataque.cat_def}}
+                        <select title="Tipo da defesa do oponente." class="mediaeval" name="data.inf_ataque.cat_def" type="text" value="{{data.data.inf_ataque.cat_def}}" data-dtype="String" height="30" style="font-size: 110%;">
+                            {{#select data.data.inf_ataque.cat_def}}
                                 <option value="L">L</option>
                                 <option value="M">M</option>
                                 <option value="P">P</option>
@@ -492,13 +492,13 @@
                         </select>
                     </div>
                     <div class="col-md-1 col-2">
-                        <input title="Valor da defesa do oponente." name="data.inf_ataque.valor_def" type="number" value="{{data.inf_ataque.valor_def}}" height="30"/>
+                        <input title="Valor da defesa do oponente." name="data.inf_ataque.valor_def" type="number" value="{{data.data.inf_ataque.valor_def}}" height="30"/>
                     </div>
                     <div class="col-md-2 col-3">
                         <label><h4 class="mediaeval">Bônus/Penalidade:</h4></label>
                     </div>
                     <div class="col-md-1 col-2">
-                        <input title="Bônus/Penalidade será aplicado a todos os ataques.(Nenhum valor, preencher zero)" name="data.inf_ataque.bonus" type="number" value="{{data.inf_ataque.bonus}}" height="30"/>
+                        <input title="Bônus/Penalidade será aplicado a todos os ataques.(Nenhum valor, preencher zero)" name="data.inf_ataque.bonus" type="number" value="{{data.data.inf_ataque.bonus}}" height="30"/>
                     </div>
                 </div>
                 <div class="row dados"> <!--Tabela Armas-->
@@ -606,7 +606,7 @@
                         <label><h4 class="mediaeval">Pontos para Magías:</h4></label>
                     </div>
                     <div class="col-md-2 hiddenT">
-                        <input name="data.pontos_mag" type="number" value="{{data.pontos_mag}}" height="30" readonly/>
+                        <input name="data.pontos_mag" type="number" value="{{data.data.pontos_mag}}" height="30" readonly/>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
@@ -684,11 +684,11 @@
                         <label><h4 class="mediaeval">Carga no transporte(Kg):</h4></label>
                     </div>
                     <div class="col-md-2 col-2">
-                        <input name="data.carga_transp.value" type="number" value="{{data.carga_transp.value}}" height="30" title="Carga em transporte." readonly/>
+                        <input name="data.carga_transp.value" type="number" value="{{data.data.carga_transp.value}}" height="30" title="Carga em transporte." readonly/>
                     </div>
                     <div class="col-md-1 col-1"><h4 class="mediaeval">/</h4></div>
                     <div class="col-md-2 col-2">
-                        <input name="data.carga_transp.max" type="number" value="{{data.carga_transp.max}}" height="30" title="Carga máxima suportada em seus transportes." readonly/>
+                        <input name="data.carga_transp.max" type="number" value="{{data.data.carga_transp.max}}" height="30" title="Carga máxima suportada em seus transportes." readonly/>
                     </div>
                     <div class="col-md-2"></div>
                 </div>

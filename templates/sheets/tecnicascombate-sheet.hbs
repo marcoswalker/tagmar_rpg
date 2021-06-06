@@ -20,19 +20,19 @@
                             <label><h4 class="mediaeval">Custo:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.custo" type="number" value="{{data.custo}}" height="30" class="custoInput"/>
+                            <input name="data.custo" type="number" value="{{data.data.custo}}" height="30" class="custoInput"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Nível:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.nivel" type="number" value="{{data.nivel}}" height="30" class="nivelInput"/>
+                            <input name="data.nivel" type="number" value="{{data.data.nivel}}" height="30" class="nivelInput"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Total:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.total" type="number" value="{{data.total}}" height="30" class="totalInput"/>
+                            <input name="data.total" type="number" value="{{data.data.total}}" height="30" class="totalInput"/>
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@
                             <label><h4 class="mediaeval">Categoria:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <input name="data.categoria" type="text" list="categorias" value="{{data.categoria}}" height="30"/>
+                            <input name="data.categoria" type="text" list="categorias" value="{{data.data.categoria}}" height="30"/>
                             <datalist id="categorias">
                                 <option value="Perícia"></option>
                                 <option value="Postura"></option>
@@ -53,22 +53,22 @@
                             </datalist>
                         </div>
                         <div class="col-md-2">
-                            {{#ifeq data.categoria "Postura"}}
+                            {{#ifeq data.data.categoria "Postura"}}
                                 <i class="far fa-hand-paper"></i>
                             {{/ifeq}}
-                            {{#ifeq data.categoria "Ataque"}}
+                            {{#ifeq data.data.categoria "Ataque"}}
                                 <i class="fas fa-gavel"></i>
                             {{/ifeq}}
-                            {{#ifeq data.categoria "Precisão"}}
+                            {{#ifeq data.data.categoria "Precisão"}}
                                 <i class="fas fa-bullseye"></i>
                             {{/ifeq}}
-                            {{#ifeq data.categoria "Agressão"}}
+                            {{#ifeq data.data.categoria "Agressão"}}
                                 <i class="fas fa-skull-crossbones"></i>
                             {{/ifeq}}
-                            {{#ifeq data.categoria "Proteção"}}
+                            {{#ifeq data.data.categoria "Proteção"}}
                                 <i class="fas fa-shield-alt"></i>
                             {{/ifeq}}
-                            {{#ifeq data.categoria "Suporte"}}
+                            {{#ifeq data.data.categoria "Suporte"}}
                                 <i class="fas fa-chess-rook"></i>
                             {{/ifeq}}
                         </div>
@@ -76,8 +76,8 @@
                             <label><h4 class="mediaeval">Ajuste:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <select class="mediaeval" style="font-size: 90%;" name="data.ajuste.atributo" type="text" value="{{data.ajuste.atributo}}" data-dtype="String" height="30">
-                                {{#select data.ajuste.atributo}}
+                            <select class="mediaeval" style="font-size: 90%;" name="data.ajuste.atributo" type="text" value="{{data.data.ajuste.atributo}}" data-dtype="String" height="30">
+                                {{#select data.data.ajuste.atributo}}
                                 <option value=""></option>
                                 <option value="INT">INT</option>
                                 <option value="CAR">CAR</option>
@@ -92,24 +92,24 @@
                     </div>
 
                     <div class="row dados">
-                        {{#if data.ativaText}}
+                        {{#if data.data.ativaText}}
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Descrição: <a class='ativaDescT' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;">{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;">{{data.data.descricao}}</textarea>
                         </div>
                         {{else}}
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Descrição: <a class='ativaDescT' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.data.descricao}}</textarea>
                         </div>
                         {{/if}}
                     </div>
                     <div class="row hiddenT">
-                        <input name="data.ajuste.valor" type="number" value="{{data.ajuste.valor}}"/>
+                        <input name="data.ajuste.valor" type="number" value="{{data.data.ajuste.valor}}"/>
                     </div>
                 </div>
             </div>

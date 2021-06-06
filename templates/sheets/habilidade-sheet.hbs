@@ -20,8 +20,8 @@
                             <label><h4 class="mediaeval">Tipo:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <select class="mediaeval" name="data.tipo" type="text" value="{{data.tipo}}" data-dtype="String" height="30">
-                                {{#select data.tipo}}
+                            <select class="mediaeval" name="data.tipo" type="text" value="{{data.data.tipo}}" data-dtype="String" height="30">
+                                {{#select data.data.tipo}}
                                 <option value="profissional">Profissional</option>
                                 <option value="manobra">Manobra</option>
                                 <option value="conhecimento">Conhecimento</option>
@@ -36,7 +36,7 @@
                             <label><h4 class="mediaeval">Custo:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.custo" type="number" value="{{data.custo}}" height="30"/>
+                            <input name="data.custo" type="number" value="{{data.data.custo}}" height="30"/>
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@
                             <label><h4 class="mediaeval">Ajuste:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <input name="data.ajuste.atributo" type="text" list="atributos" value="{{data.ajuste.atributo}}" height="30"/>
+                            <input name="data.ajuste.atributo" type="text" list="atributos" value="{{data.data.ajuste.atributo}}" height="30"/>
                             <datalist id="atributos">
                                 <option value=""></option>
                                 <option value="INT">INTELECTO</option>
@@ -58,13 +58,13 @@
                             </datalist>
                         </div>
                         <div class="col-md-2">
-                            <input class="ajuste hiddenT" name="data.ajuste.valor" type="number" value="{{data.ajuste.valor}}" height="30"/>
+                            <input class="ajuste hiddenT" name="data.ajuste.valor" type="number" value="{{data.data.ajuste.valor}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Nível:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="nivel" name="data.nivel" type="number" value="{{data.nivel}}" height="30"/>
+                            <input class="nivel" name="data.nivel" type="number" value="{{data.data.nivel}}" height="30"/>
                         </div>
                     </div>
 
@@ -73,19 +73,19 @@
                             <label><h4 class="mediaeval">Penalidade:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="penal" name="data.penalidade" type="number" value="{{data.penalidade}}" height="30"/>
+                            <input class="penal" name="data.penalidade" type="number" value="{{data.data.penalidade}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Bônus:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="bonus" name="data.bonus" type="number" value="{{data.bonus}}" height="30"/>
+                            <input class="bonus" name="data.bonus" type="number" value="{{data.data.bonus}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Total:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="totalInput2" name="data.total" type="number" value="{{data.total}}" height="30"/>
+                            <input class="totalInput2" name="data.total" type="number" value="{{data.data.total}}" height="30"/>
                         </div>
                     </div>
 
@@ -94,24 +94,24 @@
                             <label><h4 class="mediaeval">Informações adicionais:</h4></label>  <!--Tarefa Aperfeiçoada-->
                         </div>
                         <div class="col-md-9">
-                            <textarea class="mediaeval" name="data.tarefAperf" value="{{data.tarefAperf}}" style="height: 80px;font-size: 100%;">{{data.tarefAperf}}</textarea>
+                            <textarea class="mediaeval" name="data.tarefAperf" value="{{data.data.tarefAperf}}" style="height: 80px;font-size: 100%;">{{data.data.tarefAperf}}</textarea>
                         </div>
                     </div>
 
                     <div class="row dados">
-                        {{#if data.hab_nata}}
+                        {{#if data.data.hab_nata}}
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>  
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;">{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;">{{data.data.descricao}}</textarea>
                         </div>
                         {{else}}
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>  
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.data.descricao}}</textarea>
                         </div>
                         {{/if}}
                     </div>

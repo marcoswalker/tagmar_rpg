@@ -20,19 +20,19 @@
                             <label><h4 class="mediaeval">Alcance:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.alcance" type="text" value="{{data.alcance}}" height="30"/>
+                            <input name="data.alcance" type="text" value="{{data.data.alcance}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Munição:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.municao" type="number" value="{{data.municao}}" height="30"/>
+                            <input name="data.municao" type="number" value="{{data.data.municao}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Nível:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.nivel" type="number" value="{{data.nivel}}" height="30"/>
+                            <input name="data.nivel" type="number" value="{{data.data.nivel}}" height="30"/>
                         </div>
                     </div>
 
@@ -41,8 +41,8 @@
                             <label><h4 class="mediaeval">Bônus:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <select class="mediaeval" name="data.bonus" type="text" value="{{data.bonus}}" data-dtype="String" height="30" style="font-size: 110%;">
-                                {{#select data.bonus}}
+                            <select class="mediaeval" name="data.bonus" type="text" value="{{data.data.bonus}}" data-dtype="String" height="30" style="font-size: 110%;">
+                                {{#select data.data.bonus}}
                                 <option value=""></option>
                                 <option value="AUR">AUR</option>
                                 <option value="FOR">FOR</option>
@@ -55,8 +55,8 @@
                             <label><h4 class="mediaeval">Tipo:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <select class="mediaeval" name="data.tipo" type="text" data-dtype="String" value="{{data.tipo}}" height="30">
-                            {{#select data.tipo}}
+                            <select class="mediaeval" name="data.tipo" type="text" data-dtype="String" value="{{data.data.tipo}}" height="30">
+                            {{#select data.data.tipo}}
                                 <option value=""></option>
                                 <option value="CD">CD</option>
                                 <option value="CI">CI</option>
@@ -82,8 +82,8 @@
                             <label><h4 class="mediaeval">B.Dano:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <select class="mediaeval" name="data.bonus_dano" type="text" value="{{data.bonus_dano}}" data-dtype="String" height="30" style="font-size: 110%;">
-                                {{#select data.bonus_dano}}
+                            <select class="mediaeval" name="data.bonus_dano" type="text" value="{{data.data.bonus_dano}}" data-dtype="String" height="30" style="font-size: 110%;">
+                                {{#select data.data.bonus_dano}}
                                 <option value=""></option>
                                 <option value="AUR">AUR</option>
                                 <option value="FOR">FOR</option>
@@ -98,13 +98,13 @@
                             <label><h4 class="mediaeval">Coluna+:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input  name="data.bonus_magico" type="number" value="{{data.bonus_magico}}" height="30"/>
+                            <input  name="data.bonus_magico" type="number" value="{{data.data.bonus_magico}}" height="30"/>
                         </div>                        
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Dano+:</h4></label>
                         </div>
                         <div class="col-md-2 d_dano">
-                            <input type='number' name='data.peso' value="{{data.peso}}" height="30"/>
+                            <input type='number' name='data.peso' value="{{data.data.peso}}" height="30"/>
                         </div>
                     </div>
                     <div class="row dados">
@@ -113,19 +113,19 @@
                             <label><h4 class="mediaeval">L:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="mediaeval" name="data.def_l" type="number" value="{{data.def_l}}" height="30"/>
+                            <input class="mediaeval" name="data.def_l" type="number" value="{{data.data.def_l}}" height="30"/>
                         </div>
                         <div class="col-md-1">
                             <label><h4 class="mediaeval">M:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="mediaeval" name="data.def_m" type="number" value="{{data.def_m}}" height="30"/>
+                            <input class="mediaeval" name="data.def_m" type="number" value="{{data.data.def_m}}" height="30"/>
                         </div>
                         <div class="col-md-1">
                             <label><h4 class="mediaeval">P:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="mediaeval" name="data.def_p" type="number" value="{{data.def_p}}" height="30"/>
+                            <input class="mediaeval" name="data.def_p" type="number" value="{{data.data.def_p}}" height="30"/>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -151,32 +151,32 @@
                                     <th class="mediaeval">300%</th>
                                 </tr>
                                 <tr>
-                                    <td><input class="dano25" name="data.dano_base.d25" type="number" value="{{data.dano_base.d25}}"></td>
-                                    <td><input class="dano50" name="data.dano_base.d50" type="number" value="{{data.dano_base.d50}}"></td>
-                                    <td><input class="dano75" name="data.dano_base.d75" type="number" value="{{data.dano_base.d75}}"></td>
-                                    <td><input class="dano100" name="data.dano_base.d100" type="number" value="{{data.dano_base.d100}}"></td>
-                                    <td><input class="dano125" name="data.dano_base.d125" type="number" value="{{data.dano_base.d125}}"></td>
-                                    <td><input class="dano150" name="data.dano_base.d150" type="number" value="{{data.dano_base.d150}}"></td>
-                                    <td><input class="dano175" name="data.dano_base.d175" type="number" value="{{data.dano_base.d175}}"></td>
-                                    <td><input class="dano200" name="data.dano_base.d200" type="number" value="{{data.dano_base.d200}}"></td>
-                                    <td><input class="dano225" name="data.dano_base.d225" type="number" value="{{data.dano_base.d225}}"></td>
-                                    <td><input class="dano250" name="data.dano_base.d250" type="number" value="{{data.dano_base.d250}}"></td>
-                                    <td><input class="dano275" name="data.dano_base.d275" type="number" value="{{data.dano_base.d275}}"></td>
-                                    <td><input class="dano300" name="data.dano_base.d300" type="number" value="{{data.dano_base.d300}}"></td>
+                                    <td><input class="dano25" name="data.dano_base.d25" type="number" value="{{data.data.dano_base.d25}}"></td>
+                                    <td><input class="dano50" name="data.dano_base.d50" type="number" value="{{data.data.dano_base.d50}}"></td>
+                                    <td><input class="dano75" name="data.dano_base.d75" type="number" value="{{data.data.dano_base.d75}}"></td>
+                                    <td><input class="dano100" name="data.dano_base.d100" type="number" value="{{data.data.dano_base.d100}}"></td>
+                                    <td><input class="dano125" name="data.dano_base.d125" type="number" value="{{data.data.dano_base.d125}}"></td>
+                                    <td><input class="dano150" name="data.dano_base.d150" type="number" value="{{data.data.dano_base.d150}}"></td>
+                                    <td><input class="dano175" name="data.dano_base.d175" type="number" value="{{data.data.dano_base.d175}}"></td>
+                                    <td><input class="dano200" name="data.dano_base.d200" type="number" value="{{data.data.dano_base.d200}}"></td>
+                                    <td><input class="dano225" name="data.dano_base.d225" type="number" value="{{data.data.dano_base.d225}}"></td>
+                                    <td><input class="dano250" name="data.dano_base.d250" type="number" value="{{data.data.dano_base.d250}}"></td>
+                                    <td><input class="dano275" name="data.dano_base.d275" type="number" value="{{data.data.dano_base.d275}}"></td>
+                                    <td><input class="dano300" name="data.dano_base.d300" type="number" value="{{data.data.dano_base.d300}}"></td>
                                 </tr>
                                 <tr>
-                                    <td><input  name="data.dano.d25" type="number" value="{{data.dano.d25}}"></td>
-                                    <td><input  name="data.dano.d50" type="number" value="{{data.dano.d50}}"></td>
-                                    <td><input  name="data.dano.d75" type="number" value="{{data.dano.d75}}"></td>
-                                    <td><input  name="data.dano.d100" type="number" value="{{data.dano.d100}}"></td>
-                                    <td><input  name="data.dano.d125" type="number" value="{{data.dano.d125}}"></td>
-                                    <td><input  name="data.dano.d150" type="number" value="{{data.dano.d150}}"></td>
-                                    <td><input  name="data.dano.d175" type="number" value="{{data.dano.d175}}"></td>
-                                    <td><input  name="data.dano.d200" type="number" value="{{data.dano.d200}}"></td>
-                                    <td><input  name="data.dano.d225" type="number" value="{{data.dano.d225}}"></td>
-                                    <td><input  name="data.dano.d250" type="number" value="{{data.dano.d250}}"></td>
-                                    <td><input  name="data.dano.d275" type="number" value="{{data.dano.d275}}"></td>
-                                    <td><input  name="data.dano.d300" type="number" value="{{data.dano.d300}}"></td>
+                                    <td><input  name="data.dano.d25" type="number" value="{{data.data.dano.d25}}"></td>
+                                    <td><input  name="data.dano.d50" type="number" value="{{data.data.dano.d50}}"></td>
+                                    <td><input  name="data.dano.d75" type="number" value="{{data.data.dano.d75}}"></td>
+                                    <td><input  name="data.dano.d100" type="number" value="{{data.data.dano.d100}}"></td>
+                                    <td><input  name="data.dano.d125" type="number" value="{{data.data.dano.d125}}"></td>
+                                    <td><input  name="data.dano.d150" type="number" value="{{data.data.dano.d150}}"></td>
+                                    <td><input  name="data.dano.d175" type="number" value="{{data.data.dano.d175}}"></td>
+                                    <td><input  name="data.dano.d200" type="number" value="{{data.data.dano.d200}}"></td>
+                                    <td><input  name="data.dano.d225" type="number" value="{{data.data.dano.d225}}"></td>
+                                    <td><input  name="data.dano.d250" type="number" value="{{data.data.dano.d250}}"></td>
+                                    <td><input  name="data.dano.d275" type="number" value="{{data.data.dano.d275}}"></td>
+                                    <td><input  name="data.dano.d300" type="number" value="{{data.data.dano.d300}}"></td>
                                 </tr>
                             </table>
                         </div>
@@ -196,31 +196,31 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        {{#if data.penalidade.p25}}
-                                            <input class="armPen25" type="checkbox" name="data.penalidade.p25" value="{{data.penalidade.p25}}" checked data-dtype="Boolean" id="penalidade.p25" style="text-align: right;">
+                                        {{#if data.data.penalidade.p25}}
+                                            <input class="armPen25" type="checkbox" name="data.penalidade.p25" value="{{data.data.penalidade.p25}}" checked data-dtype="Boolean" id="penalidade.p25" style="text-align: right;">
                                         {{else}}
-                                            <input class="armPen25" type="checkbox" name="data.penalidade.p25" value="{{data.penalidade.p25}}" data-dtype="Boolean" id="penalidade.p25" style="text-align: right;">
+                                            <input class="armPen25" type="checkbox" name="data.penalidade.p25" value="{{data.data.penalidade.p25}}" data-dtype="Boolean" id="penalidade.p25" style="text-align: right;">
                                         {{/if}}
                                     </td>
                                     <td>
-                                        {{#if data.penalidade.p50}}
-                                            <input class="armPen50" type="checkbox" name="data.penalidade.p50" value="{{data.penalidade.p50}}" checked data-dtype="Boolean" id="penalidade.p50" style="text-align: right;">
+                                        {{#if data.data.penalidade.p50}}
+                                            <input class="armPen50" type="checkbox" name="data.penalidade.p50" value="{{data.data.penalidade.p50}}" checked data-dtype="Boolean" id="penalidade.p50" style="text-align: right;">
                                         {{else}}
-                                            <input class="armPen50" type="checkbox" name="data.penalidade.p50" value="{{data.penalidade.p50}}" data-dtype="Boolean" id="penalidade.p50" style="text-align: right;">
+                                            <input class="armPen50" type="checkbox" name="data.penalidade.p50" value="{{data.data.penalidade.p50}}" data-dtype="Boolean" id="penalidade.p50" style="text-align: right;">
                                         {{/if}}
                                     </td>
                                     <td>
-                                        {{#if data.penalidade.p75}}
-                                            <input class="armPen75" type="checkbox" name="data.penalidade.p75" value="{{data.penalidade.p75}}" checked data-dtype="Boolean" id="penalidade.p75" style="text-align: right;">
+                                        {{#if data.data.penalidade.p75}}
+                                            <input class="armPen75" type="checkbox" name="data.penalidade.p75" value="{{data.data.penalidade.p75}}" checked data-dtype="Boolean" id="penalidade.p75" style="text-align: right;">
                                         {{else}}
-                                            <input class="armPen75" type="checkbox" name="data.penalidade.p75" value="{{data.penalidade.p75}}" data-dtype="Boolean" id="penalidade.p75" style="text-align: right;">
+                                            <input class="armPen75" type="checkbox" name="data.penalidade.p75" value="{{data.data.penalidade.p75}}" data-dtype="Boolean" id="penalidade.p75" style="text-align: right;">
                                         {{/if}}
                                     </td>
                                     <td>
-                                        {{#if data.penalidade.p100}}
-                                            <input class="armPen100" type="checkbox" name="data.penalidade.p100" value="{{data.penalidade.p100}}" checked data-dtype="Boolean" id="penalidade.p100" style="text-align: right;">
+                                        {{#if data.data.penalidade.p100}}
+                                            <input class="armPen100" type="checkbox" name="data.penalidade.p100" value="{{data.data.penalidade.p100}}" checked data-dtype="Boolean" id="penalidade.p100" style="text-align: right;">
                                         {{else}}
-                                            <input class="armPen100" type="checkbox" name="data.penalidade.p100" value="{{data.penalidade.p100}}" data-dtype="Boolean" id="penalidade.p100" style="text-align: right;">
+                                            <input class="armPen100" type="checkbox" name="data.penalidade.p100" value="{{data.data.penalidade.p100}}" data-dtype="Boolean" id="penalidade.p100" style="text-align: right;">
                                         {{/if}}
                                     </td>
                                 </tr>
@@ -229,20 +229,20 @@
                     </div>
 
                     <div class="row dados">
-                        {{#ifeq data.preco ""}}
+                        {{#ifeq data.data.preco ""}}
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.data.descricao}}</textarea>
                         </div>
                         {{/ifeq}}
-                        {{#ifdf data.preco ""}}
+                        {{#ifdf data.data.preco ""}}
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Descrição: <a class='ativaDesc' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="height: 100px;font-size: 100%;">{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;">{{data.data.descricao}}</textarea>
                         </div>
                         {{/ifdf}}
                     </div>

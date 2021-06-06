@@ -20,7 +20,7 @@
                             <label><h4 class="mediaeval">Descrição:</h4></label>
                         </div>
                         <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.descricao}}" style="font-size: 100%; height: 100px;">{{data.descricao}}</textarea>
+                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="font-size: 100%; height: 100px;">{{data.data.descricao}}</textarea>
                         </div>
                     </div>
                     <div class="row dados">
@@ -35,16 +35,16 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input name="data.lista_eh.v1" type="number" value="{{data.lista_eh.v1}}" height="30"/>
+                                        <input name="data.lista_eh.v1" type="number" value="{{data.data.lista_eh.v1}}" height="30"/>
                                     </td>
                                     <td>
-                                        <input name="data.lista_eh.v2" type="number" value="{{data.lista_eh.v2}}" height="30"/>
+                                        <input name="data.lista_eh.v2" type="number" value="{{data.data.lista_eh.v2}}" height="30"/>
                                     </td>
                                     <td>
-                                        <input name="data.lista_eh.v3" type="number" value="{{data.lista_eh.v3}}" height="30"/>
+                                        <input name="data.lista_eh.v3" type="number" value="{{data.data.lista_eh.v3}}" height="30"/>
                                     </td>
                                     <td>
-                                        <input name="data.lista_eh.v4" type="number" value="{{data.lista_eh.v4}}" height="30"/>
+                                        <input name="data.lista_eh.v4" type="number" value="{{data.data.lista_eh.v4}}" height="30"/>
                                     </td>
                                 </tr>
                             </table>
@@ -60,16 +60,16 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input name="data.p_aquisicao.p_hab" type="number" value="{{data.p_aquisicao.p_hab}}"/>
+                                        <input name="data.p_aquisicao.p_hab" type="number" value="{{data.data.p_aquisicao.p_hab}}"/>
                                     </td>
                                     <td>
-                                        <input name="data.p_aquisicao.p_tec" type="number" value="{{data.p_aquisicao.p_tec}}"/>
+                                        <input name="data.p_aquisicao.p_tec" type="number" value="{{data.data.p_aquisicao.p_tec}}"/>
                                     </td>
                                     <td>
-                                        <input name="data.p_aquisicao.p_gra" type="number" value="{{data.p_aquisicao.p_gra}}"/>
+                                        <input name="data.p_aquisicao.p_gra" type="number" value="{{data.data.p_aquisicao.p_gra}}"/>
                                     </td>
                                     <!--td>
-                                        <input name="data.p_aquisicao.p_mag" type="number" value="{{data.p_aquisicao.p_mag}}"/>
+                                        <input name="data.p_aquisicao.p_mag" type="number" value="{{data.data.p_aquisicao.p_mag}}"/>
                                     </td-->
                                 </tr>
                             </table>
@@ -80,8 +80,8 @@
                             <label><h4 class="mediaeval">Atrib.Pontos Magía:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <select class="mediaeval" name="data.atrib_mag" type="text" value="{{data.atrib_mag}}" data-dtype="String" height="30">
-                                {{#select data.atrib_mag}}
+                            <select class="mediaeval" name="data.atrib_mag" type="text" value="{{data.data.atrib_mag}}" data-dtype="String" height="30">
+                                {{#select data.data.atrib_mag}}
                                 <option value=""></option>
                                 <option value="INT">INT</option>
                                 <option value="AUR">AUR</option>
@@ -97,8 +97,8 @@
                             <label><h4 class="mediaeval">Grupo Penalizado:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <select class="mediaeval" name="data.grupo_pen" type="text" value="{{data.grupo_pen}}" data-dtype="String" height="30">
-                                {{#select data.grupo_pen}}
+                            <select class="mediaeval" name="data.grupo_pen" type="text" value="{{data.data.grupo_pen}}" data-dtype="String" height="30">
+                                {{#select data.data.grupo_pen}}
                                 <option value=""></option>
                                 <option value="profissional">Profissional</option>
                                 <option value="manobra">Manobra</option>
@@ -115,13 +115,13 @@
                             <label><h4 class="mediaeval">Habilidade Nata:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <input name="data.hab_nata" type="text" value="{{data.hab_nata}}" height="30"/>
+                            <input name="data.hab_nata" type="text" value="{{data.data.hab_nata}}" height="30"/>
                         </div>
                         <div class="col-md-4" style="text-align: right;">
                             <label><h4 class="mediaeval">Energia Heróica:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.eh_base" type="number" value="{{data.eh_base}}" height="30"/>
+                            <input name="data.eh_base" type="number" value="{{data.data.eh_base}}" height="30"/>
                         </div>
                     </div>
                     <div class="row dados">

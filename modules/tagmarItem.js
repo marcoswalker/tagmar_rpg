@@ -8,7 +8,6 @@ export class tagmarItem extends Item {
          // Arrumar erro que da no compendium
         const itemData = this.data;
         const actorData = this.actor ? this.actor.data : {};
-        const data = itemData.data;
         const tabela_resol = [
             [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
             [-6, "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
@@ -213,7 +212,7 @@ export class tagmarItem extends Item {
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Impossível</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + colunarolada + "</h4>";
         r.toMessage({
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
         });
@@ -230,7 +229,7 @@ export class tagmarItem extends Item {
         }
         if (h_total < -7) h_total = -7;
         let r = new Roll("1d20");
-        r.evaluate();
+        r.evaluate({async: false});
         let Dresult = r.total;
         if (h_total <= 20) {
             let coluna_tab = tabela_resol.filter(b => b[0] === h_total);
@@ -243,7 +242,7 @@ export class tagmarItem extends Item {
                 let dados = [];
                 for (let x = 0; x < vezes; x++){
                     dados[x] = new Roll("1d20");
-                    dados[x].evaluate();
+                    dados[x].evaluate({async: false});
                     let Dresult = dados[x].total;
                     let coluna_tab = tabela_resol.filter(b => b[0] === 20);
                     let resultado = coluna_tab[0][Dresult];
@@ -255,14 +254,14 @@ export class tagmarItem extends Item {
                 let dados = [];
                 for (let x = 0; x < vezes; x++){
                     dados[x] = new Roll("1d20");
-                    dados[x].evaluate();
+                    dados[x].evaluate({async: false});
                     let Dresult = dados[x].total;
                     let coluna_tab = tabela_resol.filter(b => b[0] === 20);
                     let resultado = coluna_tab[0][Dresult];
                     await this.habToChat(resultado, dados[x], h_total, coluna_tab[0][0]);
                 }
                 let dado = new Roll("1d20");
-                dado.evaluate();
+                dado.evaluate({async: false});
                 Dresult = dado.total;
                 let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
                 let resultado = coluna_tab[0][Dresult];
@@ -273,7 +272,7 @@ export class tagmarItem extends Item {
 
     async magiaToChat() {
         let chatData = {
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({
                 actor: this.actor
               })
@@ -294,7 +293,7 @@ export class tagmarItem extends Item {
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + coluna_rolada + "</h4>";
         r.toMessage({
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${this.name}: ${this.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
         });
@@ -303,7 +302,7 @@ export class tagmarItem extends Item {
     async rollTecnicaCombate() {
         const tabela_resol = this.tabela_resol;
         let r = new Roll("1d20");
-        r.evaluate();
+        r.evaluate({async: false});
         let Dresult = r.total;
         if (this.data.data.total <= 20) {
             let coluna_tab = tabela_resol.filter(b => b[0] === this.data.data.total);
@@ -316,7 +315,7 @@ export class tagmarItem extends Item {
                 let dados = [];
                 for (let x = 0; x < vezes; x++){
                     dados[x] = new Roll("1d20");
-                    dados[x].evaluate();
+                    dados[x].evaluate({async: false});
                     let Dresult = dados[x].total;
                     let coluna_tab = tabela_resol.filter(b => b[0] === 20);
                     let resultado = coluna_tab[0][Dresult];
@@ -328,14 +327,14 @@ export class tagmarItem extends Item {
                 let dados = [];
                 for (let x = 0; x < vezes; x++){
                     dados[x] = new Roll("1d20");
-                    dados[x].evaluate();
+                    dados[x].evaluate({async: false});
                     let Dresult = dados[x].total;
                     let coluna_tab = tabela_resol.filter(b => b[0] === 20);
                     let resultado = coluna_tab[0][Dresult];
                     await this.tecnicaToChat(resultado, dados[x], coluna_tab[0][0]);
                 }
                 let dado = new Roll("1d20");
-                dado.evaluate();
+                dado.evaluate({async: false});
                 Dresult = dado.total;
                 let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
                 let resultado = coluna_tab[0][Dresult];
@@ -458,7 +457,7 @@ export class tagmarItem extends Item {
         let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
         if (critico) dano_text = table_dano;
         await r.toMessage({
-            user: game.user._id,
+            user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}`
         });
@@ -633,7 +632,7 @@ export class tagmarItem extends Item {
         let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
         if (critico) dano_text = table_dano;
         await r.toMessage({
-        user: game.user._id,
+        user: game.user.id,
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}`
         });
@@ -678,7 +677,7 @@ export class tagmarItem extends Item {
         if (this.data.data.tipo == "" || this.data.data.tipo == "MAG") valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus; // Magia de Ataque
         if (valor_tabela < -7) valor_tabela = -7; // Abaixo da Tabela
         let r = new Roll("1d20");
-        r.evaluate();
+        r.evaluate({async: false});
         let Dresult = r.total;
         if (valor_tabela <= 20) {
             let coluna_tab = tabela_resol.filter(b => b[0] === valor_tabela);

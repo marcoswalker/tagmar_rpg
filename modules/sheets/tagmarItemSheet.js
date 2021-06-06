@@ -33,8 +33,8 @@ export default class tagmarItemSheet extends ItemSheet {
         }
     }
 
-    getData() {
-        const data = super.getData();
+    getData(options) {
+        const data = super.getData(options);
         if (this.item.data.type == "Profissao" && this.item.data.data.especializacoes != "") {
             data.item.especializacoes = this.item.data.data.especializacoes.split(",");
         } else if (this.item.data.type == "Profissao") data.item.especializacoes = [];
@@ -158,17 +158,16 @@ export default class tagmarItemSheet extends ItemSheet {
         }
     }
 
-    _sendMessage(event) {
+    async _sendMessage(event) {
         if (this.item.isOwned) {
-            let itemActor = this.actor.items.get(this.item._id);
-            Item.create(itemActor).then(function(value){
-                let chatData = {};
-                chatData.content = '@Item['+value._id+']';
-                ChatMessage.create(chatData);
-            });
+            let itemActor = this.actor.items.get(this.item.id);
+            let newItem = await Item.create(itemActor.data);
+            let chatData = {};
+            chatData.content = '@Item['+newItem.id+']';
+            ChatMessage.create(chatData);
         } else {
             let chatData = {};
-            chatData.content = '@Item['+this.item._id+']';
+            chatData.content = '@Item['+this.item.id+']';
             ChatMessage.create(chatData);
         }
     }
