@@ -6,6 +6,18 @@
     font-family: 'GoudyMediaeval';
     src: url('../fonts/NewRocker-Regular.ttf') format('truetype');
 }
+.form_tagmar input[type="text"] {
+    font-family: "GoudyMediaeval";
+}
+.form_tagmar input[type="number"] {
+    font-family: "GoudyMediaeval";
+}
+.form_tagmar option {
+    font-family: "GoudyMediaeval";
+}
+.form_tagmar input[name="name"] {
+    font-family: "FairyDustB";
+}
 .fairyDust{
     font-family: "FairyDustB";
     font-size: 205%;
