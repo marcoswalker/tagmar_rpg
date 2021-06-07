@@ -619,7 +619,7 @@ Hooks.on("renderSidebarTab", async (object, html) => {
     const details = html.find("#game-details");
     const tgDetails = document.createElement("li");
     tgDetails.classList.add("donation-sistema");
-    tgDetails.innerHTML = "Tagmar RPG <a title='Faça uma doação.' href='https://www.patreon.com/xaurawalker'><i class='fas fa-mug-hot'></i></a>";
+    tgDetails.innerHTML = "Tagmar RPG no Foundry Vtt <a title='Faça uma doação.' href='https://www.patreon.com/xaurawalker'><i class='fas fa-mug-hot'></i></a>";
     details.append(tgDetails);
   }
 })
