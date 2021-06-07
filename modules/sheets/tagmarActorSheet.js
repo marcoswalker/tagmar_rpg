@@ -81,6 +81,10 @@ export default class tagmarActorSheet extends ActorSheet {
             this._prepareCharacterItems(data);
             this._prepareValorTeste(data, updateNpc);
             this._attDefesaNPC(data, updateNpc);
+            this._updateCombatItems(data);
+            this._updateHabilItems(data);
+            this._updateMagiasItems(data);
+            this._updateTencnicasItems(data);
             if (Object.keys(updateNpc).length > 0) {
                 this.actor.update(updateNpc);
             }
@@ -104,6 +108,10 @@ export default class tagmarActorSheet extends ActorSheet {
             this._attKarmaMax(data, updatePers);
             this._attRM(data, updatePers);
             this._attRF(data, updatePers);
+            this._updateCombatItems(data);
+            this._updateHabilItems(data);
+            this._updateMagiasItems(data);
+            this._updateTencnicasItems(data);
             if (updatePers.hasOwnProperty('_id')) delete updatePers['_id'];
             if (this.lastUpdate) {
                 if (this.lastUpdate.hasOwnProperty('_id')) delete this.lastUpdate['_id'];
@@ -272,6 +280,213 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    async _updateTencnicasItems(sheetData) {
+        if (!this.options.editable) return;
+        const actorData = sheetData.actor.data;
+        const tecnicas = sheetData.actor.items.filter(item => item.type == "TecnicasCombate");
+        let update_tecnicas = [];
+        for (let tecnica of tecnicas) {
+            let tec = tecnica.data;
+            const ajusteTecnica = tec.data.ajuste;
+            const nivel_tecnica = tec.data.nivel;
+            let total = 0;
+            if (ajusteTecnica.atributo == "INT") total = actorData.data.atributos.INT + nivel_tecnica;
+            else if (ajusteTecnica.atributo == "CAR") total = actorData.data.atributos.CAR + nivel_tecnica;
+            else if (ajusteTecnica.atributo == "AUR") total = actorData.data.atributos.AUR + nivel_tecnica;
+            else if (ajusteTecnica.atributo == "FOR") total = actorData.data.atributos.FOR + nivel_tecnica;
+            else if (ajusteTecnica.atributo == "FIS") total = actorData.data.atributos.FIS + nivel_tecnica;
+            else if (ajusteTecnica.atributo == "AGI") total = actorData.data.atributos.AGI + nivel_tecnica;
+            else if (ajusteTecnica.atributo == "PER") total = actorData.data.atributos.PER + nivel_tecnica;
+            else total = nivel_tecnica;
+            if (tec.data.total != total) {
+                update_tecnicas.push({
+                    "_id": tec._id,
+                    "data.total": total
+                });
+            }
+        }
+        if (update_tecnicas.length > 0) {
+            await this.actor.updateEmbeddedDocuments("Item", update_tecnicas);
+        }
+    }
+
+    async _updateMagiasItems(sheetData) {
+        if (!this.options.editable) return;
+        const actorData = sheetData.actor.data;
+        const magias = sheetData.actor.items.filter(item => item.type == "Magia");
+        let update_magias = [];
+        for (let magia of magias) {
+            let mag = magia.data;
+            const aura = actorData.data.atributos.AUR;
+            const m_nivel = mag.data.nivel;
+            const m_karma = mag.data.total.valorKarma;
+            let total = aura + m_nivel + m_karma;
+            if (mag.data.total.valor != total) {
+                update_magias.push({
+                    "_id": mag._id,
+                    "data.total.valor": total
+                });
+            }
+        }
+        if (update_magias.length > 0) {
+            await this.actor.updateEmbeddedDocuments("Item", update_magias);
+        }
+    }
+
+    async _updateHabilItems(sheetData) {
+        if (!this.options.editable) return;
+        const actorData = sheetData.actor.data;
+        const habilidades = sheetData.actor.items.filter(item => item.type == "Habilidade");
+        let hab_updates = [];
+        for (let habilidade of habilidades) {
+            let hab = habilidade.data;
+            const atributo = hab.data.ajuste.atributo;
+            let hab_nivel = 0;
+            let hab_penal = 0;
+            let hab_bonus = 0;
+            if (hab.data.nivel) hab_nivel = hab.data.nivel;
+            if (hab.data.penalidade) hab_penal = hab.data.penalidade;
+            if (hab.data.bonus) hab_bonus = hab.data.bonus;
+            let valor_atrib = 0;
+            if (atributo == "INT") valor_atrib = actorData.data.atributos.INT;
+            else if (atributo == "AUR") valor_atrib = actorData.data.atributos.AUR;
+            else if (atributo == "CAR") valor_atrib = actorData.data.atributos.CAR;
+            else if (atributo == "FOR") valor_atrib = actorData.data.atributos.FOR;
+            else if (atributo == "FIS") valor_atrib = actorData.data.atributos.FIS;
+            else if (atributo == "AGI") valor_atrib = actorData.data.atributos.AGI;
+            else if (atributo == "PER") valor_atrib = actorData.data.atributos.PER;
+            let total = 0;
+            if (hab_nivel > 0) {
+                total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
+            } else {
+                total = parseInt(valor_atrib) - 7 + parseInt(hab_penal) + parseInt(hab_bonus);
+            }
+            if (hab.data.ajuste.valor != valor_atrib || hab.data.total != total) {
+                hab_updates.push({
+                    "_id": hab._id,
+                    "data.ajuste.valor": valor_atrib,
+                    "data.total": total
+                });
+            }
+        }
+        if (hab_updates.length > 0) {
+            await this.actor.updateEmbeddedDocuments("Item", hab_updates);
+        }
+    }
+
+    async _updateCombatItems(sheetData) {
+        if (!this.options.editable) return;
+        const actorData = sheetData.actor.data;
+        const combates = sheetData.actor.items.filter(item => item.type == "Combate");
+        let comb_updates = [];
+        for (let combs of combates) {
+            let comb = combs.data;
+            let nivel_comb = 0;
+            const bonus_magico = comb.data.bonus_magico;
+            const bonus_danomais = comb.data.peso;
+            const bonus_dano = comb.data.bonus_dano;
+            const bonus = comb.data.bonus;
+            let bonus_normal = 0;
+            let bonus_valor = 0;
+            if (bonus_dano == "AUR") bonus_valor = actorData.data.atributos.AUR;
+            else if (bonus_dano == "FOR") bonus_valor = actorData.data.atributos.FOR;
+            else if (bonus_dano == "AGI") bonus_valor = actorData.data.atributos.AGI;
+            else if (bonus_dano == "PER") bonus_valor = actorData.data.atributos.PER;
+            if (bonus == "AUR") bonus_normal = actorData.data.atributos.AUR;
+            else if (bonus == "FOR") bonus_normal = actorData.data.atributos.FOR;
+            else if (bonus == "AGI") bonus_normal = actorData.data.atributos.AGI;
+            else if (bonus == "PER") bonus_normal = actorData.data.atributos.PER;
+            const p_25 = comb.data.dano_base.d25;
+            const p_50 = comb.data.dano_base.d50;
+            const p_75 = comb.data.dano_base.d75;
+            const p_100 = comb.data.dano_base.d100;
+            const p_125 = comb.data.dano_base.d125;
+            const p_150 = comb.data.dano_base.d150;
+            const p_175 = comb.data.dano_base.d175;
+            const p_200 = comb.data.dano_base.d200;
+            const p_225 = comb.data.dano_base.d225;
+            const p_250 = comb.data.dano_base.d250;
+            const p_275 = comb.data.dano_base.d275;
+            const p_300 = comb.data.dano_base.d300;
+            if (comb.data.tipo == "CD") {
+                nivel_comb = actorData.data.grupos.CD;
+            }
+            else if (comb.data.tipo == "CI") {
+                nivel_comb = actorData.data.grupos.CI;
+            }
+            else if (comb.data.tipo == "CL") {
+                nivel_comb = actorData.data.grupos.CL;
+            }
+            else if (comb.data.tipo == "CLD") {
+                nivel_comb = actorData.data.grupos.CLD;
+            }
+            else if (comb.data.tipo == "EL") {
+                nivel_comb = actorData.data.grupos.EL;
+            }
+            else if (comb.data.tipo == "CmE") {
+                nivel_comb = actorData.data.grupos.CmE;
+            }
+            else if (comb.data.tipo == "CmM") {
+                nivel_comb = actorData.data.grupos.CmM;
+            }
+            else if (comb.data.tipo == "EM") {
+                nivel_comb = actorData.data.grupos.EM;
+            }
+            else if (comb.data.tipo == "PmA") {
+                nivel_comb = actorData.data.grupos.PmA;
+            }
+            else if (comb.data.tipo == "PmL") {
+                nivel_comb = actorData.data.grupos.PmL;
+            }
+            else if (comb.data.tipo == "CpE") {
+                nivel_comb = actorData.data.grupos.CpE;
+            }
+            else if (comb.data.tipo == "CpM") {
+                nivel_comb = actorData.data.grupos.CpM;
+            }
+            else if (comb.data.tipo == "EP") {
+                nivel_comb = actorData.data.grupos.EP;
+            }
+            else if (comb.data.tipo == "PP") {
+                nivel_comb = actorData.data.grupos.PP;
+            }
+            else if (comb.data.tipo == "PpA") {
+                nivel_comb = actorData.data.grupos.PpA;
+            }
+            else if (comb.data.tipo == "PpB") {
+                nivel_comb = actorData.data.grupos.PpB;
+            }
+            else if (comb.data.tipo == "") {
+                nivel_comb = comb.data.nivel;
+            } 
+            else if (comb.data.tipo == "MAG") {
+                nivel_comb = comb.data.nivel;
+            }
+            if (comb.data.nivel != nivel_comb || comb.data.dano.d25 != p_25 + bonus_valor + bonus_danomais || comb.data.custo != bonus_normal) {
+                comb_updates.push({
+                    '_id': comb._id,
+                    'data.nivel': nivel_comb,
+                    "data.dano.d25": p_25 + bonus_valor + bonus_danomais,
+                    "data.dano.d50": p_50 + bonus_valor + bonus_danomais,
+                    "data.dano.d75": p_75 + bonus_valor + bonus_danomais,
+                    "data.dano.d100": p_100 + bonus_valor + bonus_danomais,
+                    "data.dano.d125": p_125 + bonus_valor + bonus_danomais,
+                    "data.dano.d150": p_150 + bonus_valor + bonus_danomais,
+                    "data.dano.d175": p_175 + bonus_valor + bonus_danomais,
+                    "data.dano.d200": p_200 + bonus_valor + bonus_danomais,
+                    "data.dano.d225": p_225 + bonus_valor + bonus_danomais,
+                    "data.dano.d250": p_250 + bonus_valor + bonus_danomais,
+                    "data.dano.d275": p_275 + bonus_valor + bonus_danomais,
+                    "data.dano.d300": p_300 + bonus_valor + bonus_danomais,
+                    'data.custo': bonus_normal
+                });
+            }
+        }
+        if (comb_updates.length > 0) {
+            await this.actor.updateEmbeddedDocuments("Item", comb_updates);
+        }
     }
 
     _caracSort(data, updatePers) {
@@ -969,13 +1184,15 @@ export default class tagmarActorSheet extends ActorSheet {
             for (let i = 0; i < actorData.magias.length; i++) {
                 pontos_mag -= actorData.magias[i].data.custo * actorData.magias[i].data.nivel;
             }
+            let hab_updates = [];
             for (let i = 0; i < actorData.h_prof.length; i++) {
                 if (grupo_pen == "profissional") {
                     pontos_hab -= (actorData.h_prof[i].data.custo + 1) * actorData.h_prof[i].data.nivel;
                 } else if (hab_nata == actorData.h_prof[i].name) {
                     //pontos_hab -= 0;
                     const habilidade = this.actor.items.get(actorData.h_prof[i]._id);
-                    habilidade.update({
+                    hab_updates.push({
+                        '_id': habilidade.data._id,
                         "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
@@ -987,7 +1204,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_man[i].data.custo + 1) * actorData.h_man[i].data.nivel;
                 } else if (hab_nata == actorData.h_man[i].name) {
                     const habilidade =  this.actor.items.get(actorData.h_man[i]._id);
-                    habilidade.update({
+                    hab_updates.push({
+                        '_id': habilidade.data._id,
                         "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
@@ -999,7 +1217,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_con[i].data.custo + 1) * actorData.h_con[i].data.nivel;
                 } else if (hab_nata == actorData.h_con[i].name) {
                     const habilidade = this.actor.items.get(actorData.h_con[i]._id);
-                    habilidade.update({
+                    hab_updates.push({
+                        '_id': habilidade.data._id,
                         "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
@@ -1011,7 +1230,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_sub[i].data.custo + 1) * actorData.h_sub[i].data.nivel;
                 } else if (hab_nata == actorData.h_sub[i].name) {
                     const habilidade =  this.actor.items.get(actorData.h_sub[i]._id);
-                    habilidade.update({
+                    hab_updates.push({
+                        '_id': habilidade.data._id,
                         "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
@@ -1023,7 +1243,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_inf[i].data.custo + 1) * actorData.h_inf[i].data.nivel;
                 } else if (hab_nata == actorData.h_inf[i].name) {
                     const habilidade =  this.actor.items.get(actorData.h_inf[i]._id);
-                    habilidade.update({
+                    hab_updates.push({
+                        '_id': habilidade.data._id,
                         "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
@@ -1035,7 +1256,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     pontos_hab -= (actorData.h_geral[i].data.custo + 1) * actorData.h_geral[i].data.nivel;
                 } else if (hab_nata == actorData.h_geral[i].name) {
                     const habilidade = this.actor.items.get(actorData.h_geral[i]._id);
-                    habilidade.update({
+                    hab_updates.push({
+                        '_id': habilidade.data._id,
                         "data.nivel": actorSheetData.data.estagio
                     });
                 } else {
@@ -1056,6 +1278,9 @@ export default class tagmarActorSheet extends ActorSheet {
             }
             if  (profissaoData.name != actorSheetData.data.profissao) {
                 updatePers["data.profissao"] = profissaoData.name;
+            }
+            if (hab_updates.length > 0) {
+                this.actor.updateEmbeddedDocuments('Item', hab_updates);
             }
         }
     }
