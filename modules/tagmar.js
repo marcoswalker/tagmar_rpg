@@ -614,6 +614,17 @@ async function rollResistencia(resist, f_ataque) {
   });
 }
 
+Hooks.on("renderSidebarTab", async (object, html) => {
+  if (object instanceof Settings) {
+    const details = html.find("#game-details");
+    const tgDetails = document.createElement("li");
+    tgDetails.classList.add("donation-sistema");
+    tgDetails.innerHTML = "Tagmar RPG <a title='Faça uma doação.' href='https://www.patreon.com/xaurawalker'><i class='fas fa-mug-hot'></i></a>";
+    details.append(tgDetails);
+  }
+})
+
+
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Técnicas de Combate, Habilidades e Magias.");
