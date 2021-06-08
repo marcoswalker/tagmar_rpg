@@ -348,8 +348,8 @@ export default class tagmarAltSheet extends ActorSheet {
                     label: 'Cancelar'
                 }
             },
-            default: 'novai',
-            render: html => {},
+            default: 'vai',
+            render: html => {html.css('font-family','GoudyMediaeval');},
             close: html => {
                 switch (updateComand) {
                     case 'EF':

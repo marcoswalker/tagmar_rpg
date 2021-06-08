@@ -21,6 +21,9 @@
 .form_tagmar input[name="name"] {
     font-family: "FairyDustB";
 }
+.form_tagmar table {
+    margin-bottom: 1px !important;
+}
 .fairyDust{
     font-family: "FairyDustB";
     font-size: 205%;
