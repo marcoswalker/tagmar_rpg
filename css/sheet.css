@@ -15,6 +15,9 @@
 .form_tagmar option {
     font-family: "GoudyMediaeval";
 }
+.form_tagmar select {
+    font-family: "GoudyMediaeval";
+}
 .form_tagmar input[name="name"] {
     font-family: "FairyDustB";
 }
