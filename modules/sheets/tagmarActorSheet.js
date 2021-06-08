@@ -89,6 +89,7 @@ export default class tagmarActorSheet extends ActorSheet {
             this._updateCombatItems(data,updateItemsNpc);
             this._updateMagiasItems(data,updateItemsNpc);
             this._updateTencnicasItems(data,updateItemsNpc);
+            this._updateHabilItems(data, updateItemsNpc);
             if (updateItemsNpc.length > 0) {
                 data.actor.updateEmbeddedDocuments("Item", updateItemsNpc);
             }
@@ -292,6 +293,43 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _updateHabilItems(sheetData, updateItemsNpc) {
+        if (!this.options.editable) return;
+        const actorData = sheetData.actor.data;
+        const habilidades = sheetData.actor.items.filter(item => item.type == "Habilidade");
+        for (let habilidade of habilidades) {
+            let hab = habilidade.data;
+            const atributo = hab.data.ajuste.atributo;
+            let hab_nivel = 0;
+            let hab_penal = 0;
+            let hab_bonus = 0;
+            if (hab.data.nivel) hab_nivel = hab.data.nivel;
+            if (hab.data.penalidade) hab_penal = hab.data.penalidade;
+            if (hab.data.bonus) hab_bonus = hab.data.bonus;
+            let valor_atrib = 0;
+            if (atributo == "INT") valor_atrib = actorData.data.atributos.INT;
+            else if (atributo == "AUR") valor_atrib = actorData.data.atributos.AUR;
+            else if (atributo == "CAR") valor_atrib = actorData.data.atributos.CAR;
+            else if (atributo == "FOR") valor_atrib = actorData.data.atributos.FOR;
+            else if (atributo == "FIS") valor_atrib = actorData.data.atributos.FIS;
+            else if (atributo == "AGI") valor_atrib = actorData.data.atributos.AGI;
+            else if (atributo == "PER") valor_atrib = actorData.data.atributos.PER;
+            let total = 0;
+            if (hab_nivel > 0) {
+                total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
+            } else {
+                total = parseInt(valor_atrib) - 7 + parseInt(hab_penal) + parseInt(hab_bonus);
+            }
+            if (hab.data.ajuste.valor != valor_atrib || hab.data.total != total) {
+                updateItemsNpc.push({
+                    "_id": hab._id,
+                    "data.ajuste.valor": valor_atrib,
+                    "data.total": total
+                });
+            }
+        }
     }
 
     _updateTencnicasItems(sheetData, items_toUpdate) {
@@ -632,7 +670,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 actor: this.actor
               })
         };
-        chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.data.descricao + "</h3>";
+        chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.data.data.descricao + "</h3>";
         ChatMessage.create(chatData);
     }
 
@@ -644,7 +682,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 actor: this.actor
               })
         };
-        chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.data.descricao + "</h3>";
+        chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.data.data.descricao + "</h3>";
         ChatMessage.create(chatData);
     }
 
@@ -1220,9 +1258,6 @@ export default class tagmarActorSheet extends ActorSheet {
             if  (profissaoData.name != actorSheetData.data.profissao) {
                 updatePers["data.profissao"] = profissaoData.name;
             }
-            /*if (hab_updates.length > 0) {
-                sheetData.actor.updateEmbeddedDocuments('Item', hab_updates);
-            }*/
         }
     }
 
@@ -1391,17 +1426,9 @@ export default class tagmarActorSheet extends ActorSheet {
     //Exclusivo para Inventário
     _prepareInventarioItems(sheetData) { 
         const actorData = sheetData.actor;
-        const pertences = [];
-        const transportes = [];
+        const pertences = actorData.items.filter(item => item.type == "Pertence");
+        const transportes = actorData.items.filter(item => item.type == "Transporte");
         const cesto = [];
-        const itens = sheetData.items;
-        itens.forEach(function(item, indice, array) {
-            if (item.type == "Pertence") {
-                pertences.push(item);
-            } else if (item.type == "Transporte") {
-                transportes.push(item);
-            }
-        });
         if (pertences.length > 1) pertences.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });

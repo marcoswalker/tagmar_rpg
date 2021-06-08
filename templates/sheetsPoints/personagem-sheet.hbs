@@ -483,7 +483,7 @@
                 </div>
                 <div class="row dados">
                     <div class="col-md-4 col-6" style="text-align: right;">
-                        <label><h4 class="mediaeval">Habilidade Nata(<span style="color: gray;">{{actor.profissao.data.hab_nata}}</span>):</h4></label>
+                        <label><h4 class="mediaeval">Habilidade Nata(<span style="color: gray;">{{actor.profissao.data.data.hab_nata}}</span>):</h4></label>
                     </div>
                     <div class="col-md-4 col-6">
                         <select class="mediaeval" name="data.hab_nata" type="text" data-dtype="String" value="{{data.data.hab_nata}}" height="30" title="Selecione sua Habilidade Nata."/>
@@ -537,10 +537,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_prof as |h_prof|}}      <!--Habilidades Profissionais-->
-                            <tr class="item" data-item-id="{{h_prof._id}}">
-                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_prof._id}}" title="Rolar Habilidade">{{h_prof.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_prof.data.total}}</td>
-                                <td class="mediaeval habNivel esconde">{{h_prof.data.nivel}}</td>
+                            <tr class="item" data-item-id="{{h_prof.id}}">
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_prof.id}}" title="Rolar Habilidade">{{h_prof.name}}</a></td>
+                                <td class="mediaeval habTotal">{{h_prof.data.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_prof.data.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -559,10 +559,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_man as |h_man|}}        <!--Habilidades Manuais-->
-                            <tr class="item" data-item-id="{{h_man._id}}">
-                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-roll="{{h_man.total}}" data-item-id="{{h_man._id}}" title="Rolar Habilidade">{{h_man.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_man.data.total}}</td>
-                                <td class="mediaeval habNivel esconde">{{h_man.data.nivel}}</td>
+                            <tr class="item" data-item-id="{{h_man.id}}">
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-roll="{{h_man.total}}" data-item-id="{{h_man.id}}" title="Rolar Habilidade">{{h_man.name}}</a></td>
+                                <td class="mediaeval habTotal">{{h_man.data.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_man.data.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -581,10 +581,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_con as |h_con|}}        <!--Habilidades de Conhecimento-->
-                            <tr class="item" data-item-id="{{h_con._id}}">
-                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_con._id}}" title="Rolar Habilidade">{{h_con.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_con.data.total}}</td>
-                                <td class="mediaeval habNivel esconde">{{h_con.data.nivel}}</td>
+                            <tr class="item" data-item-id="{{h_con.id}}">
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_con.id}}" title="Rolar Habilidade">{{h_con.name}}</a></td>
+                                <td class="mediaeval habTotal">{{h_con.data.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_con.data.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -610,10 +610,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_sub as |h_sub|}}    <!--Habilidades de Subterfúgio-->
-                            <tr class="item" data-item-id="{{h_sub._id}}">
-                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_sub._id}}" title="Rolar Habilidade">{{h_sub.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_sub.data.total}}</td>
-                                <td class="mediaeval habNivel esconde">{{h_sub.data.nivel}}</td>
+                            <tr class="item" data-item-id="{{h_sub.id}}">
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_sub.id}}" title="Rolar Habilidade">{{h_sub.name}}</a></td>
+                                <td class="mediaeval habTotal">{{h_sub.data.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_sub.data.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -632,10 +632,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_inf as |h_inf|}}    <!--Habilidades de Influência-->
-                            <tr class="item" data-item-id="{{h_inf._id}}">
-                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_inf._id}}" title="Rolar Habilidade">{{h_inf.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_inf.data.total}}</td>
-                                <td class="mediaeval habNivel esconde">{{h_inf.data.nivel}}</td>
+                            <tr class="item" data-item-id="{{h_inf.id}}">
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_inf.id}}" title="Rolar Habilidade">{{h_inf.name}}</a></td>
+                                <td class="mediaeval habTotal">{{h_inf.data.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_inf.data.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -654,10 +654,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.h_geral as |h_geral|}}        <!--Habilidades Gerais-->
-                            <tr class="item" data-item-id="{{h_geral._id}}">
-                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_geral._id}}" title="Rolar Habilidade">{{h_geral.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_geral.data.total}}</td>
-                                <td class="mediaeval habNivel esconde">{{h_geral.data.nivel}}</td>
+                            <tr class="item" data-item-id="{{h_geral.id}}">
+                                <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_geral.id}}" title="Rolar Habilidade">{{h_geral.name}}</a></td>
+                                <td class="mediaeval habTotal">{{h_geral.data.data.total}}</td>
+                                <td class="mediaeval habNivel esconde">{{h_geral.data.data.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -710,7 +710,7 @@
                 <div class="row dados"> <!--Tabela Armas-->
                     <div class="col-md-12">
                         <table>
-                            {{#ifind data.data.combos "Apareca"}}
+                            {{#ifind actor.data.data.combos "Apareca"}}
                                 <tr style="text-align: left;">
                                     <th width="50px"></th>
                                     <th class="mediaeval"><a class="showImg" data-item-id="Apareca">Ataque</a></th>
@@ -723,19 +723,19 @@
                                     <th class="mediaeval">Editar</th>
                                 </tr>
                                 {{#each actor.combate as |combate|}}
-                                <tr class="item" data-item-id="{{combate._id}}">
+                                <tr class="item" data-item-id="{{combate.id}}">
                                     <td class="mediaeval">
-                                        <a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar.">
+                                        <a class="rollable dragable" data-item-id="{{combate.id}}" title="Clique para atacar.">
                                             <img class="imgItem" src="{{combate.img}}"/>
                                         </a>
                                     </td>
-                                    <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
-                                    <td class="mediaeval">{{combate.data.municao}}</td>
-                                    <td class="mediaeval">{{combate.data.alcance}}</td>
-                                    <td class="mediaeval">{{soma combate.data.def_l combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                    <td class="mediaeval">{{soma combate.data.def_m combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                    <td class="mediaeval">{{soma combate.data.def_p combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.dano.d100}}</td>
+                                    <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{combate.id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
+                                    <td class="mediaeval">{{combate.data.data.municao}}</td>
+                                    <td class="mediaeval">{{combate.data.data.alcance}}</td>
+                                    <td class="mediaeval">{{soma combate.data.data.def_l combate.data.data.custo combate.data.data.bonus_magico combate.data.data.nivel}}</td>
+                                    <td class="mediaeval">{{soma combate.data.data.def_m combate.data.data.custo combate.data.data.bonus_magico combate.data.data.nivel}}</td>
+                                    <td class="mediaeval">{{soma combate.data.data.def_p combate.data.data.custo combate.data.data.bonus_magico combate.data.data.nivel}}</td>
+                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.data.dano.d100}}</td>
                                     <td>
                                         <div class="item-controls">
                                             <a class="item-control item-copy" title="Duplicar"><i class="fas fa-copy"></i></a>
@@ -746,7 +746,7 @@
                                 </tr>
                                 {{/each}}
                             {{/ifind}}
-                            {{#idfind data.data.combos "Apareca"}}
+                            {{#idfind actor.data.data.combos "Apareca"}}
                                 <tr style="text-align: left;">
                                     <th class="mediaeval"><a class="showImg" data-item-id="Apareca">Ataque</a></th>
                                     <th class="mediaeval">Munição</th>
@@ -762,18 +762,18 @@
                                     <th class="mediaeval">Editar</th>
                                 </tr>
                                 {{#each actor.combate as |combate|}}
-                                <tr class="item" data-item-id="{{combate._id}}">
-                                    <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{combate._id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
-                                    <td class="mediaeval">{{combate.data.municao}}</td>
-                                    <td class="mediaeval">{{combate.data.alcance}}</td>
-                                    <td class="mediaeval">{{soma combate.data.def_l combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                    <td class="mediaeval">{{soma combate.data.def_m combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                    <td class="mediaeval">{{soma combate.data.def_p combate.data.custo combate.data.bonus_magico combate.data.nivel}}</td>
-                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.dano.d25}}</td>
-                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.dano.d50}}</td>
-                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.dano.d75}}</td>
-                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.dano.d100}}</td>
-                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.dano.d125}}</td>
+                                <tr class="item" data-item-id="{{combate.id}}">
+                                    <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{combate.id}}" title="Clique para atacar ou arraste para sua barra de macros.">{{combate.name}}</a></td>
+                                    <td class="mediaeval">{{combate.data.data.municao}}</td>
+                                    <td class="mediaeval">{{combate.data.data.alcance}}</td>
+                                    <td class="mediaeval">{{soma combate.data.data.def_l combate.data.data.custo combate.data.data.bonus_magico combate.data.data.nivel}}</td>
+                                    <td class="mediaeval">{{soma combate.data.data.def_m combate.data.data.custo combate.data.data.bonus_magico combate.data.data.nivel}}</td>
+                                    <td class="mediaeval">{{soma combate.data.data.def_p combate.data.data.custo combate.data.data.bonus_magico combate.data.data.nivel}}</td>
+                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.data.dano.d25}}</td>
+                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.data.dano.d50}}</td>
+                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.data.dano.d75}}</td>
+                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.data.dano.d100}}</td>
+                                    <td class="mediaeval" style='text-align:center;'>{{combate.data.data.dano.d125}}</td>
                                     <td>
                                         <div class="item-controls">
                                             <a class="item-control item-copy" title="Duplicar"><i class="fas fa-copy"></i></a>
@@ -790,7 +790,7 @@
                 <div class="row dados">
                     <div class="col-md-6"> <!--Tabela Defesas-->
                         <table>
-                            {{#ifind data.data.combos "Defesa"}}
+                            {{#ifind actor.data.data.combos "Defesa"}}
                             <tr style="text-align: left;">
                                 <th width="50px"></th>
                                 <th class="mediaeval"><a class="showImg" data-item-id="Defesa">Equip. De Defesa</a></th>
@@ -799,13 +799,13 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.defesas as |defesa|}}
-                            <tr class="item" data-item-id="{{defesa._id}}">
+                            <tr class="item" data-item-id="{{defesa.id}}">
                                 <td class="mediaeval">
                                     <img class="imgItem" src="{{defesa.img}}"/> 
                                 </td>
                                 <td class="mediaeval combateName">{{defesa.name}}</td>
-                                <td class="mediaeval">{{defesa.data.defesa_base.tipo}}{{defesa.data.defesa_base.valor}}</td>
-                                <td class="mediaeval">{{defesa.data.absorcao}}</td>
+                                <td class="mediaeval">{{defesa.data.data.defesa_base.tipo}}{{defesa.data.data.defesa_base.valor}}</td>
+                                <td class="mediaeval">{{defesa.data.data.absorcao}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -815,7 +815,7 @@
                             </tr>
                             {{/each}}
                             {{/ifind}}
-                            {{#idfind data.data.combos "Defesa"}}
+                            {{#idfind actor.data.data.combos "Defesa"}}
                             <tr style="text-align: left;">
                                 <th class="mediaeval"><a class="showImg" data-item-id="Defesa">Equipamento De Defesa</a></th>
                                 <th class="mediaeval">Def. Base</th>
@@ -823,10 +823,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.defesas as |defesa|}}
-                            <tr class="item" data-item-id="{{defesa._id}}">
+                            <tr class="item" data-item-id="{{defesa.id}}">
                                 <td class="mediaeval combateName">{{defesa.name}}</td>
-                                <td class="mediaeval">{{defesa.data.defesa_base.tipo}}{{defesa.data.defesa_base.valor}}</td>
-                                <td class="mediaeval">{{defesa.data.absorcao}}</td>
+                                <td class="mediaeval">{{defesa.data.data.defesa_base.tipo}}{{defesa.data.data.defesa_base.valor}}</td>
+                                <td class="mediaeval">{{defesa.data.data.absorcao}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -840,7 +840,7 @@
                     </div>
                     <div class="col-md-6"> <!--Tabela Tecnicas Combate-->
                         <table>
-                            {{#ifind data.data.combos "Tecnicas"}}
+                            {{#ifind actor.data.data.combos "Tecnicas"}}
                             <tr style="text-align: left;">
                                 <th width="50px"></th>
                                 <th class="mediaeval"><a class="showImg" data-item-id="Tecnicas">Técnica de Combate</a></th>
@@ -849,15 +849,15 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.tecnicas as |tecnica|}}
-                            <tr class="item" data-item-id="{{tecnica._id}}">
+                            <tr class="item" data-item-id="{{tecnica.id}}">
                                 <td class="mediaeval">
-                                    <a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar.">
+                                    <a class="rollable dragable" data-item-id="{{tecnica.id}}" title="Clique para rolar.">
                                         <img class="imgItem" src="{{tecnica.img}}"/>
                                     </a>
                                 </td>
-                                <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
-                                <td class="mediaeval">{{tecnica.data.total}}</td>
-                                <td class="mediaeval">{{tecnica.data.categoria}}</td>
+                                <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica.id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
+                                <td class="mediaeval">{{tecnica.data.data.total}}</td>
+                                <td class="mediaeval">{{tecnica.data.data.categoria}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -867,7 +867,7 @@
                             </tr>
                             {{/each}}
                             {{/ifind}}
-                            {{#idfind data.data.combos "Tecnicas"}}
+                            {{#idfind actor.data.data.combos "Tecnicas"}}
                             <tr style="text-align: left;">
                                 <th class="mediaeval"><a class="showImg" data-item-id="Tecnicas">Técnica de Combate</a></th>
                                 <th class="mediaeval">Total</th>
@@ -875,29 +875,29 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.tecnicas as |tecnica|}}
-                            <tr class="item" data-item-id="{{tecnica._id}}">
-                                <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica._id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
-                                <td class="mediaeval">{{tecnica.data.total}}</td>
-                                {{#ifeq tecnica.data.categoria "Perícia"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}</td>
+                            <tr class="item" data-item-id="{{tecnica.id}}">
+                                <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica.id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
+                                <td class="mediaeval">{{tecnica.data.data.total}}</td>
+                                {{#ifeq tecnica.data.data.categoria "Perícia"}}
+                                    <td class="mediaeval">{{tecnica.data.data.categoria}}</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Postura"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="far fa-hand-paper" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.data.data.categoria "Postura"}}
+                                    <td class="mediaeval">{{tecnica.data.data.categoria}}<i class="far fa-hand-paper" style='margin-left:5px;'></i></td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Ataque"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-gavel" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.data.data.categoria "Ataque"}}
+                                    <td class="mediaeval">{{tecnica.data.data.categoria}}<i class="fas fa-gavel" style='margin-left:5px;'></i></td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Precisão"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-bullseye" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.data.data.categoria "Precisão"}}
+                                    <td class="mediaeval">{{tecnica.data.data.categoria}}<i class="fas fa-bullseye" style='margin-left:5px;'></i></td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Agressão"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-skull-crossbones" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.data.data.categoria "Agressão"}}
+                                    <td class="mediaeval">{{tecnica.data.data.categoria}}<i class="fas fa-skull-crossbones" style='margin-left:5px;'></i></td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Proteção"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-shield-alt" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.data.data.categoria "Proteção"}}
+                                    <td class="mediaeval">{{tecnica.data.data.categoria}}<i class="fas fa-shield-alt" style='margin-left:5px;'></i></td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.data.categoria "Suporte"}}
-                                    <td class="mediaeval">{{tecnica.data.categoria}}<i class="fas fa-chess-rook" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.data.data.categoria "Suporte"}}
+                                    <td class="mediaeval">{{tecnica.data.data.categoria}}<i class="fas fa-chess-rook" style='margin-left:5px;'></i></td>
                                 {{/ifeq}}
                                 <td>
                                     <div class="item-controls">
@@ -935,7 +935,7 @@
                 <div class="row dados">
                     <div class="col-md-12">
                         <table>                             <!--Tabela de Magias-->
-                            {{#idfind data.data.combos "Magias"}}
+                            {{#idfind actor.data.data.combos "Magias"}}
                             <tr style="text-align: left;">
                                 <th width="50px"></th>
                                 <th class="mediaeval"><a class="showImg" data-item-id="Magias">Magia</a></th>
@@ -944,17 +944,17 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.magias as |magia|}}
-                            <tr class="item" data-item-id="{{magia._id}}">
+                            <tr class="item" data-item-id="{{magia.id}}">
                                 <td class="mediaeval">
-                                    <a class="rollable dragable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">
+                                    <a class="rollable dragable" data-item-id="{{magia.id}}" title="Clique para usar Magia.">
                                         <img class="imgItem" src="{{magia.img}}"/>
                                     </a>
                                 </td>
                                 <td class="mediaeval magiaName">
-                                    <a class="rollable dragable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">{{magia.name}}</a>
+                                    <a class="rollable dragable" data-item-id="{{magia.id}}" title="Clique para usar Magia.">{{magia.name}}</a>
                                 </td>
-                                <td class="mediaeval">{{magia.data.nivel}}</td>
-                                <td class="mediaeval">{{magia.data.total.valor}}</td>
+                                <td class="mediaeval">{{magia.data.data.nivel}}</td>
+                                <td class="mediaeval">{{magia.data.data.total.valor}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -964,7 +964,7 @@
                             </tr>
                             {{/each}}
                             {{/idfind}}
-                            {{#ifind data.data.combos "Magias"}}
+                            {{#ifind actor.data.data.combos "Magias"}}
                             <tr style="text-align: left;">
                                 <th class="mediaeval"><a class="showImg" data-item-id="Magias">Magia</a></th>
                                 <th class="mediaeval">Nível</th>
@@ -972,12 +972,12 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.magias as |magia|}}
-                            <tr class="item" data-item-id="{{magia._id}}">
+                            <tr class="item" data-item-id="{{magia.id}}">
                                 <td class="mediaeval magiaName">
-                                    <a class="rollable dragable" data-item-id="{{magia._id}}" title="Clique para usar Magia.">{{magia.name}}</a>
+                                    <a class="rollable dragable" data-item-id="{{magia.id}}" title="Clique para usar Magia.">{{magia.name}}</a>
                                 </td>
-                                <td class="mediaeval">{{magia.data.nivel}}</td>
-                                <td class="mediaeval">{{magia.data.total.valor}}</td>
+                                <td class="mediaeval">{{magia.data.data.nivel}}</td>
+                                <td class="mediaeval">{{magia.data.data.total.valor}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -1004,7 +1004,7 @@
                 <div class="row dados">
                     <div class="col-md-12"> <!--Tabela Pertences-->
                         <table>
-                            {{#idfind data.data.combos "Pertences"}}
+                            {{#idfind actor.data.data.combos "Pertences"}}
                             <tr style="text-align: left;">
                                 <th width="50px"></th>
                                 <th class="mediaeval"><a class="showImg" data-item-id="Pertences">Pertence</a></th>
@@ -1015,16 +1015,16 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.pertences as |pertence|}}
-                            <tr class="item" data-item-id="{{pertence._id}}">
+                            <tr class="item" data-item-id="{{pertence.id}}">
                                 <td class="mediaeval">
                                     <img class="imgItem" src="{{pertence.img}}"/>
                                 </td>
                                 <td class="mediaeval pertenceName">{{pertence.name}}</td>
-                                <td class="mediaeval">{{pertence.data.quant}}</td>
-                                <td class="mediaeval">{{pertence.data.peso}}</td>
-                                <td class="mediaeval">{{multiplica pertence.data.quant pertence.data.peso}}</td>
+                                <td class="mediaeval">{{pertence.data.data.quant}}</td>
+                                <td class="mediaeval">{{pertence.data.data.peso}}</td>
+                                <td class="mediaeval">{{multiplica pertence.data.data.quant pertence.data.data.peso}}</td>
                                 <td>
-                                    <a class="movePertence" title="Mover para Transporte" data-item-id="{{pertence._id}}"><i class="fas fa-horse"></i></a>
+                                    <a class="movePertence" title="Mover para Transporte" data-item-id="{{pertence.id}}"><i class="fas fa-horse"></i></a>
                                 </td>
                                 <td>
                                     <div class="item-controls">
@@ -1035,7 +1035,7 @@
                             </tr>
                             {{/each}}
                             {{/idfind}}
-                            {{#ifind data.data.combos "Pertences"}}
+                            {{#ifind actor.data.data.combos "Pertences"}}
                             <tr style="text-align: left;">
                                 <th class="mediaeval"><a class="showImg" data-item-id="Pertences">Pertence</a></th>
                                 <th class="mediaeval">Quantidade</th>
@@ -1046,14 +1046,14 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.pertences as |pertence|}}
-                            <tr class="item" data-item-id="{{pertence._id}}">
+                            <tr class="item" data-item-id="{{pertence.id}}">
                                 <td class="mediaeval pertenceName">{{pertence.name}}</td>
-                                <td class="mediaeval">{{pertence.data.quant}}</td>
-                                <td class="mediaeval">{{pertence.data.peso}}</td>
-                                <td class="mediaeval">{{multiplica pertence.data.quant pertence.data.peso}}</td>
-                                <td class="mediaeval">{{pertence.data.preco}}</td>
+                                <td class="mediaeval">{{pertence.data.data.quant}}</td>
+                                <td class="mediaeval">{{pertence.data.data.peso}}</td>
+                                <td class="mediaeval">{{multiplica pertence.data.data.quant pertence.data.data.peso}}</td>
+                                <td class="mediaeval">{{pertence.data.data.preco}}</td>
                                 <td>
-                                    <a class="movePertence" title="Mover para Transporte" data-item-id="{{pertence._id}}"><i class="fas fa-horse"></i></a>
+                                    <a class="movePertence" title="Mover para Transporte" data-item-id="{{pertence.id}}"><i class="fas fa-horse"></i></a>
                                 </td>
                                 <td>
                                     <div class="item-controls">
@@ -1091,10 +1091,10 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.transportes as |transporte|}}
-                            <tr class="item" data-item-id="{{transporte._id}}">
+                            <tr class="item" data-item-id="{{transporte.id}}">
                                 <td class="mediaeval pertenceName">{{transporte.name}}</td>
-                                <td class="mediaeval">{{transporte.data.capacidade.carga}}</td>
-                                <td class="mediaeval">{{transporte.data.capacidade.pessoas}}</td>
+                                <td class="mediaeval">{{transporte.data.data.capacidade.carga}}</td>
+                                <td class="mediaeval">{{transporte.data.data.capacidade.pessoas}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -1115,12 +1115,12 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.pertences_transporte as |pertence|}}
-                            <tr class="item" data-item-id="{{pertence._id}}">
+                            <tr class="item" data-item-id="{{pertence.id}}">
                                 <td class="mediaeval pertenceName">{{pertence.name}}</td>
-                                <td class="mediaeval">{{pertence.data.quant}}</td>
-                                <td class="mediaeval">{{pertence.data.peso}}</td>
+                                <td class="mediaeval">{{pertence.data.data.quant}}</td>
+                                <td class="mediaeval">{{pertence.data.data.peso}}</td>
                                 <td class="mediaeval">
-                                    <a class="movePertence" title="Mover para Personagem" data-item-id="{{pertence._id}}"><i class="fas fa-user"></i></a>
+                                    <a class="movePertence" title="Mover para Personagem" data-item-id="{{pertence.id}}"><i class="fas fa-user"></i></a>
                                 </td>
                                 <td>
                                     <div class="item-controls">
@@ -1147,7 +1147,7 @@
                 <div class="row dados">
                     <div class="col-md-12">
                         <table>
-                            {{#idfind data.data.combos "Efeitos"}}
+                            {{#idfind actor.data.data.combos "Efeitos"}}
                             <tr style="text-align: left;">
                                 <th width="50px"></th>
                                 <th class="mediaeval"><a class="showImg" data-item-id="Efeitos">Efeito</a></th>
@@ -1158,29 +1158,29 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.efeitos as |efeito|}}
-                            <tr class="item" data-item-id="{{efeito._id}}">
+                            <tr class="item" data-item-id="{{efeito.id}}">
                                 <td class="mediaeval">
                                     <img class="imgItem" src="{{efeito.img}}"/>
                                 </td>
                                 <td class="mediaeval efeitoName">{{efeito.name}}</td>
-                                <td class="mediaeval">{{efeito.data.atributo}}</td>
+                                <td class="mediaeval">{{efeito.data.data.atributo}}</td>
                                 <td class="mediaeval">
-                                    {{#ifeq efeito.data.tipo "+"}}
+                                    {{#ifeq efeito.data.data.tipo "+"}}
                                         <i class="fas fa-plus"></i>
                                     {{/ifeq}}
-                                    {{#ifeq efeito.data.tipo "-"}}
+                                    {{#ifeq efeito.data.data.tipo "-"}}
                                         <i class="fas fa-minus"></i>
                                     {{/ifeq}}
-                                    {{#ifeq efeito.data.tipo "*"}}
+                                    {{#ifeq efeito.data.data.tipo "*"}}
                                         <i class="fas fa-times"></i>
                                     {{/ifeq}}
-                                    {{#ifeq efeito.data.tipo "/"}}
+                                    {{#ifeq efeito.data.data.tipo "/"}}
                                         <i class="fas fa-divide"></i>
                                     {{/ifeq}}
                                 </td>
-                                <td class="mediaeval">{{efeito.data.valor}}</td>
+                                <td class="mediaeval">{{efeito.data.data.valor}}</td>
                                 <td class="mediaeval">
-                                {{#if efeito.data.ativo}}
+                                {{#if efeito.data.data.ativo}}
                                     <a class="ativaEfeito" title="Desativar"><i class="fas fa-check-circle"></i></a>
                                 {{else}}
                                     <a class="ativaEfeito" title="Ativar"><i class="far fa-times-circle"></i></a>
@@ -1195,7 +1195,7 @@
                             </tr>
                             {{/each}}
                             {{/idfind}}
-                            {{#ifind data.data.combos "Efeitos"}}
+                            {{#ifind actor.data.data.combos "Efeitos"}}
                             <tr style="text-align: left;">
                                 <th class="mediaeval"><a class="showImg" data-item-id="Efeitos">Efeito</a></th>
                                 <th class="mediaeval">Atributo</th>
@@ -1205,26 +1205,26 @@
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.efeitos as |efeito|}}
-                            <tr class="item" data-item-id="{{efeito._id}}">
+                            <tr class="item" data-item-id="{{efeito.id}}">
                                 <td class="mediaeval efeitoName">{{efeito.name}}</td>
-                                <td class="mediaeval">{{efeito.data.atributo}}</td>
+                                <td class="mediaeval">{{efeito.data.data.atributo}}</td>
                                 <td class="mediaeval">
-                                    {{#ifeq efeito.data.tipo "+"}}
+                                    {{#ifeq efeito.data.data.tipo "+"}}
                                         <i class="fas fa-plus"></i>
                                     {{/ifeq}}
-                                    {{#ifeq efeito.data.tipo "-"}}
+                                    {{#ifeq efeito.data.data.tipo "-"}}
                                         <i class="fas fa-minus"></i>
                                     {{/ifeq}}
-                                    {{#ifeq efeito.data.tipo "*"}}
+                                    {{#ifeq efeito.data.data.tipo "*"}}
                                         <i class="fas fa-times"></i>
                                     {{/ifeq}}
-                                    {{#ifeq efeito.data.tipo "/"}}
+                                    {{#ifeq efeito.data.data.tipo "/"}}
                                         <i class="fas fa-divide"></i>
                                     {{/ifeq}}
                                 </td>
-                                <td class="mediaeval">{{efeito.data.valor}}</td>
+                                <td class="mediaeval">{{efeito.data.data.valor}}</td>
                                 <td class="mediaeval">
-                                {{#if efeito.data.ativo}}
+                                {{#if efeito.data.data.ativo}}
                                     <a class="ativaEfeito" title="Desativar"><i class="fas fa-check-circle"></i></a>
                                 {{else}}
                                     <a class="ativaEfeito" title="Ativar"><i class="far fa-times-circle"></i></a>

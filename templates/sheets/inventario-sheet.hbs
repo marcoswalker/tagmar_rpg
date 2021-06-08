@@ -38,13 +38,13 @@
                             <th class="mediaeval">Ações</th>
                         </tr>
                         {{#each actor.pertences as |pertence|}}
-                            <tr class="item" data-item-id="{{pertence._id}}">
+                            <tr class="item" data-item-id="{{pertence.data._id}}">
                                 <td class="mediaeval">
-                                    <img class="imgItem" src="{{pertence.img}}"/>
+                                    <img class="imgItem" src="{{pertence.data.img}}"/>
                                 </td>
-                                <td class="mediaeval pertenceName">{{pertence.name}}</td>
-                                <td class="mediaeval">{{pertence.data.quant}}</td>
-                                <td class="mediaeval">{{pertence.data.preco}}</td>
+                                <td class="mediaeval pertenceName">{{pertence.data.name}}</td>
+                                <td class="mediaeval">{{pertence.data.data.quant}}</td>
+                                <td class="mediaeval">{{pertence.data.data.preco}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-cesto" title="Pegar"><i class="fas fa-shopping-basket"></i></a>
@@ -67,13 +67,13 @@
                             <th class="mediaeval">Ações</th>
                         </tr>
                         {{#each actor.transportes as |transporte|}}
-                            <tr class="item" data-item-id="{{transporte._id}}">
+                            <tr class="item" data-item-id="{{transporte.data._id}}">
                                 <td class="mediaeval">
-                                    <img class="imgItem" src="{{transporte.img}}"/>
+                                    <img class="imgItem" src="{{transporte.data.img}}"/>
                                 </td>
-                                <td class="mediaeval pertenceName">{{transporte.name}}</td>
-                                <td class="mediaeval">{{transporte.data.capacidade.carga}}</td>
-                                <td class="mediaeval">{{transporte.data.preco}}</td>
+                                <td class="mediaeval pertenceName">{{transporte.data.name}}</td>
+                                <td class="mediaeval">{{transporte.data.data.capacidade.carga}}</td>
+                                <td class="mediaeval">{{transporte.data.data.preco}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-cesto" title="Pegar"><i class="fas fa-shopping-basket"></i></a>

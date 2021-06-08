@@ -138,8 +138,6 @@ function boasVindas () {
 Hooks.on('createToken',async function (document) {
   if (!game.user.isGM) return;
   const token = document.data;
-  const settingBars = game.settings.get("tagmar_rpg", "autoBars");
-  
   if (!token.actorLink) {
     try {
       let tokenA = await canvas.tokens.get(token._id);
@@ -152,13 +150,12 @@ Hooks.on('createToken',async function (document) {
         'actorId': actor.data._id,
         'actorLink': true
       });
-      if (settingBars != "no") createBars(tokenA.document);
     } catch (e) {
       ui.notifications.error("Ocorreu um erro, delete esse token e crie novamente. " + e);
     }
-  } else {
-    if (settingBars != "no") createBars(token.document);
-  }
+  } 
+  const settingBars = game.settings.get("tagmar_rpg", "autoBars");
+  if (settingBars != "no") createBars(document);
   
 });
 
@@ -341,7 +338,7 @@ function createBars(token) {
       };
     }
   }
-  token.setFlag('barbrawl','resourceBars',resources);
+  foundry.utils.setProperty(token.data, "flags.barbrawl.resourceBars",resources);
 }
 
 Hooks.once("dragRuler.ready", (SpeedProvider) => {
@@ -662,7 +659,6 @@ function rollItemMacro(itemName, extra) {
   if (!actor) actor = game.actors.get(speaker.actor);
   const item = actor ? actor.items.find(i => i.name === itemName && i.type != "Pertence" && i.type != "Transporte" && i.type != "Defesa") : null;
   if (!item) return ui.notifications.warn(`O personagem selecionado não possui um Item chamado ${itemName}`);
-  // console.log(item);
   // Trigger the item roll
   return item.rollTagmarItem();
 }
