@@ -191,7 +191,7 @@ export default class tagmarActorSheet extends ActorSheet {
         html.find('.item-copy').click(this._duplicateItem.bind(this));
 
         html.find('.rollable').click(this._onItemRoll.bind(this));
-
+        html.find('.dano_rell').click(this._danoRell.bind(this));
         html.find(".movePertence").click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             const item = this.actor.items.get(li.data('itemId')); 
@@ -293,6 +293,102 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _danoRell(event) {
+        if (!this.options.editable) return;
+        const tipo = $(event.currentTarget).data('tipo');
+        const actor = this.actor;
+        let updateComand = "";
+        let valor = 0;
+        if (tipo == "EF") {
+            if (actor.type == "Personagem") {
+                valor = actor.data.data.ef.value;
+                updateComand = "EF";
+            }
+            else if (actor.type == "NPC") {
+                valor = actor.data.data.ef_npc.value;
+                updateComand = "EF_NPC";
+            }
+        } else if (tipo == "EH") {
+            if (actor.type == "Personagem") {
+                valor = actor.data.data.eh.value;
+                updateComand = "EH";
+            }
+            else if (actor.type == "NPC") {
+                valor = actor.data.data.eh_npc.value;
+                updateComand = "EH_NPC";
+            }
+        } else if (tipo == "KARMA") {
+            if (actor.type == "Personagem") {
+                valor = actor.data.data.karma.value;
+                updateComand = "KARMA";
+            } else if (actor.type == "NPC") {
+                valor = actor.data.data.karma_npc.value;
+                updateComand = "KARMA_NPC";
+            }
+        } else if (tipo == "FOCUS") {
+            if (actor.type == "Personagem" || actor.type == "NPC") {
+                valor = actor.data.data.focus.value;
+                updateComand = "FOCUS";
+            }
+        } else if (tipo == "ABS") {
+            if (actor.type == "Personagem" || actor.type == "NPC") {
+                valor = actor.data.data.absorcao.value;
+                updateComand = "ABS";
+            }
+        }
+        let dialog = new Dialog({
+            title: "Dano/Cura na " + tipo,
+            content: '<input type="number" class="dano_valor"/>',
+            buttons: {
+                vai: {
+                    icon: '<i class="fas fa-check-circle"></i>',
+                    label: 'Aceitar',
+                    callback: (html) => {
+                        let dano = html.find('.dano_valor').val();
+                        if (dano) dano = parseInt(dano);
+                        else dano = 0;
+                        valor -= dano;
+                    }
+                },
+                novai: {
+                    icon: '<i class="fas fa-window-close"></i>',
+                    label: 'Cancelar'
+                }
+            },
+            default: 'novai',
+            render: html => {},
+            close: html => {
+                switch (updateComand) {
+                    case 'EF':
+                        actor.update({'data.ef.value': valor});
+                        break;
+                    case 'EF_NPC':
+                        actor.update({'data.ef_npc.value': valor});
+                        break;
+                    case 'EH':
+                        actor.update({'data.eh.value': valor});
+                        break;
+                    case 'EH_NPC':
+                        actor.update({'data.eh_npc.value': valor});
+                        break;
+                    case 'KARMA':
+                        actor.update({'data.karma.value': valor});
+                        break;
+                    case 'KARMA_NPC':
+                        actor.update({'data.karma_npc.value': valor});
+                        break;
+                    case 'FOCUS':
+                        actor.update({'data.focus.value': valor});
+                        break;
+                    case 'ABS':
+                        actor.update({'data.absorcao.value': valor});
+                        break;
+                }
+            }
+        });
+        if (updateComand != "") dialog.render(true);
     }
 
     _updateHabilItems(sheetData, updateItemsNpc) {
