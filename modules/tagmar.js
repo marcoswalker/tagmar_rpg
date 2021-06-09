@@ -365,6 +365,72 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
   dragRuler.registerSystem("tagmar_rpg", TagmarSpeedProvider);
 });
 
+Hooks.once('diceSoNiceReady', function (dice) {
+  dice.addSystem({ id: game.system.id, name: "Tagmar RPG"}, true);
+  dice.addDicePreset({
+    type: 'd2',
+    labels: [
+      '1',
+      'systems/'+game.system.id+'/assets/logodice.png'
+    ],
+    system: game.system.id
+  });
+  dice.addDicePreset({
+    type: 'd10',
+    labels: [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      'systems/'+game.system.id+'/assets/logodice.png'
+    ],
+    system: game.system.id
+  });
+  dice.addDicePreset({
+    type: 'd20',
+    labels: [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      'systems/'+game.system.id+'/assets/logodice.png',
+    ],
+    system: game.system.id
+  });
+  dice.addColorset({
+    name: game.system.id,
+    description: 'Special',
+    category: 'Tagmar RPG',
+    foreground: '#55420a',
+    background: '#6b6b6b',
+    outline: '#000000',
+    texture: 'metal',
+    material: 'metal',
+    font: 'Verdana',
+    default: true,
+  })
+});
+
 Hooks.on('renderChatMessage', function (message, jq, messageData) {
   const fonte_size = game.settings.get('tagmar_rpg', 'fonteMsg');
   const rola_desc = jq.find('.rola_desc');
