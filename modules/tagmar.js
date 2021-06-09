@@ -11,7 +11,6 @@ Hooks.once("init", function(){
     tagmarItem,
     rollItemMacro
   };
-
   CONFIG.Combat.initiative = {
     formula: "1d10 + @iniciativa",
     decimals: 2
@@ -140,13 +139,10 @@ Hooks.on('createToken',async function (document) {
   const token = document.data;
   if (!token.actorLink) {
     try {
-      let tokenA = await canvas.tokens.get(token._id);
-      let tokenactor = tokenA.actor;
-      await tokenactor.update({
-        'name': tokenA.actor.name + " Cópia"
-      });
-      let actor = await Actor.create(tokenactor.data);
-      await tokenA.document.update({
+      let tokenactor = duplicate(document.actor);
+      tokenactor.name = tokenactor.name + " Cópia";
+      let actor = await Actor.create(tokenactor);
+      await token.document.update({
         'actorId': actor.data._id,
         'actorLink': true
       });
@@ -155,12 +151,13 @@ Hooks.on('createToken',async function (document) {
     }
   } 
   const settingBars = game.settings.get("tagmar_rpg", "autoBars");
-  if (settingBars != "no") createBars(document);
-  
+  if (settingBars != "no") {
+      if (game.modules.get('barbrawl') && game.modules.get('barbrawl').active) createBrawrs(document, settingBars);
+      else ui.notifications.warn("Instale e ative o módulo Bar Brawl!");
+  }
 });
 
-function createBars(token) {
-  const setting = game.settings.get("tagmar_rpg", "autoBars");
+async function createBrawrs(token, setting) {
   const actor = token.actor;
   let resources = {};
   if (setting == "barra_pers") {
@@ -254,8 +251,8 @@ function createBars(token) {
   } else if (setting == "barra_both") {
     if (actor.data.type == "Personagem") {
       resources = {
-        "bar1": {
-            id: "bar1",
+        "bareh": {
+            id: "bareh",
             mincolor: "#fbff00",
             maxcolor: "#00ff08",
             position: "top-outer",
@@ -263,16 +260,16 @@ function createBars(token) {
             visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
             ignoreMax: true
         },
-        "bar2": {
-          id: "bar2",
+        "barab": {
+          id: "barab",
           mincolor: "#fbff00",
           maxcolor: "#6b6b6b",
           position: "top-outer",
           attribute: "absorcao",
           visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
         },
-        "bar3": {
-          id: "bar3",
+        "baref": {
+          id: "baref",
           mincolor: "#fbff00",
           maxcolor: "#ff0000",
           position: "top-outer",
@@ -281,16 +278,16 @@ function createBars(token) {
           ignoreMax: true,
           ignoreMin: true
         },
-        "bar4": {
-          id: "bar4",
+        "barkm": {
+          id: "barkm",
           mincolor: "#fbff00",
           maxcolor: "#a600ff",
           position: "bottom-outer",
           attribute: "karma",
           visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
         },
-        "bar5": {
-          id: "bar5",
+        "barfo": {
+          id: "barfo",
           mincolor: "#fbff00",
           maxcolor: "#003399",
           position: "bottom-outer",
@@ -338,7 +335,9 @@ function createBars(token) {
       };
     }
   }
-  foundry.utils.setProperty(token.data, "flags.barbrawl.resourceBars",resources);
+  await token.unsetFlag('barbrawl','resourceBars');
+  //await token.setFlag('barbrawl','resourceBars',{});
+  await token.setFlag('barbrawl','resourceBars',resources);
 }
 
 Hooks.once("dragRuler.ready", (SpeedProvider) => {

@@ -97,13 +97,13 @@ export default class tagmarActorSheet extends ActorSheet {
             let updatePers = {};
             let items_toUpdate = [];
             this._prepareCharacterItems(data);
-            if (data.actor.raca) {
+            if (data.actor.items.filter(item => item.type == "Raca")[0]) {
                 this._preparaCaracRaciais(data, updatePers);
                 this._caracSort(data, updatePers);
                 if (!game.settings.get('tagmar_rpg', 'ajusteManual')) this._calculaAjuste(data, updatePers);
                 this._prepareValorTeste(data, updatePers);
             }
-            if (data.actor.profissao) {
+            if (data.actor.items.filter(item => item.type == "Profissao")[0]) {
                 this._attProfissao(data, updatePers, items_toUpdate);
             }
             this._attCargaAbsorcaoDefesa(data, updatePers);
@@ -182,6 +182,14 @@ export default class tagmarActorSheet extends ActorSheet {
                 default: "nao"
             });
             dialog.render(true);
+        });
+
+        html.mouseleave(function (event) {
+            $(event.currentTarget).find('.form_tagmar').find('a').css('box-shadow','inset 1px 1px 5px red');
+        });
+
+        html.mouseenter(function (event) {
+            $(event.currentTarget).find('.form_tagmar').find('a').css('box-shadow','none');
         });
   
         if (this.actor.data.type != "Inventario") {
@@ -1193,8 +1201,9 @@ export default class tagmarActorSheet extends ActorSheet {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         const actorSheetData = sheetData.actor.data;
-        if (actorData.profissao) {
-            const profissaoData = actorData.profissao.data;
+        const profissaoP = actorData.items.filter(item => item.type == "Profissao")[0];
+        if (profissaoP) {
+            const profissaoData = profissaoP.data;
             const max_hab = profissaoData.data.p_aquisicao.p_hab + Math.floor(actorSheetData.data.estagio / 2);
             const atrib_magia = profissaoData.data.atrib_mag;
             let pontos_hab = profissaoData.data.p_aquisicao.p_hab * actorSheetData.data.estagio;
@@ -1360,11 +1369,12 @@ export default class tagmarActorSheet extends ActorSheet {
     _preparaCaracRaciais(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
-        if (actorData.raca) {
-            const racaData = actorData.raca.data.data;
-            if (actorData.data.raca != actorData.raca.name)
+        const racaP = actorData.items.filter(item => item.type == "Raca")[0];
+        if (racaP) {
+            const racaData = racaP.data.data;
+            if (actorData.data.raca != racaP.name)
             {
-                updatePers['data.raca'] = actorData.raca.name;
+                updatePers['data.raca'] = racaP.name;
                 updatePers['data.mod_racial.INT'] = racaData.mod_racial.INT;
                 updatePers['data.mod_racial.AUR'] = racaData.mod_racial.AUR;
                 updatePers['data.mod_racial.CAR'] = racaData.mod_racial.CAR;
@@ -1835,10 +1845,11 @@ export default class tagmarActorSheet extends ActorSheet {
         let ef_base = 0;
         let vb_base = 0;
         let eh_base = 0;
-    
-        ef_base = data.actor.raca.data.data.ef_base;
-        vb_base = data.actor.raca.data.data.vb;
-        eh_base = data.actor.profissao.data.data.eh_base;
+        const racaP = data.actor.items.filter(item => item.type == "Raca")[0];
+        const profP = data.actor.items.filter(item => item.type == "Profissao")[0];
+        ef_base = racaP.data.data.ef_base;
+        vb_base = racaP.data.data.vb;
+        eh_base = profP.data.data.eh_base;
         
         let efMax = data.actor.data.data.atributos.FOR + data.actor.data.data.atributos.FIS + ef_base;
         let vbTotal = data.actor.data.data.atributos.FIS + vb_base;
