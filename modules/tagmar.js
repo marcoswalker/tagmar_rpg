@@ -419,8 +419,8 @@ Hooks.once('diceSoNiceReady', function (dice) {
   });
   dice.addColorset({
     name: game.system.id,
-    description: 'Special',
-    category: 'Tagmar RPG',
+    description: ' * Tagmar RPG * ',
+    category: 'Colors',
     foreground: '#55420a',
     background: '#6b6b6b',
     outline: '#000000',
