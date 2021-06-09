@@ -16,6 +16,7 @@ Hooks.once("init", function(){
     decimals: 2
   };
   CONFIG.Item.documentClass = tagmarItem;
+  CONFIG.time.roundTime = 15;
   // Register System Settings
   SystemSettings();
   Items.unregisterSheet("core", ItemSheet);
@@ -152,12 +153,24 @@ Hooks.on('createToken',async function (document) {
   } 
   const settingBars = game.settings.get("tagmar_rpg", "autoBars");
   if (settingBars != "no") {
-      if (game.modules.get('barbrawl') && game.modules.get('barbrawl').active) createBrawrs(document, settingBars);
+      if (game.modules.get('barbrawl') && game.modules.get('barbrawl').active) {
+        let resources = createBrawrs(document, settingBars);
+        const scene = game.scenes.find(sena => sena.active && sena.visible);
+        if (document.getFlag('barbrawl', 'resourceBars')) {
+          document.unsetFlag('barbrawl', 'resourceBars');
+        }
+        //await document.setFlag('barbrawl', 'resourceBars', resources);
+        foundry.utils.setProperty(document.data, 'flags.barbrawl.resourceBars', resources);
+        await scene.updateEmbeddedDocuments("Token", [{
+          "_id": document.id,
+          "flags.barbrawl.resourceBars": document.data.flags.barbrawl.resourceBars
+        }]);
+      }
       else ui.notifications.warn("Instale e ative o módulo Bar Brawl!");
   }
 });
 
-async function createBrawrs(token, setting) {
+function createBrawrs(token, setting) {
   const actor = token.actor;
   let resources = {};
   if (setting == "barra_pers") {
@@ -335,9 +348,7 @@ async function createBrawrs(token, setting) {
       };
     }
   }
-  await token.unsetFlag('barbrawl','resourceBars');
-  //await token.setFlag('barbrawl','resourceBars',{});
-  await token.setFlag('barbrawl','resourceBars',resources);
+  return resources;
 }
 
 Hooks.once("dragRuler.ready", (SpeedProvider) => {
