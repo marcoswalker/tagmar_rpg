@@ -158,13 +158,15 @@ Hooks.on('preCreateToken', async function (document) {
   const settingBars = game.settings.get("tagmar_rpg", "autoBars");
   if (settingBars != "no") {
     if (game.modules.get('barbrawl') && game.modules.get('barbrawl').active) {
-      await document.data.update({
-        'flags.barbrawl.resourceBars': 0,
-        'bar1.attribute': "",
-        'bar2.attribute': ""
-      });
       let resources = createBrawrs(document, settingBars);
-      document.data.update({'flags.barbrawl.resourceBars': resources});
+      if (Object.keys(resources).length > 0) {
+        await document.data.update({
+          'flags.barbrawl.resourceBars': 0,
+          'bar1.attribute': "",
+          'bar2.attribute': ""
+        });
+        document.data.update({'flags.barbrawl.resourceBars': resources});
+      }
     }
     else ui.notifications.warn("Instale e ative o módulo Bar Brawl!");
   }
