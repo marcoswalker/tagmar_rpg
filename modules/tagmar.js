@@ -172,6 +172,27 @@ Hooks.on('preCreateToken', async function (document) {
   }
 });
 
+Hooks.once('renderChatLog', function (chatLog,html,css) {
+  if (!game.user.isGM) return;
+  let button = $('<a class="button export-to-journal" title="Salvar log do chat em um Journal."><i class="fas fa-archive"></i></a>');
+  button.click(function () {
+    let content = html.find('[id="chat-log"]').html();
+    let date = new Date();
+    const dia = date.getDate();
+    const mes = date.getMonth();
+    const ano = date.getFullYear();
+    const hora = date.getHours();
+    const min = date.getMinutes();
+    JournalEntry.create({
+      name: `ChatLog ${dia}/${mes+1}/${ano} - ${hora}:${min}`,
+      content: content
+    });
+    ui.notifications.info("Registro do chat armazenado em um Journal!");
+  });
+  $(html.find('.export-log')).remove();
+  $(html.find('.control-buttons')).append(button);
+});
+
 function createBrawrs(token, setting) {
   const actor = token.actor;
   let resources = {};
