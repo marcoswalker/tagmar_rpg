@@ -71,7 +71,7 @@ export default class tagmarActorSheet extends ActorSheet {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
         }
     }
-    getData(options) {
+    async getData(options) {
         const data = super.getData(options);
         data.dtypes = ["String", "Number", "Boolean"];
          // Prepare items.
@@ -121,12 +121,12 @@ export default class tagmarActorSheet extends ActorSheet {
             if (Object.keys(updatePers).length > 0 && options.editable) {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
-                    data.actor.update(updatePers);
+                    await data.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
                 else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
                     this.lastUpdate = updatePers;
-                    data.actor.update(updatePers);
+                    await data.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
             }
@@ -2102,7 +2102,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _ativaEfeito(event) {
-        event.preventDefault();
+        //event.preventDefault();
         let button = $(event.currentTarget);
         const li = button.parents(".item");
         const item = this.actor.items.get(li.data("itemId"));
