@@ -669,32 +669,62 @@ async function rollTabela(colunaR) {
 }
 
 async function rollResistencia(resist, f_ataque) {
+  const table_resFisMag = [
+    [-2, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20],
+    [-1, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20],
+    [ 0, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20],
+    [ 1, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20],
+    [ 2, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20],
+    [ 3,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20],
+    [ 4,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20],
+    [ 5,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20],
+    [ 6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20],
+    [ 7,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19],
+    [ 8,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19],
+    [ 9,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18],
+    [10,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18],
+    [11,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17],
+    [12,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17],
+    [13,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16],
+    [14,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16],
+    [15,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15],
+    [16,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15],
+    [17,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14],
+    [18,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13],
+    [19,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12],
+    [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
+  ];
   let forcAtaque = f_ataque;
   let valorDef = resist;
   let def_ataq = valorDef - forcAtaque;
   let stringSucesso = "";
   let valorSucess = 0;
-  if (def_ataq == 0) valorSucess = 11;
-  else if (def_ataq == 1) valorSucess = 10;
-  else if (def_ataq == 2) valorSucess = 9;
-  else if (def_ataq == 3) valorSucess = 8;
-  else if (def_ataq == 4 || def_ataq == 5) valorSucess = 7;
-  else if (def_ataq == 6 || def_ataq == 7) valorSucess = 6;
-  else if (def_ataq == 8 || def_ataq == 9) valorSucess = 5;
-  else if (def_ataq == 10 || def_ataq == 11) valorSucess = 4;
-  else if (def_ataq == 12 || def_ataq == 13) valorSucess = 3;
-  else if (def_ataq == 14 || def_ataq == 15) valorSucess = 2;
-  else if (def_ataq >= 16) valorSucess = 1;
-  else if (def_ataq == -1) valorSucess = 11;
-  else if (def_ataq == -2) valorSucess = 12;
-  else if (def_ataq == -3) valorSucess = 13;
-  else if (def_ataq == -4 || def_ataq == -5) valorSucess = 14;
-  else if (def_ataq == -6 || def_ataq == -7) valorSucess = 15;
-  else if (def_ataq == -8 || def_ataq == -9) valorSucess = 16;
-  else if (def_ataq == -10 || def_ataq == -11) valorSucess = 17;
-  else if (def_ataq == -12 || def_ataq == -13) valorSucess = 18;
-  else if (def_ataq == -14 || def_ataq == -15) valorSucess = 19;
-  else if (def_ataq <= -16) valorSucess = 20;
+  if ((valorDef >= -2 && valorDef <= 20) && (forcAtaque >= 1 && forcAtaque <= 20)) {
+    let coluna = table_resFisMag.find(col => col[0] == valorDef);
+    valorSucess = coluna[forcAtaque];
+  } else {
+    if (def_ataq == 0) valorSucess = 11;
+    else if (def_ataq == 1) valorSucess = 10;
+    else if (def_ataq == 2) valorSucess = 9;
+    else if (def_ataq == 3) valorSucess = 8;
+    else if (def_ataq == 4 || def_ataq == 5) valorSucess = 7;
+    else if (def_ataq == 6 || def_ataq == 7) valorSucess = 6;
+    else if (def_ataq == 8 || def_ataq == 9) valorSucess = 5;
+    else if (def_ataq == 10 || def_ataq == 11) valorSucess = 4;
+    else if (def_ataq == 12 || def_ataq == 13) valorSucess = 3;
+    else if (def_ataq == 14 || def_ataq == 15) valorSucess = 2;
+    else if (def_ataq >= 16) valorSucess = 1;
+    else if (def_ataq == -1) valorSucess = 11;
+    else if (def_ataq == -2) valorSucess = 12;
+    else if (def_ataq == -3) valorSucess = 13;
+    else if (def_ataq == -4 || def_ataq == -5) valorSucess = 14;
+    else if (def_ataq == -6 || def_ataq == -7) valorSucess = 15;
+    else if (def_ataq == -8 || def_ataq == -9) valorSucess = 16;
+    else if (def_ataq == -10 || def_ataq == -11) valorSucess = 17;
+    else if (def_ataq == -12 || def_ataq == -13) valorSucess = 18;
+    else if (def_ataq == -14 || def_ataq == -15) valorSucess = 19;
+    else if (def_ataq <= -16) valorSucess = 20;
+  }
   const r = new Roll("1d20");
   r.evaluate({async: false});
   const Dresult = r.total;
