@@ -745,7 +745,7 @@ Hooks.on("renderSidebarTab", async (object, html) => {
     const details = html.find("#game-details");
     const tgDetails = document.createElement("li");
     tgDetails.classList.add("donation-sistema");
-    tgDetails.innerHTML = "Tagmar RPG no Foundry Vtt <a title='Acesse nosso Youtube.' href='https://www.youtube.com/channel/UCDyR_0eg3TjV5r5cOUqQaSQ'><i class='fab fa-youtube-square'></i></a>";
+    tgDetails.innerHTML = "Tagmar RPG no Foundry Vtt <span><a title='Acesse nosso Youtube.' href='https://www.youtube.com/channel/UCDyR_0eg3TjV5r5cOUqQaSQ'><i class='fab fa-youtube-square'></i></a></span>";
     details.append(tgDetails);
   }
 });
