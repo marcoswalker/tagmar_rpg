@@ -760,12 +760,6 @@ Hooks.on("renderSidebarTab", async (object, html) => {
   }
 });
 
-Hooks.on("renderJournalSheet", function (object, html) {
-  console.log(object);
-  console.log(html);
-});
-
-
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Técnicas de Combate, Habilidades e Magias.");
