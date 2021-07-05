@@ -87,6 +87,16 @@ Hooks.once("init", function(){
     return options.inverse(this);
   });
 
+  Handlebars.registerHelper('fichaPontos', function (data, options) {
+    let actor = game.actors.find(a => a.items.find(i => i.id == data._id));
+    if (typeof actor != 'undefined') {
+      if (actor.sheet instanceof tagmarAltSheet) {
+        return options.inverse(this);
+      }
+    }
+    return options.fn(this);
+  });
+
   Handlebars.registerHelper('settingFalse', function(setting, options) {
     if (!game.settings.get('tagmar_rpg', setting)) {
       return options.fn(this);

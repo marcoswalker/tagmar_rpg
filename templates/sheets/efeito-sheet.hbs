@@ -29,7 +29,7 @@
                         <div class="col-md-8">
                             <select class="mediaeval" style="font-size: 90%;" name="data.atributo" type="text" value="{{data.data.atributo}}" data-dtype="String" height="30">
                                 {{#select data.data.atributo}}
-                                {{#settingFalse 'ajusteManual'}}
+                                {{#fichaPontos data}}
                                 <option value="INT">INT</option>
                                 <option value="CAR">CAR</option>
                                 <option value="AUR">AUR</option>
@@ -37,7 +37,7 @@
                                 <option value="FIS">FIS</option>
                                 <option value="AGI">AGI</option>
                                 <option value="PER">PER</option>
-                                {{/settingFalse}}
+                                {{/fichaPontos}}
                                 <option value="EF">EF</option>
                                 <option value="ABS">Absorção</option>
                                 <option value="DEF">Defesa</option>
