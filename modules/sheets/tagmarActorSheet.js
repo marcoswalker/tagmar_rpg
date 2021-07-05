@@ -71,7 +71,7 @@ export default class tagmarActorSheet extends ActorSheet {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
         }
     }
-    async getData(options) {
+    getData(options) {
         const data = super.getData(options);
         data.dtypes = ["String", "Number", "Boolean"];
          // Prepare items.
@@ -121,12 +121,12 @@ export default class tagmarActorSheet extends ActorSheet {
             if (Object.keys(updatePers).length > 0 && options.editable) {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
-                    await data.actor.update(updatePers);
+                    data.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
                 else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
                     this.lastUpdate = updatePers;
-                    await data.actor.update(updatePers);
+                    data.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
             }
@@ -973,7 +973,9 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _attRM(data, updatePers) {
         if (!this.options.editable) return;
-        let rm = data.actor.data.data.estagio + data.actor.data.data.atributos.AUR;
+        let aura = data.actor.data.data.atributos.AUR;
+        if (updatePers.hasOwnProperty('data.atributos.AUR')) aura = updatePers["data.atributos.AUR"];
+        let rm = data.actor.data.data.estagio + aura;
         const efeitos = data.actor.items.filter(e => e.type == "Efeito" && (e.data.data.atributo == "RMAG" && e.data.data.ativo));
         efeitos.forEach(function(efeit) {
             let efeito = efeit.data;
@@ -994,7 +996,9 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _attRF(data, updatePers) {
         if (!this.options.editable) return;
-        let rf = data.actor.data.data.estagio + data.actor.data.data.atributos.FIS;
+        let fisico = data.actor.data.data.atributos.FIS;
+        if (updatePers.hasOwnProperty('data.atributos.FIS')) fisico = updatePers['data.atributos.FIS'];
+        let rf = data.actor.data.data.estagio + fisico;
         const efeitos = data.actor.items.filter(e => e.type == "Efeito" && (e.data.data.atributo == "RFIS" && e.data.data.ativo));
         efeitos.forEach(function(efeit) {
             let efeito = efeit.data;
@@ -1015,7 +1019,9 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _attKarmaMax(data, updatePers) {
         if (!this.options.editable) return;
-        let karma = ((data.actor.data.data.atributos.AUR) + 1 ) * ((data.actor.data.data.estagio) + 1);
+        let aura = data.actor.data.data.atributos.AUR;
+        if (updatePers.hasOwnProperty('data.atributos.AUR')) aura = updatePers['data.atributos.AUR'];
+        let karma = ((aura) + 1 ) * ((data.actor.data.data.estagio) + 1);
         if (karma < 0) karma = 0;
         const efeitos = data.actor.items.filter(e => e.type == "Efeito" && (e.data.data.atributo == "KMA" && e.data.data.ativo));
         efeitos.forEach(function(efeit) {
@@ -1222,17 +1228,31 @@ export default class tagmarActorSheet extends ActorSheet {
             let pontos_tec = profissaoData.data.p_aquisicao.p_tec * actorSheetData.data.estagio;
             let pontos_mag = 0;
             let pontos_gra = profissaoData.data.p_aquisicao.p_gra * actorSheetData.data.estagio;
+            let intel = actorSheetData.data.atributos.INT;
+            let aura = actorSheetData.data.atributos.AUR;
+            let cari = actorSheetData.data.atributos.CAR;
+            let forca = actorSheetData.data.atributos.FOR;
+            let fisico = actorSheetData.data.atributos.FIS;
+            let agilid = actorSheetData.data.atributos.AGI;
+            let peric = actorSheetData.data.atributos.PER;
+            if (updatePers.hasOwnProperty("data.atributos.INT")) intel = updatePers['data.atributos.INT'];
+            if (updatePers.hasOwnProperty("data.atributos.AUR")) aura = updatePers['data.atributos.AUR'];
+            if (updatePers.hasOwnProperty("data.atributos.CAR")) cari = updatePers['data.atributos.CAR'];
+            if (updatePers.hasOwnProperty("data.atributos.FOR")) forca = updatePers['data.atributos.FOR'];
+            if (updatePers.hasOwnProperty("data.atributos.FIS")) fisico = updatePers['data.atributos.FIS'];
+            if (updatePers.hasOwnProperty("data.atributos.AGI")) agilid = updatePers['data.atributos.AGI'];
+            if (updatePers.hasOwnProperty("data.atributos.PER")) peric = updatePers['data.atributos.PER'];
             if (max_hab != actorSheetData.data.max_hab) {
                 updatePers["data.max_hab"] = max_hab;
             }
             if (atrib_magia != "") {
-                if (atrib_magia == "INT") pontos_mag = ((2 * actorSheetData.data.atributos.INT) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "AUR") pontos_mag = ((2 * actorSheetData.data.atributos.AUR) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "CAR") pontos_mag = ((2 * actorSheetData.data.atributos.CAR) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "FOR") pontos_mag = ((2 * actorSheetData.data.atributos.FOR) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "FIS") pontos_mag = ((2 * actorSheetData.data.atributos.FIS) + 7)  * actorSheetData.data.estagio;
-                else if (atrib_magia == "AGI") pontos_mag = ((2 * actorSheetData.data.atributos.AGI) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "PER") pontos_mag = ((2 * actorSheetData.data.atributos.PER) + 7) * actorSheetData.data.estagio;
+                if (atrib_magia == "INT") pontos_mag = ((2 * intel) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "AUR") pontos_mag = ((2 * aura) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "CAR") pontos_mag = ((2 * cari) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "FOR") pontos_mag = ((2 * forca) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "FIS") pontos_mag = ((2 * fisico) + 7)  * actorSheetData.data.estagio;
+                else if (atrib_magia == "AGI") pontos_mag = ((2 * agilid) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "PER") pontos_mag = ((2 * peric) + 7) * actorSheetData.data.estagio;
             } else pontos_mag = 0;
             const efeitos = sheetData.actor.items.filter(e => e.type == "Efeito" && ((e.data.data.atributo == "PHAB" || e.data.data.atributo == "PTEC" || e.data.data.atributo == "PARM" || e.data.data.atributo == "PMAG") && e.data.data.ativo));
             efeitos.forEach(function(efeit) {
@@ -1327,13 +1347,13 @@ export default class tagmarActorSheet extends ActorSheet {
                 if (hab.data.bonus) hab_bonus = hab.data.bonus;
                 if (hab_nataD) hab_nivel = actorSheetData.data.estagio;
                 let valor_atrib = 0;
-                if (atributo == "INT") valor_atrib = actorSheetData.data.atributos.INT;
-                else if (atributo == "AUR") valor_atrib = actorSheetData.data.atributos.AUR;
-                else if (atributo == "CAR") valor_atrib = actorSheetData.data.atributos.CAR;
-                else if (atributo == "FOR") valor_atrib = actorSheetData.data.atributos.FOR;
-                else if (atributo == "FIS") valor_atrib = actorSheetData.data.atributos.FIS;
-                else if (atributo == "AGI") valor_atrib = actorSheetData.data.atributos.AGI;
-                else if (atributo == "PER") valor_atrib = actorSheetData.data.atributos.PER;
+                if (atributo == "INT") valor_atrib = intel;
+                else if (atributo == "AUR") valor_atrib = aura;
+                else if (atributo == "CAR") valor_atrib = cari;
+                else if (atributo == "FOR") valor_atrib = forca;
+                else if (atributo == "FIS") valor_atrib = fisico;
+                else if (atributo == "AGI") valor_atrib = agilid;
+                else if (atributo == "PER") valor_atrib = peric;
                 let total = 0;
                 if (hab_nivel > 0) {
                     total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
@@ -1538,6 +1558,14 @@ export default class tagmarActorSheet extends ActorSheet {
             updatePers["data.valor_teste.AGI"] = actorData.data.atributos.AGI*4;
             updatePers["data.valor_teste.PER"] = actorData.data.atributos.PER*4;
         }
+        if (updatePers.hasOwnProperty("data.atributos.INT")) updatePers["data.valor_teste.INT"] = updatePers["data.atributos.INT"]*4;
+        if (updatePers.hasOwnProperty("data.atributos.AUR")) updatePers["data.valor_teste.AUR"] = updatePers["data.atributos.AUR"]*4;
+        if (updatePers.hasOwnProperty("data.atributos.CAR")) updatePers["data.valor_teste.CAR"] = updatePers["data.atributos.CAR"]*4;
+        if (updatePers.hasOwnProperty("data.atributos.FOR")) updatePers["data.valor_teste.FOR"] = updatePers["data.atributos.FOR"]*4;
+        if (updatePers.hasOwnProperty("data.atributos.FIS")) updatePers["data.valor_teste.FIS"] = updatePers["data.atributos.FIS"]*4;
+        if (updatePers.hasOwnProperty("data.atributos.AGI")) updatePers["data.valor_teste.AGI"] = updatePers["data.atributos.AGI"]*4;
+        if (updatePers.hasOwnProperty("data.atributos.PER")) updatePers["data.valor_teste.PER"] = updatePers["data.atributos.PER"]*4;
+        
     }
     //Exclusivo para Inventário
     _prepareInventarioItems(sheetData) { 
@@ -1719,7 +1747,9 @@ export default class tagmarActorSheet extends ActorSheet {
                 def_pasCat = item.data.defesa_base.tipo;
             }
         });
-        var def_atiVal = def_pasVal + data.actor.data.data.atributos.AGI;
+        let agilidade = data.actor.data.data.atributos.AGI;
+        if (updateNpc.hasOwnProperty('data.atributos.AGI')) agilidade = updateNpc['data.atributos.AGI'];
+        var def_atiVal = def_pasVal + agilidade;
         const actorData = data.actor.data.data;
         if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.absorcao.max != absorcao) {
             updateNpc["data.d_passiva.valor"] = def_pasVal;
@@ -1768,8 +1798,9 @@ export default class tagmarActorSheet extends ActorSheet {
                 cap_usada += itemData.data.peso * itemData.data.quant;
             });
         }
-        
-        var def_atiVal = def_pasVal + data.actor.data.data.atributos.AGI;
+        let agilidade = data.actor.data.data.atributos.AGI;
+        if (updatePers.hasOwnProperty('data.atributos.AGI')) agilidade = updatePers['data.atributos.AGI'];
+        var def_atiVal = def_pasVal + agilidade;
         const efeitos = data.actor.items.filter(e => e.type == "Efeito" && ((e.data.data.atributo == "DEF" || e.data.data.atributo == "ABS") && e.data.data.ativo));
         efeitos.forEach(function (efeit){
             let efeito = efeit.data;
@@ -1821,8 +1852,10 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         }
         let carga_max = 0;
-        if (actorSheetData.data.atributos.FOR >= 1) {
-            carga_max = (actorSheetData.data.atributos.FOR * 20) + 20;
+        let forca = actorSheetData.data.atributos.FOR;
+        if (updatePers.hasOwnProperty('data.atributos.FOR')) forca = updatePers['data.atributos.FOR'];
+        if (forca >= 1) {
+            carga_max = (forca * 20) + 20;
             if (actorSheetData.data.carga.value > carga_max) {
                 if (!actorData.carga.sobrecarga || actorData.carga.valor_s != actorSheetData.data.carga.value - carga_max) {
                     updatePers["data.carga.sobrecarga"] = true;
@@ -1860,9 +1893,12 @@ export default class tagmarActorSheet extends ActorSheet {
         ef_base = racaP.data.data.ef_base;
         vb_base = racaP.data.data.vb;
         eh_base = profP.data.data.eh_base;
-        
-        let efMax = data.actor.data.data.atributos.FOR + data.actor.data.data.atributos.FIS + ef_base;
-        let vbTotal = data.actor.data.data.atributos.FIS + vb_base;
+        let forca = data.actor.data.data.atributos.FOR;
+        let fisico = data.actor.data.data.atributos.FIS;
+        if (updatePers.hasOwnProperty("data.atributos.FOR")) forca = updatePers['data.atributos.FOR'];
+        if (updatePers.hasOwnProperty('data.atributos.FIS')) fisico = updatePers['data.atributos.FIS'];
+        let efMax = forca + fisico + ef_base;
+        let vbTotal = fisico + vb_base;
         const efeitos = data.actor.items.filter(e => e.type == "Efeito" && ((e.data.data.atributo == "VB" || e.data.data.atributo == "EF") && e.data.data.ativo));
         efeitos.forEach(function (efeit) {
             let efeito = efeit.data;
@@ -1893,7 +1929,7 @@ export default class tagmarActorSheet extends ActorSheet {
             updatePers["data.vb"] = vbTotal
         }
         if (data.actor.data.data.estagio == 1){
-            let ehMax = eh_base + data.actor.data.data.atributos.FIS;
+            let ehMax = eh_base + fisico;
             if (data.actor.data.data.eh.max != ehMax) {
                 updatePers["data.eh.max"] = ehMax;
             }
