@@ -480,6 +480,16 @@ Hooks.on('renderChatMessage', function (message, jq, messageData) {
   const rola_desc = jq.find('.rola_desc');
   if (fonte_size > 0) $(rola_desc).css('font-size', fonte_size.toString()+'%');
   else $(rola_desc).css('font-size', '100%');
+  jq.find('.showDesc').on('click', function () {
+    if (jq.find('.rola_desc').css('display') == 'none') {
+      jq.find('.rola_desc').css('display','block');
+      jq.find('.showDesc').html('Descrição: <i class="far fa-eye"></i>');
+    }
+    else {
+      jq.find('.rola_desc').css('display','none');
+      jq.find('.showDesc').html('Descrição: <i class="far fa-eye-slash"></i>');
+    }
+  });
 });
 
 Hooks.on('tagmar_Critico', async function (coluna, tabela_resol, user, actor) {
