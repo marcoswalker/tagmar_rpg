@@ -216,6 +216,7 @@ export default class tagmarActorSheet extends ActorSheet {
             }
         });
         html.find(".ativaEfeito").click(this._ativaEfeito.bind(this));
+        html.find('.newEfeito').click(this._newEfeito.bind(this));
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
         html.find(".rollAtributos").hover(function (){
             $(".rollAtributos").html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
@@ -301,6 +302,14 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _newEfeito(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        actor.createEmbeddedDocuments('Item', [{name: "Novo Efeito", type: "Efeito"}]).then(function (efeito) {
+            efeito[0].sheet.render(true);
+        });
     }
 
     _danoRell(event) {

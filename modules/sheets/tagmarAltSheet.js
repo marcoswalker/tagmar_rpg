@@ -221,6 +221,7 @@ export default class tagmarAltSheet extends ActorSheet {
             }
         });
         html.find(".ativaEfeito").click(this._ativaEfeito.bind(this));
+        html.find('.newEfeito').click(this._newEfeito.bind(this));
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
         html.find(".roll1d10").click(ev => {
             let formula = "1d10";
@@ -292,6 +293,14 @@ export default class tagmarAltSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _newEfeito(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        actor.createEmbeddedDocuments('Item', [{name: "Novo Efeito", type: "Efeito"}]).then(function (efeito) {
+            efeito[0].sheet.render(true);
+        });
     }
 
     _danoRell(event) {
