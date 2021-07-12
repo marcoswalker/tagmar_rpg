@@ -204,6 +204,7 @@ export default class tagmarAltSheet extends ActorSheet {
         html.find('.item-copy').click(this._duplicateItem.bind(this));
 
         html.find('.rollable').click(this._onItemRoll.bind(this));
+        html.find('.rollable').contextmenu(this._onItemRightButton.bind(this));
         html.find('.dano_rell').click(this._danoRell.bind(this));
         html.find(".movePertence").click(ev => {
             const li = $(ev.currentTarget).parents(".item");
@@ -1355,6 +1356,29 @@ export default class tagmarAltSheet extends ActorSheet {
             "_id": item.data._id,
             "data.ativo": ativa
         }]);
+    }
+
+    _onItemRightButton (event) {
+        let button = $(event.currentTarget);
+        const li = button.parents(".item");
+        const item = this.actor.items.get(li.data("itemId"));
+        if (typeof item.data.data.descricao == "string") {
+            let content = `<div style="height:800px" class='rola_desc mediaeval'><img src="${item.data.img}" style="display:block;margin-left:auto;margin-right:auto">`;
+            content += `<h1 class="fairyDust" style="text-align:center;">${item.name}</h1>`;
+            if (item.data.type == "Magia") content += item.data.data.efeito ;
+            else if (item.data.type == "Habilidade") {
+                if (item.data.data.tarefAperf.length > 0) content += `<h3 class="mediaeval">Tarefas aperfeiçoadas:</h3>` +  item.data.data.tarefAperf;
+                content += `<br><br><h3 class="mediaeval">Descrição:</h3>` + item.data.data.descricao;
+            }
+            else content += item.data.data.descricao;
+            content += `</div>`;
+            let dialog = new Dialog({
+                title: item.name,
+                content: content,
+                buttons: {}
+            });
+            dialog.render(true);
+        }
     }
 
     _onItemRoll (event) {
