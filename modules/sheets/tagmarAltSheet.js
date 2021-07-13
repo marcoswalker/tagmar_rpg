@@ -418,6 +418,7 @@ export default class tagmarAltSheet extends ActorSheet {
             else if (ajusteTecnica.atributo == "AGI") total = actorData.data.atributos.AGI + nivel_tecnica;
             else if (ajusteTecnica.atributo == "PER") total = actorData.data.atributos.PER + nivel_tecnica;
             else total = nivel_tecnica;
+            total += ajusteTecnica.valor;
             if (tec.data.total != total) {
                 update_tecnicas.push({
                     "_id": tec._id,
