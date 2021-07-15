@@ -218,6 +218,10 @@ export default class tagmarActorSheet extends ActorSheet {
         });
         html.find(".ativaEfeito").click(this._ativaEfeito.bind(this));
         html.find('.newEfeito').click(this._newEfeito.bind(this));
+        html.find(".newHabilidade").click(this._newHabilidade.bind(this));
+        html.find(".newCombat").click(this._newCombate.bind(this));
+        html.find(".newMagia").click(this._newMagia.bind(this));
+        html.find(".newPertence").click(this._newPertence.bind(this));
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
         html.find(".rollAtributos").hover(function (){
             $(".rollAtributos").html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
@@ -257,7 +261,9 @@ export default class tagmarActorSheet extends ActorSheet {
         });
         html.find(".showImg").click(this._combateImg.bind(this));
         html.find(".displayRaca").click(this._displayRaca.bind(this));
+        html.find(".displayRaca").contextmenu(this._editRaca.bind(this));
         html.find(".displayProf").click(this._displayProf.bind(this));
+        html.find(".displayProf").contextmenu(this._editProf.bind(this));
         html.find(".addGrupoArmas").click(this._addGrupoArmas.bind(this));
         html.find(".subGrupoArmas").click(this._subGrupoArmas.bind(this));
         html.find(".rolarMoral").click(this._rolarMoral.bind(this));
@@ -303,6 +309,113 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _newMagia(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        actor.createEmbeddedDocuments('Item', [{name: "Nova Magia", type: "Magia"}]).then(function (item) {
+            item[0].sheet.render(true);
+        });
+    }
+
+    _newPertence(event) {
+        if (!this.options.editable) return;
+        let create = false;
+        let tipo = "";
+        const actor = this.actor;
+        let dialogContent = `<div>
+            <label for="selectTipo" class="mediaeval">Selecione o tipo do item:</label>
+            <select id="selectTipo" name="selectTipo" class="selectType mediaeval" height="30" style="margin-left:2px;">
+                <option value="Pertence">Pertence</option>
+                <option value="Transporte">Transporte</option>
+            </select>
+        </div>`;
+        let dialog = new Dialog({
+            title: "Escolha o tipo do item que deseja criar.",
+            content: dialogContent,
+            buttons: {
+                criar: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Criar Item",
+                    callback: html => {
+                        create = true;
+                        tipo = html.find(".selectType").val();
+                    }
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: 'Cancelar'
+                }
+            },
+            default: "cancel",
+            close: html => {
+                if (create) {
+                    if (tipo.length > 0) {
+                        actor.createEmbeddedDocuments("Item", [{name: `Novo ${tipo}`, type: tipo}]).then(function (item) {
+                            item[0].sheet.render(true);
+                        });
+                    }
+                }
+            }
+        });
+        dialog.render(true);
+    }
+
+    _newCombate(event) {
+        if (!this.options.editable) return;
+        let create = false;
+        let tipo = "";
+        const actor = this.actor;
+        let dialogContent = `<div>
+            <label for="selectTipo" class="mediaeval">Selecione o tipo do item:</label>
+            <select id="selectTipo" name="selectTipo" class="selectType mediaeval" height="30" style="margin-left:2px;">
+                <option value="Ataque">Ataque</option>
+                <option value="Defesa">Defesa</option>
+                <option value="Tecnica">Técnica de Combate</option>
+            </select>
+            </div>`;
+        let dialog = new Dialog({
+            title: "Escolha o tipo do item que deseja criar.",
+            content: dialogContent,
+            buttons: {
+                criar: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Criar Item",
+                    callback: html => {
+                        create = true;
+                        tipo = html.find(".selectType").val();
+                    }
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: 'Cancelar'
+                }
+            },
+            default: "cancel",
+            close: html => {
+                if (create) {
+                    let tipoItem = "";
+                    if (tipo == "Ataque") tipoItem = "Combate";
+                    else if (tipo == "Defesa") tipoItem = "Defesa";
+                    else if (tipo == "Tecnica") tipoItem = "TecnicasCombate";
+                    if (tipoItem.length > 0) {
+                        actor.createEmbeddedDocuments("Item", [{name: "Novo Item Criado", type: tipoItem}]).then(function (item) {
+                            item[0].sheet.render(true);
+                        });
+                    }
+                }
+            }
+        });
+        dialog.render(true);
+    }
+
+    _newHabilidade(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        actor.createEmbeddedDocuments("Item", [{name: "Nova Habilidade", type: "Habilidade", data: {tipo: "profissional"}}]).then(function (item) {
+            item[0].sheet.render(true);
+        });
     }
 
     _newEfeito(event) {
@@ -777,28 +890,60 @@ export default class tagmarActorSheet extends ActorSheet {
         }
     }
 
+    _editRaca(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const raca = actor.items.find(item => item.type == "Raca");
+        if (!raca) return;
+        raca.sheet.render(true);
+    }
+
     _displayRaca(event) {
-        const racaData = this.raca;
-        let chatData = {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({
-                actor: this.actor
-              })
-        };
-        chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.data.data.descricao + "</h3>";
-        ChatMessage.create(chatData);
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const racaData = actor.items.find(item => item.type == "Raca");
+        if (!racaData) {
+            actor.createEmbeddedDocuments("Item", [{name: "Raça", type: "Raca"}]).then(function (item) {
+                item[0].sheet.render(true);
+            });
+        } else {
+            let chatData = {
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({
+                    actor: this.actor
+                  })
+            };
+            chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.data.data.descricao + "</h3>";
+            ChatMessage.create(chatData);
+        } 
+    }
+
+    _editProf(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const profissao = actor.items.find(item => item.type == "Profissao");
+        if (!profissao) return;
+        profissao.sheet.render(true);
     }
 
     _displayProf(event) {
-        const profData = this.profissao;
-        let chatData = {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({
-                actor: this.actor
-              })
-        };
-        chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.data.data.descricao + "</h3>";
-        ChatMessage.create(chatData);
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const profData = actor.items.find(item => item.type == "Profissao");
+        if (!profData) {
+            actor.createEmbeddedDocuments("Item", [{name: "Profissão", type: "Profissao"}]).then(function (item) {
+                item[0].sheet.render(true);
+            });
+        } else {
+            let chatData = {
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({
+                    actor: this.actor
+                  })
+            };
+            chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.data.data.descricao + "</h3>";
+            ChatMessage.create(chatData);
+        }
     }
 
     _rolaRMAG(event) {
@@ -1228,7 +1373,15 @@ export default class tagmarActorSheet extends ActorSheet {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         const actorSheetData = sheetData.actor.data;
-        const profissaoP = actorData.items.filter(item => item.type == "Profissao")[0];
+        const profissoes = actorData.items.filter(item => item.type == "Profissao");
+        if (profissoes.length > 1) {
+            let ids = [];
+            profissoes.slice(1).forEach(function (item) {
+                ids.push(item.id);
+            });
+            actorData.deleteEmbeddedDocuments("Item", ids);
+        }
+        const profissaoP = profissoes[0];
         if (profissaoP) {
             const profissaoData = profissaoP.data;
             const max_hab = profissaoData.data.p_aquisicao.p_hab + Math.floor(actorSheetData.data.estagio / 2);
@@ -1410,7 +1563,15 @@ export default class tagmarActorSheet extends ActorSheet {
     _preparaCaracRaciais(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
-        const racaP = actorData.items.filter(item => item.type == "Raca")[0];
+        const racas = actorData.items.filter(item => item.type == "Raca");
+        if (racas.length > 1) {
+            let ids = [];
+            racas.slice(1).forEach(function (item) {
+                ids.push(item.id);
+            });
+            actorData.deleteEmbeddedDocuments("Item", ids);  
+        }
+        const racaP = racas[0];
         if (racaP) {
             const racaData = racaP.data.data;
             if (actorData.data.raca != racaP.name)

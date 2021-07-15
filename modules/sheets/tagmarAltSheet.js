@@ -223,6 +223,11 @@ export default class tagmarAltSheet extends ActorSheet {
         });
         html.find(".ativaEfeito").click(this._ativaEfeito.bind(this));
         html.find('.newEfeito').click(this._newEfeito.bind(this));
+        html.find(".newHabilidade").click(this._newHabilidade.bind(this));
+        html.find(".newCombat").click(this._newCombate.bind(this));
+        html.find(".newMagia").click(this._newMagia.bind(this));
+        html.find(".newPertence").click(this._newPertence.bind(this));
+        html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
         html.find(".roll1d10").click(ev => {
             let formula = "1d10";
@@ -248,7 +253,9 @@ export default class tagmarAltSheet extends ActorSheet {
         });
         html.find(".showImg").click(this._combateImg.bind(this));
         html.find(".displayRaca").click(this._displayRaca.bind(this));
+        html.find(".displayRaca").contextmenu(this._editRaca.bind(this));
         html.find(".displayProf").click(this._displayProf.bind(this));
+        html.find(".displayProf").contextmenu(this._editProf.bind(this));
         html.find(".addGrupoArmas").click(this._addGrupoArmas.bind(this));
         html.find(".subGrupoArmas").click(this._subGrupoArmas.bind(this));
         html.find(".rolarMoral").click(this._rolarMoral.bind(this));
@@ -294,6 +301,113 @@ export default class tagmarAltSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _newMagia(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        actor.createEmbeddedDocuments('Item', [{name: "Nova Magia", type: "Magia"}]).then(function (item) {
+            item[0].sheet.render(true);
+        });
+    }
+
+    _newPertence(event) {
+        if (!this.options.editable) return;
+        let create = false;
+        let tipo = "";
+        const actor = this.actor;
+        let dialogContent = `<div>
+            <label for="selectTipo" class="mediaeval">Selecione o tipo do item:</label>
+            <select id="selectTipo" name="selectTipo" class="selectType mediaeval" height="30" style="margin-left:2px;">
+                <option value="Pertence">Pertence</option>
+                <option value="Transporte">Transporte</option>
+            </select>
+        </div>`;
+        let dialog = new Dialog({
+            title: "Escolha o tipo do item que deseja criar.",
+            content: dialogContent,
+            buttons: {
+                criar: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Criar Item",
+                    callback: html => {
+                        create = true;
+                        tipo = html.find(".selectType").val();
+                    }
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: 'Cancelar'
+                }
+            },
+            default: "cancel",
+            close: html => {
+                if (create) {
+                    if (tipo.length > 0) {
+                        actor.createEmbeddedDocuments("Item", [{name: `Novo ${tipo}`, type: tipo}]).then(function (item) {
+                            item[0].sheet.render(true);
+                        });
+                    }
+                }
+            }
+        });
+        dialog.render(true);
+    }
+
+    _newCombate(event) {
+        if (!this.options.editable) return;
+        let create = false;
+        let tipo = "";
+        const actor = this.actor;
+        let dialogContent = `<div>
+            <label for="selectTipo" class="mediaeval">Selecione o tipo do item:</label>
+            <select id="selectTipo" name="selectTipo" class="selectType mediaeval" height="30" style="margin-left:2px;">
+                <option value="Ataque">Ataque</option>
+                <option value="Defesa">Defesa</option>
+                <option value="Tecnica">Técnica de Combate</option>
+            </select>
+            </div>`;
+        let dialog = new Dialog({
+            title: "Escolha o tipo do item que deseja criar.",
+            content: dialogContent,
+            buttons: {
+                criar: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Criar Item",
+                    callback: html => {
+                        create = true;
+                        tipo = html.find(".selectType").val();
+                    }
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: 'Cancelar'
+                }
+            },
+            default: "cancel",
+            close: html => {
+                if (create) {
+                    let tipoItem = "";
+                    if (tipo == "Ataque") tipoItem = "Combate";
+                    else if (tipo == "Defesa") tipoItem = "Defesa";
+                    else if (tipo == "Tecnica") tipoItem = "TecnicasCombate";
+                    if (tipoItem.length > 0) {
+                        actor.createEmbeddedDocuments("Item", [{name: "Novo Item Criado", type: tipoItem}]).then(function (item) {
+                            item[0].sheet.render(true);
+                        });
+                    }
+                }
+            }
+        });
+        dialog.render(true);
+    }
+
+    _newHabilidade(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        actor.createEmbeddedDocuments("Item", [{name: "Nova Habilidade", type: "Habilidade", data: {tipo: "profissional"}}]).then(function (item) {
+            item[0].sheet.render(true);
+        });
     }
 
     _newEfeito(event) {
@@ -1248,28 +1362,60 @@ export default class tagmarAltSheet extends ActorSheet {
         
     }
 
+    _editRaca(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const raca = actor.items.find(item => item.type == "Raca");
+        if (!raca) return;
+        raca.sheet.render(true);
+    }
+
     _displayRaca(event) {
-        const racaData = this.raca;
-        let chatData = {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({
-                actor: this.actor
-              })
-        };
-        chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.data.data.descricao + "</h3>";
-        ChatMessage.create(chatData);
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const racaData = actor.items.find(item => item.type == "Raca");
+        if (!racaData) {
+            actor.createEmbeddedDocuments("Item", [{name: "Raça", type: "Raca"}]).then(function (item) {
+                item[0].sheet.render(true);
+            });
+        } else {
+            let chatData = {
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({
+                    actor: this.actor
+                  })
+            };
+            chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.data.data.descricao + "</h3>";
+            ChatMessage.create(chatData);
+        } 
+    }
+
+    _editProf(event) {
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const profissao = actor.items.find(item => item.type == "Profissao");
+        if (!profissao) return;
+        profissao.sheet.render(true);
     }
 
     _displayProf(event) {
-        const profData = this.profissao;
-        let chatData = {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({
-                actor: this.actor
-              })
-        };
-        chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.data.data.descricao + "</h3>";
-        ChatMessage.create(chatData);
+        if (!this.options.editable) return;
+        const actor = this.actor;
+        const profData = actor.items.find(item => item.type == "Profissao");
+        if (!profData) {
+            actor.createEmbeddedDocuments("Item", [{name: "Profissão", type: "Profissao"}]).then(function (item) {
+                item[0].sheet.render(true);
+            });
+        } else {
+            let chatData = {
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({
+                    actor: this.actor
+                  })
+            };
+            chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.data.data.descricao + "</h3>";
+            ChatMessage.create(chatData);
+        }
     }
 
     _combateImg(event) {
@@ -1658,8 +1804,17 @@ export default class tagmarAltSheet extends ActorSheet {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
         const actorSheetData = sheetData.actor.data;
-        if (actorData.profissao) {
-            const profissaoData = actorData.profissao.data;
+        const profissoes = actorData.items.filter(item => item.type == "Profissao");
+        if (profissoes.length > 1) {
+            let ids = [];
+            profissoes.slice(1).forEach(function (item) {
+                ids.push(item.id);
+            });
+            actorData.deleteEmbeddedDocuments("Item", ids);
+        }
+        const profissaoP = profissoes[0];
+        if (profissaoP) {
+            const profissaoData = profissaoP.data;
             const max_hab = profissaoData.data.p_aquisicao.p_hab + Math.floor(actorSheetData.data.estagio / 2);
             const atrib_magia = profissaoData.data.atrib_mag;
             let pontos_hab = profissaoData.data.p_aquisicao.p_hab * actorSheetData.data.estagio;
@@ -1668,17 +1823,31 @@ export default class tagmarAltSheet extends ActorSheet {
             let pontos_tec = profissaoData.data.p_aquisicao.p_tec * actorSheetData.data.estagio;
             let pontos_mag = 0;
             let pontos_gra = profissaoData.data.p_aquisicao.p_gra * actorSheetData.data.estagio;
+            let intel = actorSheetData.data.atributos.INT;
+            let aura = actorSheetData.data.atributos.AUR;
+            let cari = actorSheetData.data.atributos.CAR;
+            let forca = actorSheetData.data.atributos.FOR;
+            let fisico = actorSheetData.data.atributos.FIS;
+            let agilid = actorSheetData.data.atributos.AGI;
+            let peric = actorSheetData.data.atributos.PER;
+            if (updatePers.hasOwnProperty("data.atributos.INT")) intel = updatePers['data.atributos.INT'];
+            if (updatePers.hasOwnProperty("data.atributos.AUR")) aura = updatePers['data.atributos.AUR'];
+            if (updatePers.hasOwnProperty("data.atributos.CAR")) cari = updatePers['data.atributos.CAR'];
+            if (updatePers.hasOwnProperty("data.atributos.FOR")) forca = updatePers['data.atributos.FOR'];
+            if (updatePers.hasOwnProperty("data.atributos.FIS")) fisico = updatePers['data.atributos.FIS'];
+            if (updatePers.hasOwnProperty("data.atributos.AGI")) agilid = updatePers['data.atributos.AGI'];
+            if (updatePers.hasOwnProperty("data.atributos.PER")) peric = updatePers['data.atributos.PER'];
             if (max_hab != actorSheetData.data.max_hab) {
                 updatePers["data.max_hab"] = max_hab;
             }
             if (atrib_magia != "") {
-                if (atrib_magia == "INT") pontos_mag = ((2 * actorSheetData.data.atributos.INT) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "AUR") pontos_mag = ((2 * actorSheetData.data.atributos.AUR) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "CAR") pontos_mag = ((2 * actorSheetData.data.atributos.CAR) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "FOR") pontos_mag = ((2 * actorSheetData.data.atributos.FOR) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "FIS") pontos_mag = ((2 * actorSheetData.data.atributos.FIS) + 7)  * actorSheetData.data.estagio;
-                else if (atrib_magia == "AGI") pontos_mag = ((2 * actorSheetData.data.atributos.AGI) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "PER") pontos_mag = ((2 * actorSheetData.data.atributos.PER) + 7) * actorSheetData.data.estagio;
+                if (atrib_magia == "INT") pontos_mag = ((2 * intel) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "AUR") pontos_mag = ((2 * aura) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "CAR") pontos_mag = ((2 * cari) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "FOR") pontos_mag = ((2 * forca) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "FIS") pontos_mag = ((2 * fisico) + 7)  * actorSheetData.data.estagio;
+                else if (atrib_magia == "AGI") pontos_mag = ((2 * agilid) + 7) * actorSheetData.data.estagio;
+                else if (atrib_magia == "PER") pontos_mag = ((2 * peric) + 7) * actorSheetData.data.estagio;
             } else pontos_mag = 0;
             const efeitos = sheetData.actor.items.filter(e => e.type == "Efeito" && ((e.data.data.atributo == "PHAB" || e.data.data.atributo == "PTEC" || e.data.data.atributo == "PARM" || e.data.data.atributo == "PMAG") && e.data.data.ativo));
             efeitos.forEach(function(efeit) {
@@ -1773,13 +1942,13 @@ export default class tagmarAltSheet extends ActorSheet {
                 if (hab.data.bonus) hab_bonus = hab.data.bonus;
                 if (hab_nataD) hab_nivel = actorSheetData.data.estagio;
                 let valor_atrib = 0;
-                if (atributo == "INT") valor_atrib = actorSheetData.data.atributos.INT;
-                else if (atributo == "AUR") valor_atrib = actorSheetData.data.atributos.AUR;
-                else if (atributo == "CAR") valor_atrib = actorSheetData.data.atributos.CAR;
-                else if (atributo == "FOR") valor_atrib = actorSheetData.data.atributos.FOR;
-                else if (atributo == "FIS") valor_atrib = actorSheetData.data.atributos.FIS;
-                else if (atributo == "AGI") valor_atrib = actorSheetData.data.atributos.AGI;
-                else if (atributo == "PER") valor_atrib = actorSheetData.data.atributos.PER;
+                if (atributo == "INT") valor_atrib = intel;
+                else if (atributo == "AUR") valor_atrib = aura;
+                else if (atributo == "CAR") valor_atrib = cari;
+                else if (atributo == "FOR") valor_atrib = forca;
+                else if (atributo == "FIS") valor_atrib = fisico;
+                else if (atributo == "AGI") valor_atrib = agilid;
+                else if (atributo == "PER") valor_atrib = peric;
                 let total = 0;
                 if (hab_nivel > 0) {
                     total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
@@ -1974,11 +2143,20 @@ export default class tagmarAltSheet extends ActorSheet {
     _preparaCaracRaciais(sheetData, updatePers) {
         if (!this.options.editable) return;
         const actorData = sheetData.actor;
-        if (actorData.raca) {
-            const racaData = actorData.raca.data.data;
-            if (actorData.data.raca != actorData.raca.name)
+        const racas = actorData.items.filter(item => item.type == "Raca");
+        if (racas.length > 1) {
+            let ids = [];
+            racas.slice(1).forEach(function (item) {
+                ids.push(item.id);
+            });
+            actorData.deleteEmbeddedDocuments("Item", ids);  
+        }
+        const racaP = racas[0];
+        if (racaP) {
+            const racaData = racaP.data.data;
+            if (actorData.data.raca != racaP.name)
             {
-                updatePers['data.raca'] = actorData.raca.name;
+                updatePers['data.raca'] = racaP.name;
                 updatePers['data.mod_racial.INT'] = racaData.mod_racial.INT;
                 updatePers['data.mod_racial.AUR'] = racaData.mod_racial.AUR;
                 updatePers['data.mod_racial.CAR'] = racaData.mod_racial.CAR;
