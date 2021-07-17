@@ -770,6 +770,59 @@ Hooks.on("renderSidebarTab", async (object, html) => {
   }
 });
 
+Hooks.on("renderCombatTracker",function (combatTracker, html) {
+  if (!game.user.isGM) return;
+  const combats = combatTracker.combats;
+  if (combats.length > 0) {
+    let header = html.find("#combat-round");
+    header.append(`<nav class="encounters flexrow">
+      <a class="combat-control setarIniciativa" title="Somar Iniciativa para vários combatentes.">
+      <i class="fas fa-exchange-alt"></i>
+      </a>
+    </nav>`);
+    let currentCombat = combatTracker.viewed;
+    let combatants = currentCombat.combatants;
+    $('.setarIniciativa').on('click', function (event) {
+      let dialogContent = `<div class="mediaeval">
+        <ul class="combatates" style="list-style-type:none;"></ul>
+        <label for="valor">Somar na Iniciativa:</label>
+        <input type="number" name="valor" id="valor" value="0" style="width:50px;margin-left:10px;text-align:center;margin-bottom:10px;" class="valorIniciativa"/>
+      </div>`;
+      let dialog = new Dialog({
+        title: "Somar Iniciativa",
+        content: dialogContent,
+        buttons: {
+          vai: {
+            icon: '<i class="fas fa-check"></i>',
+            label: 'Somar Iniciativa',
+            callback: html => {
+              let valor = html.find('.valorIniciativa').val();
+              $(".mudar:checked").each(function (index, c) {
+                let combatId = $(c).val();
+                let combatante = currentCombat.combatants.find(c => c.id == combatId);
+                let iniciativaAtual = combatante.initiative;
+                valor = parseInt(valor);
+                currentCombat.setInitiative(combatId, parseInt(iniciativaAtual + valor));
+              });
+            }
+          },
+          cancel: {
+            icon: '<i class="fas fa-times"></i>',
+            label: 'Cancelar'
+          }
+        },
+        default: "cancel",
+        render: html => {
+          combatants.forEach(function (combatant) {
+            html.find('.combatates').append(`<li style="margin-bottom:5px;"><input type="checkbox" class="mudar" value="${combatant.id}"/> ${combatant.name}</li>`);
+          });
+        }
+      });
+      dialog.render(true);
+    });
+  }
+});
+
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Técnicas de Combate, Habilidades e Magias.");
