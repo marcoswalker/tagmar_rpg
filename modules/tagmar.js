@@ -36,7 +36,6 @@ const tabela_resol = [
   [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
 ];
 Hooks.once("init", function(){
-
   game.tagmar = {
     tagmarItem,
     rollItemMacro
@@ -604,6 +603,16 @@ function setInf_ataque(target_token, user) {
     ChatMessage.create(chatData);
   }
 }
+
+Hooks.on('renderUserConfig', function (UserConfig, html , User) {
+  let actors = User.actors;
+  let lista = html.find('.actor');
+  lista.each(function (index, li) {
+    let actor_id = $(li).data('actorId');
+    let actor = actors.find(a => a.id == actor_id);
+    if (actor.data.type != "Personagem") $(li).addClass('esconde');
+  });
+});
 
 Hooks.on("getSceneControlButtons", (controls) => {
   const bar = controls.find(c => c.name === "token");
