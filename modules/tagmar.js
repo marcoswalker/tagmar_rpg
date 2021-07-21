@@ -614,6 +614,15 @@ Hooks.on('renderUserConfig', function (UserConfig, html , User) {
   });
 });
 
+Hooks.on('renderActorDirectory', function (actordirectory, html, user) {
+  if (game.user.isGM) return;
+  let list = html.find('.actor');
+  list.each(function (index, li) {
+    let actor = game.actors.get($(li).data('entityId'));
+    if (actor.data.type == "Inventario") $(li).addClass('esconde');
+  });
+});
+
 Hooks.on("getSceneControlButtons", (controls) => {
   const bar = controls.find(c => c.name === "token");
   if (game.user.isGM) {
