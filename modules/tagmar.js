@@ -615,10 +615,10 @@ Hooks.on('renderUserConfig', function (UserConfig, html , User) {
 });
 
 Hooks.on('renderActorDirectory', function (actordirectory, html, user) {
-  if (game.user.isGM) return;
+  if (user.user.isGM) return;
   let list = html.find('.actor');
   list.each(function (index, li) {
-    let actor = game.actors.get($(li).data('entityId'));
+    let actor = actordirectory.documents.find(a => a.id == $(li).data('entityId'));
     if (actor.data.type == "Inventario") $(li).addClass('esconde');
   });
 });
