@@ -39,14 +39,14 @@ export class tagmarItem extends Item {
     async habToChat(resultado, r, h_total, colunarolada) {
         let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<h4 class='mediaeval rola rola_desc'>" + this.data.data.tarefAperf + "</h4>";
         let PrintResult = "";
-        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
+        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
-        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:yellow;'>Amarelo - Fácil</h1>";
-        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:orange;'>Laranja - Médio</h1>";
-        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:red;'>Vermelho - Difícil</h1>";
-        else if (resultado == "azul") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:blue;'>Azul - Muito Difícil</h1>";
-        else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:rgb(2,9,37);'>Azul Escuro - Absurdo</h1>";
-        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Impossível</h1>";
+        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
+        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
+        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
+        else if (resultado == "azul") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
+        else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - Absurdo</h1>";
+        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Impossível</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + colunarolada + "</h4>";
         r.toMessage({
             user: game.user.id,
@@ -121,13 +121,13 @@ export class tagmarItem extends Item {
     async tecnicaToChat(resultado, r, coluna_rolada) {
         let PrintResult = "";
         let conteudo = "<h3 class='mediaeval rola'><a class='showDesc'>Descrição: <i class='far fa-eye-slash'></i></a> </h3>" + "<h4 class='mediaeval rola rola_desc' style='display: none;'>" + this.data.data.descricao + "</h4>";
-        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
+        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
-        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:yellow;'>Amarelo - Fácil</h1>";
-        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:orange;'>Laranja - Médio</h1>";
-        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:red;'>Vermelho - Difícil</h1>";
-        else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 style='color: white; text-align:center;background-color:blue;'>Azul - Muito Difícil</h1>";
-        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico Absurdo</h1>";
+        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
+        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
+        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
+        else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
+        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + coluna_rolada + "</h4>";
         r.toMessage({
             user: game.user.id,
@@ -188,12 +188,12 @@ export class tagmarItem extends Item {
         let punicaoText = "";
         let conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + this.data.data.descricao + "</h4>";
         if (resultado == "verde") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha Crítica</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha Crítica</h1>";
             critico = true;
         }
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Errou</h1>";
         else if (resultado == "amarelo") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:yellow;'>Amarelo - 25%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - 25%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     dano_total = 0;
@@ -214,7 +214,7 @@ export class tagmarItem extends Item {
             } else dano_total = this.data.data.dano.d25;
         }
         else if (resultado == "laranja") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:orange;'>Laranja - 50%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - 50%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -232,7 +232,7 @@ export class tagmarItem extends Item {
             } else dano_total = this.data.data.dano.d50;
         }
         else if (resultado == "vermelho") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:red;'>Vermelho - 75%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - 75%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -250,7 +250,7 @@ export class tagmarItem extends Item {
             } else dano_total = this.data.data.dano.d75;
         }
         else if (resultado == "azul") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:blue;'>Azul - 100%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - 100%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -268,7 +268,7 @@ export class tagmarItem extends Item {
             } else dano_total = this.data.data.dano.d100;
         }
         else if (resultado == "roxo") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:rgb(2,9,37);'>Azul Escuro - 125%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - 125%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -286,7 +286,7 @@ export class tagmarItem extends Item {
             } else dano_total = this.data.data.dano.d125;
         }
         else if (resultado == "cinza") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico</h1>";
             critico = true;
         }
         let coluna = "<h4 class='mediaeval rola'>Coluna: " + coluna_rolada + "</h4>";
@@ -309,7 +309,7 @@ export class tagmarItem extends Item {
         let punicaoText = "";
         let conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + this.data.data.descricao + "</h4>";
         if (resultado == "verde") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha Crítica</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha Crítica</h1>";
             critico = true;
         }
         else if (resultado == "branco") {
@@ -331,7 +331,7 @@ export class tagmarItem extends Item {
             } else dano_total = 0 + ajusteDano;
         }
         else if (resultado == "amarelo") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:yellow;'>Amarelo - 25%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - 25%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -349,7 +349,7 @@ export class tagmarItem extends Item {
             } else dano_total = 25 + ajusteDano;
         }
         else if (resultado == "laranja") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:orange;'>Laranja - 50%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - 50%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -367,7 +367,7 @@ export class tagmarItem extends Item {
             } else dano_total = 50 + ajusteDano;
         }
         else if (resultado == "vermelho") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:red;'>Vermelho - 75%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - 75%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -385,7 +385,7 @@ export class tagmarItem extends Item {
             } else dano_total = 75 + ajusteDano;
         }
         else if (resultado == "azul") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:blue;'>Azul - 100%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - 100%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -403,7 +403,7 @@ export class tagmarItem extends Item {
             } else dano_total = 100 + ajusteDano;
         }
         else if (resultado == "roxo") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:rgb(2,9,37);'>Azul Escuro - 125%</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - 125%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
@@ -421,7 +421,7 @@ export class tagmarItem extends Item {
             } else dano_total = 125 + ajusteDano;
         }
         else if (resultado == "cinza") {
-            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Crítico</h1>";
+            PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico</h1>";
             critico = true;
         }
         let dano_novo = 0;

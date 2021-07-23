@@ -35,6 +35,33 @@ const tabela_resol = [
   [19, "verde", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"],
   [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
 ];
+
+const table_resFisMag = [
+  [-2, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20],
+  [-1, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20],
+  [ 0, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20],
+  [ 1, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20],
+  [ 2, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20],
+  [ 3,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20],
+  [ 4,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20],
+  [ 5,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20],
+  [ 6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20],
+  [ 7,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19],
+  [ 8,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19],
+  [ 9,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18],
+  [10,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18],
+  [11,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17],
+  [12,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17],
+  [13,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16],
+  [14,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16],
+  [15,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15],
+  [16,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15],
+  [17,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14],
+  [18,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13],
+  [19,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12],
+  [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
+];
+
 Hooks.once("init", function(){
   game.tagmar = {
     tagmarItem,
@@ -534,28 +561,28 @@ async function rolarCritico(coluna, tabela_resol, user, actor) {
   let col_tab = tabela_resol.filter(h => h[0] == coluna);
   let resultado = col_tab[0][result];
   if (resultado == "cinza") {
-    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza</h1>";
+    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>O Oponente é decapitado.<br><b>Esmagamento: </b>Afundamento torácico destrói os pulmões.<br><b>Penetração: </b>Golpe perfura o coração.<br><b>Garras/Mordida: </b>Força do golpe rasga a carótida.<br><b>Magia: </b>Impacto total da magia mata o adversário.<br><b>Falha: </b>Um golpe ruim. Erra o adversário.<br><b>10 a 50 vezes o peso do atacante: </b>100%. Golpe paralisa por uma rodada causando um ferimento fatal e impondo um ajuste de – 10, depois de 7 rodadas o oponente morre.<br><b>Peso acima de 50 vezes: </b>100%. Ferimento no oponente reduz o número de ataques pela metade (se for só 1, passa a ser um a cada duas rodadas).<br><b>Combate Desarmado: </b>100%. Nocaute, oponente fica desmaiado por 1 hora e incapacitado por 2 dias.</p>";
   } else if (resultado == "roxo") {
-    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:rgb(2,9,37);'>Azul Escuro</h1>";
+    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>100%. Corte vaza o olho. A dor paralisa o adversário por duas rodadas.<br><b>Esmagamento: </b>100%. Golpe no pulso destrói a articulação, obrigando a amputação em 2 dias. O inimigo é paralisado por duas rodadas.<br><b>Penetração: </b>100%. Estocada na mão, inutiliza permanentemente. A dor paralisa o inimigo por duas rodadas.<br><b>Garras/Mordida: </b>100%. Ataque no olho arranca o globo ocular e paralisa o adversário por duas rodadas.<br><b>Magia: </b>100% Impacto no pé do adversário o destrói, e ele fica paralisado por duas rodadas.<br><b>Falha: </b>Descontrole dá um ajuste de – 3 nas próximas duas rodadas.<br><b>10 a 50 vezes o peso do atacante: </b>100%. Ferimento no oponente reduz o número de ataques pela metade (se for só 1, passa a ser um a cada duas rodadas).<br><b>Peso acima de 50 vezes: </b>100%. Golpe paralisa o oponente por uma rodada e impõe um ajuste de – 5 por 10 rodadas.<br><b>Combate Desarmado: </b>100%. Nocaute, oponente fica desmaiado por meia hora.</p>";
   } else if (resultado == "azul") {
-    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:blue;'>Azul</h1>";
+    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>100%. Corte grande no músculo inutiliza um braço por uma semana.<br><b>Esmagamento: </b>100%. Pancada na cabeça. Elmo se parte (caso não seja mágico). Se não tiver Elmo entra em coma por 2 dias.<br><b>Penetração: </b>100%. Perfura o músculo do braço e o inutiliza por uma semana.<br><b>Garras/Mordida: </b>100%. Ataque arranca uma orelha e paralisa o adversário por uma rodada.<br><b>Magia: </b>100%. O poder da magia leva o inimigo a inconsciência por um dia.<br><b>Falha: </b>Descontrole dá um ajuste de – 4 nas próximas 3 rodadas.<br><b>10 a 50 vezes o peso do atacante: </b>100%. Golpe paralisa o oponente por duas rodadas e impõe um ajuste de – 5 por 10 rodadas.<br><b>Peso acima de 50 vezes: </b>100%. Ferimento desnorteia o oponente impedindo-o de atacar por uma rodada.<br><b>Combate Desarmado: </b>100%. Oponente tonto não ataca por duas rodadas.</p>";
   } else if (resultado == "vermelho") {
-    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:red;'>Vermelho</h1>";
+    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>75%. Corte mediano no músculo inutiliza um braço por 2 dias.<br><b>Esmagamento: </b>75%. Pancada na cabeça. Elmo se parte (caso não seja mágico). Se não tiver Elmo fica desacordado por 2 horas e incapacito por 2 dias.<br><b>Penetração: </b>75%. Perfura o músculo do braço e o inutiliza por 2 dias.<br><b>Garras/Mordida: </b>75%. Ataque rasga o braço causando um ajuste de - 8 por 2 dias.<br><b>Magia: </b>75%. O poder da magia leva o inimigo a inconsciência por meia hora.<br><b>Falha: </b>Ataque precipitado causa 25 % de dano em si mesmo.<br><b>10 a 50 vezes o peso do atacante: </b>75%. Golpe paralisa o oponente por uma rodada e impõe um ajuste de – 5 por 10 rodadas.<br><b>Peso acima de 50 vezes: </b>75%. Golpe reduz a velocidade base à metade e o impede de realizar sua próxima ação.<br><b>Combate Desarmado: </b>75%. Golpe desarma o oponente e o derruba, a arma cai a 3m dele.</p>";
   } else if (resultado == "laranja") {
-    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:orange;'>Laranja</h1>";
+    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>75%. Corte na cabeça põe adversário em coma por 1 dia se ele não tiver usando elmo.<br><b>Esmagamento: </b>75%. Escudo do inimigo se quebra (caso não seja mágico). Na ausência deste o braço quebra (cura em um mês).<br><b>Penetração: </b>75%. Golpe no tronco derruba o adversário se estiver usando escudo. Caso contrário incapacita-o por 2 dias.<br><b>Garras/Mordida: </b>75%. A ferocidade do golpe derruba o adversário impedindo de atacar nas próximas 3 rodadas.<br><b>Magia: </b>75%. O potente impacto paralisa o adversário, impedindo de atacar nas próximas 3 rodadas.<br><b>Falha: </b>Ataque desastroso causa 50 % de dano em si mesmo.<br><b>10 a 50 vezes o peso do atacante: </b>75%. Ferimento desnorteia o oponente impedindo-o de atacar por duas rodadas.<br><b>Peso acima de 50 vezes: </b>75%. Golpe reduz a velocidade base à metade e impõe ao adversário um ajuste de – 3 por 5 rodadas.<br><b>Combate Desarmado: </b>75%. A dor ou falta de ar deixam o oponente grogue. Ajuste de - 5 por 4 rodadas.</p>";
   } else if (resultado == "amarelo") {
-    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: black; text-align:center;background-color:yellow;'>Amarelo</h1>";
+    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>50%. Com um belo golpe, não só atinge como desarma o inimigo.<br><b>Esmagamento: </b>50%. Golpe no tórax derruba o adversário, que deixa cair o que tiver segurando.<br><b>Penetração: </b>50% Estocada no peito paralisa o adversário nas próximas 2 rodadas.<br><b>Garras/Mordida: </b>50%. Feroz ataque na mão desarma o inimigo.<br><b>Magia: </b>50%. A força da magia arremessa o adversário a 2 metros de distância, e ele deixa cair sua arma.<br><b>Falha: </b>Sua arma escapa da sua mão, caindo a 3 metros de distância.<br><b>10 a 50 vezes o peso do atacante: </b>50%. Golpe faz com que o adversário se atrapalhe, impedindo-o de realizar sua próxima ação.<br><b>Peso acima de 50 vezes: </b>50%. Golpe impõe ao adversário um ajuste de – 3 por 5 rodadas.<br><b>Combate Desarmado: </b>50%. Inchaço e sangramento facial atrapalham a visão. Ajuste de - 3 por 6 rodadas.</p>";
   } else if (resultado == "branco") {
     conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>50%. Corte no ombro, impõe um ajuste de – 4 por 1 dia.<br><b>Esmagamento: </b>50%. Golpe duro no ombro, paralisa o oponente na próxima rodada.<br><b>Penetração: </b>50%. Penetração causa ajuste de – 4 por 2 dias. Se for flecha o ajuste é de - 6 até que a mesma seja retirada.<br><b>Garras/Mordida: </b>50%. Rasgo na mão impede o adversário de realizar seu próximo ataque.<br><b>Magia: </b>50%. O poder da magia atordoa o inimigo, impedindo de realizar seu próximo ataque.<br><b>Falha: </b>Tropeção o impede de realizar seu próximo ataque.<br><b>10 a 50 vezes o peso do atacante: </b>50%. Golpe reduz a velocidade base à metade e impõe ao adversário um ajuste de – 3 por 5 rodadas.<br><b>Peso acima de 50 vezes: </b>50%. Golpe impõe ao adversário um ajuste de – 3 por 3 rodadas.<br><b>Combate Desarmado: </b>50%. Golpe desarma o oponente, e a arma cai a 2 m dele.</p>";
   } else if (resultado == "verde") {
-    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde</h1>";
+    conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>25%. Corte leve no músculo do braço dá um ajuste de – 4 na próxima rodada.<br><b>Esmagamento: </b>25%. Golpe no ombro desequilibra o adversário na próxima rodada, dando um ajuste de – 4.<br><b>Penetração: </b>25% Estocada na perna reduz o movimento à metade e causa um ajuste de – 2 por 1 hora.<br><b>Garras/Mordida: </b>25%. Ataque desequilibra o inimigo, levando-o a cair e perder uma rodada.<br><b>Magia: </b>25%. A magia foi evocada com maestria. Economizando 1 de karma OU causando +2 na FA.<br><b>Falha: </b>Faça um ataque no seu companheiro mais próximo.<br><b>10 a 50 vezes o peso do atacante: </b>25%. Golpe impõe ao adversário um ajuste de - 3 por 5 rodadas.<br><b>Peso acima de 50 vezes: </b>25%. ataque preciso causa um ajuste de –5 no próximo ataque.<br><b>Combate Desarmado: </b>25%. Golpe no ouvido causa desorientação. Ajuste de -3 por 3 rodadas.</p>";
   }
   roll.toMessage({
@@ -649,7 +676,58 @@ Hooks.on("getSceneControlButtons", (controls) => {
     onClick: () => tabelaAcoes(),
     button: true
   });
+  bar.tools.push({
+    name: "Tabela de Teste de Resistência Física / Resistência à Magia",
+    icon: "fas fa-table",
+    title: "Tabela de Teste de Resistência Física / Resistência à Magia",
+    onClick: () => tabelaResistencia(),
+    button: true
+  });
 });
+
+function tabelaResistencia () {
+  let dialogContent = `<table class="mediaeval" style="text-align:center;border-width:1px;">
+    <tr>
+      <td></td>
+      <th>FORÇA DE ATAQUE</th>
+    </tr>
+    <tr>
+      <th>
+      <p style="writing-mode: vertical-rl;text-orientation: upright;">FORÇA DE DEFESA</p>
+      </th>
+      <td>
+        <table class="tableResist"></table>
+      </td>
+    </tr>
+  </table>`;
+  let dialog = new Dialog({
+    title: "Tabela de Teste de Resistência Física / Resistência à Magia",
+    content: dialogContent,
+    buttons: {},
+    render: (html) => {
+      let table_res = html.find('.tableResist');
+      let table_lines = "<tr>";
+      for (let l = 0; l <= 20; l++) {
+        if (l == 0) table_lines += `<th></th>`;
+        else table_lines += `<th style='background-color:black;color:white;'>${l}</th>`;
+      }
+      table_lines += "</tr>";
+      for(let linha of table_resFisMag) {
+        table_lines += "<tr>";
+        linha.forEach(function (l, index) {
+          let style = "border: 1px solid black;";
+          if (table_resFisMag.indexOf(linha) % 2 == 0) style += "background-color:white;"
+          if ((l == 2 || l == 20) && index != 0) style += "background-color:white; border-width:0;";
+          if (index == 0) table_lines += `<th style='${style}'>${l}</th>`;
+          else table_lines += `<td style='${style}'>${l}</td>`;
+        });
+        table_lines += "</tr>";
+      }
+      table_res.append(table_lines);
+    }
+  },{width:800, height:680});
+  dialog.render(true);
+}
 
 function tabelaAcoes () {
   let dialogContent = `<table class="tabelaAcoes mediaeval"></table>`;
@@ -662,21 +740,21 @@ function tabelaAcoes () {
       let table_head = "<tr>";
       let table_body = "";
       for(let tab of tabela_resol) {
-        table_head += `<th style="text-align:center;border: 1px solid black;">${tab[0]}</th>`;
+        table_head += `<th style="text-align:center;border: 1px solid black;background-color:black;color:white;">${tab[0]}</th>`;
       }
       table_head += "</tr>";
       for(let linha = 1; linha <= 20; linha++) {
         table_body += "<tr>";
         for(let x=0; x < tabela_resol.length; x++) {
           let style = "";
-          if (tabela_resol[x][linha] == "verde") style = "style='background-color:green;text-align:center;border: 1px solid black;'";
+          if (tabela_resol[x][linha] == "verde") style = "style='background-color:#91cf50;text-align:center;border: 1px solid black;'";
           if (tabela_resol[x][linha] == "branco") style = "style='background-color:white;text-align:center;border: 1px solid black;'";
-          if (tabela_resol[x][linha] == "amarelo") style = "style='background-color:yellow;text-align:center;border: 1px solid black;'";
-          if (tabela_resol[x][linha] == "laranja") style = "style='background-color:orange;text-align:center;border: 1px solid black;'";
-          if (tabela_resol[x][linha] == "vermelho") style = "style='background-color:red;text-align:center;border: 1px solid black;'";
-          if (tabela_resol[x][linha] == "azul") style = "style='background-color:blue;text-align:center;color:white;border: 1px solid black;'";
-          if (tabela_resol[x][linha] == "roxo") style = "style='background-color:rgb(2,9,37);text-align:center;color:white;border: 1px solid black;'";
-          if (tabela_resol[x][linha] == "cinza") style = "style='background-color:gray;text-align:center;border: 1px solid black;'";
+          if (tabela_resol[x][linha] == "amarelo") style = "style='background-color:#ffff00;text-align:center;border: 1px solid black;'";
+          if (tabela_resol[x][linha] == "laranja") style = "style='background-color:#ff9900;text-align:center;border: 1px solid black;'";
+          if (tabela_resol[x][linha] == "vermelho") style = "style='background-color:#ff0000;text-align:center;color:white;border: 1px solid black;'";
+          if (tabela_resol[x][linha] == "azul") style = "style='background-color:#00a1e8;text-align:center;color:white;border: 1px solid black;'";
+          if (tabela_resol[x][linha] == "roxo") style = "style='background-color:#0000ff;text-align:center;color:white;border: 1px solid black;'";
+          if (tabela_resol[x][linha] == "cinza") style = "style='background-color:#bfbfbf;text-align:center;border: 1px solid black;'";
           table_body += `<td ${style}>${linha}</td>`;
         }
         table_body += "</tr>";
@@ -732,14 +810,14 @@ async function rollTabela(colunaR) {
   for (let i = 0; i < tabela_resol.length; i++) {
     if (tabela_resol[i][0] == colunaR) {
         resultado = tabela_resol[i][Dresult];
-        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:green;'>Verde - Falha</h1>";
+        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
-        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:yellow;'>Amarelo - Fácil</h1>";
-        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:orange;'>Laranja - Médio</h1>";
-        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:red;'>Vermelho - Difícil</h1>";
-        else if (resultado == "azul" ) PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:blue;'>Azul - Muito Difícil</h1>";
-        else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:rgb(2,9,37);'>Azul Escuro - Absurdo</h1>";
-        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:gray;'>Cinza - Impossível</h1>";
+        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
+        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
+        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
+        else if (resultado == "azul" ) PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
+        else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - Absurdo</h1>";
+        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Impossível</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + tabela_resol[i][0] + "</h4>";
         r.toMessage({
             user: game.user.id,
@@ -751,31 +829,6 @@ async function rollTabela(colunaR) {
 }
 
 async function rollResistencia(resist, f_ataque) {
-  const table_resFisMag = [
-    [-2, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20],
-    [-1, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20],
-    [ 0, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20],
-    [ 1, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20],
-    [ 2, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20],
-    [ 3,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20],
-    [ 4,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20],
-    [ 5,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20],
-    [ 6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20],
-    [ 7,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19],
-    [ 8,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19],
-    [ 9,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18],
-    [10,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18],
-    [11,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17],
-    [12,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17],
-    [13,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16],
-    [14,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16],
-    [15,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15],
-    [16,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15],
-    [17,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14],
-    [18,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13],
-    [19,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12],
-    [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
-  ];
   let forcAtaque = f_ataque;
   let valorDef = resist;
   let def_ataq = valorDef - forcAtaque;
@@ -811,9 +864,9 @@ async function rollResistencia(resist, f_ataque) {
   r.evaluate({async: false});
   const Dresult = r.total;
   if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
-      stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:blue;'>SUCESSO</h1>";
+      stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#00a1e8;'>SUCESSO</h1>";
   } else {    // Insucesso
-      stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:red;'>FRACASSO</h1>";
+      stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#ff0000;'>FRACASSO</h1>";
   }  
   r.toMessage({
       user: game.user.id,
