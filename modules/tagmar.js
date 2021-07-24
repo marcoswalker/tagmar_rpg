@@ -178,11 +178,45 @@ Hooks.once("init", function(){
   preloadHandlebarsTemplates();
   
 });
-
+let pixiApp;
 Hooks.once("ready", async function () {
-  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
   boasVindas();
+  pixiTagmar();
+});
+
+function pixiTagmar() {
+  pixiApp = new PIXI.Application({ transparent: true, width: 150, height: 74 });
+  pixiApp.loader.add('tagmarLogo', 'systems/tagmar_rpg/templates/sheets/img/logo.png').load((loader, resources) => {
+    const tagmarLogo = new PIXI.Sprite(resources.tagmarLogo.texture);
+    tagmarLogo.x = pixiApp.renderer.width / 2;
+    tagmarLogo.y = pixiApp.renderer.height / 2;
+    tagmarLogo.anchor.x = 0.5;
+    tagmarLogo.anchor.y = 0.5;
+    tagmarLogo.scale.set(0.5, 0.5);
+    pixiApp.stage.addChild(tagmarLogo);
+    pixiApp.ticker.autoStart = false;
+  });
+}
+
+function pixiMove () {
+  let pos = pixiApp.stage.getChildAt(0).x
+  if (pos > 220) {
+    pixiApp.stage.getChildAt(0).x = -75;
+  }
+  pixiApp.stage.getChildAt(0).x += 0.5;
+}
+
+Hooks.on('renderActorSheet', function (document, html, sheetData) {
+  const divPixi = html.find('.tagmarPixi')[0];
+  divPixi.appendChild(pixiApp.view);
+  html.find('.tagmarlink').mouseenter(function () {
+    pixiApp.ticker.add(pixiMove);
+  });
+  html.find('.tagmarlink').mouseleave(function () {
+    pixiApp.ticker.remove(pixiMove);
+    pixiApp.stage.getChildAt(0).x = 75;
+  });
 });
 
 function boasVindas () {
