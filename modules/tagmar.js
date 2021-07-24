@@ -686,7 +686,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
 });
 
 function tabelaResistencia () {
-  let dialogContent = `<table class="mediaeval" style="text-align:center;border-width:1px;">
+  let dialogContent = `<table class="mediaeval" style="text-align:center;">
     <tr>
       <td></td>
       <th>FORÇA DE ATAQUE</th>
@@ -725,7 +725,7 @@ function tabelaResistencia () {
       }
       table_res.append(table_lines);
     }
-  },{width:800, height:680});
+  },{width:800, height:700});
   dialog.render(true);
 }
 
@@ -762,7 +762,7 @@ function tabelaAcoes () {
       
       tabela.append(table_head+table_body);
     }
-  },{width:800, height:570});
+  },{width:800, height:580});
   dialog.render(true);
 }
 
