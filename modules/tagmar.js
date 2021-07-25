@@ -195,7 +195,6 @@ function pixiTagmar() {
     tagmarLogo.anchor.y = 0.5;
     tagmarLogo.scale.set(0.5, 0.5);
     pixiApp.stage.addChild(tagmarLogo);
-    pixiApp.ticker.autoStart = false;
   });
 }
 
@@ -207,9 +206,23 @@ function pixiMove () {
   pixiApp.stage.getChildAt(0).x += 0.5;
 }
 
+function pixiMove2 () {
+  let pos = pixiApp.stage.getChildAt(0).y;
+  if (pos > 100) pixiApp.stage.getChildAt(0).y = -50;
+  pixiApp.stage.getChildAt(0).y += 0.5;
+}
+
 Hooks.on('renderActorSheet', function (document, html, sheetData) {
   const divPixi = html.find('.tagmarPixi')[0];
   divPixi.appendChild(pixiApp.view);
+  setInterval(function () {
+    pixiApp.ticker.add(pixiMove2);
+    setTimeout(function () {
+      pixiApp.ticker.remove(pixiMove2);
+      pixiApp.stage.getChildAt(0).y = pixiApp.renderer.height / 2;
+    } ,4000);
+  },60000);
+
   html.find('.tagmarlink').mouseenter(function () {
     pixiApp.ticker.add(pixiMove);
   });
