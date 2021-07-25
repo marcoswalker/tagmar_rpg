@@ -147,13 +147,11 @@ export default class tagmarAltSheet extends ActorSheet {
                 data.actor.updateEmbeddedDocuments("Item", updateItemsNpc);
             }
         }
-        this._prepareLogo();
         return data;
     }
 
     activateListeners(html) {
         super.activateListeners(html);
-        this._addChildPixi(html, this.pixiApp);
         if (this.actor.data.type != "Inventario") {
             if (!this.options.editable) return;
         }
@@ -302,58 +300,6 @@ export default class tagmarAltSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
-    }
-
-    _addChildPixi(html, pixiApp) {
-        html.find('.tagmarPixi')[0].appendChild(pixiApp.view);
-        const pixiMove2 = function (delta) {
-            let pos = pixiApp.stage.getChildAt(0).y;
-            if (pos > 100) pixiApp.stage.getChildAt(0).y = -50;
-            pixiApp.stage.getChildAt(0).y += 0.62 * delta;
-        }
-        const pixiScale = function (delta) {
-            pixiApp.stage.getChildAt(0).scale.x += 0.01 * delta;
-            pixiApp.stage.getChildAt(0).scale.y += 0.01 * delta;
-            pixiApp.stage.getChildAt(0).rotation += 0.1 * delta;
-        }
-        const pixiScale2 = function (delta) {
-            pixiApp.stage.getChildAt(0).scale.x -= 0.02 * delta;
-            pixiApp.stage.getChildAt(0).scale.y -= 0.02 * delta;
-            pixiApp.stage.getChildAt(0).rotation -= 0.15 * delta;
-        }
-        setInterval(function () {
-            pixiApp.ticker.add(pixiMove2);
-            setTimeout(function () {
-                pixiApp.ticker.remove(pixiMove2);
-                pixiApp.stage.getChildAt(0).y = pixiApp.renderer.height / 2;
-                pixiApp.ticker.add(pixiScale);
-              setTimeout(function () {
-                pixiApp.ticker.remove(pixiScale);
-                pixiApp.ticker.add(pixiScale2);
-                setTimeout(function () {
-                    pixiApp.ticker.remove(pixiScale2);
-                    pixiApp.stage.getChildAt(0).scale.x = 0.5;
-                    pixiApp.stage.getChildAt(0).scale.y = 0.5;
-                    pixiApp.stage.getChildAt(0).rotation = 0;
-                } ,2000)
-              },2000);
-            } ,4000);
-          },30000);
-    }
-
-    _prepareLogo() {
-        this.pixiApp = new PIXI.Application({ transparent: true, width: 150, height: 74 });
-        for (var i = this.pixiApp.stage.children.length - 1; i >= 0; i--) {	this.pixiApp.stage.removeChild(this.pixiApp.stage.children[i]);};
-        let name = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
-        this.pixiApp.loader.add(name, 'systems/tagmar_rpg/templates/sheets/img/logo.png').load((loader, resources) => {
-            const tagmarLogo = new PIXI.Sprite(resources[name].texture);
-            tagmarLogo.x = this.pixiApp.renderer.width / 2;
-            tagmarLogo.y = this.pixiApp.renderer.height / 2;
-            tagmarLogo.anchor.x = 0.5;
-            tagmarLogo.anchor.y = 0.5;
-            tagmarLogo.scale.set(0.5, 0.5);
-            this.pixiApp.stage.addChild(tagmarLogo);
-        });
     }
 
     _newMagia(event) {
