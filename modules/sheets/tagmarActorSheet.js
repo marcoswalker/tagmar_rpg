@@ -997,7 +997,7 @@ export default class tagmarActorSheet extends ActorSheet {
         r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<h2 class="mediaeval rola">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Magía: ${valorDefI}</h3>${stringSucesso}`
+            flavor: `<img src="${this.actor.data.img}" style="display:block;margin-left:auto;margin-right:auto;border-width:0;"/><h2 class="mediaeval rola" style="text-align:center;">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Magía: ${valorDefI}</h3>${stringSucesso}`
         });
         $(".F_Ataque").val("");
         if (this.actor.data.data.forca_ataque) {
@@ -1058,7 +1058,7 @@ export default class tagmarActorSheet extends ActorSheet {
         r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<h2 class="mediaeval rola">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Física: ${valorDefI}</h3>${stringSucesso}`
+            flavor: `<img src="${this.actor.data.img}" style="display:block;margin-left:auto;margin-right:auto;border-width:0;"/><h2 class="mediaeval rola" style="text-align:center;">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência Física: ${valorDefI}</h3>${stringSucesso}`
         });
         $(".F_Ataque").val("");
         if (this.actor.data.data.forca_ataque) {
@@ -2205,6 +2205,7 @@ export default class tagmarActorSheet extends ActorSheet {
         let valor_teste = 0;
         const cat = $(target).data("itemId");
         const tabela_resol = this.tabela_resol;
+        const actorImg = `<img src='${this.actor.data.img}' style='display:block;border-width:0;margin-left:auto;margin-right:auto;'/>`;
         let PrintResult = "";
         let habil = 0;
 
@@ -2253,7 +2254,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 await r.toMessage({
                     user: game.user.id,
                     speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                    flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
+                    flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                 });
             } else {
                 let valor_hab = valor_teste % 20;
@@ -2274,7 +2275,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         await r.toMessage({
                             user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                            flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
+                            flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                         });
                     }
                 } else if (valor_hab > 0) {
@@ -2295,7 +2296,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         await r.toMessage({
                             user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                            flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
+                            flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                         });
                     }
                     let r = await new Roll("1d20").evaluate({async: false});
@@ -2312,7 +2313,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     await r.toMessage({
                         user: game.user.id,
                         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                        flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
+                        flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
                     });
                 }
             }

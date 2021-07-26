@@ -182,6 +182,7 @@ Hooks.once("init", function(){
 Hooks.once("ready", async function () {
   Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
   boasVindas();
+  $('#logo').attr('src', '/systems/tagmar_rpg/templates/sheets/img/logo.png');
 });
 
 function boasVindas () {
