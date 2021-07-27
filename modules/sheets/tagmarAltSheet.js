@@ -227,7 +227,7 @@ export default class tagmarAltSheet extends ActorSheet {
         html.find(".newMagia").click(this._newMagia.bind(this));
         html.find(".newPertence").click(this._newPertence.bind(this));
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
-        html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
+        html.find(".rolarIniciativa").click(this._rolarIniciativa.bind(this));
         html.find(".roll1d10").click(ev => {
             let formula = "1d10";
             let r = new Roll(formula);
@@ -300,6 +300,11 @@ export default class tagmarAltSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    _rolarIniciativa(event) {
+        if (!this.options.editable) return;
+        if (game.combats.size > 0) this.actor.rollInitiative({createCombatants:false, rerollInitiative:false});
     }
 
     _newMagia(event) {

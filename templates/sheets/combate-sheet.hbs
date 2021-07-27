@@ -32,7 +32,12 @@
                             <label><h4 class="mediaeval">Nível:</h4></label>
                         </div>
                         <div class="col-md-2">
+                            {{#ifeq data.data.tipo ""}}
                             <input name="data.nivel" type="number" value="{{data.data.nivel}}" height="30"/>
+                            {{/ifeq}}
+                            {{#ifdf data.data.tipo ""}}
+                            <input name="data.nivel" type="number" value="{{data.data.nivel}}" height="30" readonly/>
+                            {{/ifdf}}
                         </div>
                     </div>
 
@@ -165,18 +170,18 @@
                                     <td><input class="dano300" name="data.dano_base.d300" type="number" value="{{data.data.dano_base.d300}}"></td>
                                 </tr>
                                 <tr>
-                                    <td><input  name="data.dano.d25" type="number" value="{{data.data.dano.d25}}"></td>
-                                    <td><input  name="data.dano.d50" type="number" value="{{data.data.dano.d50}}"></td>
-                                    <td><input  name="data.dano.d75" type="number" value="{{data.data.dano.d75}}"></td>
-                                    <td><input  name="data.dano.d100" type="number" value="{{data.data.dano.d100}}"></td>
-                                    <td><input  name="data.dano.d125" type="number" value="{{data.data.dano.d125}}"></td>
-                                    <td><input  name="data.dano.d150" type="number" value="{{data.data.dano.d150}}"></td>
-                                    <td><input  name="data.dano.d175" type="number" value="{{data.data.dano.d175}}"></td>
-                                    <td><input  name="data.dano.d200" type="number" value="{{data.data.dano.d200}}"></td>
-                                    <td><input  name="data.dano.d225" type="number" value="{{data.data.dano.d225}}"></td>
-                                    <td><input  name="data.dano.d250" type="number" value="{{data.data.dano.d250}}"></td>
-                                    <td><input  name="data.dano.d275" type="number" value="{{data.data.dano.d275}}"></td>
-                                    <td><input  name="data.dano.d300" type="number" value="{{data.data.dano.d300}}"></td>
+                                    <td><input  name="data.dano.d25" type="number" value="{{data.data.dano.d25}}" readonly></td>
+                                    <td><input  name="data.dano.d50" type="number" value="{{data.data.dano.d50}}" readonly></td>
+                                    <td><input  name="data.dano.d75" type="number" value="{{data.data.dano.d75}}" readonly></td>
+                                    <td><input  name="data.dano.d100" type="number" value="{{data.data.dano.d100}}" readonly></td>
+                                    <td><input  name="data.dano.d125" type="number" value="{{data.data.dano.d125}}" readonly></td>
+                                    <td><input  name="data.dano.d150" type="number" value="{{data.data.dano.d150}}" readonly></td>
+                                    <td><input  name="data.dano.d175" type="number" value="{{data.data.dano.d175}}" readonly></td>
+                                    <td><input  name="data.dano.d200" type="number" value="{{data.data.dano.d200}}" readonly></td>
+                                    <td><input  name="data.dano.d225" type="number" value="{{data.data.dano.d225}}" readonly></td>
+                                    <td><input  name="data.dano.d250" type="number" value="{{data.data.dano.d250}}" readonly></td>
+                                    <td><input  name="data.dano.d275" type="number" value="{{data.data.dano.d275}}" readonly></td>
+                                    <td><input  name="data.dano.d300" type="number" value="{{data.data.dano.d300}}" readonly></td>
                                 </tr>
                             </table>
                         </div>
