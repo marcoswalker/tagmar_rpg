@@ -23,6 +23,7 @@
 }
 .form_tagmar table {
     margin-bottom: 1px !important;
+    margin-top: 1px !important;
 }
 .form_tagmar a:hover{
     cursor: url(/systems/tagmar_rpg/assets/cursor/xp-middle-finger.cur), auto;

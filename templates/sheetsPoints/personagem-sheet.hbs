@@ -315,42 +315,54 @@
                                 </table>
                                 {{/ifle}}
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <table>
+                                    <caption class="mediaeval">Resistência</caption>
+                                    <tr>
+                                        <th class="mediaeval" style="text-align: center;"><a class="rolaR_Fis" title="Preencha F.Ataque para rolar Tesde de Resistência."/>Física</th>
+                                        <th class="mediaeval" style="text-align: center;"><a class="rolaR_Mag" title="Preencha F.Ataque para rolar Tesde de Resistência."/>Magia</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;"><input name="data.rf" type="number" value="{{data.data.rf}}" title="Resistência Física." readonly/></td>
+                                        <td style="text-align: center;"><input name="data.rm" type="number" value="{{data.data.rm}}" title="Resistência Magía." readonly/></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="mediaeval">F.Ataque:</th>
+                                       <td><input class="F_Ataque" style="text-align: center;" type="number" name="data.forca_ataque" value="{{data.data.forca_ataque}}" title="Força de Ataque para Teste de Resistência Física ou Magía."/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-4">
+                                <table>
+                                    <caption class="mediaeval">Defesa</caption>
                                     <tr style="text-align: left;">
-                                        <th class="mediaeval">V.Base</th>
-                                        <th class="mediaeval">V.B.E</th>
-                                        <th class="mediaeval"><a class="rolaR_Fis" title="Preencha F.Ataque para rolar Tesde de Resistência."/>R.Física</th>
-                                        <th class="mediaeval"><a class="rolaR_Mag" title="Preencha F.Ataque para rolar Tesde de Resistência."/>R.Magia</th>
-                                        <th class="mediaeval">Iniciativa</th>
+                                        <th width="80px"></th>
+                                        <th class="mediaeval">Cat.</th>
+                                        <th class="mediaeval">Valor</th>
                                     </tr>
-                                    <tr>
-                                        <td><input title="Velocidade Base." name="data.vb" type="number" value="{{data.data.vb}}" readonly/></td> 
-                                        <td><input name="data.vbe" type="number" value="{{data.data.vbe}}" title="Você voa? Você nada? Coloca ai e não enche o saco!" /></td>
-                                        <td><input name="data.rf" type="number" value="{{data.data.rf}}" title="Resistência Física." readonly/></td>
-                                        <td><input name="data.rm" type="number" value="{{data.data.rm}}" title="Resistência Magía." readonly/></td>
-                                        <td><input name="data.iniciativa" type="number" value="{{data.data.iniciativa}}" title="Valor para testar Iniciativa."/></td>
+                                    <tr style="text-align: left;">
+                                        <th class="mediaeval" width="80px">Ativa</th>
+                                        <td><input name="data.d_ativa.categoria" type="text" value="{{data.data.d_ativa.categoria}}" title="Tipo da defesa." readonly/></td>
+                                        <td><input name="data.d_ativa.valor" type="number" value="{{data.data.d_ativa.valor}}" title="Valor da defesa ativa." readonly/></td>
                                     </tr>
-                                    <tr>
-                                       <td></td>
-                                       <th class="mediaeval">F.Ataque:</th>
-                                       <td><input class="F_Ataque" type="number" name="data.forca_ataque" value="{{data.data.forca_ataque}}" title="Força de Ataque para Teste de Resistência Física ou Magía."/></td> 
-                                       <td></td>
-                                       <td style="text-align: center;"><a class="rolarIniciativa" title="Rolar Iniciativa"><i class="fas fa-dice-d20"></i></a></td>
+                                    <tr style="text-align: left;">
+                                        <th class="mediaeval">Passiva</th>
+                                        <td><input name="data.d_passiva.categoria" type="text" value="{{data.data.d_passiva.categoria}}" title="Tipo da defesa." readonly/></td>
+                                        <td><input name="data.d_passiva.valor" type="number" value="{{data.data.d_passiva.valor}}" title="Valor da defesa passiva." readonly/></td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-8">
                                 <table>
                                     <tr style="text-align: left;">
                                         <th width="100px"></th>
-                                        <th class="mediaeval"><a class="dano_rell" data-tipo="EF">EF</a></th>
-                                        <th class="mediaeval"><a class="dano_rell" data-tipo="EH">EH</a></th>
-                                        <th class="mediaeval"><a class="dano_rell" data-tipo="KARMA">Karma</a></th>
-                                        <th class="mediaeval"><a class="dano_rell" data-tipo="FOCUS">Focus</a></th>
-                                        <th class="mediaeval"><a class="dano_rell" data-tipo="ABS">Absorção</a></th>
+                                        <th width="50px" class="mediaeval"><a class="dano_rell" data-tipo="EF">EF</a></th>
+                                        <th width="50px" class="mediaeval"><a class="dano_rell" data-tipo="EH">EH</a></th>
+                                        <th width="50px" class="mediaeval"><a class="dano_rell" data-tipo="KARMA">Karma</a></th>
+                                        <th width="50px" class="mediaeval"><a class="dano_rell" data-tipo="FOCUS">Focus</a></th>
+                                        <th width="50px" class="mediaeval"><a class="dano_rell" data-tipo="ABS">Absorção</a></th>
                                     </tr>
                                     <tr>
                                         <th class="mediaeval">Valor Máximo</th>
@@ -370,23 +382,17 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-md-1"></div>
                             <div class="col-md-4">
                                 <table>
                                     <tr style="text-align: left;">
-                                        <th width="80px"></th>
-                                        <th class="mediaeval">Cat.</th>
-                                        <th class="mediaeval">Valor</th>
+                                        <th class="mediaeval">V.Base</th>
+                                        <th class="mediaeval">V.B.E</th>
+                                        <th class="mediaeval"><a class="rolarIniciativa" title="Rolar Iniciativa">Iniciativa</a></th>
                                     </tr>
-                                    <tr style="text-align: left;">
-                                        <th class="mediaeval" width="80px">D.Ativa</th>
-                                        <td><input name="data.d_ativa.categoria" type="text" value="{{data.data.d_ativa.categoria}}" title="Tipo da defesa." readonly/></td>
-                                        <td><input name="data.d_ativa.valor" type="number" value="{{data.data.d_ativa.valor}}" title="Valor da defesa ativa." readonly/></td>
-                                    </tr>
-                                    <tr style="text-align: left;">
-                                        <th class="mediaeval">D.Passiva</th>
-                                        <td><input name="data.d_passiva.categoria" type="text" value="{{data.data.d_passiva.categoria}}" title="Tipo da defesa." readonly/></td>
-                                        <td><input name="data.d_passiva.valor" type="number" value="{{data.data.d_passiva.valor}}" title="Valor da defesa passiva." readonly/></td>
+                                    <tr>
+                                        <td><input title="Velocidade Base." name="data.vb" type="number" value="{{data.data.vb}}" readonly/></td> 
+                                        <td><input name="data.vbe" type="number" value="{{data.data.vbe}}" title="Você voa? Você nada? Coloca ai e não enche o saco!" /></td>
+                                        <td><input name="data.iniciativa" type="number" value="{{data.data.iniciativa}}" title="Valor para testar Iniciativa."/></td>
                                     </tr>
                                 </table>
                             </div>
@@ -396,6 +402,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <table>
+                                    <caption class="mediaeval">Moedas</caption>
                                     <tr style="text-align: center;">
                                         <th class="mediaeval">M.O</th>
                                     </tr>
