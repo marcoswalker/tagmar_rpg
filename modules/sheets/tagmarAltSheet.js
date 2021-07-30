@@ -6,7 +6,7 @@ export default class tagmarAltSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "actor"],
         //width: 900,
-        height: 970,
+        height: 960,
         tabs: [{
             navSelector: ".prim-tabs",
             contentSelector: ".sheet-primary",
