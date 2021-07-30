@@ -225,9 +225,24 @@ export default class tagmarActorSheet extends ActorSheet {
         html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
         html.find(".rolarIniciativa").click(this._rolarIniciativa.bind(this));
         html.find(".rollAtributos").hover(function (){
-            $(".rollAtributos").html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
+            $(".rollAtributos").html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
         }, function () {
             $(".rollAtributos").html("Característica Sorteada");
+        });
+        html.find('.rolaR_Fis').hover(function () {
+            $('.rolaR_Fis').html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
+        }, function () {
+            $('.rolaR_Fis').html("Física");
+        });
+        html.find('.rolaR_Mag').hover(function () {
+            $('.rolaR_Mag').html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
+        }, function () {
+            $('.rolaR_Mag').html("Magia");
+        });
+        html.find('.rolarIniciativa').hover(function () {
+            $('.rolarIniciativa').html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
+        }, function () {
+            $('.rolarIniciativa').html("Iniciativa");
         });
         html.find(".rollAtributos").click(ev => {
             let formula = "{3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl}";
@@ -271,6 +286,15 @@ export default class tagmarActorSheet extends ActorSheet {
         html.find(".rolaR_Fis").click(this._rolaRFIS.bind(this));
         html.find(".rolaR_Mag").click(this._rolaRMAG.bind(this));
         html.find(".rolarAtt").click(this._rolarAtt.bind(this));
+        html.find('.rolarAtt').hover(function (event) {
+            const target = event.currentTarget;
+            const cat = $(target).data("itemId");
+            $(target).html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
+        }, function (event) {
+            const target = event.currentTarget;
+            const cat = $(target).data("itemId");
+            $(target).html(cat);
+        });
         if (this.actor.isOwner) {
         let handler = ev => this._onDragStart(ev);
         html.find('.dragable').each((i, li) => {
