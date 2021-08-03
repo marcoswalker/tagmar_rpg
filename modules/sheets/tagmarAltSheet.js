@@ -76,49 +76,50 @@ export default class tagmarAltSheet extends ActorSheet {
         }
     }
 
-    getData(options) {
+    async getData(options) {
         const data = super.getData(options);
+        const actorUtils = await import("./actorUtils.js");
         data.dtypes = ["String", "Number", "Boolean"];
-        if (this.actor.data.type == 'Personagem') {
+        if (data.actor.data.type == 'Personagem') {
             let updatePers = {};
             let items_toUpdate = [];
             this._prepareCharacterItems(data);
             const gameSystem = game.system.id;
-            if (!game.settings.get(gameSystem, 'ajusteManual')) this._setPontosRaca(data, updatePers); // pontos = actor.data.data.carac_final.INT
-            this._prepareValorTeste(data, updatePers);
+            if (!game.settings.get(gameSystem, 'ajusteManual')) actorUtils._setPontosRaca(data, updatePers); // pontos = actor.data.data.carac_final.INT
+            actorUtils._prepareValorTeste(data, updatePers);
             if (data.actor.raca) {
-                this._preparaCaracRaciais(data, updatePers);
+                actorUtils._preparaCaracRaciais(data, updatePers);
             }
             if (data.actor.profissao) {
-                this._attProfissao(data, updatePers, items_toUpdate);
+                actorUtils._attProfissao(data, updatePers, items_toUpdate);
             }
-            this._attCargaAbsorcaoDefesa(data, updatePers);
+            actorUtils._attCargaAbsorcaoDefesa(data, updatePers);
             if (data.actor.raca && data.actor.profissao) {
-                this._attEfEhVB(data, updatePers); 
+                actorUtils._attEfEhVB(data, updatePers); 
             }
-            this._attProximoEstag(data, updatePers);
-            this._attKarmaMax(data, updatePers);
-            this._attRM(data, updatePers);
-            this._attRF(data, updatePers);
+            actorUtils._attProximoEstag(data, updatePers);
+            actorUtils._attKarmaMax(data, updatePers);
+            actorUtils._attRM(data, updatePers);
+            actorUtils._attRF(data, updatePers);
             if (updatePers.hasOwnProperty('_id')) delete updatePers['_id'];
             if (this.lastUpdate) {
                 if (this.lastUpdate.hasOwnProperty('_id')) delete this.lastUpdate['_id'];
             }
-            if (Object.keys(updatePers).length > 0 && this.options.editable) {
+            if (Object.keys(updatePers).length > 0 && options.editable) {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
-                    this.actor.update(updatePers);
+                    data.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
                 else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
                     this.lastUpdate = updatePers;
-                    this.actor.update(updatePers);
+                    data.actor.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
             }
-            this._updateCombatItems(data, items_toUpdate);
-            this._updateMagiasItems(data, items_toUpdate);
-            this._updateTencnicasItems(data, items_toUpdate);
+            actorUtils._updateCombatItems(data, items_toUpdate);
+            actorUtils._updateMagiasItems(data, items_toUpdate);
+            actorUtils._updateTencnicasItems(data, items_toUpdate);
             if (items_toUpdate.length > 0 && options.editable) {
                 if (!this.lastItemsUpdate) {
                     this.lastItemsUpdate = items_toUpdate;
@@ -128,21 +129,21 @@ export default class tagmarAltSheet extends ActorSheet {
                     data.actor.updateEmbeddedDocuments("Item", items_toUpdate);
                 }
             }
-        } else if (this.actor.data.type == "Inventario") {
+        } else if (data.actor.data.type == "Inventario") {
             this._prepareInventarioItems(data);
-        } else if (this.actor.data.type == 'NPC') {
+        } else if (data.actor.data.type == 'NPC') {
             let updateNpc = {};
             let updateItemsNpc = [];
             this._prepareCharacterItems(data);
-            this._prepareValorTeste(data, updateNpc);
-            this._attDefesaNPC(data, updateNpc);
+            actorUtils._prepareValorTeste(data, updateNpc);
+            actorUtils._attDefesaNPC(data, updateNpc);
             if (Object.keys(updateNpc).length > 0) {
-                this.actor.update(updateNpc);
+                data.actor.update(updateNpc);
             }
-            this._updateCombatItems(data,updateItemsNpc);
-            this._updateMagiasItems(data,updateItemsNpc);
-            this._updateTencnicasItems(data,updateItemsNpc);
-            this._updateHabilItems(data, updateItemsNpc);
+            actorUtils._updateCombatItems(data,updateItemsNpc);
+            actorUtils._updateMagiasItems(data,updateItemsNpc);
+            actorUtils._updateTencnicasItems(data,updateItemsNpc);
+            actorUtils._updateHabilItems(data, updateItemsNpc);
             if (updateItemsNpc.length > 0) {
                 data.actor.updateEmbeddedDocuments("Item", updateItemsNpc);
             }
@@ -542,210 +543,6 @@ export default class tagmarAltSheet extends ActorSheet {
         if (updateComand != "") dialog.render(true);
     }
 
-    _updateTencnicasItems(sheetData) {
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor.data;
-        const tecnicas = sheetData.actor.items.filter(item => item.type == "TecnicasCombate");
-        let update_tecnicas = [];
-        for (let tecnica of tecnicas) {
-            let tec = tecnica.data;
-            const ajusteTecnica = tec.data.ajuste;
-            const nivel_tecnica = tec.data.nivel;
-            let total = 0;
-            if (ajusteTecnica.atributo == "INT") total = actorData.data.atributos.INT + nivel_tecnica;
-            else if (ajusteTecnica.atributo == "CAR") total = actorData.data.atributos.CAR + nivel_tecnica;
-            else if (ajusteTecnica.atributo == "AUR") total = actorData.data.atributos.AUR + nivel_tecnica;
-            else if (ajusteTecnica.atributo == "FOR") total = actorData.data.atributos.FOR + nivel_tecnica;
-            else if (ajusteTecnica.atributo == "FIS") total = actorData.data.atributos.FIS + nivel_tecnica;
-            else if (ajusteTecnica.atributo == "AGI") total = actorData.data.atributos.AGI + nivel_tecnica;
-            else if (ajusteTecnica.atributo == "PER") total = actorData.data.atributos.PER + nivel_tecnica;
-            else total = nivel_tecnica;
-            total += ajusteTecnica.valor;
-            if (tec.data.total != total) {
-                update_tecnicas.push({
-                    "_id": tec._id,
-                    "data.total": total
-                });
-            }
-        }
-        if (update_tecnicas.length > 0) {
-            this.actor.updateEmbeddedDocuments("Item", update_tecnicas);
-        }
-    }
-
-    _updateMagiasItems(sheetData) {
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor.data;
-        const magias = sheetData.actor.items.filter(item => item.type == "Magia");
-        let update_magias = [];
-        for (let magia of magias) {
-            let mag = magia.data;
-            const aura = actorData.data.atributos.AUR;
-            const m_nivel = mag.data.nivel;
-            const m_karma = mag.data.total.valorKarma;
-            let total = aura + m_nivel + m_karma;
-            if (mag.data.total.valor != total) {
-                update_magias.push({
-                    "_id": mag._id,
-                    "data.total.valor": total
-                });
-            }
-        }
-        if (update_magias.length > 0) {
-            this.actor.updateEmbeddedDocuments("Item", update_magias);
-        }
-    }
-
-    _updateHabilItems(sheetData, updateItemsNpc) {
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor.data;
-        const habilidades = sheetData.actor.items.filter(item => item.type == "Habilidade");
-        for (let habilidade of habilidades) {
-            let hab = habilidade.data;
-            const atributo = hab.data.ajuste.atributo;
-            let hab_nivel = 0;
-            let hab_penal = 0;
-            let hab_bonus = 0;
-            if (hab.data.nivel) hab_nivel = hab.data.nivel;
-            if (hab.data.penalidade) hab_penal = hab.data.penalidade;
-            if (hab.data.bonus) hab_bonus = hab.data.bonus;
-            let valor_atrib = 0;
-            if (atributo == "INT") valor_atrib = actorData.data.atributos.INT;
-            else if (atributo == "AUR") valor_atrib = actorData.data.atributos.AUR;
-            else if (atributo == "CAR") valor_atrib = actorData.data.atributos.CAR;
-            else if (atributo == "FOR") valor_atrib = actorData.data.atributos.FOR;
-            else if (atributo == "FIS") valor_atrib = actorData.data.atributos.FIS;
-            else if (atributo == "AGI") valor_atrib = actorData.data.atributos.AGI;
-            else if (atributo == "PER") valor_atrib = actorData.data.atributos.PER;
-            let total = 0;
-            if (hab_nivel > 0) {
-                total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
-            } else {
-                total = parseInt(valor_atrib) - 7 + parseInt(hab_penal) + parseInt(hab_bonus);
-            }
-            if (hab.data.ajuste.valor != valor_atrib || hab.data.total != total) {
-                updateItemsNpc.push({
-                    "_id": hab._id,
-                    "data.ajuste.valor": valor_atrib,
-                    "data.total": total
-                });
-            }
-        }
-    }
-
-    _updateCombatItems(sheetData) {
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor.data;
-        const combates = sheetData.actor.items.filter(item => item.type == "Combate");
-        let comb_updates = [];
-        for (let combs of combates) {
-            let comb = combs.data;
-            let nivel_comb = 0;
-            const bonus_magico = comb.data.bonus_magico;
-            const bonus_danomais = comb.data.peso;
-            const bonus_dano = comb.data.bonus_dano;
-            const bonus = comb.data.bonus;
-            let bonus_normal = 0;
-            let bonus_valor = 0;
-            if (bonus_dano == "AUR") bonus_valor = actorData.data.atributos.AUR;
-            else if (bonus_dano == "FOR") bonus_valor = actorData.data.atributos.FOR;
-            else if (bonus_dano == "AGI") bonus_valor = actorData.data.atributos.AGI;
-            else if (bonus_dano == "PER") bonus_valor = actorData.data.atributos.PER;
-            if (bonus == "AUR") bonus_normal = actorData.data.atributos.AUR;
-            else if (bonus == "FOR") bonus_normal = actorData.data.atributos.FOR;
-            else if (bonus == "AGI") bonus_normal = actorData.data.atributos.AGI;
-            else if (bonus == "PER") bonus_normal = actorData.data.atributos.PER;
-            const p_25 = comb.data.dano_base.d25;
-            const p_50 = comb.data.dano_base.d50;
-            const p_75 = comb.data.dano_base.d75;
-            const p_100 = comb.data.dano_base.d100;
-            const p_125 = comb.data.dano_base.d125;
-            const p_150 = comb.data.dano_base.d150;
-            const p_175 = comb.data.dano_base.d175;
-            const p_200 = comb.data.dano_base.d200;
-            const p_225 = comb.data.dano_base.d225;
-            const p_250 = comb.data.dano_base.d250;
-            const p_275 = comb.data.dano_base.d275;
-            const p_300 = comb.data.dano_base.d300;
-            if (comb.data.tipo == "CD") {
-                nivel_comb = actorData.data.grupos.CD;
-            }
-            else if (comb.data.tipo == "CI") {
-                nivel_comb = actorData.data.grupos.CI;
-            }
-            else if (comb.data.tipo == "CL") {
-                nivel_comb = actorData.data.grupos.CL;
-            }
-            else if (comb.data.tipo == "CLD") {
-                nivel_comb = actorData.data.grupos.CLD;
-            }
-            else if (comb.data.tipo == "EL") {
-                nivel_comb = actorData.data.grupos.EL;
-            }
-            else if (comb.data.tipo == "CmE") {
-                nivel_comb = actorData.data.grupos.CmE;
-            }
-            else if (comb.data.tipo == "CmM") {
-                nivel_comb = actorData.data.grupos.CmM;
-            }
-            else if (comb.data.tipo == "EM") {
-                nivel_comb = actorData.data.grupos.EM;
-            }
-            else if (comb.data.tipo == "PmA") {
-                nivel_comb = actorData.data.grupos.PmA;
-            }
-            else if (comb.data.tipo == "PmL") {
-                nivel_comb = actorData.data.grupos.PmL;
-            }
-            else if (comb.data.tipo == "CpE") {
-                nivel_comb = actorData.data.grupos.CpE;
-            }
-            else if (comb.data.tipo == "CpM") {
-                nivel_comb = actorData.data.grupos.CpM;
-            }
-            else if (comb.data.tipo == "EP") {
-                nivel_comb = actorData.data.grupos.EP;
-            }
-            else if (comb.data.tipo == "PP") {
-                nivel_comb = actorData.data.grupos.PP;
-            }
-            else if (comb.data.tipo == "PpA") {
-                nivel_comb = actorData.data.grupos.PpA;
-            }
-            else if (comb.data.tipo == "PpB") {
-                nivel_comb = actorData.data.grupos.PpB;
-            }
-            else if (comb.data.tipo == "") {
-                nivel_comb = comb.data.nivel;
-            } 
-            else if (comb.data.tipo == "MAG") {
-                nivel_comb = comb.data.nivel;
-            }
-            if (comb.data.nivel != nivel_comb || comb.data.dano.d25 != p_25 + bonus_valor + bonus_danomais || comb.data.custo != bonus_normal) {
-                comb_updates.push({
-                    '_id': comb._id,
-                    'data.nivel': nivel_comb,
-                    "data.dano.d25": p_25 + bonus_valor + bonus_danomais,
-                    "data.dano.d50": p_50 + bonus_valor + bonus_danomais,
-                    "data.dano.d75": p_75 + bonus_valor + bonus_danomais,
-                    "data.dano.d100": p_100 + bonus_valor + bonus_danomais,
-                    "data.dano.d125": p_125 + bonus_valor + bonus_danomais,
-                    "data.dano.d150": p_150 + bonus_valor + bonus_danomais,
-                    "data.dano.d175": p_175 + bonus_valor + bonus_danomais,
-                    "data.dano.d200": p_200 + bonus_valor + bonus_danomais,
-                    "data.dano.d225": p_225 + bonus_valor + bonus_danomais,
-                    "data.dano.d250": p_250 + bonus_valor + bonus_danomais,
-                    "data.dano.d275": p_275 + bonus_valor + bonus_danomais,
-                    "data.dano.d300": p_300 + bonus_valor + bonus_danomais,
-                    'data.custo': bonus_normal
-                });
-            }
-        }
-        if (comb_updates.length > 0) {
-            this.actor.updateEmbeddedDocuments("Item", comb_updates);
-        }
-    }
-
     async _rolarMoral(event) {
         const tabela_resol = this.tabela_resol;
         let moral = this.actor.data.data.moral;
@@ -835,30 +632,6 @@ export default class tagmarAltSheet extends ActorSheet {
                 }
         }
         
-    }
-
-    _attDefesaNPC(data, updateNpc) {
-        if (!this.options.editable) return;
-        var absorcao = 0;
-        var def_pasVal = 0;
-        var def_pasCat = "";
-        data.actor.defesas.forEach(function(itemd){
-            let item = itemd.data;
-            absorcao += item.data.absorcao;
-            def_pasVal += item.data.defesa_base.valor;
-            if (item.data.defesa_base.tipo != ""){
-                def_pasCat = item.data.defesa_base.tipo;
-            }
-        });
-        var def_atiVal = def_pasVal + data.actor.data.data.atributos.AGI;
-        const actorData = data.actor.data.data;
-        if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.absorcao.max != absorcao) {
-            updateNpc["data.d_passiva.valor"] = def_pasVal;
-            updateNpc["data.d_passiva.categoria"] = def_pasCat;
-            updateNpc["data.d_ativa.categoria"] = def_pasCat;
-            updateNpc["data.d_ativa.valor"] = def_atiVal;
-            updateNpc["data.absorcao.max"] = absorcao;
-        }
     }
 
     _prepareInventarioItems(sheetData) { 
@@ -1585,441 +1358,6 @@ export default class tagmarAltSheet extends ActorSheet {
             }
     }
 
-    _attRM(data, updatePers) {
-        if (!this.options.editable) return;
-        let rm = data.actor.data.data.estagio + data.actor.data.data.atributos.AUR;
-        const efeitos = data.actor.items.filter(e => e.type == "Efeito" && (e.data.data.atributo == "RMAG" && e.data.data.ativo));
-        efeitos.forEach(function(efeit) {
-            let efeito = efeit.data;
-            if (efeito.data.tipo == "+") {
-                rm += efeito.data.valor;
-            } else if (efeito.data.tipo == "-") {
-                rm -= efeito.data.valor;
-            } else if (efeito.data.tipo == "*") {
-                rm = rm * efeito.data.valor;
-            } else if (efeito.data.tipo == "/") {
-                rm = rm / efeito.data.valor;
-            }
-        });
-        if (data.actor.data.data.rm != rm) {
-            updatePers["data.rm"] = rm;
-        }
-    }
-
-    _attRF(data, updatePers) {
-        if (!this.options.editable) return;
-        let rf = data.actor.data.data.estagio + data.actor.data.data.atributos.FIS;
-        const efeitos = data.actor.items.filter(e => e.type == "Efeito" && (e.data.data.atributo == "RFIS" && e.data.data.ativo));
-        efeitos.forEach(function(efeit) {
-            let efeito = efeit.data;
-            if (efeito.data.tipo == "+") {
-                rf += efeito.data.valor;
-            } else if (efeito.data.tipo == "-") {
-                rf -= efeito.data.valor;
-            } else if (efeito.data.tipo == "/") {
-                rf = rf / efeito.data.valor;
-            } else if (efeito.data.tipo == "*") {
-                rf = rf * efeito.data.valor;
-            }
-        });
-        if (data.actor.data.data.rf != rf) {
-            updatePers["data.rf"] = rf;
-        } 
-    }
-
-    _attKarmaMax(data, updatePers) {
-        if (!this.options.editable) return;
-        let karma = ((data.actor.data.data.atributos.AUR) + 1 ) * ((data.actor.data.data.estagio) + 1);
-        if (karma < 0) karma = 0;
-        const efeitos = data.actor.items.filter(e => e.type == "Efeito" && (e.data.data.atributo == "KMA" && e.data.data.ativo));
-        efeitos.forEach(function(efeit) {
-            let efeito = efeit.data;
-            if (efeito.data.tipo == "+") {
-                karma += efeito.data.valor;
-            } else if (efeito.data.tipo == "-") {
-                karma -= efeito.data.valor;
-            } else if (efeito.data.tipo == "*") {
-                karma = karma * efeito.data.valor;
-            } else if (efeito.data.tipo == "/") {
-                karma = karma / efeito.data.valor;
-            }
-        });
-        if (data.actor.data.data.karma.max != karma) {
-            updatePers["data.karma.max"] = karma;
-        }
-    }
-
-    _attProximoEstag(data, updatePers) {
-        if (!this.options.editable) return;
-        let estagio_atual = data.actor.data.data.estagio;
-        let prox_est = [0, 11, 21, 31, 46, 61, 76, 96, 116, 136, 166, 196, 226 , 266, 306, 346, 386, 436, 486, 536, 586, 646, 706, 766, 826, 896, 966, 1036, 1106, 1186, 1266, 
-            1346, 1426, 1516, 1606, 1696, 1786, 1886, 1986, 2086];
-        if (estagio_atual < 40 && data.actor.data.data.pontos_estagio.next != prox_est[estagio_atual]) {
-            updatePers["data.pontos_estagio.next"] = prox_est[estagio_atual];
-        }
-    }
-
-    _attEfEhVB(data, updatePers) {
-        if (!this.options.editable) return;
-        let ef_base = 0;
-        let vb_base = 0;
-        let eh_base = 0;
-    
-        ef_base = data.actor.raca.data.data.ef_base;
-        vb_base = data.actor.raca.data.data.vb;
-        eh_base = data.actor.profissao.data.data.eh_base;
-        
-        let efMax = data.actor.data.data.atributos.FOR + data.actor.data.data.atributos.FIS + ef_base;
-        let vbTotal = data.actor.data.data.atributos.FIS + vb_base;
-        const efeitos = data.actor.items.filter(e => e.type == "Efeito" && ((e.data.data.atributo == "VB" || e.data.data.atributo == "EF") && e.data.data.ativo));
-        efeitos.forEach(function (efeit) {
-            let efeito = efeit.data;
-            if (efeito.data.atributo == "VB") {
-                if (efeito.data.tipo == "+") {
-                    vbTotal += efeito.data.valor;
-                } else if (efeito.data.tipo == "-") {
-                    vbTotal -= efeito.data.valor;
-                } else if (efeito.data.tipo == "*") {
-                    vbTotal = vbTotal * efeito.data.valor;
-                } else if (efeito.data.tipo == "/") {
-                    vbTotal = vbTotal / efeito.data.valor;
-                }
-            } else if (efeito.data.atributo == "EF") {
-                if (efeito.data.tipo == "+") {
-                    efMax += efeito.data.valor;
-                } else if (efeito.data.tipo == "-") {
-                    efMax -= efeito.data.valor;
-                } else if (efeito.data.tipo == "*") {
-                    efMax = efMax * efeito.data.valor;
-                } else if (efeito.data.tipo == "/") {
-                    efMax = efMax / efeito.data.valor;
-                }
-            }
-        });
-        if (data.actor.data.data.ef.max != efMax || data.actor.data.data.vb != vbTotal) {
-            updatePers["data.ef.max"] = efMax;
-            updatePers["data.vb"] = vbTotal
-        }
-        if (data.actor.data.data.estagio == 1){
-            let ehMax = eh_base + data.actor.data.data.atributos.FIS;
-            if (data.actor.data.data.eh.max != ehMax) {
-                updatePers["data.eh.max"] = ehMax;
-            }
-        }
-    }
-
-    _attCargaAbsorcaoDefesa(data, updatePers) {
-        if (!this.options.editable) return;
-        const actorSheet = data.actor;
-        var actor_carga = 0;    // Atualiza Carga e verifica Sobrecarga
-        var cap_transp = 0;
-        var cap_usada = 0;
-        var absorcao = 0;
-        var def_pasVal = 0;
-        var def_pasCat = "";
-        
-        if (actorSheet.defesas.length > 0){
-            actorSheet.defesas.forEach(function(item){
-                let itemData = item.data;
-                //actor_carga += item.data.peso;
-                absorcao += itemData.data.absorcao;
-                def_pasVal += itemData.data.defesa_base.valor;
-                if (itemData.data.defesa_base.tipo != ""){
-                    def_pasCat = itemData.data.defesa_base.tipo;
-                }
-            });
-        }
-        if (actorSheet.pertences.length > 0){
-            actorSheet.pertences.forEach(function(item){
-                let itemData = item.data;
-                actor_carga += itemData.data.peso * itemData.data.quant;
-            });
-        }
-        if (actorSheet.transportes.length > 0){
-            actorSheet.transportes.forEach(function(item){
-                let itemData = item.data;
-                cap_transp += itemData.data.capacidade.carga;
-            });
-        }
-        if (actorSheet.pertences_transporte.length > 0){
-            actorSheet.pertences_transporte.forEach(function(item){
-                let itemData = item.data;
-                cap_usada += itemData.data.peso * itemData.data.quant;
-            });
-        }
-        
-        var def_atiVal = def_pasVal + data.actor.data.data.atributos.AGI;
-        const efeitos = data.actor.items.filter(e => e.type == "Efeito" && ((e.data.data.atributo == "DEF" || e.data.data.atributo == "ABS") && e.data.data.ativo));
-        efeitos.forEach(function (efeit){
-            let efeito = efeit.data;
-            if (efeito.data.atributo == "DEF") {
-                if (efeito.data.tipo == "+") {
-                    def_pasVal += efeito.data.valor;
-                    def_atiVal += efeito.data.valor;
-                } else if (efeito.data.tipo == "-") {
-                    def_pasVal -= efeito.data.valor;
-                    def_atiVal -= efeito.data.valor;
-                } else if (efeito.data.tipo == "*") {
-                    def_pasVal = def_pasVal * efeito.data.valor;
-                    def_atiVal = def_atiVal * efeito.data.valor;
-                } else if (efeito.data.tipo == "/") {
-                    def_pasVal = def_pasVal / efeito.data.valor;
-                    def_atiVal = def_atiVal / efeito.data.valor;
-                }
-            } else if (efeito.data.atributo == "ABS") {
-                if (efeito.data.tipo == "+") {
-                    absorcao += efeito.data.valor;
-                } else if (efeito.data.tipo == "-") {
-                    absorcao -= efeito.data.valor;
-                } else if (efeito.data.tipo == "*") {
-                    absorcao = absorcao * efeito.data.valor;
-                } else if (efeito.data.tipo == "/") {
-                    absorcao = absorcao / efeito.data.valor;
-                }
-            }
-        });
-        const actorData = data.actor.data.data;
-        const actorSheetData = actorSheet.data;
-        if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao) {
-            updatePers["data.d_passiva.valor"] = def_pasVal;
-            updatePers["data.d_passiva.categoria"] = def_pasCat;
-            updatePers["data.d_ativa.categoria"] = def_pasCat;
-            updatePers["data.d_ativa.valor"] = def_atiVal;
-            updatePers["data.carga_transp.value"] = cap_usada;
-            updatePers["data.carga_transp.max"] = cap_transp;
-            updatePers["data.carga.value"] = actor_carga;
-            updatePers["data.absorcao.max"] = absorcao;
-        }
-        if (cap_transp > 0 && cap_usada < cap_transp) {
-            if (!actorData.carga_transp.hasTransp) {
-                updatePers["data.carga_transp.hasTransp"] = true;
-            }
-        } else {
-            if (actorData.carga_transp.hasTransp) {
-                updatePers["data.carga_transp.hasTransp"] = false;
-            }
-        }
-        let carga_max = 0;
-        if (actorSheetData.data.atributos.FOR >= 1) {
-            carga_max = (actorSheetData.data.atributos.FOR * 20) + 20;
-            if (actorSheetData.data.carga.value > carga_max) {
-                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != actorSheetData.data.carga.value - carga_max) {
-                    updatePers["data.carga.sobrecarga"] = true;
-                    updatePers["data.carga.valor_s"] = actorSheetData.data.carga.value - carga_max;
-                }
-            } else {
-                if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
-                    updatePers["data.carga.sobrecarga"] = false;
-                    updatePers["data.carga.valor_s"] = 0;
-                }
-            }
-        } else {
-            carga_max = 20;
-            if (actorSheetData.data.carga.value > carga_max) {
-                if (!actorData.carga.sobrecarga || actorData.carga.valor_s != actorSheetData.data.carga.value - carga_max) {
-                    updatePers["data.carga.sobrecarga"] = true;
-                    updatePers["data.carga.valor_s"] = actorSheetData.data.carga.value - carga_max;
-                }
-            } else {
-                if (actorData.carga.sobrecarga || actorData.carga.valor_s != 0) {
-                    updatePers["data.carga.sobrecarga"] = false;
-                    updatePers["data.carga.valor_s"] = 0;
-                }
-            }
-        }
-    }
-
-    _attProfissao(sheetData, updatePers, items_toUpdate) {
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor;
-        const actorSheetData = sheetData.actor.data;
-        const profissoes = actorData.items.filter(item => item.type == "Profissao");
-        if (profissoes.length > 1) {
-            let ids = [];
-            profissoes.slice(1).forEach(function (item) {
-                ids.push(item.id);
-            });
-            actorData.deleteEmbeddedDocuments("Item", ids);
-        }
-        const profissaoP = profissoes[0];
-        if (profissaoP) {
-            const profissaoData = profissaoP.data;
-            const max_hab = profissaoData.data.p_aquisicao.p_hab + Math.floor(actorSheetData.data.estagio / 2);
-            const atrib_magia = profissaoData.data.atrib_mag;
-            let pontos_hab = profissaoData.data.p_aquisicao.p_hab * actorSheetData.data.estagio;
-            const grupo_pen = profissaoData.data.grupo_pen;
-            const hab_nata = actorSheetData.data.hab_nata;
-            let pontos_tec = profissaoData.data.p_aquisicao.p_tec * actorSheetData.data.estagio;
-            let pontos_mag = 0;
-            let pontos_gra = profissaoData.data.p_aquisicao.p_gra * actorSheetData.data.estagio;
-            let intel = actorSheetData.data.atributos.INT;
-            let aura = actorSheetData.data.atributos.AUR;
-            let cari = actorSheetData.data.atributos.CAR;
-            let forca = actorSheetData.data.atributos.FOR;
-            let fisico = actorSheetData.data.atributos.FIS;
-            let agilid = actorSheetData.data.atributos.AGI;
-            let peric = actorSheetData.data.atributos.PER;
-            if (updatePers.hasOwnProperty("data.atributos.INT")) intel = updatePers['data.atributos.INT'];
-            if (updatePers.hasOwnProperty("data.atributos.AUR")) aura = updatePers['data.atributos.AUR'];
-            if (updatePers.hasOwnProperty("data.atributos.CAR")) cari = updatePers['data.atributos.CAR'];
-            if (updatePers.hasOwnProperty("data.atributos.FOR")) forca = updatePers['data.atributos.FOR'];
-            if (updatePers.hasOwnProperty("data.atributos.FIS")) fisico = updatePers['data.atributos.FIS'];
-            if (updatePers.hasOwnProperty("data.atributos.AGI")) agilid = updatePers['data.atributos.AGI'];
-            if (updatePers.hasOwnProperty("data.atributos.PER")) peric = updatePers['data.atributos.PER'];
-            if (max_hab != actorSheetData.data.max_hab) {
-                updatePers["data.max_hab"] = max_hab;
-            }
-            if (atrib_magia != "") {
-                if (atrib_magia == "INT") pontos_mag = ((2 * intel) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "AUR") pontos_mag = ((2 * aura) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "CAR") pontos_mag = ((2 * cari) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "FOR") pontos_mag = ((2 * forca) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "FIS") pontos_mag = ((2 * fisico) + 7)  * actorSheetData.data.estagio;
-                else if (atrib_magia == "AGI") pontos_mag = ((2 * agilid) + 7) * actorSheetData.data.estagio;
-                else if (atrib_magia == "PER") pontos_mag = ((2 * peric) + 7) * actorSheetData.data.estagio;
-            } else pontos_mag = 0;
-            const efeitos = sheetData.actor.items.filter(e => e.type == "Efeito" && ((e.data.data.atributo == "PHAB" || e.data.data.atributo == "PTEC" || e.data.data.atributo == "PARM" || e.data.data.atributo == "PMAG") && e.data.data.ativo));
-            efeitos.forEach(function(efeit) {
-                let efeito = efeit.data;
-                if (efeito.data.atributo == "PHAB") {
-                    if (efeito.data.tipo == "+") {
-                        pontos_hab += efeito.data.valor;
-                    } else if (efeito.data.tipo == "-") {
-                        pontos_hab -= efeito.data.valor;
-                    } else if (efeito.data.tipo == "*") {
-                        pontos_hab = pontos_hab * efeito.data.valor;
-                    } else if (efeito.data.tipo == "/") {
-                        pontos_hab = pontos_hab / efeito.data.valor;
-                    }
-                } else if (efeito.data.atributo == "PTEC") {
-                    if (efeito.data.tipo == "+") {
-                        pontos_tec += efeito.data.valor;
-                    } else if (efeito.data.tipo == "-") {
-                        pontos_tec -= efeito.data.valor;
-                    } else if (efeito.data.tipo == "*") {
-                        pontos_tec = pontos_tec * efeito.data.valor;
-                    } else if (efeito.data.tipo == "/") {
-                        pontos_tec = pontos_tec / efeito.data.valor;
-                    }
-                } else if (efeito.data.atributo == "PARM") {
-                    if (efeito.data.tipo == "+") {
-                        pontos_gra += efeito.data.valor;
-                    } else if (efeito.data.tipo == "-") {
-                        pontos_gra -= efeito.data.valor;
-                    } else if (efeito.data.tipo == "*") {
-                        pontos_gra = pontos_gra * efeito.data.valor;
-                    } else if (efeito.data.tipo == "/") {
-                        pontos_gra = pontos_gra / efeito.data.valor;
-                    }
-                } else if (efeito.data.atributo == "PMAG") {
-                    if (efeito.data.tipo == "+") {
-                        pontos_mag += efeito.data.valor;
-                    } else if (efeito.data.tipo == "-") {
-                        pontos_mag -= efeito.data.valor;
-                    } else if (efeito.data.tipo == "*") {
-                        pontos_mag = pontos_mag * efeito.data.valor;
-                    } else if (efeito.data.tipo == "/") {
-                        pontos_mag = pontos_mag / efeito.data.valor;
-                    }
-                }
-            });
-            if (pontos_gra > 0) {
-                pontos_gra -= actorSheetData.data.grupos.CD;
-                pontos_gra -= actorSheetData.data.grupos.CI;
-                pontos_gra -= actorSheetData.data.grupos.CL;
-                pontos_gra -= actorSheetData.data.grupos.CLD;
-                pontos_gra -= actorSheetData.data.grupos.EL;
-                pontos_gra -= actorSheetData.data.grupos.CmE * 2;
-                pontos_gra -= actorSheetData.data.grupos.CmM * 2;
-                pontos_gra -= actorSheetData.data.grupos.EM * 2;
-                pontos_gra -= actorSheetData.data.grupos.PmA * 2;
-                pontos_gra -= actorSheetData.data.grupos.PmL * 2;
-                pontos_gra -= actorSheetData.data.grupos.CpE * 3;
-                pontos_gra -= actorSheetData.data.grupos.CpM * 3;
-                pontos_gra -= actorSheetData.data.grupos.EP * 3;
-                pontos_gra -= actorSheetData.data.grupos.PP * 3;
-                pontos_gra -= actorSheetData.data.grupos.PpA * 3;
-                pontos_gra -= actorSheetData.data.grupos.PpB * 3;
-
-            }
-            let tecnicasP = actorData.items.filter(item => item.type == "TecnicasCombate");
-            tecnicasP.forEach(function (tecnica) {
-                pontos_tec -= tecnica.data.data.custo * tecnica.data.data.nivel;
-            });
-            let magiasP = actorData.items.filter(item => item.type == "Magia");
-            magiasP.forEach(function (magia) {
-                pontos_mag -= magia.data.data.custo * magia.data.data.nivel;
-            });
-            //let hab_updates = [];
-            let habilidadesP = actorData.items.filter(item => item.type == "Habilidade");
-            habilidadesP.forEach(function (habilidade) {
-                let hab_nataD = false;
-                if (habilidade.data.data.tipo == grupo_pen) {
-                    pontos_hab -= (habilidade.data.data.custo + 1) * habilidade.data.data.nivel;
-                } else if (habilidade.name == hab_nata) {
-                    hab_nataD = true;
-                } else {
-                    pontos_hab -= habilidade.data.data.custo * habilidade.data.data.nivel;
-                }
-                let hab = habilidade.data;
-                const atributo = hab.data.ajuste.atributo;
-                let hab_nivel = 0;
-                let hab_penal = 0;
-                let hab_bonus = 0;
-                if (hab.data.nivel) hab_nivel = hab.data.nivel;
-                if (hab.data.penalidade) hab_penal = hab.data.penalidade;
-                if (hab.data.bonus) hab_bonus = hab.data.bonus;
-                if (hab_nataD) hab_nivel = actorSheetData.data.estagio;
-                let valor_atrib = 0;
-                if (atributo == "INT") valor_atrib = intel;
-                else if (atributo == "AUR") valor_atrib = aura;
-                else if (atributo == "CAR") valor_atrib = cari;
-                else if (atributo == "FOR") valor_atrib = forca;
-                else if (atributo == "FIS") valor_atrib = fisico;
-                else if (atributo == "AGI") valor_atrib = agilid;
-                else if (atributo == "PER") valor_atrib = peric;
-                let total = 0;
-                if (hab_nivel > 0) {
-                    total = parseInt(valor_atrib) + parseInt(hab_nivel) + parseInt(hab_penal) + parseInt(hab_bonus);
-                } else {
-                    total = parseInt(valor_atrib) - 7 + parseInt(hab_penal) + parseInt(hab_bonus);
-                }
-                if (hab.data.ajuste.valor != valor_atrib || hab.data.total != total) {
-                    if (hab_nataD) {
-                        items_toUpdate.push({
-                            "_id": hab._id,
-                            "data.ajuste.valor": valor_atrib,
-                            "data.total": total,
-                            "data.nivel": actorSheetData.data.estagio
-                        }); 
-                    } else {
-                        items_toUpdate.push({
-                            "_id": hab._id,
-                            "data.ajuste.valor": valor_atrib,
-                            "data.total": total
-                        });
-                    }
-                }
-
-            });
-            if (pontos_hab != actorSheetData.data.pontos_aqui) {
-                updatePers["data.pontos_aqui"] = pontos_hab;
-            }
-            if (pontos_tec != actorSheetData.data.pontos_tec) {
-                updatePers["data.pontos_tec"] = pontos_tec;
-            }
-            if (pontos_gra != actorSheetData.data.pontos_comb) {
-                updatePers["data.pontos_comb"] = pontos_gra;
-            }
-            if (pontos_mag != actorSheetData.data.pontos_mag) {
-                updatePers["data.pontos_mag"] = pontos_mag;
-            }
-            if  (profissaoData.name != actorSheetData.data.profissao) {
-                updatePers["data.profissao"] = profissaoData.name;
-            }
-        }
-    }
-
     _prepareCharacterItems(sheetData) {
         const actorData = sheetData.actor;
         const combate = actorData.items.filter(item => item.type == "Combate");
@@ -2169,165 +1507,4 @@ export default class tagmarAltSheet extends ActorSheet {
         actorData.magias = magias;
     }
 
-    _preparaCaracRaciais(sheetData, updatePers) {
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor;
-        const racas = actorData.items.filter(item => item.type == "Raca");
-        if (racas.length > 1) {
-            let ids = [];
-            racas.slice(1).forEach(function (item) {
-                ids.push(item.id);
-            });
-            actorData.deleteEmbeddedDocuments("Item", ids);  
-        }
-        const racaP = racas[0];
-        if (racaP) {
-            const racaData = racaP.data.data;
-            if (actorData.data.raca != racaP.name)
-            {
-                updatePers['data.raca'] = racaP.name;
-                updatePers['data.mod_racial.INT'] = racaData.mod_racial.INT;
-                updatePers['data.mod_racial.AUR'] = racaData.mod_racial.AUR;
-                updatePers['data.mod_racial.CAR'] = racaData.mod_racial.CAR;
-                updatePers['data.mod_racial.FOR'] = racaData.mod_racial.FOR;
-                updatePers['data.mod_racial.FIS'] = racaData.mod_racial.FIS;
-                updatePers['data.mod_racial.AGI'] = racaData.mod_racial.AGI;
-                updatePers['data.mod_racial.PER'] = racaData.mod_racial.PER;
-            } 
-        }
-    }
-
-    somaPontos(atributo) {
-        if (atributo <= -1) {
-            return (atributo/2);
-        } else if (atributo == 0) {
-            return 0;
-        } else if (atributo == 1) {
-            return 1;
-        } else if (atributo > 1) {
-            return atributo + this.somaPontos(atributo - 1);
-        }
-    }
-
-    _setPontosRaca(sheetData, updatePers){
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor.data;
-        const raca = actorData.data.raca;
-        const estagio = actorData.data.estagio;
-        let pontos = 14;
-        let g_int = 0;
-        let g_aur = 0;
-        let g_car = 0;
-        let g_for = 0;
-        let g_fis = 0;
-        let g_agi = 0;
-        let g_per = 0;
-        if (raca === "Humano") pontos = 15;
-
-        for (let x = 0; x <= estagio; x++) {
-            if ((x % 2) != 0) pontos += 1;
-        }
-
-        if ((actorData.data.atributos.INT > actorData.data.mod_racial.INT) && (actorData.data.mod_racial.INT > 0)) { 
-            pontos -= this.somaPontos(actorData.data.atributos.INT) - this.somaPontos(actorData.data.mod_racial.INT);
-            g_int = this.somaPontos(actorData.data.atributos.INT) - this.somaPontos(actorData.data.mod_racial.INT);
-        } else if ((actorData.data.atributos.INT > actorData.data.mod_racial.INT) && (actorData.data.mod_racial.INT < 0)) {
-            pontos -= (this.somaPontos(actorData.data.atributos.INT) - actorData.data.mod_racial.INT);
-            g_int = (this.somaPontos(actorData.data.atributos.INT) - actorData.data.mod_racial.INT);
-        } else {
-            pontos -= this.somaPontos(actorData.data.atributos.INT - actorData.data.mod_racial.INT);
-            g_int = this.somaPontos(actorData.data.atributos.INT - actorData.data.mod_racial.INT);
-        }
-
-        if ((actorData.data.atributos.AUR > actorData.data.mod_racial.AUR) && (actorData.data.mod_racial.AUR > 0)) {
-            pontos -= this.somaPontos(actorData.data.atributos.AUR) - this.somaPontos(actorData.data.mod_racial.AUR);
-            g_aur = this.somaPontos(actorData.data.atributos.AUR) - this.somaPontos(actorData.data.mod_racial.AUR);
-        } else if ((actorData.data.atributos.AUR > actorData.data.mod_racial.AUR) && (actorData.data.mod_racial.AUR < 0)) {
-            pontos -= (this.somaPontos(actorData.data.atributos.AUR) - actorData.data.mod_racial.AUR);
-            g_aur = (this.somaPontos(actorData.data.atributos.AUR) - actorData.data.mod_racial.AUR);
-        } else {
-            pontos -= this.somaPontos(actorData.data.atributos.AUR - actorData.data.mod_racial.AUR);
-            g_aur = this.somaPontos(actorData.data.atributos.AUR - actorData.data.mod_racial.AUR);
-        }
-
-        if ((actorData.data.atributos.CAR > actorData.data.mod_racial.CAR) && (actorData.data.mod_racial.CAR > 0)) {
-            pontos -= this.somaPontos(actorData.data.atributos.CAR) - this.somaPontos(actorData.data.mod_racial.CAR);
-            g_car = this.somaPontos(actorData.data.atributos.CAR) - this.somaPontos(actorData.data.mod_racial.CAR);
-        } else if ((actorData.data.atributos.CAR > actorData.data.mod_racial.CAR) && (actorData.data.mod_racial.CAR < 0)) {
-            pontos -= (this.somaPontos(actorData.data.atributos.CAR) - actorData.data.mod_racial.CAR);
-            g_car = (this.somaPontos(actorData.data.atributos.CAR) - actorData.data.mod_racial.CAR);
-        } else {
-            pontos -= this.somaPontos(actorData.data.atributos.CAR - actorData.data.mod_racial.CAR);
-            g_car = this.somaPontos(actorData.data.atributos.CAR - actorData.data.mod_racial.CAR);
-        }
-
-        if ((actorData.data.atributos.FOR > actorData.data.mod_racial.FOR) && (actorData.data.mod_racial.FOR > 0)) {
-            pontos -= this.somaPontos(actorData.data.atributos.FOR) - this.somaPontos(actorData.data.mod_racial.FOR);
-            g_for = this.somaPontos(actorData.data.atributos.FOR) - this.somaPontos(actorData.data.mod_racial.FOR);
-        } else if ((actorData.data.atributos.FOR > actorData.data.mod_racial.FOR) && (actorData.data.mod_racial.FOR < 0)) {
-            pontos -= (this.somaPontos(actorData.data.atributos.FOR) - actorData.data.mod_racial.FOR);
-            g_for = (this.somaPontos(actorData.data.atributos.FOR) - actorData.data.mod_racial.FOR);
-        } else {
-            pontos -= this.somaPontos(actorData.data.atributos.FOR - actorData.data.mod_racial.FOR);
-            g_for = this.somaPontos(actorData.data.atributos.FOR - actorData.data.mod_racial.FOR);
-        }
-
-        if ((actorData.data.atributos.FIS > actorData.data.mod_racial.FIS) && (actorData.data.mod_racial.FIS > 0)) {
-            pontos -= this.somaPontos(actorData.data.atributos.FIS) - this.somaPontos(actorData.data.mod_racial.FIS);
-            g_fis = this.somaPontos(actorData.data.atributos.FIS) - this.somaPontos(actorData.data.mod_racial.FIS);
-        } else if ((actorData.data.atributos.FIS > actorData.data.mod_racial.FIS) && (actorData.data.mod_racial.FIS < 0)) {
-            pontos -= (this.somaPontos(actorData.data.atributos.FIS) - actorData.data.mod_racial.FIS);
-            g_fis = (this.somaPontos(actorData.data.atributos.FIS) - actorData.data.mod_racial.FIS);
-        } else {
-            pontos -= this.somaPontos(actorData.data.atributos.FIS - actorData.data.mod_racial.FIS);
-            g_fis = this.somaPontos(actorData.data.atributos.FIS - actorData.data.mod_racial.FIS);
-        }
-
-        if ((actorData.data.atributos.AGI > actorData.data.mod_racial.AGI) && (actorData.data.mod_racial.AGI > 0)) {
-            pontos -= this.somaPontos(actorData.data.atributos.AGI) - this.somaPontos(actorData.data.mod_racial.AGI);
-            g_agi = this.somaPontos(actorData.data.atributos.AGI) - this.somaPontos(actorData.data.mod_racial.AGI);
-        } else if ((actorData.data.atributos.AGI > actorData.data.mod_racial.AGI) && (actorData.data.mod_racial.AGI < 0)) {
-            pontos -= (this.somaPontos(actorData.data.atributos.AGI) - actorData.data.mod_racial.AGI);
-            g_agi = (this.somaPontos(actorData.data.atributos.AGI) - actorData.data.mod_racial.AGI);
-        } else {
-            pontos -= this.somaPontos(actorData.data.atributos.AGI - actorData.data.mod_racial.AGI);
-            g_agi = this.somaPontos(actorData.data.atributos.AGI - actorData.data.mod_racial.AGI);
-        }
-
-        if ((actorData.data.atributos.PER > actorData.data.mod_racial.PER) && (actorData.data.mod_racial.PER > 0)) {
-            pontos -= this.somaPontos(actorData.data.atributos.PER) - this.somaPontos(actorData.data.mod_racial.PER);
-            g_per = this.somaPontos(actorData.data.atributos.PER) - this.somaPontos(actorData.data.mod_racial.PER);
-        } else if ((actorData.data.atributos.PER > actorData.data.mod_racial.PER) && (actorData.data.mod_racial.PER < 0)) {
-            pontos -= (this.somaPontos(actorData.data.atributos.PER) - actorData.data.mod_racial.PER);
-            g_per = (this.somaPontos(actorData.data.atributos.PER) - actorData.data.mod_racial.PER);
-        } else {
-            pontos -= this.somaPontos(actorData.data.atributos.PER - actorData.data.mod_racial.PER);
-            g_per = this.somaPontos(actorData.data.atributos.PER - actorData.data.mod_racial.PER);
-        }
-        
-        if (pontos != actorData.data.carac_final.INT) {
-            updatePers['data.carac_final.INT'] = pontos;
-            updatePers['data.carac_sort.INT'] = g_int;
-            updatePers['data.carac_sort.AUR'] = g_aur;
-            updatePers['data.carac_sort.CAR'] = g_car;
-            updatePers['data.carac_sort.FOR'] = g_for;
-            updatePers['data.carac_sort.FIS'] = g_fis;
-            updatePers['data.carac_sort.AGI'] = g_agi;
-            updatePers['data.carac_sort.PER'] = g_per;
-        }
-    }
-
-    _prepareValorTeste(sheetData, updatePers){
-        if (!this.options.editable) return;
-        const actorData = sheetData.actor.data;
-        if (actorData.data.valor_teste.INT != actorData.data.atributos.INT*4 || actorData.data.valor_teste.AUR != actorData.data.atributos.AUR*4 || actorData.data.valor_teste.CAR != actorData.data.atributos.CAR*4 || actorData.data.valor_teste.FOR != actorData.data.atributos.FOR*4 || actorData.data.valor_teste.FIS != actorData.data.atributos.FIS*4 || actorData.data.valor_teste.AGI != actorData.data.atributos.AGI*4 || actorData.data.valor_teste.PER != actorData.data.atributos.PER*4) {
-            updatePers["data.valor_teste.INT"] = actorData.data.atributos.INT*4;
-            updatePers["data.valor_teste.AUR"] = actorData.data.atributos.AUR*4;
-            updatePers["data.valor_teste.CAR"] = actorData.data.atributos.CAR*4;
-            updatePers["data.valor_teste.FOR"] = actorData.data.atributos.FOR*4;
-            updatePers["data.valor_teste.FIS"] = actorData.data.atributos.FIS*4;
-            updatePers["data.valor_teste.AGI"] = actorData.data.atributos.AGI*4;
-            updatePers["data.valor_teste.PER"] = actorData.data.atributos.PER*4;
-        }
-    }
 }
