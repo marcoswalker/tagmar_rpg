@@ -1256,6 +1256,7 @@ export default class tagmarActorSheet extends ActorSheet {
         actorData.h_geral = h_geral;
         actorData.combate = combate;
         actorData.magias = magias;
+        actorData.ficha = "Sorteio";
     }
 
     async _rolarMoral(event) {

@@ -1505,6 +1505,7 @@ export default class tagmarAltSheet extends ActorSheet {
         actorData.h_geral = h_geral;
         actorData.combate = combate;
         actorData.magias = magias;
+        actorData.ficha = "Pontos";
     }
 
 }
