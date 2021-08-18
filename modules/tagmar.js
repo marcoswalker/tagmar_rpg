@@ -145,8 +145,8 @@ Hooks.once("init", function(){
 
   Handlebars.registerHelper('fichaPontos', function (data, options) {
     let actor = game.actors.find(a => a.items.find(i => i.id == data._id));
-    if (typeof actor != 'undefined') {
-      if (actor.sheet instanceof tagmarAltSheet) {
+    if (typeof actor != 'undefined' && actor.getFlag('core', 'sheetClass')) {
+      if (actor.getFlag('core', 'sheetClass') != "tagmar.tagmarActorSheet") {
         return options.inverse(this);
       }
     }
