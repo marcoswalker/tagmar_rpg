@@ -199,6 +199,8 @@ export default class tagmarActorSheet extends ActorSheet {
 
         html.find('.item-copy').click(this._duplicateItem.bind(this));
 
+        html.find('.toJournal').click(this._toJournal.bind(this));
+
         html.find('.rollable').click(this._onItemRoll.bind(this));
         html.find('.rollable').contextmenu(this._onItemRightButton.bind(this));
         html.find('.dano_rell').click(this._danoRell.bind(this));
@@ -335,6 +337,31 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
         } 
+    }
+
+    async _toJournal(event) {
+        let journal = await JournalEntry.create({
+            name: this.actor.data.name,
+            img: this.actor.data.img,
+            content: `<div class="bg-img"><div class="container" style="height:100%;">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="fairyDust" style="text-align:center;">${this.actor.data.name}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <img src="${this.actor.data.img}" style="border-width:0;display:block;margin-left:auto;margin-right:auto;"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="mediaeval">${this.actor.data.data.descricao}</p>
+                    </div>
+                </div>
+            </div></div>`
+        });
+        journal.sheet.render(true);
     }
 
     _rolarIniciativa(event) {
