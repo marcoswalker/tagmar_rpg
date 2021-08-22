@@ -336,10 +336,73 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchCombate').keyup(this._realcaCombate.bind(this));
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
+            html.find('.descansar').click(this._descanso.bind(this));
         } 
     }
 
-    async _toJournal(event) {
+    _descanso(event) {
+        let dialog = new Dialog({
+            title: "Descanso",
+            content: `<div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <select class="mediaeval tipoDescanso">
+                                    <option value="full">Descanso Completo</option>
+                                    <option value="meio">Descanso Curto</option>
+                                </select>
+                            </div>
+                        </div>
+                     </div>`,
+            buttons: {
+                "descansar": {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: 'Descansar',
+                    callback: (html) => {
+                        let descanso = $('.tipoDescanso').val();
+                        let changes = {};
+                        if (descanso === "full") {
+                            changes = {
+                                'data.ef.value': this.actor.data.data.ef.max,
+                                'data.eh.value': this.actor.data.data.eh.max,
+                                'data.karma.value': this.actor.data.data.karma.max
+                            };
+                        } else if (descanso === "meio") {
+                            let efAtual = this.actor.data.data.ef.value;
+                            let ehAtual = this.actor.data.data.eh.value;
+                            let karmaAtual = this.actor.data.data.karma.value;
+                            let efMax = this.actor.data.data.ef.max;
+                            let ehMax = this.actor.data.data.eh.max;
+                            let karmaMax = this.actor.data.data.karma.max;
+                            if (efAtual < efMax) {
+                                efAtual += efMax/2;
+                                if (efAtual > efMax) efAtual = efMax;
+                                changes['data.ef.value'] = parseInt(efAtual)
+                            }
+                            if (ehAtual < ehMax) {
+                                ehAtual += ehMax/2;
+                                if (ehAtual > ehMax) ehAtual = ehMax;
+                                changes['data.eh.value'] = parseInt(ehAtual)
+                            }
+                            if (karmaAtual < karmaMax) {
+                                karmaAtual += karmaMax/2;
+                                if (karmaAtual > karmaMax) karmaAtual = karmaMax;
+                                changes['data.karma.value'] = parseInt(karmaAtual)
+                            }
+                        }
+                        this.actor.update(changes);
+                    }
+                },
+                "cancelar": {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: 'Cancelar'
+                }
+            },
+            default: "cancelar"
+        });
+        dialog.render(true);
+    }
+
+    async _toJournal(event) { // Fazer sistema de Descanso 
         let journal = await JournalEntry.create({
             name: this.actor.data.name,
             img: this.actor.data.img,
