@@ -28,6 +28,9 @@
 .form_tagmar a:hover{
     cursor: url(/systems/tagmar_rpg/assets/cursor/xp-middle-finger.cur), auto;
 }
+.form_tagmar button:hover{
+    cursor: url(/systems/tagmar_rpg/assets/cursor/xp-middle-finger.cur), auto;
+}
 .form_tagmar input:read-only {
     border-width: 0;
     background-color: rgba(0,0,0,0);
