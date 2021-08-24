@@ -2,6 +2,7 @@ import tagmarItemSheet from "./sheets/tagmarItemSheet.js";
 import tagmarActorSheet from "./sheets/tagmarActorSheet.js";
 import tagmarAltSheet from "./sheets/tagmarAltSheet.js";
 import { tagmarItem } from "./tagmarItem.js";
+import {tagmarActor} from "./tagmarActor.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { SystemSettings } from "./settings.js";
 
@@ -65,6 +66,7 @@ const table_resFisMag = [
 Hooks.once("init", function(){
   game.tagmar = {
     tagmarItem,
+    tagmarActor,
     rollItemMacro
   };
   CONFIG.Combat.initiative = {
@@ -72,6 +74,7 @@ Hooks.once("init", function(){
     decimals: 2
   };
   CONFIG.Item.documentClass = tagmarItem;
+  CONFIG.Actor.documentClass = tagmarActor;
   CONFIG.time.roundTime = 15;
   // Register System Settings
   SystemSettings();
