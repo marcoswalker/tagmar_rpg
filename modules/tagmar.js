@@ -179,6 +179,99 @@ Hooks.once("init", function(){
   });
 
   preloadHandlebarsTemplates();
+
+  /*if (game.modules.get('polyglot')) {
+    if (!game.modules.get('polyglot').active) return;
+    import("/modules/polyglot/module/LanguageProvider.js").then(function (LanguageProvider) {
+      class TagmarLanguageProvider extends LanguageProvider.LanguageProvider {
+        get originalTongues() {
+          return {
+              _default: "oldeenglish",
+              males: "oldeenglish",
+              leva: "oldethorass",
+              lud: "qijomi",
+              eredri: "semphari",
+              verrogari: "oriental",
+              dantseniano: "reanaarian",
+              maranes: "miroslavnormal",
+              lunes: "kargi",
+              runes: "elderfuthark",
+              abadrim: "meroiticdemotic",
+              planense: "maraseye",
+              linguacomumdascidadesestados: "chinese",
+              linguacomumdosmangues: "orkglyphs",
+              rubeo: "floki",
+              lazuli: "highdrowic",
+              linguasbarbaras: "dovah",
+              aktar: "oldethorass",
+              dictio: "nordic",
+              birso: "nordic",
+              povosdodeserto: "valmaric",
+              lanta: "thorass",
+              avozdepedra: "dethek",
+              elfico: "espruar",
+              tessaldar: "celestial",
+              kurng: "dovah",
+              linguadasfadas: "celestial",
+              linguadosdragoes: "iokharic",
+              linguasselvagens: "magescript",
+              marante: "cyrillic"
+          };
+        }
+        getSystemDefaultLanguage() {
+          this.tongues = this.originalTongues;
+          return "males";
+        }
+        get requiresReady() {
+          return false;
+        }
+        async getLanguages() {
+          const langs = {
+            males: "Malês",
+            leva: "Leva",
+            lud: "Lud",
+            eredri: "Eredri",
+            verrogari: "Verrogari",
+            dantseniano: "Dantseniano",
+            maranes: "Maranês",
+            lunes: "Lunês",
+            runes: "Runês",
+            abadrim: "Abadrim",
+            planense: "Planense",
+            linguacomumdascidadesestados: "Língua comum das Cidades-Estados",
+            linguacomumdosmangues: "Língua comum dos Mangues",
+            rubeo: "Rúbeo",
+            lazuli: "Lazúli",
+            linguasbarbaras: "Línguas bárbaras",
+            aktar: "Aktar",
+            dictio: "Díctio",
+            birso: "Birso",
+            povosdodeserto: "Povos do deserto",
+            lanta: "Lanta",
+            avozdepedra: "A voz de pedra",
+            elfico: "Élfico",
+            tessaldar: "Tessaldar",
+            kurng: "Kurng",
+            linguadasfadas: "Língua das fadas",
+            linguadosdragoes: "Língua dos dragões",
+            linguasselvagens: "Línguas selvagens",
+            marante: "Marante"
+          };     
+          this.languages = langs;
+        }
+        getUserLanguages(actor) {
+          let known_languages = new Set();
+          let literate_languages = new Set();
+          let linguas = actor.data.data.defesa.categoria.split(';');
+          for (let lang of linguas) {
+            known_languages.add(lang);
+          }
+          return [known_languages, literate_languages];
+        }
+      }
+      polyglot.registerSystem(game.system.id, TagmarLanguageProvider);
+    });
+  }*/
   
 });
 

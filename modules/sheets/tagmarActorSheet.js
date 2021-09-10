@@ -6,7 +6,7 @@ export default class tagmarActorSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "actor"],
         //width: 900,
-        height: 975,
+        height: 890,
         tabs: [{
             navSelector: ".prim-tabs",
             contentSelector: ".sheet-primary",
@@ -16,6 +16,10 @@ export default class tagmarActorSheet extends ActorSheet {
     }
     get template() {
         let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
+        if (this.actor.data.type == "NPC") {
+            this['options']['height'] = 735;
+            this['position']['height'] = 735;
+        }
         if (this.actor.data.type == "Personagem" && layout != "base") {
             if (layout == 'tagmar3anao') {
                 return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-anao.hbs';
@@ -219,6 +223,7 @@ export default class tagmarActorSheet extends ActorSheet {
                 }
             }
         });
+        html.find('.idiomas').click(this._linguasDialog.bind(this));
         html.find(".ativaEfeito").click(this._ativaEfeito.bind(this));
         html.find('.newEfeito').click(this._newEfeito.bind(this));
         html.find(".newHabilidade").click(this._newHabilidade.bind(this));
@@ -339,6 +344,87 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.descansar').click(this._descanso.bind(this));
         } 
     }
+    /*
+    Bestial
+    Centauro
+    Minotauro
+    Draconiano
+    Goblin
+    Goura
+    Napol
+    Ogro
+    Sekebete
+    Trol
+    Gigantes Colina
+    Gigantes Fogo
+    Gigantes Gelo
+    Línguas Alta, Baixa e das Árvores
+    */
+
+    _linguasDialog(event) {
+        return ui.notifications.warn("Em desenvolvimento.Aguardando lista de línguas para concluir.");
+        let dialogContent = `
+            <ul id="linguas" class="mediaeval" style="list-style-type:none;">
+            <li><input type="checkbox" value="males"/>Malês</li>
+            <li><input type="checkbox" value="leva"/>Leva</li>
+            <li><input type="checkbox" value="lud"/>Lud</li>
+            <li><input type="checkbox" value="eredri"/>Eredri</li>
+            <li><input type="checkbox" value="verrogari"/>Verrogari</li>
+            <li><input type="checkbox" value="dantseniano"/>Dantseniano</li>
+            <li><input type="checkbox" value="maranes"/>Maranês</li>
+            <li><input type="checkbox" value="lunes"/>Lunês</li>
+            <li><input type="checkbox" value="runes"/>Runês</li>
+            <li><input type="checkbox" value="abadrim"/>Abadrim</li>
+            <li><input type="checkbox" value="planense"/>Planense</li>
+            <li><input type="checkbox" value="linguacomumdascidadesestados"/>Língua comum das Cidades-Estados</li>
+            <li><input type="checkbox" value="linguacomumdosmangues"/>Língua comum dos Mangues</li>
+            <li><input type="checkbox" value="rubeo"/>Rúbeo</li>
+            <li><input type="checkbox" value="lazuli"/>Lazúli</li>
+            <li><input type="checkbox" value="linguasbarbaras"/>Línguas bárbaras</li>
+            <li><input type="checkbox" value="aktar"/>Aktar</li>
+            <li><input type="checkbox" value="dictio"/>Díctio</li>
+            <li><input type="checkbox" value="birso"/>Birso</li>
+            <li><input type="checkbox" value="povosdodeserto"/>Povos do deserto</li>
+            <li><input type="checkbox" value="lanta"/>Lanta</li>
+            <li><input type="checkbox" value="avozdepedra"/>A voz de pedra</li>
+            <li><input type="checkbox" value="elfico"/>Élfico</li>
+            <li><input type="checkbox" value="tessaldar"/>Tessaldar</li>
+            <li><input type="checkbox" value="kurng"/>Kurng</li>
+            <li><input type="checkbox" value="linguadasfadas"/>Língua das fadas</li>
+            <li><input type="checkbox" value="linguadosdragoes"/>Língua dos dragões</li>
+            <li><input type="checkbox" value="linguasselvagens"/>Línguas selvagens</li>
+            <li><input type="checkbox" value="marante"/>Marante</li>
+            </ul>`;
+        let dialog = new Dialog({
+            title: "Idiomas",
+            content: dialogContent,
+            buttons: {
+                salvar: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Salvar",
+                    callback: (html) => {
+                        let idiomas = [];
+                        let ul = html.find('input:checked');
+                        $(ul).each(function (i, c) {
+                            idiomas.push(c.value);
+                        });
+                        this.actor.update({
+                            'data.defesa.categoria': idiomas.join(';')
+                        });
+                    }
+                }
+            },
+            render: (html) => {
+                let idiomas = this.actor.data.data.defesa.categoria.split(';');
+                html.find('input[type="checkbox"]').each(function (i, c) {
+                    if (idiomas.includes(c.value)) {
+                        $(c).prop('checked',true);
+                    }
+                });
+            }
+        });
+        dialog.render(true);
+    }
 
     _descanso(event) {
         let dialog = new Dialog({
@@ -360,7 +446,13 @@ export default class tagmarActorSheet extends ActorSheet {
                     callback: (html) => {
                         let descanso = $('.tipoDescanso').val();
                         let changes = {};
+                        let dif_ef = 0;
+                        let dif_eh = 0;
+                        let dif_karma = 0;
                         if (descanso === "full") {
+                            dif_ef = this.actor.data.data.ef.max - this.actor.data.data.ef.value;
+                            dif_eh = this.actor.data.data.eh.max - this.actor.data.data.eh.value;
+                            dif_karma = this.actor.data.data.karma.max - this.actor.data.data.karma.value;
                             changes = {
                                 'data.ef.value': this.actor.data.data.ef.max,
                                 'data.eh.value': this.actor.data.data.eh.max,
@@ -373,23 +465,43 @@ export default class tagmarActorSheet extends ActorSheet {
                             let efMax = this.actor.data.data.ef.max;
                             let ehMax = this.actor.data.data.eh.max;
                             let karmaMax = this.actor.data.data.karma.max;
+                            let efNovo = 0;
+                            let ehNovo = 0;
+                            let karmaNovo = 0;
                             if (efAtual < efMax) {
-                                efAtual += efMax/2;
-                                if (efAtual > efMax) efAtual = efMax;
-                                changes['data.ef.value'] = parseInt(efAtual)
+                                efNovo = efAtual + efMax/2;
+                                if (efNovo > efMax) efNovo = efMax;
+                                dif_ef = efNovo - efAtual;
+                                changes['data.ef.value'] = parseInt(efNovo)
                             }
                             if (ehAtual < ehMax) {
-                                ehAtual += ehMax/2;
-                                if (ehAtual > ehMax) ehAtual = ehMax;
-                                changes['data.eh.value'] = parseInt(ehAtual)
+                                ehNovo = ehAtual + ehMax/2;
+                                if (ehNovo > ehMax) ehNovo = ehMax;
+                                dif_eh = ehNovo - ehAtual;
+                                changes['data.eh.value'] = parseInt(ehNovo)
                             }
                             if (karmaAtual < karmaMax) {
-                                karmaAtual += karmaMax/2;
-                                if (karmaAtual > karmaMax) karmaAtual = karmaMax;
-                                changes['data.karma.value'] = parseInt(karmaAtual)
+                                karmaNovo = karmaAtual + karmaMax/2;
+                                if (karmaNovo > karmaMax) karmaNovo = karmaMax;
+                                dif_karma = karmaNovo - karmaAtual;
+                                changes['data.karma.value'] = parseInt(karmaNovo)
                             }
                         }
                         this.actor.update(changes);
+                        let desc_text = "Completo";
+                        if (descanso == "meio") desc_text = "Curto";
+                        ChatMessage.create({
+                            user: game.user.id,
+                            speaker: ChatMessage.getSpeaker({
+                                actor: this.actor
+                            }),
+                            content: `<img src="${this.actor.data.img}" style='display: block; margin-left: auto; margin-right: auto; border-width:0;' />
+                            <p class="mediaeval rola_desc">${this.actor.data.name} fez um descanso <b>${desc_text}</b>.</p>
+                            <h3 class="mediaeval">Recuperou:</h3>
+                            <p class="mediaeval rola_desc">${parseInt(dif_ef)} de Energia Física.</p>
+                            <p class="mediaeval rola_desc">${parseInt(dif_eh)} de Energia Heroica.</p>
+                            <p class="mediaeval rola_desc">${parseInt(dif_karma)} de Karma.</p>`
+                        });
                     }
                 },
                 "cancelar": {
@@ -402,7 +514,7 @@ export default class tagmarActorSheet extends ActorSheet {
         dialog.render(true);
     }
 
-    async _toJournal(event) { // Fazer sistema de Descanso 
+    async _toJournal(event) {
         let journal = await JournalEntry.create({
             name: this.actor.data.name,
             img: this.actor.data.img,
@@ -418,8 +530,8 @@ export default class tagmarActorSheet extends ActorSheet {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        <p class="mediaeval">${this.actor.data.data.descricao}</p>
+                    <div class="col-12 mediaeval">
+                        <p class="rola_desc">${this.actor.data.data.descricao}</p>
                     </div>
                 </div>
             </div></div>`
