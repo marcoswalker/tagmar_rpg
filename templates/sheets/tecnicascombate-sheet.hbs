@@ -100,21 +100,9 @@
                     </div>
 
                     <div class="row dados">
-                        {{#if data.data.ativaText}}
-                        <div class="col-md-2">
-                            <label><h4 class="mediaeval">Descrição: <a class='ativaDescT' title='Desativar edição do texto.'><i class="fas fa-toggle-on"></i></a></h4></label>
+                        <div class="col-md-12" style="height: 290px;">
+                            {{editor content=data.data.descricao target="data.descricao" button=true owner=options.owner editable=options.editable}}
                         </div>
-                        <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;">{{data.data.descricao}}</textarea>
-                        </div>
-                        {{else}}
-                        <div class="col-md-2">
-                            <label><h4 class="mediaeval">Descrição: <a class='ativaDescT' title='Ativar edição do texto.'><i class="fas fa-toggle-off"></i></a></h4></label>
-                        </div>
-                        <div class="col-md-10">
-                            <textarea class="mediaeval" name="data.descricao" value="{{data.data.descricao}}" style="height: 100px;font-size: 100%;" disabled>{{data.data.descricao}}</textarea>
-                        </div>
-                        {{/if}}
                     </div>
                 </div>
             </div>

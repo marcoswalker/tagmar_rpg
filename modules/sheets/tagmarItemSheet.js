@@ -1,31 +1,29 @@
 export default class tagmarItemSheet extends ItemSheet {
-    constructor(...args) {
-        super(...args);
-        // Expand the default size of the class sheet
-        if ( this.item.data.type === "Combate" ) {
-          this.options.width = this.position.width =  640;
-          this.options.height = this.position.height = 660;
-        }
-        if ( this.item.data.type === "Raca" ) {
-            this.options.width = this.position.width =  640;
-            this.options.height = this.position.height = 450;
-        }
-      }
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "item"],
-        //width: 900,
-        //height: 600,
+        width: 600,
+        height: 600,
         tabs: [{
             navSelector: ".prim-tabs",
             contentSelector: ".sheet-primary",
-            initial: "descricao"
+            initial: "basico"
             }]
         });
     }
 
     get template() {
         let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
+        if (this.item.data.type == "Efeito") {
+            this['options']['height'] = 350;
+            this['position']['height'] = 350;
+            this['options']['width'] = 500;
+            this['position']['width'] = 500;
+        }
+        if (this.item.data.type == "Combate") {
+            this['options']['height'] = 540;
+            this['position']['height'] = 540;
+        }
         if (layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-ficha.hbs';
         } else {

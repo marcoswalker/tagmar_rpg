@@ -38,8 +38,14 @@
 .form_tagmar .editor {
     padding: 0 8px;
     height: 100%;
-    min-height: 400px;
+    min-height: 200px;
     font-family: "GoudyMediaeval";
+}
+.form_tagmar .editor strong {
+    color:rgb(94, 8, 8);
+}
+.form_tagmar .editor b {
+    color:rgb(94, 8, 8);
 }
 .fairyDust{
     font-family: "FairyDustB";
@@ -117,6 +123,9 @@
 .rola_desc b {
     color:rgb(94, 8, 8);
     font-size: 105%;
+}
+.rola_desc strong {
+    color:rgb(94, 8, 8);
 }
 .Negrito {
     color:rgb(94, 8, 8);

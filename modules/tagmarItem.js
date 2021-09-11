@@ -37,7 +37,7 @@ export class tagmarItem extends Item {
     }
 
     async habToChat(resultado, r, h_total, colunarolada) {
-        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<h4 class='mediaeval rola rola_desc'>" + this.data.data.tarefAperf + "</h4>";
+        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<div class='mediaeval rola rola_desc'>" + this.data.data.tarefAperf + "</div>";
         let PrintResult = "";
         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
@@ -114,7 +114,7 @@ export class tagmarItem extends Item {
                 actor: this.actor
               })
         };
-        chatData.content = "<img src='"+ this.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + this.name + "</h1>" + "<h2 class='mediaeval rola' style='text-align: center'>Nível: " + this.data.data.nivel + "</h2>" + "<h3 class='mediaeval rola rola_desc'>" + this.data.data.efeito + "</h3>";
+        chatData.content = "<img src='"+ this.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + this.name + "</h1>" + "<h2 class='mediaeval rola' style='text-align: center'>Nível: " + this.data.data.nivel + "</h2>" + "<div class='mediaeval rola rola_desc'>" + this.data.data.efeito + "</div>";
         ChatMessage.create(chatData);
     }
 
