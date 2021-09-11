@@ -21,8 +21,12 @@ export default class tagmarItemSheet extends ItemSheet {
             this['position']['width'] = 500;
         }
         if (this.item.data.type == "Combate") {
-            this['options']['height'] = 540;
-            this['position']['height'] = 540;
+            this['options']['height'] = 530;
+            this['position']['height'] = 530;
+        }
+        if (this.item.data.type == "Profissao") {
+            this['options']['height'] = 595;
+            this['position']['height'] = 595;
         }
         if (layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-ficha.hbs';
