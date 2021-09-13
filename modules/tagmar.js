@@ -180,7 +180,7 @@ Hooks.once("init", function(){
 
   preloadHandlebarsTemplates();
 
-  /*if (game.modules.get('polyglot')) {
+  if (game.modules.get('polyglot')) {
     if (!game.modules.get('polyglot').active) return;
     import("/modules/polyglot/module/LanguageProvider.js").then(function (LanguageProvider) {
       class TagmarLanguageProvider extends LanguageProvider.LanguageProvider {
@@ -215,7 +215,9 @@ Hooks.once("init", function(){
               linguadasfadas: "celestial",
               linguadosdragoes: "iokharic",
               linguasselvagens: "magescript",
-              marante: "cyrillic"
+              marante: "cyrillic",
+              infernal: "infernal",
+              abissal: "infernal"
           };
         }
         getSystemDefaultLanguage() {
@@ -255,7 +257,9 @@ Hooks.once("init", function(){
             linguadasfadas: "Língua das fadas",
             linguadosdragoes: "Língua dos dragões",
             linguasselvagens: "Línguas selvagens",
-            marante: "Marante"
+            marante: "Marante",
+            infernal: "Infernal",
+            abissal: "Abissal"
           };     
           this.languages = langs;
         }
@@ -271,7 +275,7 @@ Hooks.once("init", function(){
       }
       polyglot.registerSystem(game.system.id, TagmarLanguageProvider);
     });
-  }*/
+  }
   
 });
 

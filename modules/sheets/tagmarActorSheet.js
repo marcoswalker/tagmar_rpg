@@ -344,27 +344,10 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.descansar').click(this._descanso.bind(this));
         } 
     }
-    /*
-    Bestial
-    Centauro
-    Minotauro
-    Draconiano
-    Goblin
-    Goura
-    Napol
-    Ogro
-    Sekebete
-    Trol
-    Gigantes Colina
-    Gigantes Fogo
-    Gigantes Gelo
-    Línguas Alta, Baixa e das Árvores
-    */
-
+    
     _linguasDialog(event) {
-        return ui.notifications.warn("Em desenvolvimento.Aguardando lista de línguas para concluir.");
         let dialogContent = `
-            <ul id="linguas" class="mediaeval" style="list-style-type:none;">
+            <ul id="linguas" class="mediaeval" style="list-style-type: none;columns: 2;">
             <li><input type="checkbox" value="males"/>Malês</li>
             <li><input type="checkbox" value="leva"/>Leva</li>
             <li><input type="checkbox" value="lud"/>Lud</li>
@@ -394,6 +377,8 @@ export default class tagmarActorSheet extends ActorSheet {
             <li><input type="checkbox" value="linguadosdragoes"/>Língua dos dragões</li>
             <li><input type="checkbox" value="linguasselvagens"/>Línguas selvagens</li>
             <li><input type="checkbox" value="marante"/>Marante</li>
+            <li><input type="checkbox" value="infernal"/>Infernal</li>
+            <li><input type="checkbox" value="abissal"/>Abissal</li>
             </ul>`;
         let dialog = new Dialog({
             title: "Idiomas",
@@ -422,7 +407,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     }
                 });
             }
-        });
+        },{width: 600});
         dialog.render(true);
     }
 
