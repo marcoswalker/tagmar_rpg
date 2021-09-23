@@ -6,6 +6,8 @@ import {tagmarActor} from "./tagmarActor.js";
 import { preloadHandlebarsTemplates } from "./templates.js";
 import { SystemSettings } from "./settings.js";
 
+let ocultos = false;
+
 const tabela_resol = [
   [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
   [-6, "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
@@ -283,6 +285,45 @@ Hooks.once("ready", async function () {
   Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
   boasVindas();
   $('#logo').attr('src', '/systems/tagmar_rpg/templates/sheets/img/logo.png');
+  $('#logo').click(function () {
+    if (!ocultos) {
+      $('#controls').addClass('esconde');
+      $('#navigation').addClass('esconde');
+      $('#hotbar').addClass('esconde');
+      $('#players').addClass('esconde');
+      ocultos = true;
+    } else {
+      $('#controls').removeClass('esconde');
+      $('#navigation').removeClass('esconde');
+      $('#players').removeClass('esconde');
+      $('#hotbar').removeClass('esconde');
+      ocultos = false;
+    }
+  }); 
+});
+
+Hooks.on('renderPlayerList', function () {
+  if (ocultos) {
+    $('#players').addClass('esconde');
+  } else {
+    $('#players').removeClass('esconde');
+  }
+});
+
+Hooks.on('renderSceneNavigation', function () {
+  if (ocultos) {
+    $('#navigation').addClass('esconde');
+  } else {
+    $('#navigation').removeClass('esconde');
+  }
+});
+
+Hooks.on('renderSceneControls', function () {
+  if (ocultos) {
+    $('#controls').addClass('esconde');
+  } else {
+    $('#controls').removeClass('esconde');
+  }
 });
 
 function boasVindas () {
