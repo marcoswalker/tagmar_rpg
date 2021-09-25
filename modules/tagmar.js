@@ -670,6 +670,8 @@ Hooks.once('diceSoNiceReady', function (dice) {
     font: 'Verdana',
     default: true,
   });
+  if (game.user.data.name == "AGROK") game.user.setFlag('dice-so-nice', 'appearance', { "global": {"labelColor": "#dea822", "diceColor": "#000000",
+    "outlineColor": "#dea822", "edgeColor": "#dea822", "texture": "metal", "material": "metal", "font": "Bradley Hand", "colorset": "custom", "system": "tagmar_rpg"} });
 });
 
 Hooks.on('renderChatMessage', function (message, jq, messageData) {
