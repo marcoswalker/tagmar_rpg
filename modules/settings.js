@@ -76,4 +76,12 @@ export const SystemSettings = function() {
         default: false,
         type: Boolean
       });
+      game.settings.register('tagmar_rpg', 'popOutCombat', {
+        name: 'PopOut TurnOrder automático',
+        hint: 'Quando um combate começa, Turn Order abre em popOut.',
+        scope: 'client',
+        config: true,
+        default: true,
+        type: Boolean
+      });
 }

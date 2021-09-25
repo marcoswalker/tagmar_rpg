@@ -1027,6 +1027,9 @@ Hooks.on("renderSidebarTab", async (object, html) => {
 });
 
 Hooks.on("renderCombatTracker",function (combatTracker, html) {
+  if (game.settings.get('tagmar_rpg', 'popOutCombat')) {
+    if (!combatTracker.options.popOut && combatTracker.combats.length > 0) combatTracker.renderPopout();
+  }
   if (!game.user.isGM) return;
   const combats = combatTracker.combats;
   if (combats.length > 0) {
