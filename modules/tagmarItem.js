@@ -299,6 +299,7 @@ export class tagmarItem extends Item {
             flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}`
         });
         if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
+        else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_total, actor: this.actor});
     }
 
     async combateToChatPlus(coluna_rolada, resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela, ajusteDano) {
@@ -474,6 +475,7 @@ export class tagmarItem extends Item {
         flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}`
         });
         if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
+        else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_novo, actor: this.actor});
     }
 
     async rollCombate() {

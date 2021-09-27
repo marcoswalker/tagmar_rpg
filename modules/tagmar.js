@@ -379,7 +379,33 @@ Hooks.on('preCreateToken', async function (document) {
   }
 });
 
-Hooks.once('renderChatLog', function (chatLog,html,css) {
+Hooks.on('tagmar_combate_roll', function (rollData) {
+  if (game.user != rollData.user) return;
+  let input_dano = $('#sidebar #chat #danos #soma_dano');
+  let valor = 0;
+  if (parseInt(input_dano.val())) valor = parseInt(input_dano.val());
+  valor += rollData.dano;
+  input_dano.val(valor);
+});
+
+Hooks.once('renderChatLog', function (chatLog, html, css) {
+  let apaga_dano = $(`<a id="apaga_dano" style="height:20px;" title="Apagar e enviar ao chat."><i class="far fa-trash-alt"></i></a>`);
+  let input_dano = $(`<input type="number" style="background-color: white;" id="soma_dano"/>`);
+  apaga_dano.click(function (event) {
+    let valor = 0;
+    if (parseInt(input_dano.val())) valor = parseInt(input_dano.val());
+    if (valor != 0) ChatMessage.create({
+      user: game.user,
+      content: `<p class="mediaeval rola_desc">Dano somado: ${valor}</p>`,
+      speaker: ChatMessage.getSpeaker({ alias: game.user.name })
+    });
+    $(input_dano).val(0);
+  });
+  let div_danos = $(`<div id="danos" class="flexrow" style="flex: 0 0 28px;margin: 0 6px;align-content: center;"></div>`);
+  div_danos.append(apaga_dano);
+  div_danos.append($(`<label>Somar Dano:</label>`));
+  div_danos.append(input_dano);
+  div_danos.insertBefore($(html.find('#chat-controls')));
   if (!game.user.isGM) return;
   let button = $('<a class="button export-to-journal" title="Salvar log do chat em um Journal."><i class="fas fa-archive"></i></a>');
   button.click(function () {
