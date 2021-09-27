@@ -90,6 +90,34 @@ export class tagmarActor extends Actor {
             else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
             else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
             let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+            switch (resultado) {
+                case "verde":
+                    r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                case "branco":
+                    r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                case "amarelo":
+                    r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                case "laranja":
+                    r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                case "vermelho":
+                    r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                case "azul":
+                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                case "roxo":
+                    r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                case "cinza":
+                    r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    break;
+                default:
+                    break;
+            }
             await r.toMessage({
                 user: game.user.id,
                 speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -111,6 +139,34 @@ export class tagmarActor extends Actor {
                     else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+                    switch (resultado) {
+                        case "verde":
+                            ds.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "branco":
+                            ds.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "amarelo":
+                            ds.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "laranja":
+                            ds.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "vermelho":
+                            ds.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "azul":
+                            ds.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "roxo":
+                            ds.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "cinza":
+                            ds.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        default:
+                            break;
+                    }
                     await ds.toMessage({
                         user: game.user.id,
                         speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -132,6 +188,34 @@ export class tagmarActor extends Actor {
                         else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+                        switch (resultado) {
+                            case "verde":
+                                ds.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "branco":
+                                ds.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "amarelo":
+                                ds.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "laranja":
+                                ds.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "vermelho":
+                                ds.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "azul":
+                                ds.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "roxo":
+                                ds.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "cinza":
+                                ds.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            default:
+                                break;
+                        }
                         await ds.toMessage({
                             user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -149,6 +233,34 @@ export class tagmarActor extends Actor {
                     else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+                    switch (resultado) {
+                        case "verde":
+                            dado.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "branco":
+                            dado.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "amarelo":
+                            dado.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "laranja":
+                            dado.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "vermelho":
+                            dado.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "azul":
+                            dado.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "roxo":
+                            dado.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "cinza":
+                            dado.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        default:
+                            break;
+                    }
                     await dado.toMessage({
                         user: game.user.id,
                         speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -259,6 +371,34 @@ export class tagmarActor extends Actor {
                 else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
                 else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                 let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+                switch (resultado) {
+                    case "verde":
+                        r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    case "branco":
+                        r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    case "amarelo":
+                        r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    case "laranja":
+                        r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    case "vermelho":
+                        r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    case "azul":
+                        r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    case "roxo":
+                        r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    case "cinza":
+                        r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        break;
+                    default:
+                        break;
+                }
                 await r.toMessage({
                     user: game.user.id,
                     speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -280,6 +420,34 @@ export class tagmarActor extends Actor {
                         else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+                        switch (resultado) {
+                            case "verde":
+                                r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "branco":
+                                r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "amarelo":
+                                r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "laranja":
+                                r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "vermelho":
+                                r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "azul":
+                                r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "roxo":
+                                r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "cinza":
+                                r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            default:
+                                break;
+                        }
                         await r.toMessage({
                             user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -301,6 +469,34 @@ export class tagmarActor extends Actor {
                         else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+                        switch (resultado) {
+                            case "verde":
+                                r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "branco":
+                                r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "amarelo":
+                                r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "laranja":
+                                r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "vermelho":
+                                r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "azul":
+                                r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "roxo":
+                                r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            case "cinza":
+                                r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                break;
+                            default:
+                                break;
+                        }
                         await r.toMessage({
                             user: game.user.id,
                             speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -318,6 +514,34 @@ export class tagmarActor extends Actor {
                     else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
+                    switch (resultado) {
+                        case "verde":
+                            r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "branco":
+                            r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "amarelo":
+                            r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "laranja":
+                            r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "vermelho":
+                            r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "azul":
+                            r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "roxo":
+                            r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        case "cinza":
+                            r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            break;
+                        default:
+                            break;
+                    }
                     await r.toMessage({
                         user: game.user.id,
                         speaker: ChatMessage.getSpeaker({ actor: this }),
