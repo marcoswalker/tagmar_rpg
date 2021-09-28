@@ -757,28 +757,28 @@ async function rolarCritico(coluna, tabela_resol, user, actor) {
   }
   switch (resultado) {
     case "verde":
-        roll.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     case "branco":
-        roll.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     case "amarelo":
-        roll.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     case "laranja":
-        roll.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     case "vermelho":
-        roll.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     case "azul":
-        roll.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     case "roxo":
-        roll.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     case "cinza":
-        roll.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+        roll.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
         break;
     default:
         break;
@@ -1019,28 +1019,28 @@ async function rollTabela(colunaR) {
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + tabela_resol[i][0] + "</h4>";
         switch (resultado) {
           case "verde":
-              r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           case "branco":
-              r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           case "amarelo":
-              r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           case "laranja":
-              r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           case "vermelho":
-              r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           case "azul":
-              r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           case "roxo":
-              r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           case "cinza":
-              r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+              r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
               break;
           default:
               break;

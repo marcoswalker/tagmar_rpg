@@ -92,28 +92,28 @@ export class tagmarActor extends Actor {
             let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
             switch (resultado) {
                 case "verde":
-                    r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 case "branco":
-                    r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 case "amarelo":
-                    r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 case "laranja":
-                    r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 case "vermelho":
-                    r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 case "azul":
-                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 case "roxo":
-                    r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 case "cinza":
-                    r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                     break;
                 default:
                     break;
@@ -141,28 +141,28 @@ export class tagmarActor extends Actor {
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     switch (resultado) {
                         case "verde":
-                            ds.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "branco":
-                            ds.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "amarelo":
-                            ds.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "laranja":
-                            ds.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "vermelho":
-                            ds.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "azul":
-                            ds.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "roxo":
-                            ds.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "cinza":
-                            ds.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            ds.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         default:
                             break;
@@ -190,28 +190,28 @@ export class tagmarActor extends Actor {
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         switch (resultado) {
                             case "verde":
-                                ds.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "branco":
-                                ds.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "amarelo":
-                                ds.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "laranja":
-                                ds.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "vermelho":
-                                ds.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "azul":
-                                ds.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "roxo":
-                                ds.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "cinza":
-                                ds.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                ds.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             default:
                                 break;
@@ -235,28 +235,28 @@ export class tagmarActor extends Actor {
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     switch (resultado) {
                         case "verde":
-                            dado.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "branco":
-                            dado.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "amarelo":
-                            dado.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "laranja":
-                            dado.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "vermelho":
-                            dado.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "azul":
-                            dado.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "roxo":
-                            dado.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "cinza":
-                            dado.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            dado.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         default:
                             break;
@@ -373,28 +373,28 @@ export class tagmarActor extends Actor {
                 let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                 switch (resultado) {
                     case "verde":
-                        r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     case "branco":
-                        r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     case "amarelo":
-                        r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     case "laranja":
-                        r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     case "vermelho":
-                        r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     case "azul":
-                        r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     case "roxo":
-                        r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     case "cinza":
-                        r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                        r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                         break;
                     default:
                         break;
@@ -422,28 +422,28 @@ export class tagmarActor extends Actor {
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         switch (resultado) {
                             case "verde":
-                                r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "branco":
-                                r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "amarelo":
-                                r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "laranja":
-                                r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "vermelho":
-                                r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "azul":
-                                r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "roxo":
-                                r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "cinza":
-                                r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             default:
                                 break;
@@ -471,28 +471,28 @@ export class tagmarActor extends Actor {
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         switch (resultado) {
                             case "verde":
-                                r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "branco":
-                                r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "amarelo":
-                                r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "laranja":
-                                r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "vermelho":
-                                r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "azul":
-                                r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "roxo":
-                                r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             case "cinza":
-                                r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                                r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                                 break;
                             default:
                                 break;
@@ -516,28 +516,28 @@ export class tagmarActor extends Actor {
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     switch (resultado) {
                         case "verde":
-                            r.dice[0].options.appearance = {background: "#52cc00", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "branco":
-                            r.dice[0].options.appearance = {background: "#ffffff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "amarelo":
-                            r.dice[0].options.appearance = {background: "#fff700", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "laranja":
-                            r.dice[0].options.appearance = {background: "#8f4500", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "vermelho":
-                            r.dice[0].options.appearance = {background: "#ff0000", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "azul":
-                            r.dice[0].options.appearance = {background: "#00a1e8", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "roxo":
-                            r.dice[0].options.appearance = {background: "#0000ff", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         case "cinza":
-                            r.dice[0].options.appearance = {background: "#525252", texture: "plastic", material: "plastic", edge: "#000000", foreground: "#000000"};
+                            r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
                             break;
                         default:
                             break;
