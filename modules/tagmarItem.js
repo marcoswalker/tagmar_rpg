@@ -511,6 +511,9 @@ export class tagmarItem extends Item {
         }
         let dano_novo = 0;
         switch (dano_total) {
+            case 0:
+                dano_novo = 0;
+                break;
             case 25:
                 dano_novo = this.data.data.dano.d25;
                 break;
@@ -546,6 +549,11 @@ export class tagmarItem extends Item {
                 break;
             case 300:
                 dano_novo = this.data.data.dano.d300;
+                break;
+            default:
+                let vez = dano_total / 25;
+                let dif = this.data.data.dano.d50 - this.data.data.dano.d25;
+                dano_novo = this.data.data.dano.d25 + ( (vez-1) * dif );
                 break;
         }
         let coluna = "<h4 class='mediaeval rola'>Coluna: " + coluna_rolada + "</h4>";
