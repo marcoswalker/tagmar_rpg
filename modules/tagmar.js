@@ -758,28 +758,28 @@ async function rolarCritico(coluna, tabela_resol, user, actor) {
   if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
     switch (resultado) {
         case "verde":
-            r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         case "branco":
-            r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         case "amarelo":
-            r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         case "laranja":
-            r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         case "vermelho":
-            r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         case "azul":
-            r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         case "roxo":
-            r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         case "cinza":
-            r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            roll.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
             break;
         default:
             break;
