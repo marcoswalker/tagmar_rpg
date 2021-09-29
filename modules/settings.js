@@ -84,4 +84,12 @@ export const SystemSettings = function() {
         default: true,
         type: Boolean
       });
+      game.settings.register('tagmar_rpg', 'dadosColoridos', {
+        name: 'Dados coloridos (Dice so nice)',
+        hint: 'Dados 3d na cor do resultado.',
+        scope: 'client',
+        config: true,
+        default: true,
+        type: Boolean
+      });
 }

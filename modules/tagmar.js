@@ -755,34 +755,36 @@ async function rolarCritico(coluna, tabela_resol, user, actor) {
     conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde</h1>";
     conteudo = conteudo + "<br><p class='mediaeval rola_desc'><b>Corte: </b>25%. Corte leve no músculo do braço dá um ajuste de – 4 na próxima rodada.<br><b>Esmagamento: </b>25%. Golpe no ombro desequilibra o adversário na próxima rodada, dando um ajuste de – 4.<br><b>Penetração: </b>25% Estocada na perna reduz o movimento à metade e causa um ajuste de – 2 por 1 hora.<br><b>Garras/Mordida: </b>25%. Ataque desequilibra o inimigo, levando-o a cair e perder uma rodada.<br><b>Magia: </b>25%. A magia foi evocada com maestria. Economizando 1 de karma OU causando +2 na FA.<br><b>Falha: </b>Faça um ataque no seu companheiro mais próximo.<br><b>10 a 50 vezes o peso do atacante: </b>25%. Golpe impõe ao adversário um ajuste de - 3 por 5 rodadas.<br><b>Peso acima de 50 vezes: </b>25%. ataque preciso causa um ajuste de –5 no próximo ataque.<br><b>Combate Desarmado: </b>25%. Golpe no ouvido causa desorientação. Ajuste de -3 por 3 rodadas.</p>";
   }
-  switch (resultado) {
-    case "verde":
-        roll.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    case "branco":
-        roll.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    case "amarelo":
-        roll.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    case "laranja":
-        roll.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    case "vermelho":
-        roll.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    case "azul":
-        roll.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    case "roxo":
-        roll.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    case "cinza":
-        roll.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-        break;
-    default:
-        break;
-}
+  if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+    switch (resultado) {
+        case "verde":
+            r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        case "branco":
+            r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        case "amarelo":
+            r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        case "laranja":
+            r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        case "vermelho":
+            r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        case "azul":
+            r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        case "roxo":
+            r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        case "cinza":
+            r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+            break;
+        default:
+            break;
+    }
+  }
   roll.toMessage({
     user: user,
     speaker: ChatMessage.getSpeaker({ actor: actor }),
@@ -1017,33 +1019,35 @@ async function rollTabela(colunaR) {
         else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - Absurdo</h1>";
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Impossível</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + tabela_resol[i][0] + "</h4>";
-        switch (resultado) {
-          case "verde":
-              r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          case "branco":
-              r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          case "amarelo":
-              r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          case "laranja":
-              r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          case "vermelho":
-              r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          case "azul":
-              r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          case "roxo":
-              r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          case "cinza":
-              r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-              break;
-          default:
-              break;
+        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+          switch (resultado) {
+              case "verde":
+                  r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              case "branco":
+                  r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              case "amarelo":
+                  r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              case "laranja":
+                  r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              case "vermelho":
+                  r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              case "azul":
+                  r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              case "roxo":
+                  r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              case "cinza":
+                  r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                  break;
+              default:
+                  break;
+          }
         }
         r.toMessage({
             user: game.user.id,
