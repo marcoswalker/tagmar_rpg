@@ -1095,8 +1095,14 @@ async function rollResistencia(resist, f_ataque) {
   const Dresult = r.total;
   if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
       stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#00a1e8;'>SUCESSO</h1>";
+      if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+        r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+      }
   } else {    // Insucesso
       stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#ff0000;'>FRACASSO</h1>";
+      if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+        r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+      }
   }  
   r.toMessage({
       user: game.user.id,
