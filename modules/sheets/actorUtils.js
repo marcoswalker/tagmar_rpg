@@ -407,6 +407,7 @@ export function _attCargaAbsorcaoDefesa(data, updatePers) {
     var absorcao = 0;
     var def_pasVal = 0;
     var def_pasCat = "";
+    var abs_magica = 0;
     
     if (actorSheet.defesas.length > 0){
         actorSheet.defesas.forEach(function(item){
@@ -417,6 +418,7 @@ export function _attCargaAbsorcaoDefesa(data, updatePers) {
             if (itemData.data.defesa_base.tipo != ""){
                 def_pasCat = itemData.data.defesa_base.tipo;
             }
+            abs_magica += itemData.data.peso;
         });
     }
     if (actorSheet.pertences.length > 0){
@@ -471,7 +473,8 @@ export function _attCargaAbsorcaoDefesa(data, updatePers) {
     });
     const actorData = data.actor.data.data;
     const actorSheetData = actorSheet.data;
-    if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao) {
+    if (abs_magica > 0) abs_magica = 1;
+    if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao || actorData.v_base != abs_magica) {
         updatePers["data.d_passiva.valor"] = def_pasVal;
         updatePers["data.d_passiva.categoria"] = def_pasCat;
         updatePers["data.d_ativa.categoria"] = def_pasCat;
@@ -480,6 +483,7 @@ export function _attCargaAbsorcaoDefesa(data, updatePers) {
         updatePers["data.carga_transp.max"] = cap_transp;
         updatePers["data.carga.value"] = actor_carga;
         updatePers["data.absorcao.max"] = absorcao;
+        updatePers['data.v_base'] = abs_magica;
     }
     if (cap_transp > 0 && cap_usada < cap_transp) {
         if (!actorData.carga_transp.hasTransp) {

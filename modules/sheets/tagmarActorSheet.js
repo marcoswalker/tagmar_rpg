@@ -198,8 +198,6 @@ export default class tagmarActorSheet extends ActorSheet {
         });
   
         if (this.actor.data.type != "Inventario") {
-        //Ativa edição de descricao
-        html.find('.ativaDesc').click(this._edtDesc.bind(this));
 
         html.find('.item-copy').click(this._duplicateItem.bind(this));
 
@@ -842,19 +840,6 @@ export default class tagmarActorSheet extends ActorSheet {
                 $(parente).removeClass('esconde');
             }
         });
-    }
-
-    _edtDesc(event) {
-        const actorData = this.actor.data.data;
-            if (actorData.v_base == 0) {
-                this.actor.update({
-                    'data.v_base': 1
-                });
-            } else {
-                this.actor.update({
-                    'data.v_base': 0
-                });
-            }
     }
 
     _combateImg(event) {

@@ -62,15 +62,45 @@ export class tagmarActor extends Actor {
         let eh = this.data.data.eh.value;
         let ef = this.data.data.ef.value;
         let abs = this.data.data.absorcao.value;
+        let abs_magica = this.data.data.v_base;
+        if (abs_magica > 0) abs_magica = true;
+        else abs_magica = false;
         let update = {};
         let olds = {};
-        if (!dano.isCura) {
-            if (eh > 0) {
-                eh -= dano.valor;
-                if (eh < 0) eh = 0;
-                update['data.eh.value'] = eh;
-                olds['data.eh.value'] = this.data.data.eh.value - eh;
-            } else if (abs > 0) {
+        if (!dano.isCritico) {
+            if (!dano.isCura) {
+                if (eh > 0) {
+                    eh -= dano.valor;
+                    if (eh < 0) eh = 0;
+                    update['data.eh.value'] = eh;
+                    olds['data.eh.value'] = this.data.data.eh.value - eh;
+                } else if (abs > 0) {
+                    abs -= dano.valor;
+                    if (abs < 0) {
+                        ef += abs;
+                        abs = 0;
+                        update['data.ef.value'] = ef;
+                        olds['data.ef.value'] = this.data.data.ef.value - ef;
+                    }
+                    update['data.absorcao.value'] = abs;
+                    olds['data.absorcao.value'] = this.data.data.absorcao.value - abs;
+                } else {
+                    ef -= dano.valor;
+                    update['data.ef.value'] = ef;
+                    olds['data.ef.value'] = this.data.data.ef.value - ef;
+                }
+            } else {
+                if (eh < this.data.data.eh.max) {
+                    eh += dano.valor;
+                    if (eh > this.data.data.eh.max) eh = this.data.data.eh.max;
+                    update['data.eh.value'] = eh;
+                    olds['data.eh.value'] = this.data.data.eh.value - eh;
+                } else {
+                    ui.notifications.info('Sua EH atual é igual ou maior que o valor máximo. Nenhum valor alterado.');
+                }
+            }
+        } else {
+            if (abs > 0 && abs_magica) {
                 abs -= dano.valor;
                 if (abs < 0) {
                     ef += abs;
@@ -84,15 +114,6 @@ export class tagmarActor extends Actor {
                 ef -= dano.valor;
                 update['data.ef.value'] = ef;
                 olds['data.ef.value'] = this.data.data.ef.value - ef;
-            }
-        } else {
-            if (eh < this.data.data.eh.max) {
-                eh += dano.valor;
-                if (eh > this.data.data.eh.max) eh = this.data.data.eh.max;
-                update['data.eh.value'] = eh;
-                olds['data.eh.value'] = this.data.data.eh.value - eh;
-            } else {
-                ui.notifications.info('Sua EH atual é igual ou maior que o valor máximo. Nenhum valor alterado.');
             }
         }
         await this.update(update);

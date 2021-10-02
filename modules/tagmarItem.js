@@ -385,8 +385,16 @@ export class tagmarItem extends Item {
         }
         let button = "";
         let buttonC = "";
-        if (!critico && dano_total != 0) button = `<button class="aplicarDano mediaeval" data-cura="false" data-dano="${dano_total}">Aplicar Dano</button>`;
-        if (!critico && dano_total != 0) buttonC = `<button class="aplicarDano mediaeval" data-cura="true" data-dano="${dano_total}">Aplicar Cura EH</button>`;
+        if (!critico && dano_total != 0) button = `<button class="aplicarDano mediaeval" data-critico="false" data-cura="false" data-dano="${dano_total}">Aplicar Dano</button>`;
+        if (!critico && dano_total != 0) buttonC = `<button class="aplicarDano mediaeval" data-critico="false" data-cura="true" data-dano="${dano_total}">Aplicar Cura EH</button>`;
+        if (critico) {
+            button = `<p>
+                <button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d25}">Aplicar 25% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d50}">Aplicar 50% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d75}">Aplicar 75% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d100}">Aplicar 100% Dano</button>
+            </p>`;
+        }
         await r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -603,8 +611,16 @@ export class tagmarItem extends Item {
         }
         let button = "";
         let buttonC = "";
-        if (!critico && dano_novo != 0) button = `<button class="aplicarDano mediaeval" data-cura="false" data-dano="${dano_novo}">Aplicar Dano</button>`;
-        if (!critico && dano_novo != 0) buttonC = `<button class="aplicarDano mediaeval" data-cura="true" data-dano="${dano_novo}">Aplicar Cura EH</button>`;
+        if (!critico && dano_novo != 0) button = `<button class="aplicarDano mediaeval" data-critico="false" data-cura="false" data-dano="${dano_novo}">Aplicar Dano</button>`;
+        if (!critico && dano_novo != 0) buttonC = `<button class="aplicarDano mediaeval" data-critico="false" data-cura="true" data-dano="${dano_novo}">Aplicar Cura EH</button>`;
+        if (critico) {
+            button = `<p>
+                <button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d25}">Aplicar 25% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d50}">Aplicar 50% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d75}">Aplicar 75% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d100}">Aplicar 100% Dano</button>
+            </p>`;
+        }
         await r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),

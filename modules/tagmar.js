@@ -400,6 +400,7 @@ Hooks.once('renderChatLog', function (chatLog, html, css) {
       content: `<p class="mediaeval rola_desc">Dano somado: ${valor}</p>`,
       speaker: ChatMessage.getSpeaker({ alias: game.user.name })
     });
+    $(input_dano).val(0);
   });
   apaga_dano.click(function (event) {
     $(input_dano).val(0);
@@ -726,7 +727,8 @@ Hooks.on('renderChatMessage', function (message, jq, messageData) {
     for (let token of tokens) {
       let dano = $(event.currentTarget).data('dano');
       let cura = $(event.currentTarget).data('cura');
-      token.actor._aplicarDano({"valor": dano, "isCura": cura});
+      let critico = $(event.currentTarget).data('critico');
+      token.actor._aplicarDano({"valor": dano, "isCura": cura, "isCritico": critico});
     }
   });
 });

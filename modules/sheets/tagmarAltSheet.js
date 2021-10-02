@@ -202,8 +202,6 @@ export default class tagmarAltSheet extends ActorSheet {
         });
   
         if (this.actor.data.type != "Inventario") {
-        //Ativa edição de descricao
-        html.find('.ativaDesc').click(this._edtDesc.bind(this));
 
         html.find('.item-copy').click(this._duplicateItem.bind(this));
 
@@ -1239,19 +1237,6 @@ export default class tagmarAltSheet extends ActorSheet {
         let dupi = duplicate(item);
         dupi.name = dupi.name + "(Cópia)";
         this.actor.createEmbeddedDocuments("Item", [dupi]);
-    }
-
-    _edtDesc(event) {
-        const actorData = this.actor.data.data;
-            if (actorData.v_base == 0) {
-                this.actor.update({
-                    'data.v_base': 1
-                });
-            } else {
-                this.actor.update({
-                    'data.v_base': 0
-                });
-            }
     }
 
     _prepareCharacterItems(sheetData) {

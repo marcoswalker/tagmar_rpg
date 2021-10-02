@@ -111,6 +111,17 @@ export default class tagmarItemSheet extends ItemSheet {
                 $('.armPen75').attr('checked', false);
             }
         });
+        html.find('.abs_magica').click(this._abs_magica.bind(this));
+    }
+
+    _abs_magica(event) {
+        let abs_magica = 0; 
+        if (this.item.data.data.peso == 0) {
+            abs_magica = 1;
+        } else {
+            abs_magica = 0;
+        }
+        this.item.update({'data.peso': abs_magica});
     }
 
     _ativaTextTec(event) {
