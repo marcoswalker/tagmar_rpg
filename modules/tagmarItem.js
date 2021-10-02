@@ -383,10 +383,14 @@ export class tagmarItem extends Item {
                     break;
             }
         }
+        let button = "";
+        let buttonC = "";
+        if (!critico && dano_total != 0) button = `<button class="aplicarDano mediaeval" data-cura="false" data-dano="${dano_total}">Aplicar Dano</button>`;
+        if (!critico && dano_total != 0) buttonC = `<button class="aplicarDano mediaeval" data-cura="true" data-dano="${dano_total}">Aplicar Cura EH</button>`;
         await r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}`
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}${button}${buttonC}`
         });
         if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_total, actor: this.actor});
@@ -597,10 +601,14 @@ export class tagmarItem extends Item {
                     break;
             }
         }
+        let button = "";
+        let buttonC = "";
+        if (!critico && dano_novo != 0) button = `<button class="aplicarDano mediaeval" data-cura="false" data-dano="${dano_novo}">Aplicar Dano</button>`;
+        if (!critico && dano_novo != 0) buttonC = `<button class="aplicarDano mediaeval" data-cura="true" data-dano="${dano_novo}">Aplicar Cura EH</button>`;
         await r.toMessage({
-        user: game.user.id,
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}`
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}${button}${buttonC}`
         });
         if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_novo, actor: this.actor});

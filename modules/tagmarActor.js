@@ -57,6 +57,60 @@ export class tagmarActor extends Actor {
             [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
         ];
     }
+
+    async _aplicarDano(dano) {
+        let eh = this.data.data.eh.value;
+        let ef = this.data.data.ef.value;
+        let abs = this.data.data.absorcao.value;
+        let update = {};
+        let olds = {};
+        if (!dano.isCura) {
+            if (eh > 0) {
+                eh -= dano.valor;
+                if (eh < 0) eh = 0;
+                update['data.eh.value'] = eh;
+                olds['data.eh.value'] = this.data.data.eh.value - eh;
+            } else if (abs > 0) {
+                abs -= dano.valor;
+                if (abs < 0) {
+                    ef += abs;
+                    abs = 0;
+                    update['data.ef.value'] = ef;
+                    olds['data.ef.value'] = this.data.data.ef.value - ef;
+                }
+                update['data.absorcao.value'] = abs;
+                olds['data.absorcao.value'] = this.data.data.absorcao.value - abs;
+            } else {
+                ef -= dano.valor;
+                update['data.ef.value'] = ef;
+                olds['data.ef.value'] = this.data.data.ef.value - ef;
+            }
+        } else {
+            if (eh < this.data.data.eh.max) {
+                eh += dano.valor;
+                if (eh > this.data.data.eh.max) eh = this.data.data.eh.max;
+                update['data.eh.value'] = eh;
+                olds['data.eh.value'] = this.data.data.eh.value - eh;
+            } else {
+                ui.notifications.info('Sua EH atual é igual ou maior que o valor máximo. Nenhum valor alterado.');
+            }
+        }
+        await this.update(update);
+        if (update.hasOwnProperty('_id')) delete update['_id'];
+        if (Object.keys(update).length > 0) {
+            let conteudo = "";
+            for (let key of Object.keys(update)) {
+                let att = key.replace("data.", "").replace('.value', "");
+                if (dano.isCura) conteudo += `<p class="mediaeval rola_desc">${att.toUpperCase()} + ${olds[key] *-1}</p>`
+                else conteudo += `<p class="mediaeval rola_desc">${att.toUpperCase()} - ${olds[key]}</p>`
+            }
+            ChatMessage.create({
+                content: conteudo,
+                speaker: ChatMessage.getSpeaker({actor: this}),
+                whisper: [game.user]
+            });
+        }
+    }
     
     _rollTeste(teste) {
         if (teste.name == "Atributo") {
