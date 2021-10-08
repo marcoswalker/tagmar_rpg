@@ -125,11 +125,7 @@ export class tagmarActor extends Actor {
                 if (dano.isCura) conteudo += `<p class="mediaeval rola_desc">${att.toUpperCase()} + ${olds[key] *-1}</p>`
                 else conteudo += `<p class="mediaeval rola_desc">${att.toUpperCase()} - ${olds[key]}</p>`
             }
-            ChatMessage.create({
-                content: conteudo,
-                speaker: ChatMessage.getSpeaker({actor: this}),
-                whisper: [game.user]
-            });
+            ui.notifications.info(conteudo);
         }
     }
     
