@@ -59,6 +59,7 @@ export class tagmarActor extends Actor {
     }
 
     async _aplicarDano(dano) {
+        if (this.data.type == "Inventario") return;
         let eh = this.data.data.eh.value;
         let eh_max = this.data.data.eh.max;
         let ef = this.data.data.ef.value;
