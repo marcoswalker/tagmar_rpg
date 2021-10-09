@@ -60,11 +60,21 @@ export class tagmarActor extends Actor {
 
     async _aplicarDano(dano) {
         let eh = this.data.data.eh.value;
+        let eh_max = this.data.data.eh.max;
         let ef = this.data.data.ef.value;
         let abs = this.data.data.absorcao.value;
         let abs_magica = this.data.data.v_base;
         if (abs_magica > 0) abs_magica = true;
         else abs_magica = false;
+        let eh_str = 'data.eh.value';
+        let ef_str = 'data.ef.value';
+        if (this.data.type == "NPC") {
+            eh_str = 'data.eh_npc.value';
+            ef_str = 'data.ef_npc.value';
+            eh = this.data.data.eh_npc.value;
+            eh_max = this.data.data.eh_npc.max;
+            ef = this.data.data.ef_npc.value;
+        }
         let update = {};
         let olds = {};
         if (!dano.isCritico) {
@@ -72,29 +82,33 @@ export class tagmarActor extends Actor {
                 if (eh > 0) {
                     eh -= dano.valor;
                     if (eh < 0) eh = 0;
-                    update['data.eh.value'] = eh;
-                    olds['data.eh.value'] = this.data.data.eh.value - eh;
+                    update[eh_str] = eh;
+                    olds[eh_str] = this.data.data.eh.value - eh;
+                    if (this.data.type == "NPC") olds[eh_str] = this.data.data.eh_npc.value - eh;
                 } else if (abs > 0) {
                     abs -= dano.valor;
                     if (abs < 0) {
                         ef += abs;
                         abs = 0;
-                        update['data.ef.value'] = ef;
-                        olds['data.ef.value'] = this.data.data.ef.value - ef;
+                        update[ef_str] = ef;
+                        olds[ef_str] = this.data.data.ef.value - ef;
+                        if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
                     }
                     update['data.absorcao.value'] = abs;
                     olds['data.absorcao.value'] = this.data.data.absorcao.value - abs;
                 } else {
                     ef -= dano.valor;
-                    update['data.ef.value'] = ef;
-                    olds['data.ef.value'] = this.data.data.ef.value - ef;
+                    update[ef_str] = ef;
+                    olds[ef_str] = this.data.data.ef.value - ef;
+                    if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
                 }
             } else {
-                if (eh < this.data.data.eh.max) {
+                if (eh < eh_max) {
                     eh += dano.valor;
-                    if (eh > this.data.data.eh.max) eh = this.data.data.eh.max;
-                    update['data.eh.value'] = eh;
-                    olds['data.eh.value'] = this.data.data.eh.value - eh;
+                    if (eh > eh_max) eh = eh_max;
+                    update[eh_str] = eh;
+                    olds[eh_str] = this.data.data.eh.value - eh;
+                    if (this.data.type == "NPC") olds[eh_str] = this.data.data.eh_npc.value - eh;
                 } else {
                     ui.notifications.info('Sua EH atual é igual ou maior que o valor máximo. Nenhum valor alterado.');
                 }
@@ -105,15 +119,17 @@ export class tagmarActor extends Actor {
                 if (abs < 0) {
                     ef += abs;
                     abs = 0;
-                    update['data.ef.value'] = ef;
-                    olds['data.ef.value'] = this.data.data.ef.value - ef;
+                    update[ef_str] = ef;
+                    olds[ef_str] = this.data.data.ef.value - ef;
+                    if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
                 }
                 update['data.absorcao.value'] = abs;
                 olds['data.absorcao.value'] = this.data.data.absorcao.value - abs;
             } else {
                 ef -= dano.valor;
-                update['data.ef.value'] = ef;
-                olds['data.ef.value'] = this.data.data.ef.value - ef;
+                update[ef_str] = ef;
+                olds[ef_str] = this.data.data.ef.value - ef;
+                if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
             }
         }
         await this.update(update);
