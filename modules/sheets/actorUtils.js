@@ -868,6 +868,7 @@ export function _attDefesaNPC(data, updateNpc) {
     var absorcao = 0;
     var def_pasVal = 0;
     var def_pasCat = "";
+    var abs_magica = 0;
     data.actor.defesas.forEach(function(itemd){
         let item = itemd.data;
         absorcao += item.data.absorcao;
@@ -875,17 +876,20 @@ export function _attDefesaNPC(data, updateNpc) {
         if (item.data.defesa_base.tipo != ""){
             def_pasCat = item.data.defesa_base.tipo;
         }
+        abs_magica += item.data.peso;
     });
     let agilidade = data.actor.data.data.atributos.AGI;
     if (updateNpc.hasOwnProperty('data.atributos.AGI')) agilidade = updateNpc['data.atributos.AGI'];
     var def_atiVal = def_pasVal + agilidade;
     const actorData = data.actor.data.data;
-    if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.absorcao.max != absorcao) {
+    if (abs_magica > 0) abs_magica = 1;
+    if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.absorcao.max != absorcao || actorData.v_base != abs_magica) {
         updateNpc["data.d_passiva.valor"] = def_pasVal;
         updateNpc["data.d_passiva.categoria"] = def_pasCat;
         updateNpc["data.d_ativa.categoria"] = def_pasCat;
         updateNpc["data.d_ativa.valor"] = def_atiVal;
         updateNpc["data.absorcao.max"] = absorcao;
+        updateNpc['data.v_base'] = abs_magica;
     }
 }
 
