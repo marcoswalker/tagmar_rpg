@@ -1166,12 +1166,12 @@ Hooks.on("renderCombatTracker",function (combatTracker, html) {
             label: 'Somar Iniciativa',
             callback: html => {
               let valor = html.find('.valorIniciativa').val();
-              $(".mudar:checked").each(function (index, c) {
+              $(".mudar:checked").each(async function (index, c) {
                 let combatId = $(c).val();
                 let combatante = currentCombat.combatants.find(c => c.id == combatId);
                 let iniciativaAtual = combatante.initiative;
                 valor = parseInt(valor);
-                currentCombat.setInitiative(combatId, parseInt(iniciativaAtual + valor));
+                await currentCombat.setInitiative(combatId, parseInt(iniciativaAtual + valor));
               });
             }
           },
