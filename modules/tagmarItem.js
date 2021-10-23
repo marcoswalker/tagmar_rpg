@@ -138,8 +138,10 @@ export class tagmarItem extends Item {
     }
 
     async magiaToChat() {
+        let itemId = `<h1 class="esconde" id="itemId" data-item-id="${this.id}">id</h1>`;
         let chatData = {
             user: game.user.id,
+            flavor: `${itemId}`,
             speaker: ChatMessage.getSpeaker({
                 actor: this.actor
               })
@@ -395,10 +397,11 @@ export class tagmarItem extends Item {
                 <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d100}">Aplicar 100% Dano</button>
             </p>`;
         }
+        let itemId = `<h1 class="esconde" id="itemId" data-item-id="${this.id}">id</h1>`;
         await r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}${button}${buttonC}`
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
         });
         if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_total, actor: this.actor});
@@ -621,10 +624,11 @@ export class tagmarItem extends Item {
                 <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d100}">Aplicar 100% Dano</button>
             </p>`;
         }
+        let itemId = `<h1 class="esconde" id="itemId" data-item-id="${this.id}">id</h1>`;
         await r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}${button}${buttonC}`
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
         });
         if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_novo, actor: this.actor});
