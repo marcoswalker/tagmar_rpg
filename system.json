@@ -2,8 +2,8 @@
   "name": "tagmar_rpg",
   "title": "Tagmar XXX",
   "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
-  "semanticVersion": "1.9.7",
-  "version": "1.9.7",
+  "semanticVersion": "1.9.8",
+  "version": "1.9.8",
   "dependencies": [
     {
       "name": "compendium-folders",
@@ -27,8 +27,8 @@
     }
   ],
   "author": "Vinicius Fernandez, Marcos Walker",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "0.8.9",
+  "minimumCoreVersion": "9.238",
+  "compatibleCoreVersion": "9.238",
   "scripts": [
   ],
   "esmodules": [
@@ -163,7 +163,7 @@
   ],
   "gridDistance": 1.0,
   "gridUnits": "m",
-  "url": "https://github.com/marcoswalker/tagmar_rpg",
-  "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmar_rpg/master/system.json",
-  "download": "https://codeload.github.com/marcoswalker/tagmar_rpg/zip/master"
+  "url": "https://github.com/marcoswalker/tagmar_rpg/tree/0.9",
+  "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmar_rpg/0.9/system.json",
+  "download": "https://codeload.github.com/marcoswalker/tagmar_rpg/zip/0.9"
 }

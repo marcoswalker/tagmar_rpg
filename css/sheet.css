@@ -47,6 +47,10 @@
 .form_tagmar .editor b {
     color:rgb(94, 8, 8);
 }
+.form_tagmar nav label{
+    width: 100% !important;
+
+}
 .fairyDust{
     font-family: "FairyDustB";
     font-size: 205%;
