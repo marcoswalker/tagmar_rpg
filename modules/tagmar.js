@@ -867,15 +867,7 @@ Hooks.on('renderActorDirectory', function (actordirectory, html, user) {
 
 Hooks.on("getSceneControlButtons", (controls) => {
   const bar = controls.find(c => c.name === "token");
-  if (game.user.isGM) {
-    bar.tools.push({
-      name: "Rolar direto na tabela ou Teste de Resistência",
-      icon: "fas fa-dice-d20",
-      title: "Rolagem do Mestre",
-      onClick: async () => rollDialog(),
-      button: true
-    });
-  } else {
+  if (!game.user.isGM && typeof(game.user.character) != 'undefined') {
     bar.tools.push({
       name: "Centralizar Canvas no Token",
       icon: "fas fa-anchor",
@@ -883,7 +875,14 @@ Hooks.on("getSceneControlButtons", (controls) => {
       onClick: async () => centralizaToken(),
       button: true
     });
-  }
+  } 
+  bar.tools.push({
+    name: "Rolar direto na tabela ou Teste de Resistência",
+    icon: "fas fa-dice-d20",
+    title: "Rolagem do Mestre",
+    onClick: async () => rollDialog(),
+    button: true
+  });
   bar.tools.push({
     name: "Tabela de Resolução de Ações",
     icon: "fas fa-border-all",
@@ -898,7 +897,30 @@ Hooks.on("getSceneControlButtons", (controls) => {
     onClick: () => tabelaResistencia(),
     button: true
   });
+  bar.tools.push({
+    name: "Mensagens do Usuário",
+    icon: "fas fa-comments",
+    title: "Mensagens do chat apenas do usuário.",
+    onClick: async () => user_messages(),
+    button: true
+  });
 });
+
+async function user_messages() {
+  const messages = game.messages.filter(b => b.user.id == game.user.id);
+  let dialog = new Dialog({
+    title: `Mensagens do ${game.user.name}`,
+    content: "<ol id='user_messages' style='width: 100%; padding-left: 5px; padding-right: 5px; background-color: none;'></ol>",
+    buttons: {},
+    render: async (html) => {
+      for (let mess of messages) {
+        let mess_html = await mess.getHTML();
+        $(html.find("#user_messages")).append($(mess_html));
+      }
+    }
+  },{height: 800, width: 400, popOut: true});
+  dialog.render(true);
+}
 
 function tabelaResistencia () {
   let dialogContent = `<table class="mediaeval" style="text-align:center;">
@@ -986,6 +1008,7 @@ async function centralizaToken () {
     await canvas.animatePan({x: canvas.tokens.controlled[0].position.x, y: canvas.tokens.controlled[0].position.y});
   } else if (canvas.tokens.ownedTokens.length) {
     await canvas.animatePan({x: canvas.tokens.ownedTokens[0].position.x, y: canvas.tokens.ownedTokens[0].position.y});
+    canvas.tokens.controlAll();
   } else {
     ui.notifications.warn("Você não possui nenhum token na cena!");
   }
