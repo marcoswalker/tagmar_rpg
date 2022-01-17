@@ -185,7 +185,8 @@
     "templates": {
       "base": {
         "alcance": "",
-        "descricao": ""
+        "descricao": "",
+        "favorito": false
       },
       "custoNivel": {
         "custo": 0,

@@ -96,7 +96,15 @@
                         <div class="col-md-2">
                             <input name="data.ajuste.valor" type="number" value="{{data.data.ajuste.valor}}" height="30"/>
                         </div>
-                        <div class="col-md-6"></div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2"><h4 class="mediaeval">Favorito:</h4></div>
+                        <div class="col-md-2">
+                            {{#if data.data.favorito}}
+                                <input type="checkbox" checked name="data.favorito" data-dtype="Boolean" value="{{data.data.favorito}}"/>
+                            {{else}}
+                                <input type="checkbox" name="data.favorito" data-dtype="Boolean" value="{{data.data.favorito}}"/>
+                            {{/if}}
+                        </div>
                     </div>
 
                     <div class="row dados">

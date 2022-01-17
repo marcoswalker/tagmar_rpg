@@ -1317,6 +1317,9 @@ export default class tagmarActorSheet extends ActorSheet {
         if (efeitos.length > 1) efeitos.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
+        const combate_fav = combate.filter(item => item.data.data.favorito == true);
+        const tecnica_fav = tecnicas.filter(item => item.data.data.favorito == true);
+        const magia_fav = magias.filter(item => item.data.data.favorito == true);
         actorData.efeitos = efeitos;
         this.efeitos = efeitos;
         this.table_resFisMag = table_resFisMag;
@@ -1338,6 +1341,9 @@ export default class tagmarActorSheet extends ActorSheet {
         actorData.h_inf = h_inf;
         actorData.h_geral = h_geral;
         actorData.combate = combate;
+        actorData.combate_fav = combate_fav;
+        actorData.tecnica_fav = tecnica_fav;
+        actorData.magia_fav = magia_fav;
         actorData.magias = magias;
         actorData.ficha = "Sorteio";
     }

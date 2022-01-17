@@ -21,8 +21,8 @@ export default class tagmarItemSheet extends ItemSheet {
             this['position']['width'] = 500;
         }
         if (this.item.data.type == "Combate") {
-            this['options']['height'] = 530;
-            this['position']['height'] = 530;
+            this['options']['height'] = 560;
+            this['position']['height'] = 560;
         }
         if (this.item.data.type == "Profissao") {
             this['options']['height'] = 595;
