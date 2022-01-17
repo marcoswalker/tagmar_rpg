@@ -1,6 +1,6 @@
 export class tagmarItem extends Item {
 
-    prepareData() {
+    async prepareData() {
         if (!this.isOwned) return;
         super.prepareData();
         const tabela_resol = [
@@ -34,6 +34,7 @@ export class tagmarItem extends Item {
             [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
         ];
         this.tabela_resol = tabela_resol;
+        this.dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
     }
 
     async habToChat(resultado, r, h_total, colunarolada) {
@@ -49,34 +50,7 @@ export class tagmarItem extends Item {
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Impossível</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + colunarolada + "</h4>";
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            switch (resultado) {
-                case "verde":
-                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "branco":
-                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "amarelo":
-                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "laranja":
-                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "vermelho":
-                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "azul":
-                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "roxo":
-                    r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "cinza":
-                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                default:
-                    break;
-            }
+            this.dadosColoridos.dadosColoridos(resultado, r);
         }
         r.toMessage({
             user: game.user.id,
@@ -162,34 +136,7 @@ export class tagmarItem extends Item {
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + coluna_rolada + "</h4>";
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            switch (resultado) {
-                case "verde":
-                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "branco":
-                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "amarelo":
-                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "laranja":
-                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "vermelho":
-                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "azul":
-                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "roxo":
-                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "cinza":
-                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                default:
-                    break;
-            }
+            this.dadosColoridos.dadosColoridos(resultado, r);
         }
         r.toMessage({
             user: game.user.id,
@@ -356,34 +303,7 @@ export class tagmarItem extends Item {
         let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
         if (critico) dano_text = table_dano;
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            switch (resultado) {
-                case "verde":
-                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "branco":
-                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "amarelo":
-                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "laranja":
-                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "vermelho":
-                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "azul":
-                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "roxo":
-                    r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "cinza":
-                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                default:
-                    break;
-            }
+            this.dadosColoridos.dadosColoridos(resultado, r);
         }
         let button = "";
         let buttonC = "";
@@ -583,34 +503,7 @@ export class tagmarItem extends Item {
         let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
         if (critico) dano_text = table_dano;
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            switch (resultado) {
-                case "verde":
-                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "branco":
-                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "amarelo":
-                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "laranja":
-                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "vermelho":
-                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "azul":
-                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "roxo":
-                    r.dice[0].options.appearance = {background: "#0000ff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                case "cinza":
-                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                    break;
-                default:
-                    break;
-            }
+            this.dadosColoridos.dadosColoridos(resultado, r);
         }
         let button = "";
         let buttonC = "";

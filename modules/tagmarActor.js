@@ -1,6 +1,6 @@
 export class tagmarActor extends Actor {
     
-    prepareData() {
+    async prepareData() {
         this.tabela_resol = [
             [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
             [-6, "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
@@ -56,6 +56,7 @@ export class tagmarActor extends Actor {
             [19,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12],
             [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
         ];
+        this.dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
     }
 
     async _aplicarDano(dano) {
@@ -179,34 +180,7 @@ export class tagmarActor extends Actor {
             else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
             let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
             if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                switch (resultado) {
-                    case "verde":
-                        r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    case "branco":
-                        r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    case "amarelo":
-                        r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    case "laranja":
-                        r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    case "vermelho":
-                        r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    case "azul":
-                        r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    case "roxo":
-                        r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    case "cinza":
-                        r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                        break;
-                    default:
-                        break;
-                }
+                this.dadosColoridos.dadosColoridos(resultado, r);
             }
             await r.toMessage({
                 user: game.user.id,
@@ -230,34 +204,7 @@ export class tagmarActor extends Actor {
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                        switch (resultado) {
-                            case "verde":
-                                ds.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "branco":
-                                ds.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "amarelo":
-                                ds.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "laranja":
-                                ds.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "vermelho":
-                                ds.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "azul":
-                                ds.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "roxo":
-                                ds.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "cinza":
-                                ds.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            default:
-                                break;
-                        }
+                        this.dadosColoridos.dadosColoridos(resultado, ds);
                     }
                     await ds.toMessage({
                         user: game.user.id,
@@ -281,34 +228,7 @@ export class tagmarActor extends Actor {
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                            switch (resultado) {
-                                case "verde":
-                                    ds.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "branco":
-                                    ds.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "amarelo":
-                                    ds.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "laranja":
-                                    ds.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "vermelho":
-                                    ds.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "azul":
-                                    ds.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "roxo":
-                                    ds.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "cinza":
-                                    ds.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                default:
-                                    break;
-                            }
+                            this.dadosColoridos.dadosColoridos(resultado, ds);
                         }
                         await ds.toMessage({
                             user: game.user.id,
@@ -328,34 +248,7 @@ export class tagmarActor extends Actor {
                     else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                        switch (resultado) {
-                            case "verde":
-                                dado.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "branco":
-                                dado.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "amarelo":
-                                dado.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "laranja":
-                                dado.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "vermelho":
-                                dado.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "azul":
-                                dado.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "roxo":
-                                dado.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            case "cinza":
-                                dado.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                break;
-                            default:
-                                break;
-                        }
+                        this.dadosColoridos.dadosColoridos(resultado, dado);
                     }
                     await dado.toMessage({
                         user: game.user.id,
@@ -408,12 +301,12 @@ export class tagmarActor extends Actor {
         if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#00a1e8;'>SUCESSO</h1>";
             if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                this.dadosColoridos.dadosColoridos("azul", r);
             }
         } else {    // Insucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#ff0000;'>FRACASSO</h1>";
             if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
+                this.dadosColoridos.dadosColoridos("vermelho", r);
             }
         }
         r.toMessage({
@@ -474,34 +367,7 @@ export class tagmarActor extends Actor {
                 else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                 let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                 if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                    switch (resultado) {
-                        case "verde":
-                            r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        case "branco":
-                            r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        case "amarelo":
-                            r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        case "laranja":
-                            r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        case "vermelho":
-                            r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        case "azul":
-                            r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        case "roxo":
-                            r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        case "cinza":
-                            r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                            break;
-                        default:
-                            break;
-                    }
+                    this.dadosColoridos.dadosColoridos(resultado, r);
                 }
                 await r.toMessage({
                     user: game.user.id,
@@ -525,34 +391,7 @@ export class tagmarActor extends Actor {
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                            switch (resultado) {
-                                case "verde":
-                                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "branco":
-                                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "amarelo":
-                                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "laranja":
-                                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "vermelho":
-                                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "azul":
-                                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "roxo":
-                                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "cinza":
-                                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                default:
-                                    break;
-                            }
+                            this.dadosColoridos.dadosColoridos(resultado, r);
                         }
                         await r.toMessage({
                             user: game.user.id,
@@ -576,34 +415,7 @@ export class tagmarActor extends Actor {
                         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
                         let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                            switch (resultado) {
-                                case "verde":
-                                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "branco":
-                                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "amarelo":
-                                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "laranja":
-                                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "vermelho":
-                                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "azul":
-                                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "roxo":
-                                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "cinza":
-                                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                default:
-                                    break;
-                            }
+                            this.dadosColoridos.dadosColoridos(resultado, r);
                         }
                         await r.toMessage({
                             user: game.user.id,
@@ -624,34 +436,7 @@ export class tagmarActor extends Actor {
                     let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
                     if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
                         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                            switch (resultado) {
-                                case "verde":
-                                    r.dice[0].options.appearance = {background: "#52cc00", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "branco":
-                                    r.dice[0].options.appearance = {background: "#ffffff", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "amarelo":
-                                    r.dice[0].options.appearance = {background: "#fff700", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "laranja":
-                                    r.dice[0].options.appearance = {background: "#8f4500", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "vermelho":
-                                    r.dice[0].options.appearance = {background: "#ff0000", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "azul":
-                                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "roxo":
-                                    r.dice[0].options.appearance = {background: "#00a1e8", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                case "cinza":
-                                    r.dice[0].options.appearance = {background: "#525252", texture: "none", material: "plastic", edge: "#000000", foreground: "#000000"};
-                                    break;
-                                default:
-                                    break;
-                            }
+                            this.dadosColoridos.dadosColoridos(resultado, r);
                         }
                     }
                     await r.toMessage({
