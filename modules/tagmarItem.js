@@ -573,7 +573,8 @@ export class tagmarItem extends Item {
             await this.combateToChat(coluna_tab[0][0], resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela);
         } else {
             let coluna_t = valor_tabela % 20;
-            const ajusteDano = parseInt(valor_tabela/20) * 50;
+            if (coluna_t == 0) coluna_t = 20;
+            const ajusteDano = parseInt((valor_tabela)/20) * 50;
             let coluna_tab = tabela_resol.filter(b => b[0] === coluna_t);
             let resultado = coluna_tab[0][Dresult];
             await this.combateToChatPlus(coluna_tab[0][0], resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela, ajusteDano);
