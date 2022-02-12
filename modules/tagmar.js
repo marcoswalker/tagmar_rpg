@@ -713,7 +713,7 @@ Hooks.on('renderChatMessage', function (message, jq, messageData) {
       let dano = $(event.currentTarget).data('dano');
       let cura = $(event.currentTarget).data('cura');
       let critico = $(event.currentTarget).data('critico');
-      token.actor._aplicarDano({"valor": dano, "isCura": cura, "isCritico": critico});
+      token.actor._aplicarDano({"valor": dano, "isCura": cura, "isCritico": critico}, token);
     }
   });
 });

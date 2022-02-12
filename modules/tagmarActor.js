@@ -59,7 +59,7 @@ export class tagmarActor extends Actor {
         this.dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
     }
 
-    async _aplicarDano(dano) {
+    async _aplicarDano(dano, token) {
         if (this.data.type == "Inventario") return;
         let eh = this.data.data.eh.value;
         let eh_max = this.data.data.eh.max;
@@ -137,13 +137,19 @@ export class tagmarActor extends Actor {
         await this.update(update);
         if (update.hasOwnProperty('_id')) delete update['_id'];
         if (Object.keys(update).length > 0) {
-            let conteudo = "";
+            let scrolling = "";
+            let scrollStyle = {fill: "red", fontFamily: "GoudyMediaeval", strokeThickness: 2, stroke: "black"};
             for (let key of Object.keys(update)) {
                 let att = key.replace("data.", "").replace('.value', "");
-                if (dano.isCura) conteudo += `<p class="mediaeval rola_desc">${att.toUpperCase()} + ${olds[key] *-1}</p>`
-                else conteudo += `<p class="mediaeval rola_desc">${att.toUpperCase()} - ${olds[key]}</p>`
+                if (dano.isCura) {
+                    scrolling += `${att.toUpperCase()} + ${olds[key] *-1}\n`;
+                    scrollStyle = {fill: "green", fontFamily: "GoudyMediaeval", strokeThickness: 2, stroke: "black"};
+                }
+                else {
+                    scrolling += `${att.toUpperCase()} - ${olds[key]}\n`;
+                }
             }
-            ui.notifications.info(conteudo);
+            token.hud.createScrollingText(scrolling, scrollStyle);
         }
     }
     
