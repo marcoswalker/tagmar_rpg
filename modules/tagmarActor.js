@@ -142,11 +142,11 @@ export class tagmarActor extends Actor {
             for (let key of Object.keys(update)) {
                 let att = key.replace("data.", "").replace('.value', "");
                 if (dano.isCura) {
-                    scrolling += `${att.toUpperCase()} + ${olds[key] *-1}\n`;
+                    scrolling += `${att.toUpperCase()} +${olds[key] *-1}\n`;
                     scrollStyle = {fill: "green", fontFamily: "GoudyMediaeval", strokeThickness: 2, stroke: "black"};
                 }
                 else {
-                    scrolling += `${att.toUpperCase()} - ${olds[key]}\n`;
+                    scrolling += `${att.toUpperCase()} -${olds[key]}\n`;
                 }
             }
             token.hud.createScrollingText(scrolling, scrollStyle);
