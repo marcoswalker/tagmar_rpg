@@ -66,7 +66,8 @@ export const SystemSettings = function() {
         scope: 'client',
         config: true,
         default: 100,
-        type: Number
+        type: Number,
+        onChange: () => {location.reload();}
       });
       game.settings.register('tagmar_rpg', 'ajusteManual', {
         name: 'Modificar ajuste manualmente',
