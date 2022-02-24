@@ -696,16 +696,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 100%. Nocaute, oponente fica desmaiado por 1 hora e incapacitado por 2 dias.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> Força do golpe rasga a carótida.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> O Oponente é decapitado.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> Afundamento torácico destrói os pulmões.</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> Golpe perfura o coração.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> Força do golpe rasga a carótida.</li>
+                        <li class="mediaeval"><b>Corte:</b> O Oponente é decapitado.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> Afundamento torácico destrói os pulmões.</li>
+                        <li class="mediaeval"><b>Penetração:</b> Golpe perfura o coração.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> Impacto total da magia mata o adversário.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 100%. Golpe paralisa por uma rodada causando um ferimento fatal e impondo um ajuste de – 10, depois de 7 rodadas o oponente morre.</li>
@@ -720,16 +717,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 100%. Nocaute, oponente fica desmaiado por meia hora.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> 100%. Ataque no olho arranca o globo ocular e paralisa o adversário por duas rodadas.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> 100%. Corte vaza o olho. A dor paralisa o adversário por duas rodadas.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> 100%. Golpe no pulso destrói a articulação, obrigando a amputação em 2 dias. O inimigo é paralisado por duas rodadas.</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> 100%. Estocada na mão, inutiliza permanentemente. A dor paralisa o inimigo por duas rodadas.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> 100%. Ataque no olho arranca o globo ocular e paralisa o adversário por duas rodadas.</li>
+                        <li class="mediaeval"><b>Corte:</b> 100%. Corte vaza o olho. A dor paralisa o adversário por duas rodadas.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> 100%. Golpe no pulso destrói a articulação, obrigando a amputação em 2 dias. O inimigo é paralisado por duas rodadas.</li>
+                        <li class="mediaeval"><b>Penetração:</b> 100%. Estocada na mão, inutiliza permanentemente. A dor paralisa o inimigo por duas rodadas.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> 100% Impacto no pé do adversário o destrói, e ele fica paralisado por duas rodadas.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 100%. Ferimento no oponente reduz o número de ataques pela metade (se for só 1, passa a ser um a cada duas rodadas).</li>
@@ -744,16 +738,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 100%. Oponente tonto não ataca por duas rodadas.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> 100%. Ataque arranca uma orelha e paralisa o adversário por uma rodada.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> 100%. Corte grande no músculo inutiliza um braço por uma semana.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> 100%. Pancada na cabeça. Elmo se parte (caso não seja mágico). Se não tiver Elmo entra em coma por 2 dias.</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> 100%. Perfura o músculo do braço e o inutiliza por uma semana.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> 100%. Ataque arranca uma orelha e paralisa o adversário por uma rodada.</li>
+                        <li class="mediaeval"><b>Corte:</b> 100%. Corte grande no músculo inutiliza um braço por uma semana.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> 100%. Pancada na cabeça. Elmo se parte (caso não seja mágico). Se não tiver Elmo entra em coma por 2 dias.</li>
+                        <li class="mediaeval"><b>Penetração:</b> 100%. Perfura o músculo do braço e o inutiliza por uma semana.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> 100%. O poder da magia leva o inimigo a inconsciência por um dia.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 100%. Golpe paralisa o oponente por duas rodadas e impõe um ajuste de – 5 por 10 rodadas.</li>
@@ -768,16 +759,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 75%. Golpe desarma o oponente e o derruba, a arma cai a 3m dele.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> 75%. Ataque rasga o braço causando um ajuste de - 8 por 2 dias.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> 75%. Corte mediano no músculo inutiliza um braço por 2 dias.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> 75%. Pancada na cabeça. Elmo se parte (caso não seja mágico). Se não tiver Elmo fica desacordado por 2 horas e incapacito por 2 dias.</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> 75%. Perfura o músculo do braço e o inutiliza por 2 dias.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> 75%. Ataque rasga o braço causando um ajuste de - 8 por 2 dias.</li>
+                        <li class="mediaeval"><b>Corte:</b> 75%. Corte mediano no músculo inutiliza um braço por 2 dias.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> 75%. Pancada na cabeça. Elmo se parte (caso não seja mágico). Se não tiver Elmo fica desacordado por 2 horas e incapacito por 2 dias.</li>
+                        <li class="mediaeval"><b>Penetração:</b> 75%. Perfura o músculo do braço e o inutiliza por 2 dias.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> 75%. O poder da magia leva o inimigo a inconsciência por meia hora.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 75%. Golpe paralisa o oponente por uma rodada e impõe um ajuste de – 5 por 10 rodadas.</li>
@@ -792,16 +780,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 75%. A dor ou falta de ar deixam o oponente grogue. Ajuste de - 5 por 4 rodadas.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> 75%. A ferocidade do golpe derruba o adversário impedindo de atacar nas próximas 3 rodadas.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> 75%. Corte na cabeça põe adversário em coma por 1 dia se ele não tiver usando elmo.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> 75%. Escudo do inimigo se quebra (caso não seja mágico). Na ausência deste o braço quebra (cura em um mês).</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> 75%. Golpe no tronco derruba o adversário se estiver usando escudo. Caso contrário incapacita-o por 2 dias.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> 75%. A ferocidade do golpe derruba o adversário impedindo de atacar nas próximas 3 rodadas.</li>
+                        <li class="mediaeval"><b>Corte:</b> 75%. Corte na cabeça põe adversário em coma por 1 dia se ele não tiver usando elmo.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> 75%. Escudo do inimigo se quebra (caso não seja mágico). Na ausência deste o braço quebra (cura em um mês).</li>
+                        <li class="mediaeval"><b>Penetração:</b> 75%. Golpe no tronco derruba o adversário se estiver usando escudo. Caso contrário incapacita-o por 2 dias.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> 75%. O potente impacto paralisa o adversário, impedindo de atacar nas próximas 3 rodadas.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 75%. Ferimento desnorteia o oponente impedindo-o de atacar por duas rodadas.</li>
@@ -816,16 +801,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 50%. Inchaço e sangramento facial atrapalham a visão. Ajuste de - 3 por 6 rodadas.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> 50%. Feroz ataque na mão desarma o inimigo.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> 50%. Com um belo golpe, não só atinge como desarma o inimigo.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> 50%. Golpe no tórax derruba o adversário, que deixa cair o que tiver segurando.</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> 50% Estocada no peito paralisa o adversário nas próximas 2 rodadas.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> 50%. Feroz ataque na mão desarma o inimigo.</li>
+                        <li class="mediaeval"><b>Corte:</b> 50%. Com um belo golpe, não só atinge como desarma o inimigo.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> 50%. Golpe no tórax derruba o adversário, que deixa cair o que tiver segurando.</li>
+                        <li class="mediaeval"><b>Penetração:</b> 50% Estocada no peito paralisa o adversário nas próximas 2 rodadas.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> 50%. A força da magia arremessa o adversário a 2 metros de distância, e ele deixa cair sua arma.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 50%. Golpe faz com que o adversário se atrapalhe, impedindo-o de realizar sua próxima ação.</li>
@@ -840,16 +822,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 50%. Golpe desarma o oponente, e a arma cai a 2 m dele.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> 50%. Rasgo na mão impede o adversário de realizar seu próximo ataque.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> 50%. Corte no ombro, impõe um ajuste de – 4 por 1 dia.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> 50%. Golpe duro no ombro, paralisa o oponente na próxima rodada.</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> 50%. Penetração causa ajuste de – 4 por 2 dias. Se for flecha o ajuste é de - 6 até que a mesma seja retirada.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> 50%. Rasgo na mão impede o adversário de realizar seu próximo ataque.</li>
+                        <li class="mediaeval"><b>Corte:</b> 50%. Corte no ombro, impõe um ajuste de – 4 por 1 dia.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> 50%. Golpe duro no ombro, paralisa o oponente na próxima rodada.</li>
+                        <li class="mediaeval"><b>Penetração:</b> 50%. Penetração causa ajuste de – 4 por 2 dias. Se for flecha o ajuste é de - 6 até que a mesma seja retirada.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> 50%. O poder da magia atordoa o inimigo, impedindo de realizar seu próximo ataque.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 50%. Golpe reduz a velocidade base à metade e impõe ao adversário um ajuste de – 3 por 5 rodadas.</li>
@@ -864,16 +843,13 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
       </ul>`;
     } else {
       table = table + `<ul style="list-style-type: disc;" class="rola_desc">`;
-      if (tipo == "CD") {
+      if (tipo != "") {
         table = table + `<li class="mediaeval"><b>Combate Desarmado:</b> 25%. Golpe no ouvido causa desorientação. Ajuste de -3 por 3 rodadas.</li>
-                        <li class="mediaeval"><b>Garras/Mordida:</b> 25%. Ataque desequilibra o inimigo, levando-o a cair e perder uma rodada.</li>`;
-      } else if (tipo == "CL" || tipo == "CmE" || tipo == "CmM" || tipo == "CpE" || tipo == "CpM") {
-        table = table + `<li class="mediaeval"><b>Corte:</b> 25%. Corte leve no músculo do braço dá um ajuste de – 4 na próxima rodada.</li>`;
-      } else if (tipo == "EL" || tipo == "EM" || tipo == "EP") {
-        table = table + `<li class="mediaeval"><b>Esmagamento:</b> 25%. Golpe no ombro desequilibra o adversário na próxima rodada, dando um ajuste de – 4.</li>`;
-      } else if (tipo == "CLD" || tipo == "PmA" || tipo == "PmL" || tipo == "PpA" || tipo == "PpB" || tipo == "PP") {
-        table = table + `<li class="mediaeval"><b>Penetração:</b> 25% Estocada na perna reduz o movimento à metade e causa um ajuste de – 2 por 1 hora.</li>`;
-      } else if (tipo == "") {
+                        <li class="mediaeval"><b>Garras/Mordida:</b> 25%. Ataque desequilibra o inimigo, levando-o a cair e perder uma rodada.</li>
+                        <li class="mediaeval"><b>Corte:</b> 25%. Corte leve no músculo do braço dá um ajuste de – 4 na próxima rodada.</li>
+                        <li class="mediaeval"><b>Esmagamento:</b> 25%. Golpe no ombro desequilibra o adversário na próxima rodada, dando um ajuste de – 4.</li>
+                        <li class="mediaeval"><b>Penetração:</b> 25% Estocada na perna reduz o movimento à metade e causa um ajuste de – 2 por 1 hora.</li>`;
+      } else {
         table = table + `<li class="mediaeval"><b>Magia:</b> 25%. A magia foi evocada com maestria. Economizando 1 de karma OU causando +2 na FA.</li>`;
       }
       table = table + `<li class="mediaeval"><b>10 a 50 vezes o peso do atacante:</b> 25%. Golpe impõe ao adversário um ajuste de - 3 por 5 rodadas.</li>
