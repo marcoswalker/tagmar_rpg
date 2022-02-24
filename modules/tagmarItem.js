@@ -191,6 +191,7 @@ export class tagmarItem extends Item {
 
     async combateToChat(coluna_rolada, resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela) {
         let critico = false;
+        let falha = false;
         const tabela_resol = this.tabela_resol;
         let PrintResult = "";
         let dano_total = 0;
@@ -199,6 +200,7 @@ export class tagmarItem extends Item {
         if (resultado == "verde") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha Crítica</h1>";
             critico = true;
+            falha = true;
         }
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Errou</h1>";
         else if (resultado == "amarelo") {
@@ -323,12 +325,13 @@ export class tagmarItem extends Item {
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
         });
-        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
+        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor, this.data.data.tipo, falha);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_total, actor: this.actor});
     }
 
     async combateToChatPlus(coluna_rolada, resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela, ajusteDano) {
         let critico = false;
+        let falha = false;
         const tabela_resol = this.tabela_resol;
         let PrintResult = "";
         let dano_total = 0;
@@ -337,6 +340,7 @@ export class tagmarItem extends Item {
         if (resultado == "verde") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha Crítica</h1>";
             critico = true;
+            falha = true;
         }
         else if (resultado == "branco") {
             PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco</h1>";
@@ -523,7 +527,7 @@ export class tagmarItem extends Item {
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
         });
-        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor);
+        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor, this.data.data.tipo, falha);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_novo, actor: this.actor});
     }
 
