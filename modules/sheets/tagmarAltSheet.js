@@ -855,8 +855,7 @@ export default class tagmarAltSheet extends ActorSheet {
     _rolaRMAG(event) {
         const forcAtaqueI = parseInt($(".F_Ataque").val());
         if (!forcAtaqueI) {
-            ui.notifications.warn("Preencha um valor maior que zero no campo F.Ataque.");
-            $('.F_Ataque').css('background-color','Orange');
+            this._dialogResistencia("Magía");
             return;
         }
         this.actor._rollTeste({name: "Resistencia", id: "Magía", f_ataque: parseInt(forcAtaqueI)});
@@ -871,8 +870,7 @@ export default class tagmarAltSheet extends ActorSheet {
     _rolaRFIS(event) {
         const forcAtaqueI = parseInt($(".F_Ataque").val());
         if (!forcAtaqueI) {
-            ui.notifications.warn("Preencha um valor maior que zero no campo F.Ataque.");
-            $('.F_Ataque').css('background-color','Orange');
+            this._dialogResistencia("Física");
             return;
         }
         this.actor._rollTeste({name: "Resistencia", id: "Física", f_ataque: parseInt(forcAtaqueI)});
@@ -882,6 +880,42 @@ export default class tagmarAltSheet extends ActorSheet {
                 "data.forca_ataque": null
             });
         }
+    }
+
+    _dialogResistencia(tipo) {
+        let f_ataque;
+        let rolar = false;
+        let dialogContent = `
+        <div class="mediaeval">
+            <label for="forca-ataque">Força de Ataque:</label>
+            <input type="number" name="forca-ataque" id="forca-ataque" value="1" style="width: 60px; text-align: center;"/>
+        </div>`;
+        let dialog = new Dialog({
+            title: "Informe a força de ataque.",
+            content: dialogContent,
+            buttons: {
+                Rolar: {
+                    icon: '<i class="fas fa-dice-d20"></i>',
+                    label: "Rolar Teste",
+                    callback: (html) => {
+                        f_ataque = html.find('#forca-ataque').val();
+                        if (f_ataque) {
+                            f_ataque = parseInt(f_ataque);
+                            rolar = true;
+                        }
+                    }
+                },
+                Cancelar: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: "Cancelar"
+                }
+            },
+            default: "Cancelar",
+            close: html => {
+                if (rolar) this.actor._rollTeste({name: "Resistencia", id: tipo, f_ataque: f_ataque});
+            }
+        });
+        dialog.render(true);
     }
 
     _addGrupoArmas(event) {
