@@ -27,8 +27,8 @@
                             <label><h4 class="mediaeval">Atributo:</h4></label>
                         </div>
                         <div class="col-md-8">
-                            <select class="mediaeval" style="font-size: 90%;" name="data.atributo" type="text" value="{{data.data.atributo}}" data-dtype="String" height="30">
-                                {{#select data.data.atributo}}
+                            <select class="mediaeval" style="font-size: 90%;" name="data.atributo" type="text" value="{{data.system.atributo}}" data-dtype="String" height="30">
+                                {{#select data.system.atributo}}
                                 {{#fichaPontos data}}
                                 <option value="INT">INT</option>
                                 <option value="CAR">CAR</option>
@@ -58,8 +58,8 @@
                             <label><h4 class="mediaeval">Tipo:</h4></label>
                         </div>
                         <div class="col-md-8">
-                            <select class="mediaeval" style="font-size: 100%;" name="data.tipo" type="text" value="{{data.data.tipo}}" data-dtype="String" height="30">
-                                {{#select data.data.tipo}}
+                            <select class="mediaeval" style="font-size: 100%;" name="data.tipo" type="text" value="{{data.system.tipo}}" data-dtype="String" height="30">
+                                {{#select data.system.tipo}}
                                 <option value="+">+</option>
                                 <option value="-">-</option>
                                 <option value="/">/</option>
@@ -73,7 +73,7 @@
                             <label><h4 class="mediaeval">Valor:</h4></label>
                         </div>
                         <div class="col-md-8">
-                            <input name="data.valor" type="number" value="{{data.data.valor}}" height="30"/>
+                            <input name="data.valor" type="number" value="{{data.system.valor}}" height="30"/>
                         </div>
                     </div>
                     <div class="row dados">
@@ -81,7 +81,7 @@
                             <label><h4 class="mediaeval">Ativo:</h4></label>
                         </div>
                         <div class="col-md-8">
-                            {{#if data.data.ativo}}
+                            {{#if data.system.ativo}}
                             <input type='checkbox' name='data.ativo' checked/>
                             {{else}}
                             <input type="checkbox" name="data.ativo"/>

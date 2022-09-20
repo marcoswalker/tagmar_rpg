@@ -20,19 +20,19 @@
                             <label><h4 class="mediaeval">Custo:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.custo" type="number" value="{{data.data.custo}}" height="30" class="custoInput"/>
+                            <input name="system.custo" type="number" value="{{data.system.custo}}" height="30" class="custoInput"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Nível:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.nivel" type="number" value="{{data.data.nivel}}" height="30" class="nivelInput"/>
+                            <input name="system.nivel" type="number" value="{{data.system.nivel}}" height="30" class="nivelInput"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Total:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.total" type="number" value="{{data.data.total}}" height="30" class="totalInput" readonly/>
+                            <input name="system.total" type="number" value="{{data.system.total}}" height="30" class="totalInput" readonly/>
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@
                             <label><h4 class="mediaeval">Categoria:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <input name="data.categoria" type="text" list="categorias" value="{{data.data.categoria}}" height="30"/>
+                            <input name="system.categoria" type="text" list="categorias" value="{{data.system.categoria}}" height="30"/>
                             <datalist id="categorias">
                                 <option value="Perícia"></option>
                                 <option value="Postura"></option>
@@ -53,22 +53,22 @@
                             </datalist>
                         </div>
                         <div class="col-md-2">
-                            {{#ifeq data.data.categoria "Postura"}}
+                            {{#ifeq data.system.categoria "Postura"}}
                                 <i class="far fa-hand-paper"></i>
                             {{/ifeq}}
-                            {{#ifeq data.data.categoria "Ataque"}}
+                            {{#ifeq data.system.categoria "Ataque"}}
                                 <i class="fas fa-gavel"></i>
                             {{/ifeq}}
-                            {{#ifeq data.data.categoria "Precisão"}}
+                            {{#ifeq data.system.categoria "Precisão"}}
                                 <i class="fas fa-bullseye"></i>
                             {{/ifeq}}
-                            {{#ifeq data.data.categoria "Agressão"}}
+                            {{#ifeq data.system.categoria "Agressão"}}
                                 <i class="fas fa-skull-crossbones"></i>
                             {{/ifeq}}
-                            {{#ifeq data.data.categoria "Proteção"}}
+                            {{#ifeq data.system.categoria "Proteção"}}
                                 <i class="fas fa-shield-alt"></i>
                             {{/ifeq}}
-                            {{#ifeq data.data.categoria "Suporte"}}
+                            {{#ifeq data.system.categoria "Suporte"}}
                                 <i class="fas fa-chess-rook"></i>
                             {{/ifeq}}
                         </div>
@@ -76,8 +76,8 @@
                             <label><h4 class="mediaeval">Ajuste:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <select class="mediaeval" style="font-size: 90%;" name="data.ajuste.atributo" type="text" value="{{data.data.ajuste.atributo}}" data-dtype="String" height="30">
-                                {{#select data.data.ajuste.atributo}}
+                            <select class="mediaeval" style="font-size: 90%;" name="system.ajuste.atributo" type="text" value="{{data.system.ajuste.atributo}}" data-dtype="String" height="30">
+                                {{#select data.system.ajuste.atributo}}
                                 <option value=""></option>
                                 <option value="INT">INT</option>
                                 <option value="CAR">CAR</option>
@@ -94,22 +94,22 @@
                     <div class="row dados">
                         <div class="col-md-4"><label><h4 class="mediaeval">Bônus/Penalidade:</h4></label></div>
                         <div class="col-md-2">
-                            <input name="data.ajuste.valor" type="number" value="{{data.data.ajuste.valor}}" height="30"/>
+                            <input name="system.ajuste.valor" type="number" value="{{data.system.ajuste.valor}}" height="30"/>
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-2"><h4 class="mediaeval">Favorito:</h4></div>
                         <div class="col-md-2">
-                            {{#if data.data.favorito}}
-                                <input type="checkbox" checked name="data.favorito" data-dtype="Boolean" value="{{data.data.favorito}}"/>
+                            {{#if data.system.favorito}}
+                                <input type="checkbox" checked name="system.favorito" data-dtype="Boolean" value="{{data.system.favorito}}"/>
                             {{else}}
-                                <input type="checkbox" name="data.favorito" data-dtype="Boolean" value="{{data.data.favorito}}"/>
+                                <input type="checkbox" name="system.favorito" data-dtype="Boolean" value="{{data.system.favorito}}"/>
                             {{/if}}
                         </div>
                     </div>
 
                     <div class="row dados">
                         <div class="col-md-12" style="height: 290px;">
-                            {{editor content=data.data.descricao target="data.descricao" button=true owner=options.owner editable=options.editable}}
+                            {{editor data.system.descricao target="system.descricao" button=true owner=options.owner editable=options.editable}}
                         </div>
                     </div>
                 </div>

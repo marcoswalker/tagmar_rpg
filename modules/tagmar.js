@@ -72,7 +72,9 @@ Hooks.once("init", function(){
   game.tagmar = {
     tagmarItem,
     tagmarActor,
-    rollItemMacro
+    rollItemMacro,
+    tabela_resol,
+    table_resFisMag
   };
   CONFIG.Combat.initiative = {
     formula: "1d10 + @iniciativa",
@@ -184,7 +186,7 @@ Hooks.once("init", function(){
   });
 
   preloadHandlebarsTemplates();
-
+  game.audio.preload("/systems/tagmar_rpg/assets/vo_anno_fight04.wav");
   if (game.modules.get('polyglot')) {
     if (!game.modules.get('polyglot').active) return;
     import("/modules/polyglot/module/LanguageProvider.js").then(function (LanguageProvider) {
@@ -271,21 +273,23 @@ Hooks.once("init", function(){
         getUserLanguages(actor) {
           let known_languages = new Set();
           let literate_languages = new Set();
-          let linguas = actor.data.data.defesa.categoria.split(';');
+          let linguas = actor.system.defesa.categoria.split(';');
           for (let lang of linguas) {
             known_languages.add(lang);
           }
           return [known_languages, literate_languages];
         }
       }
-      polyglot.registerSystem(game.system.id, TagmarLanguageProvider);
+      game.polyglot.registerSystem(game.system.id, TagmarLanguageProvider);
     });
   }
-  game.audio.preload("/systems/tagmar_rpg/assets/vo_anno_fight04.wav");
 });
 
 Hooks.once("ready", async function () {
-  Hooks.on("hotbarDrop", (bar, data, slot) => createTagmarMacro(data, slot));
+  Hooks.on("hotbarDrop", (bar, data, slot) => {
+    createTagmarMacro(data, slot);
+    return false;
+  });
   boasVindas();
   $('#logo').attr('src', '/systems/tagmar_rpg/templates/sheets/img/logo.png');
   $('#logo').click(function () {
@@ -345,57 +349,22 @@ function boasVindas () {
   }
 }
 
-Hooks.on('createToken',async function (document) {
+Hooks.on("preCreateToken", function (document, data) {
   if (!game.user.isGM) return;
-  const token = document.data;
-  if (!token.actorLink) {
-    try {
-      let tokenactor = duplicate(document.actor);
-      tokenactor.name = tokenactor.name + " Cópia";
-      let actor = await Actor.create(tokenactor);
-      await token.document.update({
-        'actorId': actor.data._id,
-        'actorLink': true
-      });
-    } catch (e) {
-      ui.notifications.error("Ocorreu um erro, delete esse token e crie novamente. " + e);
-    }
-  } 
-});
-
-Hooks.on('preCreateToken', async function (document) {
-  if (!game.user.isGM) return;
+  if (!game.modules.get('barbrawl') && !game.modules.get('barbrawl').active) return;
   const settingBars = game.settings.get("tagmar_rpg", "autoBars");
-  if (settingBars != "no") {
-    if (game.modules.get('barbrawl') && game.modules.get('barbrawl').active) {
-      let resources = createBrawrs(document, settingBars);
-      if (Object.keys(resources).length > 0) {
-        await document.data.update({
-          'flags.barbrawl.resourceBars': 0,
-          'bar1.attribute': "",
-          'bar2.attribute': ""
-        });
-        document.data.update({'flags.barbrawl.resourceBars': resources});
-      }
-    }
-    else ui.notifications.warn("Instale e ative o módulo Bar Brawl!");
-  }
-});
-
-Hooks.on('tagmar_combate_roll', function (rollData) {
-  if (game.user != rollData.user) return;
-  let input_dano = $('#sidebar #chat #danos #soma_dano');
-  let valor = 0;
-  if (parseInt(input_dano.val())) valor = parseInt(input_dano.val());
-  valor += rollData.dano;
-  input_dano.val(valor);  
+  if (settingBars == "no") return;
+  let resources = createBrawrs(document, settingBars);
+  document.updateSource({
+      "flags.barbrawl.resourceBars": resources
+  });
 });
 
 function createBrawrs(token, setting) {
   const actor = token.actor;
   let resources = {};
   if (setting == "barra_pers") {
-    if (actor.data.type == "Personagem") {
+    if (actor.type == "Personagem") {
       resources = {
         "bar1": {
             id: "bar1",
@@ -443,7 +412,7 @@ function createBrawrs(token, setting) {
       };
     }
   } else if (setting == "barra_npc") {
-    if (actor.data.type == "NPC") {
+    if (actor.type == "NPC") {
       resources = {
         "bar1": {
             id: "bar1",
@@ -483,7 +452,7 @@ function createBrawrs(token, setting) {
       };
     }
   } else if (setting == "barra_both") {
-    if (actor.data.type == "Personagem") {
+    if (actor.type == "Personagem") {
       resources = {
         "bareh": {
             id: "bareh",
@@ -529,7 +498,7 @@ function createBrawrs(token, setting) {
           visibility: CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
         }
       };
-    } else if (actor.data.type == "NPC") {
+    } else if (actor.type == "NPC") {
       resources = {
         "bar1": {
             id: "bar1",
@@ -572,7 +541,16 @@ function createBrawrs(token, setting) {
   return resources;
 }
 
-Hooks.once("dragRuler.ready", (SpeedProvider) => {
+Hooks.on('tagmar_combate_roll', function (rollData) {
+  if (game.user != rollData.user) return;
+  let input_dano = $('#sidebar #chat #danos #soma_dano');
+  let valor = 0;
+  if (parseInt(input_dano.val())) valor = parseInt(input_dano.val());
+  valor += rollData.dano;
+  input_dano.val(valor);  
+});
+/* // Módulo ainda não atualizado para V10
+Hooks.once("dragRuler.ready", (SpeedProvider) => { 
   class TagmarSpeedProvider extends SpeedProvider {
       get colors() {
           return [
@@ -583,7 +561,7 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
       }
 
       getRanges(token) {
-          const baseSpeed = token.actor.data.data.vb;
+          const baseSpeed = token.actor.system.vb;
 
     // A character can always walk it's base speed and dash twice it's base speed
     const ranges = [
@@ -596,7 +574,7 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
 
   dragRuler.registerSystem("tagmar_rpg", TagmarSpeedProvider);
 });
-
+*/
 Hooks.once('diceSoNiceReady', function (dice) {
   dice.addSystem({ id: game.system.id, name: "Tagmar RPG"}, true);
   dice.addDicePreset({
@@ -870,7 +848,7 @@ async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
 
 document.addEventListener('mousedown', function (event) {
   if ((event.button == 1 || event.button == 4) && game.user.isGM) {
-    const hoveredToken = canvas.tokens._hover;
+    const hoveredToken = canvas.tokens.hover;
     if (hoveredToken !== null) {
       event.preventDefault();
       if (!hoveredToken.isTargeted) hoveredToken.setTarget(true, game.user, true, false);
@@ -880,7 +858,7 @@ document.addEventListener('mousedown', function (event) {
 });
 
 Hooks.on('targetToken', function (user, token, targeted) {
-  if (!(token.actor.data.type === "Personagem" || token.actor.data.type === "NPC")) return;
+  if (!(token.actor.type === "Personagem" || token.actor.type === "NPC")) return;
   const setting_target = game.settings.get("tagmar_rpg", "autoTarget");
   if (targeted && setting_target == "yes") setInf_ataque(token, user);
 });
@@ -890,10 +868,10 @@ function setInf_ataque(target_token, user) {
     const speaker = ChatMessage.getSpeaker();
     let actor = game.actors.get(speaker.actor);
     if (!actor) return ui.notifications.warn("Selecione um Token para setar Def. Oponente!");
-    if (actor.data.type == "Inventario") return ui.notifications.error("Não é possível atacar com um Inventário.");
+    if (actor.type == "Inventario") return ui.notifications.error("Não é possível atacar com um Inventário.");
     actor.update({
-      'data.inf_ataque.cat_def': target_token.actor.data.data.d_ativa.categoria,
-      'data.inf_ataque.valor_def': target_token.actor.data.data.d_ativa.valor
+      'system.inf_ataque.cat_def': target_token.actor.system.d_ativa.categoria,
+      'system.inf_ataque.valor_def': target_token.actor.system.d_ativa.valor
     });
     let chatData = {
       user: game.user.id,
@@ -901,8 +879,8 @@ function setInf_ataque(target_token, user) {
           actor: actor
         })
     };
-    let target_def = target_token.actor.data.data.d_ativa;
-    chatData.content = "<p><img src='"+ actor.img +"' style='float: left; margin-left: auto; margin-right: auto; width: 40%;border: 0px;' /><img src='systems/tagmar_rpg/assets/TAGMAR FOUNDRY.png' style='float: left;margin-top:25px; margin-left: auto; margin-right: auto; width: 20%;border: 0px;'/><img src='"+ target_token.actor.img +"' style='float: left; width: 40%; margin-left: auto; margin-right: auto;border: 0px;' /></p><p class='rola_desc mediaeval' style='display: block;margin-left:auto;margin-right:auto;margin-top:60%;'>"+ "<b>Agressor: </b>" + actor.data.name + "<br><b>Bônus de Ataque: </b>"+ String(actor.data.data.inf_ataque.bonus) +"<br><b>Oponente: </b>" + target_token.actor.data.name  +"<br><b>Def. Oponente: </b>"+ target_def.categoria + String(target_def.valor) +"</p>";
+    let target_def = target_token.actor.system.d_ativa;
+    chatData.content = "<p><img src='"+ actor.img +"' style='float: left; margin-left: auto; margin-right: auto; width: 40%;border: 0px;' /><img src='systems/tagmar_rpg/assets/TAGMAR FOUNDRY.png' style='float: left;margin-top:25px; margin-left: auto; margin-right: auto; width: 20%;border: 0px;'/><img src='"+ target_token.actor.img +"' style='float: left; width: 40%; margin-left: auto; margin-right: auto;border: 0px;' /></p><p class='rola_desc mediaeval' style='display: block;margin-left:auto;margin-right:auto;margin-top:60%;'>"+ "<b>Agressor: </b>" + actor.name + "<br><b>Bônus de Ataque: </b>"+ String(actor.system.inf_ataque.bonus) +"<br><b>Oponente: </b>" + target_token.actor.name  +"<br><b>Def. Oponente: </b>"+ target_def.categoria + String(target_def.valor) +"</p>";
     ChatMessage.create(chatData);
   }
 }
@@ -913,7 +891,7 @@ Hooks.on('renderUserConfig', function (UserConfig, html , User) {
   lista.each(function (index, li) {
     let actor_id = $(li).data('actorId');
     let actor = actors.find(a => a.id == actor_id);
-    if (actor.data.type != "Personagem") $(li).addClass('esconde');
+    if (actor.type != "Personagem") $(li).addClass('esconde');
   });
 });
 
@@ -921,8 +899,8 @@ Hooks.on('renderActorDirectory', function (actordirectory, html, user) {
   if (user.user.isGM) return;
   let list = html.find('.actor');
   list.each(function (index, li) {
-    let actor = actordirectory.documents.find(a => a.id == $(li).data('entityId'));
-    if (actor.data.type == "Inventario") $(li).addClass('esconde');
+    let actor = actordirectory.documents.find(a => a._id == $(li).data('documentId'));
+    if (actor.type == "Inventario") $(li).addClass('esconde');
   });
 });
 
@@ -1180,12 +1158,10 @@ Hooks.on("renderCombatTracker",function (combatTracker, html) {
   if (!game.user.isGM) return;
   const combats = combatTracker.combats;
   if (combats.length > 0) {
-    let header = html.find("#combat-round");
-    header.append(`<nav class="encounters flexrow">
-      <a class="combat-control setarIniciativa" title="Somar Iniciativa para vários combatentes.">
+    let header = html.find("div[class='encounter-controls flexrow combat']");
+    header.append(`<a class="combat-button setarIniciativa" title="Somar Iniciativa para vários combatentes.">
       <i class="fas fa-exchange-alt"></i>
-      </a>
-    </nav>`);
+      </a>`);
     let currentCombat = combatTracker.viewed;
     let combatants = currentCombat.combatants;
     $('.setarIniciativa').on('click', function (event) {
@@ -1231,11 +1207,16 @@ Hooks.on("renderCombatTracker",function (combatTracker, html) {
 
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
-  if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Técnicas de Combate, Habilidades e Magias.");
-  const item = data.data;
-  const command = `game.tagmar.rollItemMacro("${item.name}");`;
+  //if (!("data" in data)) return ui.notifications.warn("Você só pode criar Macros para Ataques, Técnicas de Combate, Habilidades e Magias.");
+  //const item = data.data;
+  let data_a = data.uuid.split('.');
+  const item = game.actors.get(data_a[1]).items.get(data_a[3]);
+  if (typeof item == "undefined") {
+    return ui.notifications.error("Não foi possível encontrar o item.");
+  }
+  const command = 'game.tagmar.rollItemMacro("'+item.name+'");';
 
-  let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
+  let macro = game.macros.find(m => (m.name == item.name) && (m.command == command));
   if (!macro) {
     macro = await Macro.create({
       name: item.name,
@@ -1248,7 +1229,6 @@ async function createTagmarMacro(data, slot) {
     });
   }
   game.user.assignHotbarMacro(macro, slot);
-  return false;
 }
 
 /**

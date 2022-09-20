@@ -14,39 +14,39 @@ export default class tagmarItemSheet extends ItemSheet {
 
     get template() {
         let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
-        if (this.item.data.type == "Efeito") {
+        if (this.object.type == "Efeito") {
             this['options']['height'] = 350;
             this['position']['height'] = 350;
             this['options']['width'] = 500;
             this['position']['width'] = 500;
         }
-        if (this.item.data.type == "Combate") {
+        if (this.object.type == "Combate") {
             this['options']['height'] = 560;
             this['position']['height'] = 560;
         }
-        if (this.item.data.type == "Profissao") {
+        if (this.object.type == "Profissao") {
             this['options']['height'] = 595;
             this['position']['height'] = 595;
         }
         if (layout != "base") {
-            return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-ficha.hbs';
+            return 'systems/tagmar_rpg/templates/sheets/'+ this.object.type.toLowerCase() +'-ficha.hbs';
         } else {
-            return 'systems/tagmar_rpg/templates/sheets/'+ this.item.data.type.toLowerCase() +'-sheet.hbs';
+            return 'systems/tagmar_rpg/templates/sheets/'+ this.object.type.toLowerCase() +'-sheet.hbs';
         }
     }
 
     getData(options) {
         const data = super.getData(options);
-        if (this.item.data.type == "Profissao" && this.item.data.data.especializacoes != "") {
-            data.item.especializacoes = this.item.data.data.especializacoes.split(",");
-        } else if (this.item.data.type == "Profissao") data.item.especializacoes = [];
+        
+        if (this.object.type == "Profissao" && this.object.system.especializacoes != "") {
+            data.data.system.especializacoes = this.object.system.especializacoes.split(",");
+        } else if (this.object.type == "Profissao") data.data.system.especializacoes = [];
         return data;
     }
 
     activateListeners(html) {
         super.activateListeners(html);
         if (!this.options.editable) return;
-        html.find(".ativaDescT").click(this._ativaTextTec.bind(this))
 
         html.find(".dano25").change(event => {
             const dano25Input = html.find(".dano25");
@@ -82,7 +82,6 @@ export default class tagmarItemSheet extends ItemSheet {
         html.find(".bonus").change(this._attTotalHab(this));
         html.find(".bAddEspec").click(this._addEspec.bind(this));
         html.find(".bApagaEspec").click(this._deleteEspec.bind(this));
-        html.find(".ativaDesc").click(this._edtDesc.bind(this));
         html.find(".armPen25").click(function (event) {
             if (event.currentTarget.checked) {
                 $('.armPen50').attr('checked', false);
@@ -116,64 +115,17 @@ export default class tagmarItemSheet extends ItemSheet {
 
     _abs_magica(event) {
         let abs_magica = 0; 
-        if (this.item.data.data.peso == 0) {
+        if (this.object.system.peso == 0) {
             abs_magica = 1;
         } else {
             abs_magica = 0;
         }
-        this.item.update({'data.peso': abs_magica});
-    }
-
-    _ativaTextTec(event) {
-        if (this.item.data.data.ativaText) {
-            this.item.update({
-                'data.ativaText': false
-            });
-        } else {
-            this.item.update({
-                'data.ativaText': true
-            });
-        }
-    }
-
-    _edtDesc(event) {
-        const itemData = this.item.data.data;
-        if (this.item.data.type == "Habilidade") {
-            if (itemData.hab_nata) {
-                this.item.update({
-                    'data.hab_nata': false
-                });
-            } else {
-                this.item.update({
-                    'data.hab_nata': true
-                });
-            }
-        } else if (this.item.data.type == "Magia") {
-            if (itemData.duracao != "") {
-                this.item.update({
-                    'data.duracao': ""
-                });
-            } else {
-                this.item.update({
-                    'data.duracao': "Abemus"
-                });
-            }
-        } else if (this.item.data.type == "Combate") {
-            if (itemData.preco != "") {
-                this.item.update({
-                    'data.preco': ""
-                });
-            } else {
-                this.item.update({
-                    'data.preco': "vainenem"
-                });
-            }
-        }
+        this.object.update({'system.peso': abs_magica});
     }
 
     async _sendMessage(event) {
-        if (this.item.isOwned) {
-            let itemActor = this.actor.items.get(this.item.id);
+        if (this.object.isOwned) {
+            let itemActor = this.object.actor.items.get(this.object.id);
             let newItem = await Item.create(itemActor.data);
             let chatData = {};
             chatData.content = '@Item['+newItem.id+']';
@@ -186,7 +138,7 @@ export default class tagmarItemSheet extends ItemSheet {
     }
 
     _deleteEspec(event) {
-        const itemData = this.item.data.data;
+        const itemData = this.object.system;
         let especD = $(event.currentTarget).data("itemId");
         let espec_list_string = itemData.especializacoes;
         let nova_string = "";
@@ -198,15 +150,15 @@ export default class tagmarItemSheet extends ItemSheet {
         }
         nova_string = espec_list.join(",");
         this.item.update({
-            "data.especializacoes": nova_string
+            "system.especializacoes": nova_string
         });
         this.render();
     }
 
     _addEspec(event) {
-        const item = this.item;
+        const item = this.object;
         const espec_name = $(".iEspecName").val();
-        let espec_list = item.data.data.especializacoes;
+        let espec_list = item.system.especializacoes;
         let espec_list_string = "";
         
         if (!espec_list.search(",") && espec_name != "") {
@@ -215,8 +167,8 @@ export default class tagmarItemSheet extends ItemSheet {
             espec_list_string = espec_list + espec_name + ",";
         }
         if (espec_list_string != "") {
-            this.item.update({
-                "data.especializacoes": espec_list_string
+            item.update({
+                "system.especializacoes": espec_list_string
             });
         }
         this.render();
@@ -224,6 +176,7 @@ export default class tagmarItemSheet extends ItemSheet {
     
 
     _attTotalHab(event) {
+        if (!this.object.isOwned) return;
         const ajuste = $(".ajuste").val();
         const nivel = $(".nivel").val();
         const penal = $(".penal").val();

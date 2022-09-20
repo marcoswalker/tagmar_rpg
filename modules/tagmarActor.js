@@ -1,81 +1,26 @@
 export class tagmarActor extends Actor {
     
     async prepareData() {
-        this.tabela_resol = [
-            [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
-            [-6, "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
-            [-5, "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "azul", "cinza"],
-            [-4, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "azul", "cinza"],
-            [-3, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "azul", "cinza"],
-            [-2, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "vermelho", "azul", "cinza"],
-            [-1, "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "azul", "cinza"],
-            [0, "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "cinza"],
-            [1, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "cinza"],
-            [2, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [3, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [4, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [5, "verde", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [6, "verde", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [7, "verde", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [8, "verde", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [9, "verde", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [10, "verde", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "cinza"],
-            [11, "verde", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
-            [12, "verde", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
-            [13, "verde", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
-            [14, "verde", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "cinza"],
-            [15, "verde", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [16, "verde", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [17, "verde", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [18, "verde", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [19, "verde", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"],
-            [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
-        ];
-        this.table_resFisMag = [
-            [-2, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20],
-            [-1, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20],
-            [ 0, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20, 20],
-            [ 1, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20, 20],
-            [ 2, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 20],
-            [ 3,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20],
-            [ 4,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20],
-            [ 5,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20],
-            [ 6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20],
-            [ 7,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19],
-            [ 8,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19],
-            [ 9,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18, 18],
-            [10,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 18],
-            [11,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17],
-            [12,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16, 17],
-            [13,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16, 16],
-            [14,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15, 16],
-            [15,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15, 15],
-            [16,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14, 15],
-            [17,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13, 14],
-            [18,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12, 13],
-            [19,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11, 12],
-            [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
-        ];
         this.dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
     }
 
     async _aplicarDano(dano, token) {
-        if (this.data.type == "Inventario") return;
-        let eh = this.data.data.eh.value;
-        let eh_max = this.data.data.eh.max;
-        let ef = this.data.data.ef.value;
-        let abs = this.data.data.absorcao.value;
-        let abs_magica = this.data.data.v_base;
+        if (this.type == "Inventario") return;
+        let eh = this.system.eh.value;
+        let eh_max = this.system.eh.max;
+        let ef = this.system.ef.value;
+        let abs = this.system.absorcao.value;
+        let abs_magica = this.system.v_base;
         if (abs_magica > 0) abs_magica = true;
         else abs_magica = false;
-        let eh_str = 'data.eh.value';
-        let ef_str = 'data.ef.value';
-        if (this.data.type == "NPC") {
-            eh_str = 'data.eh_npc.value';
-            ef_str = 'data.ef_npc.value';
-            eh = this.data.data.eh_npc.value;
-            eh_max = this.data.data.eh_npc.max;
-            ef = this.data.data.ef_npc.value;
+        let eh_str = 'system.eh.value';
+        let ef_str = 'system.ef.value';
+        if (this.type == "NPC") {
+            eh_str = 'system.eh_npc.value';
+            ef_str = 'system.ef_npc.value';
+            eh = this.system.eh_npc.value;
+            eh_max = this.system.eh_npc.max;
+            ef = this.system.ef_npc.value;
         }
         let update = {};
         let olds = {};
@@ -85,32 +30,32 @@ export class tagmarActor extends Actor {
                     eh -= dano.valor;
                     if (eh < 0) eh = 0;
                     update[eh_str] = eh;
-                    olds[eh_str] = this.data.data.eh.value - eh;
-                    if (this.data.type == "NPC") olds[eh_str] = this.data.data.eh_npc.value - eh;
+                    olds[eh_str] = this.system.eh.value - eh;
+                    if (this.type == "NPC") olds[eh_str] = this.system.eh_npc.value - eh;
                 } else if (abs > 0) {
                     abs -= dano.valor;
                     if (abs < 0) {
                         ef += abs;
                         abs = 0;
                         update[ef_str] = ef;
-                        olds[ef_str] = this.data.data.ef.value - ef;
-                        if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
+                        olds[ef_str] = this.system.ef.value - ef;
+                        if (this.type == "NPC") olds[ef_str] = this.system.ef_npc.value - ef;
                     }
-                    update['data.absorcao.value'] = abs;
-                    olds['data.absorcao.value'] = this.data.data.absorcao.value - abs;
+                    update['system.absorcao.value'] = abs;
+                    olds['system.absorcao.value'] = this.system.absorcao.value - abs;
                 } else {
                     ef -= dano.valor;
                     update[ef_str] = ef;
-                    olds[ef_str] = this.data.data.ef.value - ef;
-                    if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
+                    olds[ef_str] = this.system.ef.value - ef;
+                    if (this.type == "NPC") olds[ef_str] = this.system.ef_npc.value - ef;
                 }
             } else {
                 if (eh < eh_max) {
                     eh += dano.valor;
                     if (eh > eh_max) eh = eh_max;
                     update[eh_str] = eh;
-                    olds[eh_str] = this.data.data.eh.value - eh;
-                    if (this.data.type == "NPC") olds[eh_str] = this.data.data.eh_npc.value - eh;
+                    olds[eh_str] = this.system.eh.value - eh;
+                    if (this.type == "NPC") olds[eh_str] = this.system.eh_npc.value - eh;
                 } else {
                     ui.notifications.info('Sua EH atual é igual ou maior que o valor máximo. Nenhum valor alterado.');
                 }
@@ -122,16 +67,16 @@ export class tagmarActor extends Actor {
                     ef += abs;
                     abs = 0;
                     update[ef_str] = ef;
-                    olds[ef_str] = this.data.data.ef.value - ef;
-                    if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
+                    olds[ef_str] = this.system.ef.value - ef;
+                    if (this.type == "NPC") olds[ef_str] = this.system.ef_npc.value - ef;
                 }
-                update['data.absorcao.value'] = abs;
-                olds['data.absorcao.value'] = this.data.data.absorcao.value - abs;
+                update['system.absorcao.value'] = abs;
+                olds['system.absorcao.value'] = this.system.absorcao.value - abs;
             } else {
                 ef -= dano.valor;
                 update[ef_str] = ef;
-                olds[ef_str] = this.data.data.ef.value - ef;
-                if (this.data.type == "NPC") olds[ef_str] = this.data.data.ef_npc.value - ef;
+                olds[ef_str] = this.system.ef.value - ef;
+                if (this.type == "NPC") olds[ef_str] = this.system.ef_npc.value - ef;
             }
         }
         await this.update(update);
@@ -140,7 +85,7 @@ export class tagmarActor extends Actor {
             let scrolling = "";
             let scrollStyle = {fill: "red", fontFamily: "GoudyMediaeval", strokeThickness: 2, stroke: "black"};
             for (let key of Object.keys(update)) {
-                let att = key.replace("data.", "").replace('.value', "");
+                let att = key.replace("system.", "").replace('.value', "");
                 if (dano.isCura) {
                     scrolling += `${att.toUpperCase()} +${olds[key] *-1}\n`;
                     scrollStyle = {fill: "green", fontFamily: "GoudyMediaeval", strokeThickness: 2, stroke: "black"};
@@ -149,7 +94,8 @@ export class tagmarActor extends Actor {
                     scrolling += `${att.toUpperCase()} -${olds[key]}\n`;
                 }
             }
-            token.hud.createScrollingText(scrolling, scrollStyle);
+            //token.hud.createScrollingText(scrolling, scrollStyle);
+            canvas.interface.createScrollingText(token.center, scrolling, scrollStyle);
         }
     }
     
@@ -164,8 +110,8 @@ export class tagmarActor extends Actor {
     }
 
     async _rollMoral() {
-        const tabela_resol = this.tabela_resol;
-        let moral = this.data.data.moral;
+        const tabela_resol = game.tagmar.tabela_resol;
+        let moral = this.system.moral;
         if (moral < -7) moral = -7;
         let formulaD = "1d20";
         let r = new Roll(formulaD);
@@ -266,10 +212,10 @@ export class tagmarActor extends Actor {
     }
 
     _rollResistencia(forcAtaqueI, tipo) {
-        const table_resFisMag = this.table_resFisMag;
+        const table_resFisMag = game.tagmar.table_resFisMag;
         let valorDefI;
-        if (tipo == "Magía") valorDefI = this.data.data.rm;
-        else valorDefI = this.data.data.rf;
+        if (tipo == "Magía") valorDefI = this.system.rm;
+        else valorDefI = this.system.rf;
         let forcAtaque = forcAtaqueI;
         let valorDef = valorDefI;
         let def_ataq = valorDef - forcAtaque;
@@ -318,15 +264,15 @@ export class tagmarActor extends Actor {
         r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this }),
-            flavor: `<img src="${this.data.img}" style="display:block;margin-left:auto;margin-right:auto;border-width:0;"/><h2 class="mediaeval rola" style="text-align:center;">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência ${tipo}: ${valorDefI}</h3>${stringSucesso}`
+            flavor: `<img src="${this.img}" style="display:block;margin-left:auto;margin-right:auto;border-width:0;"/><h2 class="mediaeval rola" style="text-align:center;">Teste de Resistência </h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaqueI}</h3><h3 class="mediaeval rola">Resistência ${tipo}: ${valorDefI}</h3>${stringSucesso}`
         });
     }
 
     async _rollAtributo(cat) {
-        const tabela_resol = this.tabela_resol;
+        const tabela_resol = game.tagmar.tabela_resol;
         let valor_teste = 0;
-        const actorData = this.data.data;
-        const actorImg = `<img src='${this.data.img}' style='display:block;border-width:0;margin-left:auto;margin-right:auto;'/>`;
+        const actorData = this.system;
+        const actorImg = `<img src='${this.img}' style='display:block;border-width:0;margin-left:auto;margin-right:auto;'/>`;
         let PrintResult = "";
         let habil = 0;
 

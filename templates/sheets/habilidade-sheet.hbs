@@ -32,8 +32,8 @@
                             <label><h4 class="mediaeval">Tipo:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <select class="mediaeval" name="data.tipo" type="text" value="{{data.data.tipo}}" data-dtype="String" height="30">
-                                {{#select data.data.tipo}}
+                            <select class="mediaeval" name="system.tipo" type="text" value="{{data.system.tipo}}" data-dtype="String" height="30">
+                                {{#select data.system.tipo}}
                                 <option value="profissional">Profissional</option>
                                 <option value="manobra">Manobra</option>
                                 <option value="conhecimento">Conhecimento</option>
@@ -48,7 +48,7 @@
                             <label><h4 class="mediaeval">Custo:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input name="data.custo" type="number" value="{{data.data.custo}}" height="30"/>
+                            <input name="system.custo" type="number" value="{{data.system.custo}}" height="30"/>
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
                             <label><h4 class="mediaeval">Ajuste:</h4></label>
                         </div>
                         <div class="col-md-4">
-                            <input name="data.ajuste.atributo" type="text" list="atributos" value="{{data.data.ajuste.atributo}}" height="30"/>
+                            <input name="system.ajuste.atributo" type="text" list="atributos" value="{{data.system.ajuste.atributo}}" height="30"/>
                             <datalist id="atributos">
                                 <option value=""></option>
                                 <option value="INT">INTELECTO</option>
@@ -70,13 +70,13 @@
                             </datalist>
                         </div>
                         <div class="col-md-2">
-                            <input class="ajuste hiddenT" name="data.ajuste.valor" type="number" value="{{data.data.ajuste.valor}}" height="30"/>
+                            <input class="ajuste hiddenT" name="system.ajuste.valor" type="number" value="{{data.system.ajuste.valor}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Nível:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="nivel" name="data.nivel" type="number" value="{{data.data.nivel}}" height="30"/>
+                            <input class="nivel" name="system.nivel" type="number" value="{{data.system.nivel}}" height="30"/>
                         </div>
                     </div>
 
@@ -85,19 +85,19 @@
                             <label><h4 class="mediaeval">Penalidade:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="penal" name="data.penalidade" type="number" value="{{data.data.penalidade}}" height="30"/>
+                            <input class="penal" name="system.penalidade" type="number" value="{{data.system.penalidade}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Bônus:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="bonus" name="data.bonus" type="number" value="{{data.data.bonus}}" height="30"/>
+                            <input class="bonus" name="system.bonus" type="number" value="{{data.system.bonus}}" height="30"/>
                         </div>
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Total:</h4></label>
                         </div>
                         <div class="col-md-2">
-                            <input class="totalInput2" name="data.total" type="number" value="{{data.data.total}}" height="30" readonly/>
+                            <input class="totalInput2" name="system.total" type="number" value="{{data.system.total}}" height="30" readonly/>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -106,7 +106,7 @@
 
                     <div class="row dados">
                         <div class="col-md-12" style="height: 235px;">
-                            {{editor content=data.data.tarefAperf target="data.tarefAperf" button=true owner=options.owner editable=options.editable}}
+                            {{editor data.system.tarefAperf target="system.tarefAperf" button=true owner=options.owner editable=options.editable}}
                         </div>
                     </div>
 
@@ -114,7 +114,7 @@
                 <div class="tab descricao container" data-group="primary" data-tab="descricao">
                     <div class="row dados">
                         <div class="col-md-12" style="height: 350px;">
-                            {{editor content=data.data.descricao target="data.descricao" button=true owner=options.owner editable=options.editable}}
+                            {{editor data.system.descricao target="system.descricao" button=true owner=options.owner editable=options.editable}}
                         </div>
                     </div>
                 </div>

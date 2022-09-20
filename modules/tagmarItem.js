@@ -3,42 +3,11 @@ export class tagmarItem extends Item {
     async prepareData() {
         if (!this.isOwned) return;
         super.prepareData();
-        const tabela_resol = [
-            [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
-            [-6, "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
-            [-5, "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "azul", "cinza"],
-            [-4, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "azul", "cinza"],
-            [-3, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "azul", "cinza"],
-            [-2, "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "vermelho", "azul", "cinza"],
-            [-1, "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "azul", "cinza"],
-            [0, "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "cinza"],
-            [1, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "cinza"],
-            [2, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [3, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [4, "verde", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [5, "verde", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "cinza"],
-            [6, "verde", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [7, "verde", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [8, "verde", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [9, "verde", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "cinza"],
-            [10, "verde", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "cinza"],
-            [11, "verde", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
-            [12, "verde", "branco", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
-            [13, "verde", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "cinza"],
-            [14, "verde", "branco", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "cinza"],
-            [15, "verde", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [16, "verde", "amarelo", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [17, "verde", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [18, "verde", "amarelo", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "cinza"],
-            [19, "verde", "amarelo", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"],
-            [20, "verde", "amarelo", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "laranja", "vermelho", "vermelho", "vermelho", "azul", "azul", "azul", "azul", "roxo", "roxo", "roxo", "cinza"]
-        ];
-        this.tabela_resol = tabela_resol;
-        this.dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
     }
 
     async habToChat(resultado, r, h_total, colunarolada) {
-        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<div class='mediaeval rola rola_desc'>" + this.data.data.tarefAperf + "</div>";
+        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
+        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<div class='mediaeval rola rola_desc'>" + this.system.tarefAperf + "</div>";
         let PrintResult = "";
         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
@@ -50,7 +19,7 @@ export class tagmarItem extends Item {
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Impossível</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + colunarolada + "</h4>";
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            this.dadosColoridos.dadosColoridos(resultado, r);
+            dadosColoridos.dadosColoridos(resultado, r);
         }
         r.toMessage({
             user: game.user.id,
@@ -60,13 +29,13 @@ export class tagmarItem extends Item {
     }
 
     async rollHabilidade() {
-        const tabela_resol = this.tabela_resol;
-        let bonus_hab = this.actor.data.data.bonus_habil;
+        const tabela_resol = game.tagmar.tabela_resol;
+        let bonus_hab = this.actor.system.bonus_habil;
         let h_total = 0;
-        if (this.data.data.nivel > 0){
-            h_total = this.data.data.total + bonus_hab;
+        if (this.system.nivel > 0){
+            h_total = this.system.total + bonus_hab;
         } else {
-            h_total = -7 + this.data.data.ajuste.valor + this.data.data.bonus + this.data.data.penalidade + bonus_hab;
+            h_total = -7 + this.system.ajuste.valor + this.system.bonus + this.system.penalidade + bonus_hab;
         }
         if (h_total < -7) h_total = -7;
         let r = new Roll("1d20");
@@ -120,13 +89,14 @@ export class tagmarItem extends Item {
                 actor: this.actor
               })
         };
-        chatData.content = "<img src='"+ this.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + this.name + "</h1>" + "<h2 class='mediaeval rola' style='text-align: center'>Nível: " + this.data.data.nivel + "</h2>" + "<div class='mediaeval rola rola_desc'>" + this.data.data.efeito + "</div>";
+        chatData.content = "<img src='"+ this.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + this.name + "</h1>" + "<h2 class='mediaeval rola' style='text-align: center'>Nível: " + this.system.nivel + "</h2>" + "<div class='mediaeval rola rola_desc'>" + this.system.efeito + "</div>";
         ChatMessage.create(chatData);
     }
 
     async tecnicaToChat(resultado, r, coluna_rolada) {
+        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
         let PrintResult = "";
-        let conteudo = "<h3 class='mediaeval rola'><a class='showDesc'>Descrição: <i class='far fa-eye-slash'></i></a> </h3>" + "<p class='mediaeval rola rola_desc' style='display: none;'>" + this.data.data.descricao + "</p>";
+        let conteudo = "<h3 class='mediaeval rola'><a class='showDesc'>Descrição: <i class='far fa-eye-slash'></i></a> </h3>" + "<p class='mediaeval rola rola_desc' style='display: none;'>" + this.system.descricao + "</p>";
         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
         else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
@@ -136,28 +106,28 @@ export class tagmarItem extends Item {
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + coluna_rolada + "</h4>";
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            this.dadosColoridos.dadosColoridos(resultado, r);
+            dadosColoridos.dadosColoridos(resultado, r);
         }
         r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${this.name}: ${this.data.data.total}</h2>${conteudo}${coluna}${PrintResult}`
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${this.name}: ${this.system.total}</h2>${conteudo}${coluna}${PrintResult}`
         });
     }
 
     async rollTecnicaCombate() {
-        const tabela_resol = this.tabela_resol;
+        const tabela_resol = game.tagmar.tabela_resol;
         let r = new Roll("1d20");
         r.evaluate({async: false});
         let Dresult = r.total;
-        if (this.data.data.total <= 20) {
-            let coluna_tab = tabela_resol.filter(b => b[0] === this.data.data.total);
+        if (this.system.total <= 20) {
+            let coluna_tab = tabela_resol.filter(b => b[0] === this.system.total);
             let resultado = coluna_tab[0][Dresult];
             await this.tecnicaToChat(resultado, r, coluna_tab[0][0]);
         } else {
-            let valor_hab = this.data.data.total % 20;
+            let valor_hab = this.system.total % 20;
             if (valor_hab == 0) {
-                let vezes = this.data.data.total / 20;
+                let vezes = this.system.total / 20;
                 let dados = [];
                 for (let x = 0; x < vezes; x++){
                     dados[x] = new Roll("1d20");
@@ -168,8 +138,8 @@ export class tagmarItem extends Item {
                     await this.tecnicaToChat(resultado, dados[x], coluna_tab[0][0]);
                 }
             } else if (valor_hab > 0) {
-                let vezes = parseInt(this.data.data.total / 20);
-                let sobra = this.data.data.total % 20;
+                let vezes = parseInt(this.system.total / 20);
+                let sobra = this.system.total % 20;
                 let dados = [];
                 for (let x = 0; x < vezes; x++){
                     dados[x] = new Roll("1d20");
@@ -190,13 +160,14 @@ export class tagmarItem extends Item {
     }
 
     async combateToChat(coluna_rolada, resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela) {
+        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
         let critico = false;
         let falha = false;
-        const tabela_resol = this.tabela_resol;
+        const tabela_resol = game.tagmar.tabela_resol;
         let PrintResult = "";
         let dano_total = 0;
         let punicaoText = "";
-        let conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + this.data.data.descricao + "</h4>";
+        let conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + this.system.descricao + "</h4>";
         if (resultado == "verde") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha Crítica</h1>";
             critico = true;
@@ -222,14 +193,14 @@ export class tagmarItem extends Item {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 100%</h4>";
                     dano_total = 0;
                 }
-            } else dano_total = this.data.data.dano.d25;
+            } else dano_total = this.system.dano.d25;
         }
         else if (resultado == "laranja") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - 50%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
-                    dano_total = this.data.data.dano.d25;
+                    dano_total = this.system.dano.d25;
                 } else if (puni_50) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 50%</h4>";
                     dano_total = 0;
@@ -240,17 +211,17 @@ export class tagmarItem extends Item {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 100%</h4>";
                     dano_total = 0;
                 }
-            } else dano_total = this.data.data.dano.d50;
+            } else dano_total = this.system.dano.d50;
         }
         else if (resultado == "vermelho") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - 75%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
-                    dano_total = this.data.data.dano.d50;
+                    dano_total = this.system.dano.d50;
                 } else if (puni_50) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 50%</h4>";
-                    dano_total = this.data.data.dano.d25;
+                    dano_total = this.system.dano.d25;
                 } else if (puni_75) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 75%</h4>";
                     dano_total = 0;
@@ -258,43 +229,43 @@ export class tagmarItem extends Item {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 100%</h4>";
                     dano_total = 0;
                 }
-            } else dano_total = this.data.data.dano.d75;
+            } else dano_total = this.system.dano.d75;
         }
         else if (resultado == "azul") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - 100%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
-                    dano_total = this.data.data.dano.d75;
+                    dano_total = this.system.dano.d75;
                 } else if (puni_50) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 50%</h4>";
-                    dano_total = this.data.data.dano.d50;
+                    dano_total = this.system.dano.d50;
                 } else if (puni_75) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 75%</h4>";
-                    dano_total = this.data.data.dano.d25;
+                    dano_total = this.system.dano.d25;
                 } else if (puni_100) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 100%</h4>";
                     dano_total = 0;
                 }
-            } else dano_total = this.data.data.dano.d100;
+            } else dano_total = this.system.dano.d100;
         }
         else if (resultado == "roxo") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - 125%</h1>";
             if (puni_25 || puni_50 || puni_75 || puni_100) {
                 if (puni_25) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 25%</h4>";
-                    dano_total = this.data.data.dano.d100;
+                    dano_total = this.system.dano.d100;
                 } else if (puni_50) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 50%</h4>";
-                    dano_total = this.data.data.dano.d75;
+                    dano_total = this.system.dano.d75;
                 } else if (puni_75) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 75%</h4>";
-                    dano_total = this.data.data.dano.d50;
+                    dano_total = this.system.dano.d50;
                 } else if (puni_100) {
                     punicaoText = "<h4 class='mediaeval rola' style='color: red; text-align: center;'>Penalidade 100%</h4>";
-                    dano_total = this.data.data.dano.d25;
+                    dano_total = this.system.dano.d25;
                 }
-            } else dano_total = this.data.data.dano.d125;
+            } else dano_total = this.system.dano.d125;
         }
         else if (resultado == "cinza") {
             PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico</h1>";
@@ -302,10 +273,10 @@ export class tagmarItem extends Item {
         }
         let coluna = "<h4 class='mediaeval rola'>Coluna: " + coluna_rolada + "</h4>";
         let dano_text = "<h2 class='mediaeval rola rola_dano' style='text-align: center;'>Dano: " + dano_total + "</h2>";
-        let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
+        let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.system.dano.d25}</td><td>${this.system.dano.d50}</td><td>${this.system.dano.d75}</td><td>${this.system.dano.d100}</td></tr></table>`;
         if (critico) dano_text = table_dano;
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            this.dadosColoridos.dadosColoridos(resultado, r);
+            dadosColoridos.dadosColoridos(resultado, r);
         }
         let button = "";
         let buttonC = "";
@@ -313,30 +284,31 @@ export class tagmarItem extends Item {
         if (!critico && dano_total != 0) buttonC = `<button class="aplicarDano mediaeval" data-critico="false" data-cura="true" data-dano="${dano_total}">Aplicar Cura EH</button>`;
         if (critico) {
             button = `<p>
-                <button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d25}">Aplicar 25% Dano</button>
-                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d50}">Aplicar 50% Dano</button>
-                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d75}">Aplicar 75% Dano</button>
-                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d100}">Aplicar 100% Dano</button>
+                <button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d25}">Aplicar 25% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d50}">Aplicar 50% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d75}">Aplicar 75% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d100}">Aplicar 100% Dano</button>
             </p>`;
         }
         let itemId = `<h1 class="esconde" id="itemId" data-item-id="${this.id}">id</h1>`;
         await r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.system.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
         });
-        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor, this.data.data.tipo, falha);
+        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor, this.system.tipo, falha);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_total, actor: this.actor});
     }
 
     async combateToChatPlus(coluna_rolada, resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela, ajusteDano) {
+        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
         let critico = false;
         let falha = false;
-        const tabela_resol = this.tabela_resol;
+        const tabela_resol = game.tagmar.tabela_resol;
         let PrintResult = "";
         let dano_total = 0;
         let punicaoText = "";
-        let conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + this.data.data.descricao + "</h4>";
+        let conteudo = "<h4 class='mediaeval rola rola_desc'>Descrição: " + this.system.descricao + "</h4>";
         if (resultado == "verde") {
             PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha Crítica</h1>";
             critico = true;
@@ -460,54 +432,54 @@ export class tagmarItem extends Item {
                 dano_novo = 0;
                 break;
             case 25:
-                dano_novo = this.data.data.dano.d25;
+                dano_novo = this.system.dano.d25;
                 break;
             case 50:
-                dano_novo = this.data.data.dano.d50;
+                dano_novo = this.system.dano.d50;
                 break;
             case 75:
-                dano_novo = this.data.data.dano.d75;
+                dano_novo = this.system.dano.d75;
                 break;
             case 100:
-                dano_novo = this.data.data.dano.d100;
+                dano_novo = this.system.dano.d100;
                 break;
             case 125:
-                dano_novo = this.data.data.dano.d125;
+                dano_novo = this.system.dano.d125;
                 break;
             case 150:
-                dano_novo = this.data.data.dano.d150;
+                dano_novo = this.system.dano.d150;
                 break;
             case 175:
-                dano_novo = this.data.data.dano.d175;
+                dano_novo = this.system.dano.d175;
                 break;
             case 200:
-                dano_novo = this.data.data.dano.d200;
+                dano_novo = this.system.dano.d200;
                 break;
             case 225:
-                dano_novo = this.data.data.dano.d225;
+                dano_novo = this.system.dano.d225;
                 break;
             case 250:
-                dano_novo = this.data.data.dano.d250;
+                dano_novo = this.system.dano.d250;
                 break;
             case 275:
-                dano_novo = this.data.data.dano.d275;
+                dano_novo = this.system.dano.d275;
                 break;
             case 300:
-                dano_novo = this.data.data.dano.d300;
+                dano_novo = this.system.dano.d300;
                 break;
             default:
                 let vez = dano_total / 25;
-                let dif = this.data.data.dano.d50 - this.data.data.dano.d25;
-                dano_novo = this.data.data.dano.d25 + ( (vez-1) * dif );
+                let dif = this.system.dano.d50 - this.system.dano.d25;
+                dano_novo = this.system.dano.d25 + ( (vez-1) * dif );
                 break;
         }
         let coluna = "<h4 class='mediaeval rola'>Coluna: " + coluna_rolada + "</h4>";
         let ajuste_text = "<h1 class='mediaeval rola' style='text-align: center;'>AAC20: " + ajusteDano + "%</h1>";
         let dano_text = "<h1 class='mediaeval rola rola_dano' style='text-align: center;'>Dano: " + dano_novo + "</h1>";
-        let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.data.data.dano.d25}</td><td>${this.data.data.dano.d50}</td><td>${this.data.data.dano.d75}</td><td>${this.data.data.dano.d100}</td></tr></table>`;
+        let table_dano = `<table style="margin-left: auto;margin-right: auto;text-align:center;" class="mediaeval"><tr><th>25%</th><th>50%</th><th>75%</th><th>100%</th></tr><tr><td>${this.system.dano.d25}</td><td>${this.system.dano.d50}</td><td>${this.system.dano.d75}</td><td>${this.system.dano.d100}</td></tr></table>`;
         if (critico) dano_text = table_dano;
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-            this.dadosColoridos.dadosColoridos(resultado, r);
+            dadosColoridos.dadosColoridos(resultado, r);
         }
         let button = "";
         let buttonC = "";
@@ -515,58 +487,58 @@ export class tagmarItem extends Item {
         if (!critico && dano_novo != 0) buttonC = `<button class="aplicarDano mediaeval" data-critico="false" data-cura="true" data-dano="${dano_novo}">Aplicar Cura EH</button>`;
         if (critico) {
             button = `<p>
-                <button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d25}">Aplicar 25% Dano</button>
-                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d50}">Aplicar 50% Dano</button>
-                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d75}">Aplicar 75% Dano</button>
-                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.data.data.dano.d100}">Aplicar 100% Dano</button>
+                <button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d25}">Aplicar 25% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d50}">Aplicar 50% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d75}">Aplicar 75% Dano</button>
+                <br><button class="aplicarDano mediaeval" data-critico="true" data-cura="false" data-dano="${this.system.dano.d100}">Aplicar 100% Dano</button>
             </p>`;
         }
         let itemId = `<h1 class="esconde" id="itemId" data-item-id="${this.id}">id</h1>`;
         await r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.data.data.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${valor_tabela} - ${this.system.tipo}</h2>${conteudo}${municao_text}${coluna}${PrintResult}${ajuste_text}${punicaoText}${dano_text}${button}${buttonC}${itemId}`
         });
-        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor, this.data.data.tipo, falha);
+        if (critico) Hooks.callAll('tagmar_Critico', coluna_rolada, tabela_resol, game.user, this.actor, this.system.tipo, falha);
         else Hooks.callAll('tagmar_combate_roll', {coluna: coluna_rolada, user: game.user, dano: dano_novo, actor: this.actor});
     }
 
     async rollCombate() {
-        const tabela_resol = this.tabela_resol;
-        let municao = this.data.data.municao;
+        const tabela_resol = game.tagmar.tabela_resol;
+        let municao = this.system.municao;
         let muni_usada = 0;
         if (municao > 0) {
-            if (this.data.data.tipo == "")  muni_usada = this.data.data.nivel;
+            if (this.system.tipo == "")  muni_usada = this.system.nivel;
             else muni_usada = 1;
             municao -= muni_usada;
-            if (this.data.data.municao != municao) await this.update({"data.municao": municao});
+            if (this.system.municao != municao) await this.update({"system.municao": municao});
         }
         let municao_text = "";
         if (muni_usada >= 1) municao_text = "<h4 class='mediaeval rola'>Munição gasta: " + muni_usada + " Restam: " + municao + "</h4>";
         else municao_text = "";
-        let bonus_cat = this.data.data.bonus;
+        let bonus_cat = this.system.bonus;
         let bonus_ajustev = 0;
-        const puni_25 = this.data.data.penalidade.p25;
-        const puni_50 = this.data.data.penalidade.p50;
-        const puni_75 = this.data.data.penalidade.p75;
-        const puni_100 = this.data.data.penalidade.p100;
-        if (bonus_cat == "AUR") bonus_ajustev = this.actor.data.data.atributos.AUR;
-        else if (bonus_cat == "FOR") bonus_ajustev = this.actor.data.data.atributos.FOR;
-        else if (bonus_cat == "AGI") bonus_ajustev = this.actor.data.data.atributos.AGI;
-        else if (bonus_cat == "PER") bonus_ajustev = this.actor.data.data.atributos.PER; 
-        let total_l = this.data.data.nivel + bonus_ajustev + this.data.data.bonus_magico + this.data.data.def_l;
-        let total_m = this.data.data.nivel + bonus_ajustev + this.data.data.bonus_magico + this.data.data.def_m;
-        let total_p = this.data.data.nivel + bonus_ajustev + this.data.data.bonus_magico + this.data.data.def_p;
-        const cat_def = this.actor.data.data.inf_ataque.cat_def;
+        const puni_25 = this.system.penalidade.p25;
+        const puni_50 = this.system.penalidade.p50;
+        const puni_75 = this.system.penalidade.p75;
+        const puni_100 = this.system.penalidade.p100;
+        if (bonus_cat == "AUR") bonus_ajustev = this.actor.system.atributos.AUR;
+        else if (bonus_cat == "FOR") bonus_ajustev = this.actor.system.atributos.FOR;
+        else if (bonus_cat == "AGI") bonus_ajustev = this.actor.system.atributos.AGI;
+        else if (bonus_cat == "PER") bonus_ajustev = this.actor.system.atributos.PER; 
+        let total_l = this.system.nivel + bonus_ajustev + this.system.bonus_magico + this.system.def_l;
+        let total_m = this.system.nivel + bonus_ajustev + this.system.bonus_magico + this.system.def_m;
+        let total_p = this.system.nivel + bonus_ajustev + this.system.bonus_magico + this.system.def_p;
+        const cat_def = this.actor.system.inf_ataque.cat_def;
         let valor_tabela = 0;
-        if (this.data.data.nivel > 0) {
-            if (cat_def == "L") valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus - this.actor.data.data.inf_ataque.valor_def;
-            else if (cat_def == "M") valor_tabela = total_m + this.actor.data.data.inf_ataque.bonus - this.actor.data.data.inf_ataque.valor_def;
-            else if (cat_def == "P") valor_tabela = total_p + this.actor.data.data.inf_ataque.bonus - this.actor.data.data.inf_ataque.valor_def;
+        if (this.system.nivel > 0) {
+            if (cat_def == "L") valor_tabela = total_l + this.actor.system.inf_ataque.bonus - this.actor.system.inf_ataque.valor_def;
+            else if (cat_def == "M") valor_tabela = total_m + this.actor.system.inf_ataque.bonus - this.actor.system.inf_ataque.valor_def;
+            else if (cat_def == "P") valor_tabela = total_p + this.actor.system.inf_ataque.bonus - this.actor.system.inf_ataque.valor_def;
         } else {
             valor_tabela = -7;
         }
-        if (this.data.data.tipo == "" || this.data.data.tipo == "MAG") valor_tabela = total_l + this.actor.data.data.inf_ataque.bonus; // Magia de Ataque
+        if (this.system.tipo == "" || this.system.tipo == "MAG") valor_tabela = total_l + this.actor.system.inf_ataque.bonus; // Magia de Ataque
         if (valor_tabela < -7) valor_tabela = -7; // Abaixo da Tabela
         let r = new Roll("1d20");
         r.evaluate({async: false});

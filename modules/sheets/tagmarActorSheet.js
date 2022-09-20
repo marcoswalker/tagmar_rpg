@@ -16,11 +16,11 @@ export default class tagmarActorSheet extends ActorSheet {
     }
     get template() {
         let layout = game.settings.get("tagmar_rpg", "sheetTemplate");
-        if (this.actor.data.type == "NPC") {
+        if (this.document.type == "NPC") {
             this['options']['height'] = 735;
             this['position']['height'] = 735;
         }
-        if (this.actor.data.type == "Personagem" && layout != "base") {
+        if (this.document.type == "Personagem" && layout != "base") {
             if (layout == 'tagmar3anao') {
                 return 'systems/tagmar_rpg/templates/sheets/personagem-ficha-anao.hbs';
             } else if (layout == 'tagmar3barda') {
@@ -67,12 +67,12 @@ export default class tagmarActorSheet extends ActorSheet {
                 return 'systems/tagmar_rpg/templates/sheets/personagem-ficha.hbs';
             }
             
-        } else if (this.actor.data.type == "NPC" && layout != "base") {
+        } else if (this.document.type == "NPC" && layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/npc-ficha.hbs';
-        } else if (this.actor.data.type == "Inventario" && layout != "base") {
+        } else if (this.document.type == "Inventario" && layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/inventario-ficha.hbs';
         } else {
-            return 'systems/tagmar_rpg/templates/sheets/'+ this.actor.data.type.toLowerCase() +'-sheet.hbs';
+            return 'systems/tagmar_rpg/templates/sheets/'+ this.document.type.toLowerCase() +'-sheet.hbs';
         }
     }
     async getData(options) {
@@ -80,39 +80,39 @@ export default class tagmarActorSheet extends ActorSheet {
         const actorUtils = await import("./actorUtils.js");
         data.dtypes = ["String", "Number", "Boolean"];
          // Prepare items.
-        if (data.actor.data.type == "Inventario") {
+        if (data.document.type == "Inventario") {
             this._prepareInventarioItems(data);
-        } else if (data.actor.data.type == 'NPC') {
+        } else if (data.document.type == 'NPC') {
             let updateNpc = {};
             let updateItemsNpc = [];
             this._prepareCharacterItems(data);
             actorUtils._prepareValorTeste(data, updateNpc);
             actorUtils._attDefesaNPC(data, updateNpc);
             if (Object.keys(updateNpc).length > 0) {
-                data.actor.update(updateNpc);
+                data.document.update(updateNpc);
             }
             actorUtils._updateCombatItems(data,updateItemsNpc);
             actorUtils._updateMagiasItems(data,updateItemsNpc);
             actorUtils._updateTencnicasItems(data,updateItemsNpc);
             actorUtils._updateHabilItems(data, updateItemsNpc);
             if (updateItemsNpc.length > 0) {
-                data.actor.updateEmbeddedDocuments("Item", updateItemsNpc);
+                data.document.updateEmbeddedDocuments("Item", updateItemsNpc);
             }
-        } else if (data.actor.data.type == 'Personagem') {
+        } else if (data.document.type == 'Personagem') {
             let updatePers = {};
             let items_toUpdate = [];
             this._prepareCharacterItems(data);
-            if (data.actor.items.filter(item => item.type == "Raca")[0]) {
+            if (data.document.items.filter(item => item.type == "Raca")[0]) {
                 actorUtils._preparaCaracRaciais(data, updatePers);
                 actorUtils._caracSort(data, updatePers);
                 if (!game.settings.get('tagmar_rpg', 'ajusteManual')) actorUtils._calculaAjuste(data, updatePers);
                 actorUtils._prepareValorTeste(data, updatePers);
             }
-            if (data.actor.items.filter(item => item.type == "Profissao")[0]) {
+            if (data.document.items.filter(item => item.type == "Profissao")[0]) {
                 actorUtils._attProfissao(data, updatePers, items_toUpdate);
             }
             actorUtils._attCargaAbsorcaoDefesa(data, updatePers);
-            if (data.actor.raca && data.actor.profissao) {
+            if (data.document.raca && data.document.profissao) {
                 actorUtils._attEfEhVB(data, updatePers); 
             }
             actorUtils._attProximoEstag(data, updatePers);
@@ -126,12 +126,12 @@ export default class tagmarActorSheet extends ActorSheet {
             if (Object.keys(updatePers).length > 0 && options.editable) {
                 if (!this.lastUpdate) {
                     this.lastUpdate = updatePers;
-                    data.actor.update(updatePers);
+                    data.document.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
                 else if (JSON.stringify(updatePers) !== JSON.stringify(this.lastUpdate)) {   // updatePers[Object.keys(updatePers)[0]] != this.lastUpdate[Object.keys(updatePers)[0]]
                     this.lastUpdate = updatePers;
-                    data.actor.update(updatePers);
+                    data.document.update(updatePers);
                     //ui.notifications.info("Ficha atualizada.");
                 }
             }
@@ -141,10 +141,10 @@ export default class tagmarActorSheet extends ActorSheet {
             if (items_toUpdate.length > 0 && options.editable) {
                 if (!this.lastItemsUpdate) {
                     this.lastItemsUpdate = items_toUpdate;
-                    data.actor.updateEmbeddedDocuments("Item", items_toUpdate);
+                    data.document.updateEmbeddedDocuments("Item", items_toUpdate);
                 } else if (JSON.stringify(items_toUpdate) !== JSON.stringify(this.lastItemsUpdate)) {
                     this.lastItemsUpdate = items_toUpdate;
-                    data.actor.updateEmbeddedDocuments("Item", items_toUpdate);
+                    data.document.updateEmbeddedDocuments("Item", items_toUpdate);
                 }
             }
         }
@@ -153,14 +153,14 @@ export default class tagmarActorSheet extends ActorSheet {
 
     activateListeners(html) {
         super.activateListeners(html);
-        if (this.actor.data.type != "Inventario") {
+        if (this.document.type != "Inventario") {
             if (!this.options.editable) return;
         }
   
         // Update Inventory Item
         html.find('.item-edit').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.items.get(li.data('itemId'));
+            const item = this.document.items.get(li.data('itemId'));
             item.sheet.render(true);
         });
 
@@ -174,7 +174,7 @@ export default class tagmarActorSheet extends ActorSheet {
                         icon: "<i class='fas fa-check'></i>",
                         label: "Confirmar",
                         callback: () => {
-                            this.actor.deleteEmbeddedDocuments("Item", [li.data("itemId")]);
+                            this.document.deleteEmbeddedDocuments("Item", [li.data("itemId")]);
                             li.slideUp(200, () => this.render(false));
                         }
                     },
@@ -197,7 +197,7 @@ export default class tagmarActorSheet extends ActorSheet {
             $(event.currentTarget).find('.form_tagmar').find('a').css('box-shadow','none');
         });
   
-        if (this.actor.data.type != "Inventario") {
+        if (this.document.type != "Inventario") {
 
         html.find('.item-copy').click(this._duplicateItem.bind(this));
 
@@ -208,15 +208,15 @@ export default class tagmarActorSheet extends ActorSheet {
         html.find('.dano_rell').click(this._danoRell.bind(this));
         html.find(".movePertence").click(ev => {
             const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.items.get(li.data('itemId')); 
-            if (this.actor.data.data.carga_transp.hasTransp){
-                if (!item.data.data.inTransport) {
+            const item = this.document.items.get(li.data('itemId')); 
+            if (this.document.system.carga_transp.hasTransp){
+                if (!item.system.inTransport) {
                     item.update({
-                        "data.inTransport": true
+                        "system.inTransport": true
                     });
                 } else {
                     item.update({
-                        "data.inTransport": false
+                        "system.inTransport": false
                     });
                 }
             }
@@ -255,7 +255,7 @@ export default class tagmarActorSheet extends ActorSheet {
             let r = new Roll(formula);
             r.evaluate({async: false}).toMessage({
                 user: game.user.id,
-                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                speaker: ChatMessage.getSpeaker({ actor: this.document }),
                 flavor: ``
             });
         });
@@ -265,7 +265,7 @@ export default class tagmarActorSheet extends ActorSheet {
             r.evaluate({async:false});
             r.toMessage({
                 user: game.user.id,
-                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                speaker: ChatMessage.getSpeaker({ actor: this.document }),
                 flavor: ``
             });
             $(html.find(".valord10EH")).val(r.total);
@@ -301,7 +301,7 @@ export default class tagmarActorSheet extends ActorSheet {
             const cat = $(target).data("itemId");
             $(target).html(cat);
         });
-        if (this.actor.isOwner) {
+        if (this.document.isOwner) {
         let handler = ev => this._onDragStart(ev);
         html.find('.dragable').each((i, li) => {
             if (li.classList.contains("inventory-header")) return;
@@ -310,30 +310,30 @@ export default class tagmarActorSheet extends ActorSheet {
         });
         }
         }
-        if (this.actor.data.type == "Inventario") {
+        if (this.document.type == "Inventario") {
             $('.searchPertence').prop( "disabled", false );
             html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
             html.find('.item-cesto').click(ev => {
-                const actors = game.actors;
+                const actors = game.documents;
                 let personagem;
                 let inventario;
                 let bau = null;
                 actors.forEach(function (actor){
-                    if (actor.isOwner && actor.data.type == "Personagem") personagem = actor;
-                    if (actor.isOwner && actor.data.type == "Inventario") {
+                    if (actor.isOwner && actor.type == "Personagem") personagem = actor;
+                    if (actor.isOwner && actor.type == "Inventario") {
                         bau = actor;
                         inventario = actor;
                     }
-                    else if (actor.data.type == "Inventario") inventario = actor;
+                    else if (actor.type == "Inventario") inventario = actor;
                 });
                 const li = $(ev.currentTarget).parents(".item");
-                const item = this.actor.items.get(li.data('itemId')); 
-                personagem.createEmbeddedDocuments("Item", [item.data]); 
-                if (bau == this.actor) {
+                const item = this.document.items.get(li.data('itemId')); 
+                personagem.createEmbeddedDocuments("Item", [item.system]); 
+                if (bau == this.document) {
                     bau.deleteEmbeddedDocuments("Item", [item.id]); 
                 }
             });
-        } else if (this.actor.data.type == "Personagem") {
+        } else if (this.document.type == "Personagem") {
             html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
             html.find('.searchMagia').keyup(this._realcaMagia.bind(this));
             html.find('.searchCombate').keyup(this._realcaCombate.bind(this));
@@ -391,14 +391,14 @@ export default class tagmarActorSheet extends ActorSheet {
                         $(ul).each(function (i, c) {
                             idiomas.push(c.value);
                         });
-                        this.actor.update({
-                            'data.defesa.categoria': idiomas.join(';')
+                        this.document.update({
+                            'system.defesa.categoria': idiomas.join(';')
                         });
                     }
                 }
             },
             render: (html) => {
-                let idiomas = this.actor.data.data.defesa.categoria.split(';');
+                let idiomas = this.document.system.defesa.categoria.split(';');
                 html.find('input[type="checkbox"]').each(function (i, c) {
                     if (idiomas.includes(c.value)) {
                         $(c).prop('checked',true);
@@ -433,21 +433,21 @@ export default class tagmarActorSheet extends ActorSheet {
                         let dif_eh = 0;
                         let dif_karma = 0;
                         if (descanso === "full") {
-                            dif_ef = this.actor.data.data.ef.max - this.actor.data.data.ef.value;
-                            dif_eh = this.actor.data.data.eh.max - this.actor.data.data.eh.value;
-                            dif_karma = this.actor.data.data.karma.max - this.actor.data.data.karma.value;
+                            dif_ef = this.document.system.ef.max - this.document.system.ef.value;
+                            dif_eh = this.document.system.eh.max - this.document.system.eh.value;
+                            dif_karma = this.document.system.karma.max - this.document.system.karma.value;
                             changes = {
-                                'data.ef.value': this.actor.data.data.ef.max,
-                                'data.eh.value': this.actor.data.data.eh.max,
-                                'data.karma.value': this.actor.data.data.karma.max
+                                'system.ef.value': this.document.system.ef.max,
+                                'system.eh.value': this.document.system.eh.max,
+                                'system.karma.value': this.document.system.karma.max
                             };
                         } else if (descanso === "meio") {
-                            let efAtual = this.actor.data.data.ef.value;
-                            let ehAtual = this.actor.data.data.eh.value;
-                            let karmaAtual = this.actor.data.data.karma.value;
-                            let efMax = this.actor.data.data.ef.max;
-                            let ehMax = this.actor.data.data.eh.max;
-                            let karmaMax = this.actor.data.data.karma.max;
+                            let efAtual = this.document.system.ef.value;
+                            let ehAtual = this.document.system.eh.value;
+                            let karmaAtual = this.document.system.karma.value;
+                            let efMax = this.document.system.ef.max;
+                            let ehMax = this.document.system.eh.max;
+                            let karmaMax = this.document.system.karma.max;
                             let efNovo = 0;
                             let ehNovo = 0;
                             let karmaNovo = 0;
@@ -455,31 +455,31 @@ export default class tagmarActorSheet extends ActorSheet {
                                 efNovo = efAtual + efMax/2;
                                 if (efNovo > efMax) efNovo = efMax;
                                 dif_ef = efNovo - efAtual;
-                                changes['data.ef.value'] = parseInt(efNovo)
+                                changes['system.ef.value'] = parseInt(efNovo)
                             }
                             if (ehAtual < ehMax) {
                                 ehNovo = ehAtual + ehMax/2;
                                 if (ehNovo > ehMax) ehNovo = ehMax;
                                 dif_eh = ehNovo - ehAtual;
-                                changes['data.eh.value'] = parseInt(ehNovo)
+                                changes['system.eh.value'] = parseInt(ehNovo)
                             }
                             if (karmaAtual < karmaMax) {
                                 karmaNovo = karmaAtual + karmaMax/2;
                                 if (karmaNovo > karmaMax) karmaNovo = karmaMax;
                                 dif_karma = karmaNovo - karmaAtual;
-                                changes['data.karma.value'] = parseInt(karmaNovo)
+                                changes['system.karma.value'] = parseInt(karmaNovo)
                             }
                         }
-                        this.actor.update(changes);
+                        this.document.update(changes);
                         let desc_text = "Completo";
                         if (descanso == "meio") desc_text = "Curto";
                         ChatMessage.create({
                             user: game.user.id,
                             speaker: ChatMessage.getSpeaker({
-                                actor: this.actor
+                                actor: this.document
                             }),
-                            content: `<img src="${this.actor.data.img}" style='display: block; margin-left: auto; margin-right: auto; border-width:0;' />
-                            <p class="mediaeval rola_desc">${this.actor.data.name} fez um descanso <b>${desc_text}</b>.</p>
+                            content: `<img src="${this.document.img}" style='display: block; margin-left: auto; margin-right: auto; border-width:0;' />
+                            <p class="mediaeval rola_desc">${this.document.name} fez um descanso <b>${desc_text}</b>.</p>
                             <h3 class="mediaeval">Recuperou:</h3>
                             <p class="mediaeval rola_desc">${parseInt(dif_ef)} de Energia Física.</p>
                             <p class="mediaeval rola_desc">${parseInt(dif_eh)} de Energia Heroica.</p>
@@ -499,22 +499,22 @@ export default class tagmarActorSheet extends ActorSheet {
 
     async _toJournal(event) {
         let journal = await JournalEntry.create({
-            name: this.actor.data.name,
-            img: this.actor.data.img,
+            name: this.document.name,
+            img: this.document.img,
             content: `<div class="bg-img"><div class="container" style="height:100%;">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="fairyDust" style="text-align:center;">${this.actor.data.name}</h2>
+                        <h2 class="fairyDust" style="text-align:center;">${this.document.name}</h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <img src="${this.actor.data.img}" style="border-width:0;display:block;margin-left:auto;margin-right:auto;"/>
+                        <img src="${this.document.img}" style="border-width:0;display:block;margin-left:auto;margin-right:auto;"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 mediaeval">
-                        <p class="rola_desc">${this.actor.data.data.descricao}</p>
+                        <p class="rola_desc">${this.document.system.descricao}</p>
                     </div>
                 </div>
             </div></div>`
@@ -524,12 +524,12 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _rolarIniciativa(event) {
         if (!this.options.editable) return;
-        if (game.combats.size > 0) this.actor.rollInitiative({createCombatants:false, rerollInitiative:false});
+        if (game.combats.size > 0) this.document.rollInitiative({createCombatants:false, rerollInitiative:false});
     }
 
     _newMagia(event) {
         if (!this.options.editable) return;
-        const actor = this.actor;
+        const actor = this.document;
         actor.createEmbeddedDocuments('Item', [{name: "Nova Magia", type: "Magia"}]).then(function (item) {
             item[0].sheet.render(true);
         });
@@ -539,7 +539,7 @@ export default class tagmarActorSheet extends ActorSheet {
         if (!this.options.editable) return;
         let create = false;
         let tipo = "";
-        const actor = this.actor;
+        const actor = this.document;
         let dialogContent = `<div>
             <label for="selectTipo" class="mediaeval">Selecione o tipo do item:</label>
             <select id="selectTipo" name="selectTipo" class="selectType mediaeval" height="30" style="margin-left:2px;">
@@ -582,7 +582,7 @@ export default class tagmarActorSheet extends ActorSheet {
         if (!this.options.editable) return;
         let create = false;
         let tipo = "";
-        const actor = this.actor;
+        const actor = this.document;
         let dialogContent = `<div>
             <label for="selectTipo" class="mediaeval">Selecione o tipo do item:</label>
             <select id="selectTipo" name="selectTipo" class="selectType mediaeval" height="30" style="margin-left:2px;">
@@ -628,7 +628,7 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _newHabilidade(event) {
         if (!this.options.editable) return;
-        const actor = this.actor;
+        const actor = this.document;
         actor.createEmbeddedDocuments("Item", [{name: "Nova Habilidade", type: "Habilidade", data: {tipo: "profissional"}}]).then(function (item) {
             item[0].sheet.render(true);
         });
@@ -636,7 +636,7 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _newEfeito(event) {
         if (!this.options.editable) return;
-        const actor = this.actor;
+        const actor = this.document;
         actor.createEmbeddedDocuments('Item', [{name: "Novo Efeito", type: "Efeito"}]).then(function (efeito) {
             efeito[0].sheet.render(true);
         });
@@ -645,43 +645,43 @@ export default class tagmarActorSheet extends ActorSheet {
     _danoRell(event) {
         if (!this.options.editable) return;
         const tipo = $(event.currentTarget).data('tipo');
-        const actor = this.actor;
+        const actor = this.document;
         let updateComand = "";
         let valor = 0;
         if (tipo == "EF") {
             if (actor.type == "Personagem") {
-                valor = actor.data.data.ef.value;
+                valor = actor.system.ef.value;
                 updateComand = "EF";
             }
             else if (actor.type == "NPC") {
-                valor = actor.data.data.ef_npc.value;
+                valor = actor.system.ef_npc.value;
                 updateComand = "EF_NPC";
             }
         } else if (tipo == "EH") {
             if (actor.type == "Personagem") {
-                valor = actor.data.data.eh.value;
+                valor = actor.system.eh.value;
                 updateComand = "EH";
             }
             else if (actor.type == "NPC") {
-                valor = actor.data.data.eh_npc.value;
+                valor = actor.system.eh_npc.value;
                 updateComand = "EH_NPC";
             }
         } else if (tipo == "KARMA") {
             if (actor.type == "Personagem") {
-                valor = actor.data.data.karma.value;
+                valor = actor.system.karma.value;
                 updateComand = "KARMA";
             } else if (actor.type == "NPC") {
-                valor = actor.data.data.karma_npc.value;
+                valor = actor.system.karma_npc.value;
                 updateComand = "KARMA_NPC";
             }
         } else if (tipo == "FOCUS") {
             if (actor.type == "Personagem" || actor.type == "NPC") {
-                valor = actor.data.data.focus.value;
+                valor = actor.system.focus.value;
                 updateComand = "FOCUS";
             }
         } else if (tipo == "ABS") {
             if (actor.type == "Personagem" || actor.type == "NPC") {
-                valor = actor.data.data.absorcao.value;
+                valor = actor.system.absorcao.value;
                 updateComand = "ABS";
             }
         }
@@ -709,28 +709,28 @@ export default class tagmarActorSheet extends ActorSheet {
             close: html => {
                 switch (updateComand) {
                     case 'EF':
-                        actor.update({'data.ef.value': valor});
+                        actor.update({'system.ef.value': valor});
                         break;
                     case 'EF_NPC':
-                        actor.update({'data.ef_npc.value': valor});
+                        actor.update({'system.ef_npc.value': valor});
                         break;
                     case 'EH':
-                        actor.update({'data.eh.value': valor});
+                        actor.update({'system.eh.value': valor});
                         break;
                     case 'EH_NPC':
-                        actor.update({'data.eh_npc.value': valor});
+                        actor.update({'system.eh_npc.value': valor});
                         break;
                     case 'KARMA':
-                        actor.update({'data.karma.value': valor});
+                        actor.update({'system.karma.value': valor});
                         break;
                     case 'KARMA_NPC':
-                        actor.update({'data.karma_npc.value': valor});
+                        actor.update({'system.karma_npc.value': valor});
                         break;
                     case 'FOCUS':
-                        actor.update({'data.focus.value': valor});
+                        actor.update({'system.focus.value': valor});
                         break;
                     case 'ABS':
-                        actor.update({'data.absorcao.value': valor});
+                        actor.update({'system.absorcao.value': valor});
                         break;
                 }
             }
@@ -740,10 +740,10 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _duplicateItem(event) {
         const li = $(event.currentTarget).parents(".item");
-        const item =  this.actor.items.get(li.data('itemId')); 
+        const item =  this.document.items.get(li.data('itemId')); 
         let dupi = duplicate(item);
         dupi.name = dupi.name + "(Cópia)";
-        this.actor.createEmbeddedDocuments("Item", [dupi]); 
+        this.document.createEmbeddedDocuments("Item", [dupi]); 
     }
 
     _realcaEfeito(event) {
@@ -843,7 +843,7 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _combateImg(event) {
-        const actorData = this.actor.data.data;
+        const actorData = this.document.system;
         const grupo = $(event.currentTarget).data("itemId");
         let combos = actorData.combos;
         let com_list = combos.split(',');
@@ -851,20 +851,20 @@ export default class tagmarActorSheet extends ActorSheet {
         if (found) {
             let index = com_list.indexOf(grupo);
             if (index != -1) com_list.splice(index,1);
-            this.actor.update({
-                "data.combos": com_list.join(',')
+            this.document.update({
+                "system.combos": com_list.join(',')
             });
         } else {
             com_list.push(grupo);
-            this.actor.update({
-                "data.combos": com_list.join(',')
+            this.document.update({
+                "system.combos": com_list.join(',')
             });
         }
     }
 
     _editRaca(event) {
         if (!this.options.editable) return;
-        const actor = this.actor;
+        const actor = this.document;
         const raca = actor.items.find(item => item.type == "Raca");
         if (!raca) return;
         raca.sheet.render(true);
@@ -872,7 +872,7 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _displayRaca(event) {
         if (!this.options.editable) return;
-        const actor = this.actor;
+        const actor = this.document;
         const racaData = actor.items.find(item => item.type == "Raca");
         if (!racaData) {
             actor.createEmbeddedDocuments("Item", [{name: "Raça", type: "Raca"}]).then(function (item) {
@@ -882,17 +882,17 @@ export default class tagmarActorSheet extends ActorSheet {
             let chatData = {
                 user: game.user.id,
                 speaker: ChatMessage.getSpeaker({
-                    actor: this.actor
+                    actor: this.document
                   })
             };
-            chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.data.data.descricao + "</h3>";
+            chatData.content = "<img src='"+ racaData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + racaData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + racaData.system.descricao + "</h3>";
             ChatMessage.create(chatData);
         } 
     }
 
     _editProf(event) {
         if (!this.options.editable) return;
-        const actor = this.actor;
+        const actor = this.document;
         const profissao = actor.items.find(item => item.type == "Profissao");
         if (!profissao) return;
         profissao.sheet.render(true);
@@ -900,7 +900,7 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _displayProf(event) {
         if (!this.options.editable) return;
-        const actor = this.actor;
+        const actor = this.document;
         const profData = actor.items.find(item => item.type == "Profissao");
         if (!profData) {
             actor.createEmbeddedDocuments("Item", [{name: "Profissão", type: "Profissao"}]).then(function (item) {
@@ -910,10 +910,10 @@ export default class tagmarActorSheet extends ActorSheet {
             let chatData = {
                 user: game.user.id,
                 speaker: ChatMessage.getSpeaker({
-                    actor: this.actor
+                    actor: this.document
                   })
             };
-            chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.data.data.descricao + "</h3>";
+            chatData.content = "<img src='"+ profData.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + profData.name + "</h1>"  + "<h3 class='mediaeval rola rola_desc'>" + profData.system.descricao + "</h3>";
             ChatMessage.create(chatData);
         }
     }
@@ -924,11 +924,11 @@ export default class tagmarActorSheet extends ActorSheet {
             this._dialogResistencia("Magía");
             return;
         }
-        this.actor._rollTeste({name: "Resistencia", id: "Magía", f_ataque: parseInt(forcAtaqueI)});
+        this.document._rollTeste({name: "Resistencia", id: "Magía", f_ataque: parseInt(forcAtaqueI)});
         $(".F_Ataque").val("");
-        if (this.actor.data.data.forca_ataque) {
-            this.actor.update({
-                "data.forca_ataque": null
+        if (this.document.system.forca_ataque) {
+            this.document.update({
+                "system.forca_ataque": null
             });
         }
     }
@@ -939,11 +939,11 @@ export default class tagmarActorSheet extends ActorSheet {
             this._dialogResistencia("Física");
             return;
         }
-        this.actor._rollTeste({name: "Resistencia", id: "Física", f_ataque: parseInt(forcAtaqueI)});
+        this.document._rollTeste({name: "Resistencia", id: "Física", f_ataque: parseInt(forcAtaqueI)});
         $(".F_Ataque").val("");
-        if (this.actor.data.data.forca_ataque) {
-            this.actor.update({
-                "data.forca_ataque": null
+        if (this.document.system.forca_ataque) {
+            this.document.update({
+                "system.forca_ataque": null
             });
         }
     }
@@ -978,14 +978,14 @@ export default class tagmarActorSheet extends ActorSheet {
             },
             default: "Cancelar",
             close: html => {
-                if (rolar) this.actor._rollTeste({name: "Resistencia", id: tipo, f_ataque: f_ataque});
+                if (rolar) this.document._rollTeste({name: "Resistencia", id: tipo, f_ataque: f_ataque});
             }
         });
         dialog.render(true);
     }
     
     _passandoEH(event) {
-        let estagio_atual = this.actor.data.data.estagio;
+        let estagio_atual = this.document.system.estagio;
         let valord10 = parseInt($(".valord10EH").val());
         if (!valord10 && estagio_atual > 1) {
             ui.notifications.warn("Clique em '1d10' para rolar o dado ou preencha o valor no campo.");
@@ -994,40 +994,40 @@ export default class tagmarActorSheet extends ActorSheet {
         }
         let raca_list = [];
         let nova_eh = 0;
-        let eh_atual = this.actor.data.data.eh.max;
-        let attFIS = this.actor.data.data.atributos.FIS;
+        let eh_atual = this.document.system.eh.max;
+        let attFIS = this.document.system.atributos.FIS;
         if (estagio_atual > 1 && valord10 > 0 && valord10 <= 10) {
             if (this.profissao) {
                 if (valord10 >= 1 && valord10 <= 2) {
-                    nova_eh = this.profissao.data.data.lista_eh.v1;
-                    this.actor.update({
-                        "data.eh.max": eh_atual + nova_eh + attFIS
+                    nova_eh = this.profissao.system.lista_eh.v1;
+                    this.document.update({
+                        "system.eh.max": eh_atual + nova_eh + attFIS
                     });
                     ui.notifications.info("Nova EH calculada.");
                 } else if (valord10 >= 3 && valord10 <= 5) {
-                    nova_eh = this.profissao.data.data.lista_eh.v2;
-                    this.actor.update({
-                        "data.eh.max": eh_atual + nova_eh + attFIS
+                    nova_eh = this.profissao.system.lista_eh.v2;
+                    this.document.update({
+                        "system.eh.max": eh_atual + nova_eh + attFIS
                     });
                     ui.notifications.info("Nova EH calculada.");
                 } else if (valord10 >= 6 && valord10 <= 8) {
-                    nova_eh = this.profissao.data.data.lista_eh.v3;
-                    this.actor.update({
-                        "data.eh.max": eh_atual + nova_eh + attFIS
+                    nova_eh = this.profissao.system.lista_eh.v3;
+                    this.document.update({
+                        "system.eh.max": eh_atual + nova_eh + attFIS
                     });
                     ui.notifications.info("Nova EH calculada.");
                 } else if (valord10 >= 9 && valord10 <= 10) {
-                    nova_eh = this.profissao.data.data.lista_eh.v4;
-                    this.actor.update({
-                        "data.eh.max": eh_atual + nova_eh + attFIS
+                    nova_eh = this.profissao.system.lista_eh.v4;
+                    this.document.update({
+                        "system.eh.max": eh_atual + nova_eh + attFIS
                     });
                     ui.notifications.info("Nova EH calculada.");
                 }
             }
         }
-        if (this.actor.data.data.valor_dado_eh) {
-            this.actor.update({
-                "data.valor_dado_eh": null
+        if (this.document.system.valor_dado_eh) {
+            this.document.update({
+                "system.valor_dado_eh": null
             });
         }
         //$(".valord10EH").val("");
@@ -1036,173 +1036,173 @@ export default class tagmarActorSheet extends ActorSheet {
 
     _addGrupoArmas(event) {
         const grupo = $(event.currentTarget).data("itemId");
-        const actorData = this.actor.data;
-        if (actorData.data.pontos_comb >= 0) {
+        const actorData = this.document;
+        if (actorData.system.pontos_comb >= 0) {
             if (grupo == "CD") {
-                let pontos = actorData.data.grupos.CD + 1;
-                this.actor.update({
-                    "data.grupos.CD": pontos
+                let pontos = actorData.system.grupos.CD + 1;
+                this.document.update({
+                    "system.grupos.CD": pontos
                 });
             } else if (grupo == "CI") {
-                let pontos = actorData.data.grupos.CI + 1;
-                this.actor.update({
-                    "data.grupos.CI": pontos
+                let pontos = actorData.system.grupos.CI + 1;
+                this.document.update({
+                    "system.grupos.CI": pontos
                 });
             } else if (grupo == "CL") {
-                let pontos = actorData.data.grupos.CL + 1;
-                this.actor.update({
-                    "data.grupos.CL": pontos
+                let pontos = actorData.system.grupos.CL + 1;
+                this.document.update({
+                    "system.grupos.CL": pontos
                 });
             } else if (grupo == "CLD") {
-                let pontos = actorData.data.grupos.CLD + 1;
-                this.actor.update({
-                    "data.grupos.CLD": pontos
+                let pontos = actorData.system.grupos.CLD + 1;
+                this.document.update({
+                    "system.grupos.CLD": pontos
                 });
             } else if (grupo == "EL") {
-                let pontos = actorData.data.grupos.EL + 1;
-                this.actor.update({
-                    "data.grupos.EL": pontos
+                let pontos = actorData.system.grupos.EL + 1;
+                this.document.update({
+                    "system.grupos.EL": pontos
                 });
             } else if (grupo == "CmE") {
-                let pontos = actorData.data.grupos.CmE + 1;
-                this.actor.update({
-                    "data.grupos.CmE": pontos
+                let pontos = actorData.system.grupos.CmE + 1;
+                this.document.update({
+                    "system.grupos.CmE": pontos
                 });
             } else if (grupo == "CmM") {
-                let pontos = actorData.data.grupos.CmM + 1;
-                this.actor.update({
-                    "data.grupos.CmM": pontos
+                let pontos = actorData.system.grupos.CmM + 1;
+                this.document.update({
+                    "system.grupos.CmM": pontos
                 });
             } else if (grupo == "EM") {
-                let pontos = actorData.data.grupos.EM + 1;
-                this.actor.update({
-                    "data.grupos.EM": pontos
+                let pontos = actorData.system.grupos.EM + 1;
+                this.document.update({
+                    "system.grupos.EM": pontos
                 });
             } else if (grupo == "PmA") {
-                let pontos = actorData.data.grupos.PmA + 1;
-                this.actor.update({
-                    "data.grupos.PmA": pontos
+                let pontos = actorData.system.grupos.PmA + 1;
+                this.document.update({
+                    "system.grupos.PmA": pontos
                 });
             } else if (grupo == "PmL") {
-                let pontos = actorData.data.grupos.PmL + 1;
-                this.actor.update({
-                    "data.grupos.PmL": pontos
+                let pontos = actorData.system.grupos.PmL + 1;
+                this.document.update({
+                    "system.grupos.PmL": pontos
                 });
             } else if (grupo == "CpE") {
-                let pontos = actorData.data.grupos.CpE + 1;
-                this.actor.update({
-                    "data.grupos.CpE": pontos
+                let pontos = actorData.system.grupos.CpE + 1;
+                this.document.update({
+                    "system.grupos.CpE": pontos
                 });
             } else if (grupo == "CpM") {
-                let pontos = actorData.data.grupos.CpM + 1;
-                this.actor.update({
-                    "data.grupos.CpM": pontos
+                let pontos = actorData.system.grupos.CpM + 1;
+                this.document.update({
+                    "system.grupos.CpM": pontos
                 });
             } else if (grupo == "EP") {
-                let pontos = actorData.data.grupos.EP + 1;
-                this.actor.update({
-                    "data.grupos.EP": pontos
+                let pontos = actorData.system.grupos.EP + 1;
+                this.document.update({
+                    "system.grupos.EP": pontos
                 });
             } else if (grupo == "PP") {
-                let pontos = actorData.data.grupos.PP + 1;
-                this.actor.update({
-                    "data.grupos.PP": pontos
+                let pontos = actorData.system.grupos.PP + 1;
+                this.document.update({
+                    "system.grupos.PP": pontos
                 });
             } else if (grupo == "PpA") {
-                let pontos = actorData.data.grupos.PpA + 1;
-                this.actor.update({
-                    "data.grupos.PpA": pontos
+                let pontos = actorData.system.grupos.PpA + 1;
+                this.document.update({
+                    "system.grupos.PpA": pontos
                 });
             } else if (grupo == "PpB") {
-                let pontos = actorData.data.grupos.PpB + 1;
-                this.actor.update({
-                    "data.grupos.PpB": pontos
+                let pontos = actorData.system.grupos.PpB + 1;
+                this.document.update({
+                    "system.grupos.PpB": pontos
                 });
             }
         }
     }
     _subGrupoArmas(event){
         const grupo = $(event.currentTarget).data("itemId");
-        const actorData = this.actor.data;
-        if (grupo == "CD" && actorData.data.grupos.CD > 0) {
-            let pontos = actorData.data.grupos.CD - 1;
-            this.actor.update({
-                "data.grupos.CD": pontos
+        const actorData = this.document;
+        if (grupo == "CD" && actorData.system.grupos.CD > 0) {
+            let pontos = actorData.system.grupos.CD - 1;
+            this.document.update({
+                "system.grupos.CD": pontos
             });
-        } else if (grupo == "CI" && actorData.data.grupos.CI > 0) {
-            let pontos = actorData.data.grupos.CI - 1;
-            this.actor.update({
-                "data.grupos.CI": pontos
+        } else if (grupo == "CI" && actorData.system.grupos.CI > 0) {
+            let pontos = actorData.system.grupos.CI - 1;
+            this.document.update({
+                "system.grupos.CI": pontos
             });
-        } else if (grupo == "CL" && actorData.data.grupos.CL > 0) {
-            let pontos = actorData.data.grupos.CL - 1;
-            this.actor.update({
-                "data.grupos.CL": pontos
+        } else if (grupo == "CL" && actorData.system.grupos.CL > 0) {
+            let pontos = actorData.system.grupos.CL - 1;
+            this.document.update({
+                "system.grupos.CL": pontos
             });
-        } else if (grupo == "CLD" && actorData.data.grupos.CLD > 0) {
-            let pontos = actorData.data.grupos.CLD - 1;
-            this.actor.update({
-                "data.grupos.CLD": pontos
+        } else if (grupo == "CLD" && actorData.system.grupos.CLD > 0) {
+            let pontos = actorData.system.grupos.CLD - 1;
+            this.document.update({
+                "system.grupos.CLD": pontos
             });
-        } else if (grupo == "EL" && actorData.data.grupos.EL > 0) {
-            let pontos = actorData.data.grupos.EL - 1;
-            this.actor.update({
-                "data.grupos.EL": pontos
+        } else if (grupo == "EL" && actorData.system.grupos.EL > 0) {
+            let pontos = actorData.system.grupos.EL - 1;
+            this.document.update({
+                "system.grupos.EL": pontos
             });
-        } else if (grupo == "CmE" && actorData.data.grupos.CmE > 0) {
-            let pontos = actorData.data.grupos.CmE - 1;
-            this.actor.update({
-                "data.grupos.CmE": pontos
+        } else if (grupo == "CmE" && actorData.system.grupos.CmE > 0) {
+            let pontos = actorData.system.grupos.CmE - 1;
+            this.document.update({
+                "system.grupos.CmE": pontos
             });
-        } else if (grupo == "CmM" && actorData.data.grupos.CmM > 0) {
-            let pontos = actorData.data.grupos.CmM - 1;
-            this.actor.update({
-                "data.grupos.CmM": pontos
+        } else if (grupo == "CmM" && actorData.system.grupos.CmM > 0) {
+            let pontos = actorData.system.grupos.CmM - 1;
+            this.document.update({
+                "system.grupos.CmM": pontos
             });
-        } else if (grupo == "EM" && actorData.data.grupos.EM > 0) {
-            let pontos = actorData.data.grupos.EM - 1;
-            this.actor.update({
-                "data.grupos.EM": pontos
+        } else if (grupo == "EM" && actorData.system.grupos.EM > 0) {
+            let pontos = actorData.system.grupos.EM - 1;
+            this.document.update({
+                "system.grupos.EM": pontos
             });
-        } else if (grupo == "PmA" && actorData.data.grupos.PmA > 0) {
-            let pontos = actorData.data.grupos.PmA - 1;
-            this.actor.update({
-                "data.grupos.PmA": pontos
+        } else if (grupo == "PmA" && actorData.system.grupos.PmA > 0) {
+            let pontos = actorData.system.grupos.PmA - 1;
+            this.document.update({
+                "system.grupos.PmA": pontos
             });
-        } else if (grupo == "PmL" && actorData.data.grupos.PmL > 0) {
-            let pontos = actorData.data.grupos.PmL - 1;
-            this.actor.update({
-                "data.grupos.PmL": pontos
+        } else if (grupo == "PmL" && actorData.system.grupos.PmL > 0) {
+            let pontos = actorData.system.grupos.PmL - 1;
+            this.document.update({
+                "system.grupos.PmL": pontos
             });
-        } else if (grupo == "CpE" && actorData.data.grupos.CpE > 0) {
-            let pontos = actorData.data.grupos.CpE - 1;
-            this.actor.update({
-                "data.grupos.CpE": pontos
+        } else if (grupo == "CpE" && actorData.system.grupos.CpE > 0) {
+            let pontos = actorData.system.grupos.CpE - 1;
+            this.document.update({
+                "system.grupos.CpE": pontos
             });
-        } else if (grupo == "CpM" && actorData.data.grupos.CpM > 0) {
-            let pontos = actorData.data.grupos.CpM - 1;
-            this.actor.update({
-                "data.grupos.CpM": pontos
+        } else if (grupo == "CpM" && actorData.system.grupos.CpM > 0) {
+            let pontos = actorData.system.grupos.CpM - 1;
+            this.document.update({
+                "system.grupos.CpM": pontos
             });
-        } else if (grupo == "EP" && actorData.data.grupos.EP > 0) {
-            let pontos = actorData.data.grupos.EP - 1;
-            this.actor.update({
-                "data.grupos.EP": pontos
+        } else if (grupo == "EP" && actorData.system.grupos.EP > 0) {
+            let pontos = actorData.system.grupos.EP - 1;
+            this.document.update({
+                "system.grupos.EP": pontos
             });
-        } else if (grupo == "PP" && actorData.data.grupos.PP > 0) {
-            let pontos = actorData.data.grupos.PP - 1;
-            this.actor.update({
-                "data.grupos.PP": pontos
+        } else if (grupo == "PP" && actorData.system.grupos.PP > 0) {
+            let pontos = actorData.system.grupos.PP - 1;
+            this.document.update({
+                "system.grupos.PP": pontos
             });
-        } else if (grupo == "PpA" && actorData.data.grupos.PpA > 0) {
-            let pontos = actorData.data.grupos.PpA - 1;
-            this.actor.update({
-                "data.grupos.PpA": pontos
+        } else if (grupo == "PpA" && actorData.system.grupos.PpA > 0) {
+            let pontos = actorData.system.grupos.PpA - 1;
+            this.document.update({
+                "system.grupos.PpA": pontos
             });
-        } else if (grupo == "PpB" && actorData.data.grupos.PpB > 0) {
-            let pontos = actorData.data.grupos.PpB - 1;
-            this.actor.update({
-                "data.grupos.PpB": pontos
+        } else if (grupo == "PpB" && actorData.system.grupos.PpB > 0) {
+            let pontos = actorData.system.grupos.PpB - 1;
+            this.document.update({
+                "system.grupos.PpB": pontos
             });
         }
         
@@ -1210,7 +1210,7 @@ export default class tagmarActorSheet extends ActorSheet {
 
     //Exclusivo para Inventário
     _prepareInventarioItems(sheetData) { 
-        const actorData = sheetData.actor;
+        const actorData = sheetData.document;
         const pertences = actorData.items.filter(item => item.type == "Pertence");
         const transportes = actorData.items.filter(item => item.type == "Transporte");
         const cesto = [];
@@ -1227,24 +1227,24 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     _prepareCharacterItems(sheetData) {
-        const actorData = sheetData.actor;
+        const actorData = sheetData.document;
         const combate = actorData.items.filter(item => item.type == "Combate");
         const magias = actorData.items.filter(item => item.type == "Magia");
-        const h_prof = actorData.items.filter(item => item.type == "Habilidade" && item.data.data.tipo == "profissional");
-        const h_man = actorData.items.filter(item => item.type == "Habilidade" && item.data.data.tipo == "manobra");
-        const h_con = actorData.items.filter(item => item.type == "Habilidade" && item.data.data.tipo == "conhecimento");
-        const h_sub = actorData.items.filter(item => item.type == "Habilidade" && item.data.data.tipo == "subterfugio");
-        const h_inf = actorData.items.filter(item => item.type == "Habilidade" && item.data.data.tipo == "influencia");
-        const h_geral = actorData.items.filter(item => item.type == "Habilidade" && item.data.data.tipo == "geral");
+        const h_prof = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "profissional");
+        const h_man = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "manobra");
+        const h_con = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "conhecimento");
+        const h_sub = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "subterfugio");
+        const h_inf = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "influencia");
+        const h_geral = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "geral");
         const tecnicas = actorData.items.filter(item => item.type == "TecnicasCombate");
         const defesas = actorData.items.filter(item => item.type == "Defesa");
         const transportes = actorData.items.filter(item => item.type == "Transporte");
-        const pertences = actorData.items.filter(item => item.type == "Pertence" && !item.data.data.inTransport);
-        const pertences_transporte = actorData.items.filter(item => item.type == "Pertence" && item.data.data.inTransport);
+        const pertences = actorData.items.filter(item => item.type == "Pertence" && !item.system.inTransport);
+        const pertences_transporte = actorData.items.filter(item => item.type == "Pertence" && item.system.inTransport);
         const racas = actorData.items.filter(item => item.type == "Raca");
         const profissoes = actorData.items.filter(item => item.type == "Profissao");
-        //if (racas.length >= 1) this.actor.deleteEmbeddedDocuments("Item", [racas]);
-        //if (profissoes.length >= 1) this.actor.deleteEmbeddedDocuments("Item", [item._id]);
+        //if (racas.length >= 1) this.document.deleteEmbeddedDocuments("Item", [racas]);
+        //if (profissoes.length >= 1) this.document.deleteEmbeddedDocuments("Item", [item._id]);
         var especializacoes = [];
         const efeitos = actorData.items.filter(item => item.type == "Efeito");
         const tabela_resol = [
@@ -1303,7 +1303,7 @@ export default class tagmarActorSheet extends ActorSheet {
             [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
         ];
         if (profissoes[0]) {
-            especializacoes = profissoes[0].data.data.especializacoes.split(",");
+            especializacoes = profissoes[0].system.especializacoes.split(",");
         } // Alow
         
         if (h_prof.length > 1) h_prof.sort(function (a, b) {
@@ -1334,7 +1334,7 @@ export default class tagmarActorSheet extends ActorSheet {
             return a.name.localeCompare(b.name);
         });
         if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
-            return a.data.data.categoria.localeCompare(b.data.data.categoria);
+            return a.system.categoria.localeCompare(b.system.categoria);
         });
         if (defesas.length > 1) defesas.sort(function (a, b) {
             return a.name.localeCompare(b.name);
@@ -1351,9 +1351,9 @@ export default class tagmarActorSheet extends ActorSheet {
         if (efeitos.length > 1) efeitos.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        const combate_fav = combate.filter(item => item.data.data.favorito == true);
-        const tecnica_fav = tecnicas.filter(item => item.data.data.favorito == true);
-        const magia_fav = magias.filter(item => item.data.data.favorito == true);
+        const combate_fav = combate.filter(item => item.system.favorito == true);
+        const tecnica_fav = tecnicas.filter(item => item.system.favorito == true);
+        const magia_fav = magias.filter(item => item.system.favorito == true);
         actorData.efeitos = efeitos;
         this.efeitos = efeitos;
         this.table_resFisMag = table_resFisMag;
@@ -1383,47 +1383,47 @@ export default class tagmarActorSheet extends ActorSheet {
     }
 
     async _rolarMoral(event) {
-        this.actor._rollTeste({name: "Moral"});        
+        this.document._rollTeste({name: "Moral"});        
     }
 
     async _rolarAtt(event) {      // Rolar Atributo
         const target = event.currentTarget;
         const cat = $(target).data("itemId");
         let teste = {name: "Atributo", id: cat};
-        this.actor._rollTeste(teste);
+        this.document._rollTeste(teste);
     }
 
     _ativaEfeito(event) {
         //event.preventDefault();
         let button = $(event.currentTarget);
         const li = button.parents(".item");
-        const item = this.actor.items.get(li.data("itemId"));
-        let ativo = item.data.data.ativo;
+        const item = this.document.items.get(li.data("itemId"));
+        let ativo = item.system.ativo;
         let ativa;
         if (ativo) {
             ativa = false;
         } else {
             ativa = true;
         }
-        this.actor.updateEmbeddedDocuments("Item", [{
-            "_id": item.data._id,
-            "data.ativo": ativa
+        this.document.updateEmbeddedDocuments("Item", [{
+            "_id": item._id,
+            "system.ativo": ativa
         }]);
     }
 
     _onItemRightButton (event) {
         let button = $(event.currentTarget);
         const li = button.parents(".item");
-        const item = this.actor.items.get(li.data("itemId"));
-        if (typeof item.data.data.descricao == "string") {
-            let content = `<div style="height:800px" class='rola_desc mediaeval'><img src="${item.data.img}" style="display:block;margin-left:auto;margin-right:auto">`;
+        const item = this.document.items.get(li.data("itemId"));
+        if (typeof item.system.descricao == "string") {
+            let content = `<div style="height:800px" class='rola_desc mediaeval'><img src="${item.img}" style="display:block;margin-left:auto;margin-right:auto">`;
             content += `<h1 class="fairyDust" style="text-align:center;">${item.name}</h1>`;
-            if (item.data.type == "Magia") content += item.data.data.efeito ;
-            else if (item.data.type == "Habilidade") {
-                if (item.data.data.tarefAperf.length > 0) content += `<h3 class="mediaeval">Tarefas aperfeiçoadas:</h3>` +  item.data.data.tarefAperf;
-                content += `<br><br><h3 class="mediaeval">Descrição:</h3>` + item.data.data.descricao;
+            if (item.type == "Magia") content += item.system.efeito ;
+            else if (item.type == "Habilidade") {
+                if (item.system.tarefAperf.length > 0) content += `<h3 class="mediaeval">Tarefas aperfeiçoadas:</h3>` +  item.system.tarefAperf;
+                content += `<br><br><h3 class="mediaeval">Descrição:</h3>` + item.system.descricao;
             }
-            else content += item.data.data.descricao;
+            else content += item.system.descricao;
             content += `</div>`;
             let dialog = new Dialog({
                 title: item.name,
@@ -1437,7 +1437,7 @@ export default class tagmarActorSheet extends ActorSheet {
     _onItemRoll (event) {
         let button = $(event.currentTarget);
         const li = button.parents(".item");
-        const item = this.actor.items.get(li.data("itemId"));
+        const item = this.document.items.get(li.data("itemId"));
         item.rollTagmarItem();
     }
 
