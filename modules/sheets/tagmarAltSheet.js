@@ -192,14 +192,6 @@ export default class tagmarAltSheet extends ActorSheet {
             });
             dialog.render(true);
         });
-
-        html.mouseleave(function (event) {
-            $(event.currentTarget).find('.form_tagmar').find('a').css('box-shadow','inset 1px 1px 5px red');
-        });
-
-        html.mouseenter(function (event) {
-            $(event.currentTarget).find('.form_tagmar').find('a').css('box-shadow','none');
-        });
   
         if (this.document.type != "Inventario") {
 
