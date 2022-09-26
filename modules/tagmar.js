@@ -186,7 +186,6 @@ Hooks.once("init", function(){
   });
 
   preloadHandlebarsTemplates();
-  game.audio.preload("/systems/tagmar_rpg/assets/vo_anno_fight04.wav");
   if (game.modules.get('polyglot')) {
     if (!game.modules.get('polyglot').active) return;
     import("/modules/polyglot/module/LanguageProvider.js").then(function (LanguageProvider) {
@@ -307,6 +306,7 @@ Hooks.once("ready", async function () {
       ocultos = false;
     }
   }); 
+  game.audio.preload("/systems/tagmar_rpg/assets/vo_anno_fight04.wav");
 });
 
 Hooks.on('renderPlayerList', function () {
