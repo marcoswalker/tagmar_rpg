@@ -1,0 +1,1 @@
+Para instalar o sistema utilize o manifest: https://raw.githubusercontent.com/marcoswalker/tagmar_rpg/master/system.json
