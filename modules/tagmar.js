@@ -185,6 +185,10 @@ Hooks.once("init", function(){
     } else return 0;
   });
 
+  Handlebars.registerHelper('numHab', function(items) {
+    return items.filter(i=> i.type=="Habilidade" && i.system.nivel > 0).length;
+  });
+
   preloadHandlebarsTemplates();
   if (game.modules.get('polyglot')) {
     if (!game.modules.get('polyglot').active) return;
