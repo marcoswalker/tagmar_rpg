@@ -549,7 +549,7 @@ Hooks.on('tagmar_combate_roll', function (rollData) {
   valor += rollData.dano;
   input_dano.val(valor);  
 });
-/* // Módulo ainda não atualizado para V10
+
 Hooks.once("dragRuler.ready", (SpeedProvider) => { 
   class TagmarSpeedProvider extends SpeedProvider {
       get colors() {
@@ -574,7 +574,7 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
 
   dragRuler.registerSystem("tagmar_rpg", TagmarSpeedProvider);
 });
-*/
+
 Hooks.once('diceSoNiceReady', function (dice) {
   dice.addSystem({ id: game.system.id, name: "Tagmar RPG"}, true);
   dice.addDicePreset({
