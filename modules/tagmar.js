@@ -80,6 +80,22 @@ Hooks.once("init", function(){
     formula: "1d10 + @iniciativa",
     decimals: 2
   };
+  CONFIG.Combat.sounds = Object.assign({ // Exclusivo Tagmar XXX
+    tagmar: {
+      label: "Tagmar",
+      startEncounter: ["/systems/tagmar_rpg/assets/sounds/vo_anno_fight04.wav"],
+      yourTurn: [
+        "/systems/tagmar_rpg/assets/sounds/Bar_datewithdeath.wav",
+        "/systems/tagmar_rpg/assets/sounds/Bar_meetdeath.wav",
+        "/systems/tagmar_rpg/assets/sounds/Bar_pleasecontinue.wav"
+      ],
+      nextUp: [
+        "/systems/tagmar_rpg/assets/sounds/Nec_soonperhaps.wav",
+        "/systems/tagmar_rpg/assets/sounds/Nec_tellmemore.wav",
+        "/systems/tagmar_rpg/assets/sounds/Nec_letsgo.wav"
+      ]
+    }
+  }, CONFIG.Combat.sounds);
   CONFIG.Item.documentClass = tagmarItem;
   CONFIG.Actor.documentClass = tagmarActor;
   CONFIG.time.roundTime = 15;
@@ -289,6 +305,7 @@ Hooks.once("init", function(){
 });
 
 Hooks.once("ready", async function () {
+  game.settings.set('core', 'combatTheme', 'tagmar'); // Exclusivo Tagmar XXX
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     createTagmarMacro(data, slot);
     return false;
@@ -310,7 +327,7 @@ Hooks.once("ready", async function () {
       ocultos = false;
     }
   }); 
-  game.audio.preload("/systems/tagmar_rpg/assets/vo_anno_fight04.wav");
+  //game.audio.preload("/systems/tagmar_rpg/assets/vo_anno_fight04.wav");
 });
 
 Hooks.on('renderPlayerList', function () {
@@ -1159,13 +1176,13 @@ Hooks.on("renderSidebarTab", async (object, html) => {
   $(html.find("#chat-controls .chat-control-icon")).click(async () => rollDialog());
 });
 
-Hooks.on("renderCombatTracker",function (combatTracker, html) {
+Hooks.on("renderCombatTracker",async function (combatTracker, html) {
   if (combatTracker.combats.length > 0) {
     if (!combatTracker.options.popOut && game.settings.get('tagmar_rpg', 'popOutCombat')) combatTracker.renderPopout();
-    if (combatTracker.combats[0].round == 1 && combatTracker.combats[0].turn == 0 && combatTracker.combats[0].started && !fight) {
-      game.audio.sounds.get("/systems/tagmar_rpg/assets/vo_anno_fight04.wav").play({ volume:0.8, loop:false}, false);
+    /*if (combatTracker.combats[0].round == 1 && combatTracker.combats[0].turn == 0 && combatTracker.combats[0].started && !fight) {
+      await game.audio.sounds.get("/systems/tagmar_rpg/assets/vo_anno_fight04.wav").play({ volume:0.8, loop:false}, false);
       fight = true;
-    }
+    }*/
   } else fight = false;
   if (!game.user.isGM) return;
   const combats = combatTracker.combats;
