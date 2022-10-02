@@ -9,8 +9,6 @@ import { dadosColoridos } from "./dadosColoridos.js";
 
 let ocultos = false;
 
-let fight = false;
-
 const tabela_resol = [
   [-7, "verde", "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
   [-6, "verde", "verde", "verde", "verde", "verde", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "branco", "amarelo", "amarelo", "amarelo", "laranja", "vermelho", "azul", "cinza"],
@@ -327,7 +325,6 @@ Hooks.once("ready", async function () {
       ocultos = false;
     }
   }); 
-  //game.audio.preload("/systems/tagmar_rpg/assets/vo_anno_fight04.wav");
 });
 
 Hooks.on('renderPlayerList', function () {
@@ -1179,11 +1176,7 @@ Hooks.on("renderSidebarTab", async (object, html) => {
 Hooks.on("renderCombatTracker",async function (combatTracker, html) {
   if (combatTracker.combats.length > 0) {
     if (!combatTracker.options.popOut && game.settings.get('tagmar_rpg', 'popOutCombat')) combatTracker.renderPopout();
-    /*if (combatTracker.combats[0].round == 1 && combatTracker.combats[0].turn == 0 && combatTracker.combats[0].started && !fight) {
-      await game.audio.sounds.get("/systems/tagmar_rpg/assets/vo_anno_fight04.wav").play({ volume:0.8, loop:false}, false);
-      fight = true;
-    }*/
-  } else fight = false;
+  }
   if (!game.user.isGM) return;
   const combats = combatTracker.combats;
   if (combats.length > 0) {
