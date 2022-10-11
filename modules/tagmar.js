@@ -1051,12 +1051,10 @@ function tabelaAcoes () {
       tabela.append(table_head+table_body);
 
       tabela.find("td").mouseenter( function (event) {
-        $('.'+$(event.currentTarget).attr('class')).css('color', 'RebeccaPurple');
         $('.'+$(event.currentTarget).attr('class')).css('font-weight', 'bold');
         $('.'+$(event.currentTarget).attr('class')).css('border-color', 'RebeccaPurple');
       });
       tabela.find("td").mouseleave(function (event) {
-        $('.'+$(event.currentTarget).attr('class')).css('color', 'black');
         $('.'+$(event.currentTarget).attr('class')).css('font-weight', 'normal');
         $('.'+$(event.currentTarget).attr('class')).css('border-color', 'black');
       });
