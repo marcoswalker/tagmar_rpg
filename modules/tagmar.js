@@ -983,6 +983,7 @@ function tabelaResistencia () {
         else table_lines += `<th style='background-color:black;color:white;'>${l}</th>`;
       }
       table_lines += "</tr>";
+      let lines = 0;
       for(let linha of table_resFisMag) {
         table_lines += "<tr>";
         linha.forEach(function (l, index) {
@@ -990,11 +991,27 @@ function tabelaResistencia () {
           if (table_resFisMag.indexOf(linha) % 2 == 0) style += "background-color:white;"
           if ((l == 2 || l == 20) && index != 0) style += "background-color:white; border-width:0;";
           if (index == 0) table_lines += `<th style='${style}'>${l}</th>`;
-          else table_lines += `<td style='${style}'>${l}</td>`;
+          else table_lines += `<td class="colu-${index} line-${lines}" style='${style}'>${l}</td>`;
         });
+        lines++;
         table_lines += "</tr>";
       }
       table_res.append(table_lines);
+      table_res.find('td').mouseenter(function (event) {
+        let classes = $(event.currentTarget).attr('class').split(/\s+/);
+        $('.'+classes[0]).css('color', 'RebeccaPurple');
+        $('.'+classes[1]).css('color', 'RebeccaPurple');
+        $('.'+classes[0]).css('font-weight', 'bold');
+        $('.'+classes[1]).css('font-weight', 'bold');
+      });
+
+      table_res.find('td').mouseleave(function (event) {
+        let classes = $(event.currentTarget).attr('class').split(/\s+/);
+        $('.'+classes[0]).css('color', 'black');
+        $('.'+classes[1]).css('color', 'black');
+        $('.'+classes[0]).css('font-weight', 'normal');
+        $('.'+classes[1]).css('font-weight', 'normal');
+      });
     }
   },{width:800, height:700});
   dialog.render(true);
@@ -1026,12 +1043,23 @@ function tabelaAcoes () {
           if (tabela_resol[x][linha] == "azul") style = "style='background-color:#00a1e8;text-align:center;color:white;border: 1px solid black;'";
           if (tabela_resol[x][linha] == "roxo") style = "style='background-color:#0000ff;text-align:center;color:white;border: 1px solid black;'";
           if (tabela_resol[x][linha] == "cinza") style = "style='background-color:#bfbfbf;text-align:center;border: 1px solid black;'";
-          table_body += `<td ${style}>${linha}</td>`;
+          table_body += `<td class="colu-${x}" ${style}>${linha}</td>`;
         }
         table_body += "</tr>";
       }
       
       tabela.append(table_head+table_body);
+
+      tabela.find("td").mouseenter( function (event) {
+        $('.'+$(event.currentTarget).attr('class')).css('color', 'RebeccaPurple');
+        $('.'+$(event.currentTarget).attr('class')).css('font-weight', 'bold');
+        $('.'+$(event.currentTarget).attr('class')).css('border-color', 'RebeccaPurple');
+      });
+      tabela.find("td").mouseleave(function (event) {
+        $('.'+$(event.currentTarget).attr('class')).css('color', 'black');
+        $('.'+$(event.currentTarget).attr('class')).css('font-weight', 'normal');
+        $('.'+$(event.currentTarget).attr('class')).css('border-color', 'black');
+      });
     }
   },{width:800, height:580});
   dialog.render(true);
