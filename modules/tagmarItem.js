@@ -5,9 +5,7 @@ export class tagmarItem extends Item {
         super.prepareData();
     }
 
-    async habToChat(resultado, r, h_total, colunarolada) {
-        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
-        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<div class='mediaeval rola rola_desc'>" + this.system.tarefAperf + "</div>";
+    async evalHab(resultado) {
         let PrintResult = "";
         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
@@ -17,6 +15,13 @@ export class tagmarItem extends Item {
         else if (resultado == "azul") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
         else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - Absurdo</h1>";
         else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Impossível</h1>";
+        return PrintResult;
+    }
+
+    async habToChat(resultado, r, h_total, colunarolada) {
+        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
+        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<div class='mediaeval rola rola_desc'>" + this.system.tarefAperf + "</div>";
+        let PrintResult = await this.evalHab(resultado);
         let coluna = "<h4 class='mediaeval rola'>Coluna:" + colunarolada + "</h4>";
         if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
             dadosColoridos.dadosColoridos(resultado, r);
@@ -25,6 +30,126 @@ export class tagmarItem extends Item {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${h_total}</h2>${conteudo}${coluna}${PrintResult}`
+        });
+    }
+
+    async habToChat2(vezes, h_total, tabela_resol, sobra) {
+        let dados = [];
+        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
+        let conteudo = "<h3 class='mediaeval rola'>Informações adicionais: </h3>" + "<div class='mediaeval rola rola_desc'>" + this.system.tarefAperf + "</div>";
+        let melhor;
+        let valor = 0;
+        let m_valor = 0;
+        let m_cor;
+        for (let x = 0; x < vezes; x++){
+            dados[x] = new Roll("1d20");
+            dados[x].evaluate({async: false});
+            let coluna_tab = tabela_resol.filter(b => b[0] === 20);
+            let resultado = coluna_tab[0][dados[x].total];
+            let PrintResult = await this.evalHab(resultado);
+            let color = "";
+            switch (resultado) {
+                case 'verde':
+                    valor = 0;
+                    color = 'green';
+                    break;
+                case 'branco':
+                    valor = 1;
+                    color = 'white';
+                    break;
+                case 'amarelo':
+                    valor = 2;
+                    color = 'yellow';
+                    break;
+                case 'laranja':
+                    valor = 3;
+                    color = 'orange';
+                    break;
+                case 'vermelho':
+                    valor = 4;
+                    color = 'red';
+                    break;
+                case 'azul':
+                    valor = 5;
+                    color = 'blue';
+                    break;
+                case 'roxo':
+                    valor = 6;
+                    color = 'darkBlue'
+                    break;
+                default:
+                    valor = 7;
+                    color = 'grey';
+                    break;
+            }
+            conteudo += "<h4 class='mediaeval rola'>Coluna:" + coluna_tab[0][0] + " <span style='color: "+ color +"; text-shadow: 2px 2px 5px black;'>Dado:"+ dados[x].total +"</span></h4>";
+            if (x == 0) {
+                melhor = dados[x];
+                m_cor = resultado;
+                m_valor = valor;
+            } else if (valor > m_valor) {
+                melhor = dados[x];
+                m_cor = resultado;
+                m_valor = valor;
+            }
+            conteudo += PrintResult;
+        }
+        if (sobra > 0) {
+            let dado = new Roll("1d20");
+            dado.evaluate({async: false});
+            let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
+            let resultado = coluna_tab[0][dado.total];
+            let PrintResult = await this.evalHab(resultado);
+            let color = "";
+            switch (resultado) {
+                case 'verde':
+                    valor = 0;
+                    color = 'green';
+                    break;
+                case 'branco':
+                    valor = 1;
+                    color = 'white';
+                    break;
+                case 'amarelo':
+                    valor = 2;
+                    color = 'yellow';
+                    break;
+                case 'laranja':
+                    valor = 3;
+                    color = 'orange';
+                    break;
+                case 'vermelho':
+                    valor = 4;
+                    color = 'red';
+                    break;
+                case 'azul':
+                    valor = 5;
+                    color = 'blue';
+                    break;
+                case 'roxo':
+                    valor = 6;
+                    color = 'darkBlue'
+                    break;
+                default:
+                    valor = 7;
+                    color = 'grey';
+                    break;
+            }
+            conteudo += "<h4 class='mediaeval rola'>Coluna:" + coluna_tab[0][0] + " <span style='color: "+ color +"; text-shadow: 2px 2px 5px black;'>Dado:"+ dado.total +"</span></h4>";
+            if (valor > m_valor) {
+                melhor = dado;
+                m_cor = resultado;
+                m_valor = valor;
+            }
+            conteudo += PrintResult;
+        }
+        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+            dadosColoridos.dadosColoridos(m_cor, melhor);
+        }
+        melhor.toMessage({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class="mediaeval rola" style="text-align:center;">${this.name}: ${h_total}</h2>${conteudo}`
         });
     }
 
@@ -38,44 +163,21 @@ export class tagmarItem extends Item {
             h_total = -7 + this.system.ajuste.valor + this.system.bonus + this.system.penalidade + bonus_hab;
         }
         if (h_total < -7) h_total = -7;
-        let r = new Roll("1d20");
-        r.evaluate({async: false});
-        let Dresult = r.total;
         if (h_total <= 20) {
+            let r = new Roll('1d20');
+            r.evaluate({async: false});
             let coluna_tab = tabela_resol.filter(b => b[0] === h_total);
-            let resultado = coluna_tab[0][Dresult];
+            let resultado = coluna_tab[0][r.total];
             await this.habToChat(resultado, r, h_total, coluna_tab[0][0]);
         } else {
             let valor_hab = h_total % 20;
             if (valor_hab == 0) {
                 let vezes = h_total / 20;
-                let dados = [];
-                for (let x = 0; x < vezes; x++){
-                    dados[x] = new Roll("1d20");
-                    dados[x].evaluate({async: false});
-                    let Dresult = dados[x].total;
-                    let coluna_tab = tabela_resol.filter(b => b[0] === 20);
-                    let resultado = coluna_tab[0][Dresult];
-                    await this.habToChat(resultado, dados[x], h_total, coluna_tab[0][0]);
-                }
+                await this.habToChat2(vezes, h_total, tabela_resol, 0);                
             } else if (valor_hab > 0) {
                 let vezes = parseInt(h_total / 20);
                 let sobra = h_total % 20;
-                let dados = [];
-                for (let x = 0; x < vezes; x++){
-                    dados[x] = new Roll("1d20");
-                    dados[x].evaluate({async: false});
-                    let Dresult = dados[x].total;
-                    let coluna_tab = tabela_resol.filter(b => b[0] === 20);
-                    let resultado = coluna_tab[0][Dresult];
-                    await this.habToChat(resultado, dados[x], h_total, coluna_tab[0][0]);
-                }
-                let dado = new Roll("1d20");
-                dado.evaluate({async: false});
-                Dresult = dado.total;
-                let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
-                let resultado = coluna_tab[0][Dresult];
-                await this.habToChat(resultado, dado, h_total, coluna_tab[0][0]);
+                await this.habToChat2(vezes, h_total, tabela_resol, sobra);
             }
         }
     }

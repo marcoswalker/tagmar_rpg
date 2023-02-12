@@ -268,14 +268,158 @@ export class tagmarActor extends Actor {
         });
     }
 
+    async evalAtrib(resultado) {
+        let PrintResult = "";
+        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
+        else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
+        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
+        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
+        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
+        else if (resultado == "azul") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
+        else if (resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#0000ff;'>Azul Escuro - Absurdo</h1>";
+        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Impossível</h1>";
+        return PrintResult;
+    }
+
+    async AtribToChat(resultado, r, col, cat, habil) {
+        let PrintResult = await this.evalAtrib(resultado);
+        const actorImg = `<img src='${this.img}' style='display:block;border-width:0;margin-left:auto;margin-right:auto;'/>`;
+        let coluna = "<h4 class='mediaeval rola'>Coluna:" + col + "</h4>";
+        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+            this.dadosColoridos.dadosColoridos(resultado, r);
+        }
+        await r.toMessage({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this }),
+            flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
+        });
+    }
+
+    async AtribToChat2(vezes, tabela_resol, sobra, cat, habil) {
+        let dados = [];
+        let melhor;
+        let valor = 0;
+        let m_valor = 0;
+        let m_cor;
+        let conteudo = "";
+        const actorImg = `<img src='${this.img}' style='display:block;border-width:0;margin-left:auto;margin-right:auto;'/>`;
+        for (let x = 0; x < vezes; x++){
+            dados[x] = new Roll("1d20");
+            dados[x].evaluate({async: false});
+            let coluna_tab = tabela_resol.filter(b => b[0] === 20);
+            let color = "";
+            let resultado = coluna_tab[0][dados[x].total];
+            let PrintResult = await this.evalAtrib(resultado);
+            switch (resultado) {
+                case 'verde':
+                    valor = 0;
+                    color = 'green';
+                    break;
+                case 'branco':
+                    valor = 1;
+                    color = 'white';
+                    break;
+                case 'amarelo':
+                    valor = 2;
+                    color = 'yellow';
+                    break;
+                case 'laranja':
+                    valor = 3;
+                    color = 'orange';
+                    break;
+                case 'vermelho':
+                    valor = 4;
+                    color = 'red';
+                    break;
+                case 'azul':
+                    valor = 5;
+                    color = 'blue';
+                    break;
+                case 'roxo':
+                    valor = 6;
+                    color = 'darkBlue'
+                    break;
+                default:
+                    valor = 7;
+                    color = 'grey';
+                    break;
+            }
+            conteudo += "<h4 class='mediaeval rola'>Coluna:" + coluna_tab[0][0] + " <span style='color: "+ color +"; text-shadow: 2px 2px 5px black;'>Dado:"+ dados[x].total +"</span></h4>";
+            if (x == 0) {
+                melhor = dados[x];
+                m_cor = resultado;
+                m_valor = valor;
+            } else if (valor > m_valor) {
+                melhor = dados[x];
+                m_cor = resultado;
+                m_valor = valor;
+            }
+            conteudo += PrintResult;
+        }
+        if (sobra > 0) {
+            let dado = new Roll("1d20");
+            dado.evaluate({async: false});
+            let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
+            let resultado = coluna_tab[0][dado.total];
+            let color = "";
+            let PrintResult = await this.evalAtrib(resultado);
+            switch (resultado) {
+                case 'verde':
+                    valor = 0;
+                    color = 'green';
+                    break;
+                case 'branco':
+                    valor = 1;
+                    color = 'white';
+                    break;
+                case 'amarelo':
+                    valor = 2;
+                    color = 'yellow';
+                    break;
+                case 'laranja':
+                    valor = 3;
+                    color = 'orange';
+                    break;
+                case 'vermelho':
+                    valor = 4;
+                    color = 'red';
+                    break;
+                case 'azul':
+                    valor = 5;
+                    color = 'blue';
+                    break;
+                case 'roxo':
+                    valor = 6;
+                    color = 'darkBlue'
+                    break;
+                default:
+                    valor = 7;
+                    color = 'grey';
+                    break;
+            }
+            conteudo += "<h4 class='mediaeval rola'>Coluna:" + coluna_tab[0][0] + " <span style='color: "+ color +"; text-shadow: 2px 2px 5px black;'>Dado:"+ dado.total +"</span></h4>";
+            if (valor > m_valor) {
+                melhor = dado;
+                m_cor = resultado;
+                m_valor = valor;
+            }
+            conteudo += PrintResult;
+        }
+        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+            this.dadosColoridos.dadosColoridos(m_cor, melhor);
+        }
+        melhor.toMessage({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${conteudo}`
+        });
+    }
+
     async _rollAtributo(cat) {
         const tabela_resol = game.tagmar.tabela_resol;
         let valor_teste = 0;
         const actorData = this.system;
-        const actorImg = `<img src='${this.img}' style='display:block;border-width:0;margin-left:auto;margin-right:auto;'/>`;
-        let PrintResult = "";
         let habil = 0;
-
         if (cat == "INT") {
             habil = actorData.atributos.INT;
             valor_teste = actorData.valor_teste.INT;
@@ -305,99 +449,22 @@ export class tagmarActor extends Actor {
             valor_teste = actorData.valor_teste.PER;
         }
         if (valor_teste < -7) valor_teste = -7;
-        if (valor_teste >= -7) {
-            if (valor_teste <= 20) {
-                let r = await new Roll("1d20").evaluate({async: false});
-                let col_tab = tabela_resol.find(h => h[0] == valor_teste);
-                let resultado = col_tab[r.total];
-                if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
-                else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
-                else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
-                else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
-                else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
-                else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
-                else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
-                let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
-                if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                    this.dadosColoridos.dadosColoridos(resultado, r);
-                }
-                await r.toMessage({
-                    user: game.user.id,
-                    speaker: ChatMessage.getSpeaker({ actor: this }),
-                    flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
-                });
-            } else {
-                let valor_hab = valor_teste % 20;
-                if (valor_hab == 0) {
-                    let vezes = valor_teste / 20;
-                    for (let x = 0; x < vezes; x++){
-                        let r = await new Roll("1d20").evaluate({async: false});
-                        let col_tab = tabela_resol.find(h => h[0] == 20);
-                        let resultado = col_tab[r.total];
-                        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
-                        else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
-                        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
-                        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
-                        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
-                        else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
-                        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
-                        let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
-                        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                            this.dadosColoridos.dadosColoridos(resultado, r);
-                        }
-                        await r.toMessage({
-                            user: game.user.id,
-                            speaker: ChatMessage.getSpeaker({ actor: this }),
-                            flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
-                        });
-                    }
-                } else if (valor_hab > 0) {
-                    let vezes = parseInt(valor_teste / 20);
-                    let sobra = valor_teste % 20;
-                    for (let x = 0; x < vezes; x++){
-                        let r = await new Roll("1d20").evaluate({async: false});
-                        let col_tab = tabela_resol.find(h => h[0] == 20);
-                        let resultado = col_tab[r.total];
-                        if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
-                        else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
-                        else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
-                        else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
-                        else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
-                        else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
-                        else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
-                        let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
-                        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                            this.dadosColoridos.dadosColoridos(resultado, r);
-                        }
-                        await r.toMessage({
-                            user: game.user.id,
-                            speaker: ChatMessage.getSpeaker({ actor: this }),
-                            flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
-                        });
-                    }
-                    let r = await new Roll("1d20").evaluate({async: false});
-                    let col_tab = tabela_resol.find(h => h[0] == sobra);
-                    let resultado = col_tab[r.total];
-                    if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
-                    else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
-                    else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
-                    else if (resultado == "laranja") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff9900;'>Laranja - Médio</h1>";
-                    else if (resultado == "vermelho") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#ff0000;'>Vermelho - Difícil</h1>";
-                    else if (resultado == "azul" || resultado == "roxo") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#00a1e8;'>Azul - Muito Difícil</h1>";
-                    else if (resultado == "cinza") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#bfbfbf;'>Cinza - Crítico Absurdo</h1>";
-                    let coluna = "<h4 class='mediaeval rola'>Coluna:" + col_tab[0] + "</h4>";
-                    if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
-                            this.dadosColoridos.dadosColoridos(resultado, r);
-                        }
-                    }
-                    await r.toMessage({
-                        user: game.user.id,
-                        speaker: ChatMessage.getSpeaker({ actor: this }),
-                        flavor: `${actorImg}<h2 class="mediaeval rola" style="text-align:center;">Teste de Habilidade ${cat} : ${habil}</h2>${coluna}${PrintResult}`
-                    });
-                }
+        if (valor_teste <= 20) {
+            let r = await new Roll("1d20").evaluate({async: false});
+            let col_tab = tabela_resol.find(h => h[0] == valor_teste);
+            let resultado = col_tab[r.total];
+            await this.AtribToChat(resultado, r, col_tab[0], cat, habil);
+        } else {
+            let valor_atrib = valor_teste % 20;
+            if (valor_atrib == 0) {
+                let vezes = valor_teste / 20;
+                await this.AtribToChat2(vezes, tabela_resol, 0, cat, habil);                
+            } else if (valor_atrib > 0) {
+                let vezes = parseInt(valor_teste / 20);
+                let sobra = valor_teste % 20;
+                await this.AtribToChat2(vezes, tabela_resol, sobra, cat, habil);
             }
         }
     }
+
 }
