@@ -217,46 +217,146 @@ export class tagmarItem extends Item {
         });
     }
 
+    async tecnicaToChat2(vezes, total, tabela_resol, sobra) {
+        let dados = [];
+        let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
+        let conteudo = "<h3 class='mediaeval rola'><a class='showDesc'>Descrição: <i class='far fa-eye-slash'></i></a> </h3>" + "<p class='mediaeval rola rola_desc' style='display: none;'>" + this.system.descricao + "</p>";
+        let melhor;
+        let valor = 0;
+        let m_valor = 0;
+        let m_cor;
+        for (let x = 0; x < vezes; x++) {
+            dados[x] = new Roll('1d20');
+            dados[x].evaluate({async: false});
+            let coluna_tab = tabela_resol.filter(b => b[0] === 20);
+            let resultado = coluna_tab[0][dados[x].total];
+            if (resultado == "roxo") resultado = "azul";
+            let PrintResult = await this.evalHab(resultado);
+            let color = "";
+            switch (resultado) {
+                case 'verde':
+                    valor = 0;
+                    color = 'green';
+                    break;
+                case 'branco':
+                    valor = 1;
+                    color = 'white';
+                    break;
+                case 'amarelo':
+                    valor = 2;
+                    color = 'yellow';
+                    break;
+                case 'laranja':
+                    valor = 3;
+                    color = 'orange';
+                    break;
+                case 'vermelho':
+                    valor = 4;
+                    color = 'red';
+                    break;
+                case 'azul':
+                    valor = 5;
+                    color = 'blue';
+                    break;
+                case 'roxo':
+                    valor = 6;
+                    color = 'blue'
+                    break;
+                default:
+                    valor = 7;
+                    color = 'grey';
+                    break;
+            }
+            conteudo += "<h4 class='mediaeval rola'>Coluna:" + coluna_tab[0][0] + " <span style='color: "+ color +"; text-shadow: 2px 2px 5px black;'>Dado:"+ dados[x].total +"</span></h4>";
+            if (x == 0) {
+                melhor = dados[x];
+                m_cor = resultado;
+                m_valor = valor;
+            } else if (valor > m_valor) {
+                melhor = dados[x];
+                m_cor = resultado;
+                m_valor = valor;
+            }
+            conteudo += PrintResult;
+        }
+        if (sobra > 0) {
+            let dado = new Roll('1d20');
+            dado.evaluate({async: false});
+            let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
+            let resultado = coluna_tab[0][dado.total];
+            if (resultado == 'roxo') resultado = 'azul';
+            let PrintResult = await this.evalHab(resultado);
+            let color = "";
+            switch (resultado) {
+                case 'verde':
+                    valor = 0;
+                    color = 'green';
+                    break;
+                case 'branco':
+                    valor = 1;
+                    color = 'white';
+                    break;
+                case 'amarelo':
+                    valor = 2;
+                    color = 'yellow';
+                    break;
+                case 'laranja':
+                    valor = 3;
+                    color = 'orange';
+                    break;
+                case 'vermelho':
+                    valor = 4;
+                    color = 'red';
+                    break;
+                case 'azul':
+                    valor = 5;
+                    color = 'blue';
+                    break;
+                case 'roxo':
+                    valor = 6;
+                    color = 'darkBlue'
+                    break;
+                default:
+                    valor = 7;
+                    color = 'grey';
+                    break;
+            }
+            conteudo += "<h4 class='mediaeval rola'>Coluna:" + coluna_tab[0][0] + " <span style='color: "+ color +"; text-shadow: 2px 2px 5px black;'>Dado:"+ dado.total +"</span></h4>";
+            if (valor > m_valor) {
+                melhor = dado;
+                m_cor = resultado;
+                m_valor = valor;
+            }
+            conteudo += PrintResult;
+        }
+        if (game.settings.get('tagmar_rpg', 'dadosColoridos')) {
+            dadosColoridos.dadosColoridos(m_cor, melhor);
+        }
+        melhor.toMessage({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${this.name}: ${this.system.total}</h2>${conteudo}`
+        });
+    }
+
     async rollTecnicaCombate() {
         const tabela_resol = game.tagmar.tabela_resol;
-        let r = new Roll("1d20");
-        r.evaluate({async: false});
-        let Dresult = r.total;
-        if (this.system.total <= 20) {
-            let coluna_tab = tabela_resol.filter(b => b[0] === this.system.total);
-            let resultado = coluna_tab[0][Dresult];
+        let total = this.system.total;
+        if (total < -7) total = -7;
+        if (total <= 20) {
+            let r = new Roll('1d20');
+            r.evaluate({async: false});
+            let coluna_tab = tabela_resol.filter(b => b[0] === total);
+            let resultado = coluna_tab[0][r.total];
             await this.tecnicaToChat(resultado, r, coluna_tab[0][0]);
         } else {
-            let valor_hab = this.system.total % 20;
-            if (valor_hab == 0) {
-                let vezes = this.system.total / 20;
-                let dados = [];
-                for (let x = 0; x < vezes; x++){
-                    dados[x] = new Roll("1d20");
-                    dados[x].evaluate({async: false});
-                    let Dresult = dados[x].total;
-                    let coluna_tab = tabela_resol.filter(b => b[0] === 20);
-                    let resultado = coluna_tab[0][Dresult];
-                    await this.tecnicaToChat(resultado, dados[x], coluna_tab[0][0]);
-                }
-            } else if (valor_hab > 0) {
-                let vezes = parseInt(this.system.total / 20);
-                let sobra = this.system.total % 20;
-                let dados = [];
-                for (let x = 0; x < vezes; x++){
-                    dados[x] = new Roll("1d20");
-                    dados[x].evaluate({async: false});
-                    let Dresult = dados[x].total;
-                    let coluna_tab = tabela_resol.filter(b => b[0] === 20);
-                    let resultado = coluna_tab[0][Dresult];
-                    await this.tecnicaToChat(resultado, dados[x], coluna_tab[0][0]);
-                }
-                let dado = new Roll("1d20");
-                dado.evaluate({async: false});
-                Dresult = dado.total;
-                let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
-                let resultado = coluna_tab[0][Dresult];
-                await this.tecnicaToChat(resultado, dado, coluna_tab[0][0]);
+            let valor_total = total % 20;
+            if (valor_total == 0) {
+                let vezes = total / 20;
+                await this.tecnicaToChat2(vezes, total, tabela_resol, 0);
+            } else if (valor_total > 0){
+                let vezes = parseInt(total / 20);
+                await this.tecnicaToChat2(vezes, total, tabela_resol, valor_total);
             }
         }
     }
