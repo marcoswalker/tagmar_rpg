@@ -1,0 +1,8 @@
+2023/10/03-12:37:48.836 1678 Recovering log #6
+2023/10/03-12:37:48.838 1678 Delete type=0 #6
+2023/10/03-12:37:48.838 1678 Delete type=3 #2
+2023/10/03-12:38:38.815 1adc Level-0 table #17: started
+2023/10/03-12:38:38.815 1adc Level-0 table #17: 0 bytes OK
+2023/10/03-12:38:38.816 1adc Delete type=0 #15
+2023/10/03-12:38:38.816 1adc Manual compaction at level-0 from '!actors!03zeWUfluq00dbES' @ 72057594037927935 : 1 .. '!folders!zqAuVRAyzXirCoPJ' @ 0 : 0; will stop at (end)
+2023/10/03-12:38:38.816 1adc Manual compaction at level-1 from '!actors!03zeWUfluq00dbES' @ 72057594037927935 : 1 .. '!folders!zqAuVRAyzXirCoPJ' @ 0 : 0; will stop at (end)
