@@ -1,8 +1,21 @@
-2023/10/03-12:37:48.836 1678 Recovering log #6
-2023/10/03-12:37:48.838 1678 Delete type=0 #6
-2023/10/03-12:37:48.838 1678 Delete type=3 #2
-2023/10/03-12:38:38.815 1adc Level-0 table #17: started
-2023/10/03-12:38:38.815 1adc Level-0 table #17: 0 bytes OK
-2023/10/03-12:38:38.816 1adc Delete type=0 #15
-2023/10/03-12:38:38.816 1adc Manual compaction at level-0 from '!actors!03zeWUfluq00dbES' @ 72057594037927935 : 1 .. '!folders!zqAuVRAyzXirCoPJ' @ 0 : 0; will stop at (end)
-2023/10/03-12:38:38.816 1adc Manual compaction at level-1 from '!actors!03zeWUfluq00dbES' @ 72057594037927935 : 1 .. '!folders!zqAuVRAyzXirCoPJ' @ 0 : 0; will stop at (end)
+2023/10/03-20:01:23.212 15d8 Delete type=3 #1
+2023/10/03-20:03:49.384 1174 Level-0 table #5: started
+2023/10/03-20:03:49.500 1174 Level-0 table #5: 11668555 bytes OK
+2023/10/03-20:03:49.503 1174 Delete type=0 #3
+2023/10/03-20:04:06.608 1174 Level-0 table #7: started
+2023/10/03-20:04:06.610 1174 Level-0 table #7: 72811 bytes OK
+2023/10/03-20:04:06.612 1174 Delete type=0 #4
+2023/10/03-20:04:06.649 1174 Manual compaction at level-0 from '!actors!0BkHQiD5YgNbsjCr' @ 72057594037927935 : 1 .. '!folders!x3LmFhZIf6bnUUhr' @ 0 : 0; will stop at (end)
+2023/10/03-20:04:06.649 1174 Manual compaction at level-1 from '!actors!0BkHQiD5YgNbsjCr' @ 72057594037927935 : 1 .. '!folders!x3LmFhZIf6bnUUhr' @ 0 : 0; will stop at '!actors.items!st0EylNK27RhEAsP.yPSg1RKZemTuj3En' @ 6861 : 1
+2023/10/03-20:04:06.649 1174 Compacting 1@1 + 1@2 files
+2023/10/03-20:04:06.675 1174 Generated table #8@1: 650 keys, 2118393 bytes
+2023/10/03-20:04:06.701 1174 Generated table #9@1: 1375 keys, 2121383 bytes
+2023/10/03-20:04:06.727 1174 Generated table #10@1: 1405 keys, 2124597 bytes
+2023/10/03-20:04:06.753 1174 Generated table #11@1: 1481 keys, 2126364 bytes
+2023/10/03-20:04:06.780 1174 Generated table #12@1: 1282 keys, 2125524 bytes
+2023/10/03-20:04:06.794 1174 Generated table #13@1: 716 keys, 1127755 bytes
+2023/10/03-20:04:06.794 1174 Compacted 1@1 + 1@2 files => 11744016 bytes
+2023/10/03-20:04:06.794 1174 compacted to: files[ 0 0 6 0 0 0 0 ]
+2023/10/03-20:04:06.794 1174 Delete type=2 #5
+2023/10/03-20:04:06.796 1174 Delete type=2 #7
+2023/10/03-20:04:06.796 1174 Manual compaction at level-1 from '!actors.items!st0EylNK27RhEAsP.yPSg1RKZemTuj3En' @ 6861 : 1 .. '!folders!x3LmFhZIf6bnUUhr' @ 0 : 0; will stop at (end)
