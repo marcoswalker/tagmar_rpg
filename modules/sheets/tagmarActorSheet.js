@@ -306,7 +306,7 @@ export default class tagmarActorSheet extends ActorSheet {
             $('.searchPertence').prop( "disabled", false );
             html.find('.searchPertence').keyup(this._realcaPertence.bind(this));
             html.find('.item-cesto').click(ev => {
-                const actors = game.documents;
+                const actors = game.actors;
                 let personagem;
                 let inventario;
                 let bau = null;
@@ -320,8 +320,8 @@ export default class tagmarActorSheet extends ActorSheet {
                 });
                 const li = $(ev.currentTarget).parents(".item");
                 const item = this.document.items.get(li.data('itemId')); 
-                personagem.createEmbeddedDocuments("Item", [item.system]); 
-                if (bau == this.document) {
+                personagem.createEmbeddedDocuments("Item", [item.data.document]); 
+                if (bau.id == this.document.id) {
                     bau.deleteEmbeddedDocuments("Item", [item.id]); 
                 }
             });

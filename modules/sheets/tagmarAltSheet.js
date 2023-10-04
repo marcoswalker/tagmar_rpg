@@ -310,8 +310,8 @@ export default class tagmarAltSheet extends ActorSheet {
                 });
                 const li = $(ev.currentTarget).parents(".item");
                 const item = this.document.items.get(li.data('itemId')); 
-                personagem.createEmbeddedDocuments("Item", [item.system]); 
-                if (bau == this.document) {
+                personagem.createEmbeddedDocuments("Item", [item.data.document]); 
+                if (bau.id == this.document.id) {
                     bau.deleteEmbeddedDocuments("Item", [item.id]); 
                 }
             });
