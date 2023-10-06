@@ -204,102 +204,339 @@ Hooks.once("init", function(){
   });
 
   preloadHandlebarsTemplates();
-  if (game.modules.get('polyglot')) {
-    if (!game.modules.get('polyglot').active) return;
-    import("/modules/polyglot/module/LanguageProvider.js").then(function (LanguageProvider) {
-      class TagmarLanguageProvider extends LanguageProvider.LanguageProvider {
-        get originalTongues() {
-          return {
-              _default: "oldeenglish",
-              males: "oldeenglish",
-              leva: "oldethorass",
-              lud: "qijomi",
-              eredri: "semphari",
-              verrogari: "oriental",
-              dantseniano: "reanaarian",
-              maranes: "miroslavnormal",
-              lunes: "kargi",
-              runes: "elderfuthark",
-              abadrim: "meroiticdemotic",
-              planense: "maraseye",
-              linguacomumdascidadesestados: "chinese",
-              linguacomumdosmangues: "orkglyphs",
-              rubeo: "floki",
-              lazuli: "highdrowic",
-              linguasbarbaras: "dovah",
-              aktar: "oldethorass",
-              dictio: "nordic",
-              birso: "nordic",
-              povosdodeserto: "valmaric",
-              lanta: "thorass",
-              avozdepedra: "dethek",
-              elfico: "espruar",
-              tessaldar: "celestial",
-              kurng: "dovah",
-              linguadasfadas: "celestial",
-              linguadosdragoes: "iokharic",
-              linguasselvagens: "magescript",
-              marante: "cyrillic",
-              infernal: "infernal",
-              abissal: "infernal"
-          };
-        }
-        getSystemDefaultLanguage() {
-          this.tongues = this.originalTongues;
-          return "males";
-        }
-        get requiresReady() {
-          return false;
-        }
-        async getLanguages() {
-          const langs = {
-            males: "Malês",
-            leva: "Leva",
-            lud: "Lud",
-            eredri: "Eredri",
-            verrogari: "Verrogari",
-            dantseniano: "Dantseniano",
-            maranes: "Maranês",
-            lunes: "Lunês",
-            runes: "Runês",
-            abadrim: "Abadrim",
-            planense: "Planense",
-            linguacomumdascidadesestados: "Língua comum das Cidades-Estados",
-            linguacomumdosmangues: "Língua comum dos Mangues",
-            rubeo: "Rúbeo",
-            lazuli: "Lazúli",
-            linguasbarbaras: "Línguas bárbaras",
-            aktar: "Aktar",
-            dictio: "Díctio",
-            birso: "Birso",
-            povosdodeserto: "Povos do deserto",
-            lanta: "Lanta",
-            avozdepedra: "A voz de pedra",
-            elfico: "Élfico",
-            tessaldar: "Tessaldar",
-            kurng: "Kurng",
-            linguadasfadas: "Língua das fadas",
-            linguadosdragoes: "Língua dos dragões",
-            linguasselvagens: "Línguas selvagens",
-            marante: "Marante",
-            infernal: "Infernal",
-            abissal: "Abissal"
-          };     
-          this.languages = langs;
-        }
-        getUserLanguages(actor) {
-          let known_languages = new Set();
-          let literate_languages = new Set();
-          let linguas = actor.system.defesa.categoria.split(';');
-          for (let lang of linguas) {
-            known_languages.add(lang);
-          }
-          return [known_languages, literate_languages];
-        }
+});
+
+Hooks.once("polyglot.init", (LanguageProvider) => {
+  class TagmarLanguageProvider extends LanguageProvider {
+    languages = {
+      males: {
+        label: "Males",
+        font: "Olde English",
+        rng: "default"
+      },
+      leva: {
+        label: "Leva",
+        font: "Olde Thorass",
+        rng: "default"
+      },
+      lud: {
+        label: "Lud",
+        font: "Qijomi",
+        rng: "default"
+      },
+      eredri: {
+        label: "Eredri",
+        font: "Semphari",
+        rng: "default"
+      },
+      verrogari: {
+        label: "Verrogari",
+        font: "Oriental",
+        rng: "default"
+      },
+      dantseniano: {
+        label: "Dantseniano",
+        font: "Reanaarian",
+        rng: "default"
+      },
+      maranes: {
+        label: "Maranês",
+        font: "Miroslav Normal",
+        rng: "default"
+      },
+      lunes: {
+        label: "Lunês",
+        font: "Kargi",
+        rng: "default"
+      },
+      runes: {
+        label: "Runês",
+        font: "Elder Futhark",
+        rng: "default"
+      },
+      abadrim: {
+        label: "Abadrim",
+        font: "Meroitic Demotic",
+        rng: "default"
+      },
+      planense: {
+        label: "Planense",
+        font: "Maras Eye",
+        rng: "default"
+      },
+      linguacomumdascidadesestados: {
+        label: "Língua comum das Cidades-Estados",
+        font: "Scrapbook Chinese",
+        rng: "default"
+      },
+      linguacomumdosmangues: {
+        label: "Língua comum dos Mangues",
+        font: "Ork Glyphs",
+        rng: "default"
+      },
+      rubeo: {
+        label: "Rúbeo",
+        font: "Floki",
+        rng: "default"
+      },
+      lazuli: {
+        label: "Lazúli",
+        font: "High Drowic",
+        rng: "default"
+      },
+      linguasbarbaras: {
+        label: "Línguas bárbaras",
+        font: "Dovah",
+        rng: "default"
+      },
+      aktar: {
+        label: "Aktar",
+        font: "Olde Thorass",
+        rng: "default"
+      },
+      dictio: {
+        label: "Díctio",
+        font: "Nordic",
+        rng: "default"
+      },
+      birso: {
+        label: "Birso",
+        font: "Nordic",
+        rng: "default"
+      },
+      povosdodeserto: {
+        label: "Povos do deserto",
+        font: "Valmaric",
+        rng: "default"
+      },
+      lanta: {
+        label: "Lanta",
+        font: "Thorass",
+        rng: "default"
+      },
+      avozdepedra: {
+        label: "A voz de pedra",
+        font: "Dethek",
+        rng: "default"
+      },
+      elfico: {
+        label: "Élfico",
+        font: "Espruar",
+        rng: "default"
+      },
+      tessaldar: {
+        label: "Tessaldar",
+        font: "Celestial",
+        rng: "default"
+      },
+      kurng: {
+        label: "Kurng",
+        font: "Dovah",
+        rng: "default"
+      },
+      linguadasfadas: {
+        label: "Língua das fadas",
+        font: "Celestial",
+        rng: "default"
+      },
+      linguadosdragoes: {
+        label: "Língua dos dragões",
+        font: "Iokharic",
+        rng: "default"
+      },
+      linguasselvagens: {
+        label: "Línguas selvagens",
+        font: "Mage Script",
+        rng: "default"
+      },
+      marante: {
+        label: "Marante",
+        font: "Ophidian",
+        rng: "default"
+      },
+      infernal: {
+        label: "Infernal",
+        font: "Infernal",
+        rng: "default"
+      },
+      abissal: {
+        label: "Abissal",
+        font: "Infernal",
+        rng: "default"
       }
-      game.polyglot.registerSystem(game.system.id, TagmarLanguageProvider);
-    });
+    }
+    async getLanguages() {
+      const langs = {
+        males: {
+          label: "Males",
+          font: "Olde English",
+          rng: "default"
+        },
+        leva: {
+          label: "Leva",
+          font: "Olde Thorass",
+          rng: "default"
+        },
+        lud: {
+          label: "Lud",
+          font: "Qijomi",
+          rng: "default"
+        },
+        eredri: {
+          label: "Eredri",
+          font: "Semphari",
+          rng: "default"
+        },
+        verrogari: {
+          label: "Verrogari",
+          font: "Oriental",
+          rng: "default"
+        },
+        dantseniano: {
+          label: "Dantseniano",
+          font: "Reanaarian",
+          rng: "default"
+        },
+        maranes: {
+          label: "Maranês",
+          font: "Miroslav Normal",
+          rng: "default"
+        },
+        lunes: {
+          label: "Lunês",
+          font: "Kargi",
+          rng: "default"
+        },
+        runes: {
+          label: "Runês",
+          font: "Elder Futhark",
+          rng: "default"
+        },
+        abadrim: {
+          label: "Abadrim",
+          font: "Meroitic Demotic",
+          rng: "default"
+        },
+        planense: {
+          label: "Planense",
+          font: "Maras Eye",
+          rng: "default"
+        },
+        linguacomumdascidadesestados: {
+          label: "Língua comum das Cidades-Estados",
+          font: "Scrapbook Chinese",
+          rng: "default"
+        },
+        linguacomumdosmangues: {
+          label: "Língua comum dos Mangues",
+          font: "Ork Glyphs",
+          rng: "default"
+        },
+        rubeo: {
+          label: "Rúbeo",
+          font: "Floki",
+          rng: "default"
+        },
+        lazuli: {
+          label: "Lazúli",
+          font: "High Drowic",
+          rng: "default"
+        },
+        linguasbarbaras: {
+          label: "Línguas bárbaras",
+          font: "Dovah",
+          rng: "default"
+        },
+        aktar: {
+          label: "Aktar",
+          font: "Olde Thorass",
+          rng: "default"
+        },
+        dictio: {
+          label: "Díctio",
+          font: "Nordic",
+          rng: "default"
+        },
+        birso: {
+          label: "Birso",
+          font: "Nordic",
+          rng: "default"
+        },
+        povosdodeserto: {
+          label: "Povos do deserto",
+          font: "Valmaric",
+          rng: "default"
+        },
+        lanta: {
+          label: "Lanta",
+          font: "Thorass",
+          rng: "default"
+        },
+        avozdepedra: {
+          label: "A voz de pedra",
+          font: "Dethek",
+          rng: "default"
+        },
+        elfico: {
+          label: "Élfico",
+          font: "Espruar",
+          rng: "default"
+        },
+        tessaldar: {
+          label: "Tessaldar",
+          font: "Celestial",
+          rng: "default"
+        },
+        kurng: {
+          label: "Kurng",
+          font: "Dovah",
+          rng: "default"
+        },
+        linguadasfadas: {
+          label: "Língua das fadas",
+          font: "Celestial",
+          rng: "default"
+        },
+        linguadosdragoes: {
+          label: "Língua dos dragões",
+          font: "Iokharic",
+          rng: "default"
+        },
+        linguasselvagens: {
+          label: "Línguas selvagens",
+          font: "Mage Script",
+          rng: "default"
+        },
+        marante: {
+          label: "Marante",
+          font: "Ophidian",
+          rng: "default"
+        },
+        infernal: {
+          label: "Infernal",
+          font: "Infernal",
+          rng: "default"
+        },
+        abissal: {
+          label: "Abissal",
+          font: "Infernal",
+          rng: "default"
+        }
+      };
+      this.languages = langs;
+    }
+    getUserLanguages(actor) {
+      let known_languages = new Set();
+      let literate_languages = new Set();
+      let linguas = actor.system.defesa.categoria.split(';');
+      for (let lang of linguas) {
+        known_languages.add(lang);
+      }
+      return [known_languages, literate_languages];
+    }
   }
+  game.polyglot.api.registerSystem(TagmarLanguageProvider);
+  console.log("AQUI FOI O POLYGLOT");
 });
 
 Hooks.once("ready", async function () {

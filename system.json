@@ -2,7 +2,7 @@
   "id": "tagmar_rpg",
   "title": "Tagmar XXX",
   "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "relationships": {
     "requires": [
       {
@@ -24,6 +24,10 @@
       {
         "id": "drag-ruler",
         "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-drag-ruler/master/module.json"
+      },
+      {
+        "id": "polyglot",
+        "manifest": "https://github.com/mclemente/fvtt-module-polyglot/releases/latest/download/module.json"
       }
     ]
   },
