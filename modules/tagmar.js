@@ -536,7 +536,6 @@ Hooks.once("polyglot.init", (LanguageProvider) => {
     }
   }
   game.polyglot.api.registerSystem(TagmarLanguageProvider);
-  console.log("AQUI FOI O POLYGLOT");
 });
 
 Hooks.once("ready", async function () {
