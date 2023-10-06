@@ -6,7 +6,7 @@ export const SystemSettings = function() {
         hint: "Opção de imagem de fundo da ficha, padrão ou fundo do livro",
         scope: "client",
         config: true,
-        default: "base",
+        default: "tagmar3",
         type: String,
         choices: {
           "base": "Sem Imagem (padrão)",
@@ -39,7 +39,7 @@ export const SystemSettings = function() {
         hint: "Opção para criar barras automaticamente ao criar um token.(Nescessário módulo Bar Brawl)",
         scope: "world",
         config: true,
-        default: "no",
+        default: "barra_both",
         type: String,
         choices: {
           "no": "Não criar barras automaticamente.",
