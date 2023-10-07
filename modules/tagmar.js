@@ -540,6 +540,7 @@ Hooks.once("polyglot.init", (LanguageProvider) => {
 
 Hooks.once("ready", async function () {
   game.settings.set('core', 'combatTheme', 'tagmar'); // Exclusivo Tagmar XXX
+  if (game.user.isGM) game.settings.set('polyglot', 'allowOOC', 'a');
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     createTagmarMacro(data, slot);
     return false;
