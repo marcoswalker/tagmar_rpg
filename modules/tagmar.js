@@ -528,6 +528,7 @@ Hooks.once("polyglot.init", (LanguageProvider) => {
     getUserLanguages(actor) {
       let known_languages = new Set();
       let literate_languages = new Set();
+      if (actor.type == "Inventario") return [known_languages, literate_languages];
       let linguas = actor.system.defesa.categoria.split(';');
       for (let lang of linguas) {
         known_languages.add(lang);
@@ -907,6 +908,12 @@ Hooks.on('renderChatMessage', function (message, jq, messageData) {
       token.actor._aplicarDano({"valor": dano, "isCura": cura, "isCritico": critico}, token);
     }
   });
+  // Imagem do personagem no chat
+  if (!messageData.message.speaker.actor) return;
+  let sender = game.actors.get(messageData.message.speaker.actor);
+  jq.find('.message-sender').html(`
+  <h4><img src="${sender.img}" width=40px height=40px style="border-radius:8px;vertical-align: middle;margin-right:10px;"/>${sender.name}</h4>
+  `);
 });
 
 Hooks.on('tagmar_Critico', async function (coluna, tabela_resol, user, actor, tipo, falha) {
@@ -1368,7 +1375,7 @@ async function rollTabela(colunaR) {
   }
   r.toMessage({
       user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ alias: game.user.name }),
+      speaker: ChatMessage.getSpeaker({ alias: game.user.name, actor: null }),
       flavor: `<h2 class='mediaeval rola' style='text-align:center;'>Rolagem Resolução de Ações</h2>${coluna}${PrintResult}`
   });
 }
@@ -1421,7 +1428,7 @@ async function rollResistencia(resist, f_ataque) {
   }  
   r.toMessage({
       user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ alias: game.user.name }),
+      speaker: ChatMessage.getSpeaker({ alias: game.user.name, actor: null }),
       flavor: `<h2 class="mediaeval rola" style="text-align:center;">Teste de Resistência</h2><h3 class="mediaeval rola"> Força Ataque: ${forcAtaque}</h3><h3 class="mediaeval rola">Resistência: ${valorDef}</h3>${stringSucesso}`
   });
 }
