@@ -1500,7 +1500,9 @@ Hooks.on("renderCombatTracker",async function (combatTracker, html) {
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   let data_a = data.uuid.split('.');
-  const item = game.actors.get(data_a[5]).items.get(data_a[7]);
+  let item_id = data_a[data_a.length-1];
+  let actor_id = data_a[1];
+  const item = game.actors.get(actor_id).items.get(item_id);
   if (typeof item == "undefined") {
     return ui.notifications.error("Não foi possível encontrar o item.");
   }
