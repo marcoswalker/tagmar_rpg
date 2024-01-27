@@ -413,10 +413,11 @@ export function _attCargaAbsorcaoDefesa(data, updatePers) {
         actorSheet.defesas.forEach(function(item){
             let itemData = item;
             //actor_carga += item.system.peso;
-            absorcao += itemData.system.absorcao;
-            def_pasVal += itemData.system.defesa_base.valor;
+            if (itemData.system.equipado) absorcao += itemData.system.absorcao;
+            if (itemData.system.equipado)  def_pasVal += itemData.system.defesa_base.valor;
             if (itemData.system.defesa_base.tipo != ""){
-                def_pasCat = itemData.system.defesa_base.tipo;
+                if (!itemData.system.equipado) def_pasCat = "L";
+                else def_pasCat = itemData.system.defesa_base.tipo;
             }
             abs_magica += itemData.system.peso;
         });
@@ -474,6 +475,7 @@ export function _attCargaAbsorcaoDefesa(data, updatePers) {
     const actorData = data.document.system;
     const actorSheetData = actorSheet.system;
     if (abs_magica > 0) abs_magica = 1;
+    if (def_pasCat == "") def_pasCat = "L";
     if (actorData.d_passiva.valor != def_pasVal || actorData.d_passiva.categoria != def_pasCat || actorData.d_ativa.categoria != def_pasCat || actorData.d_ativa.valor != def_atiVal || actorData.carga_transp.value != cap_usada || actorData.carga_transp.max != cap_transp || actorData.carga.value != actor_carga || actorData.absorcao.max != absorcao || actorData.v_base != abs_magica) {
         updatePers["system.d_passiva.valor"] = def_pasVal;
         updatePers["system.d_passiva.categoria"] = def_pasCat;

@@ -291,7 +291,8 @@
       "for_min": 0,
       "peso": 0,
       "preco": "",
-      "descricao": ""
+      "descricao": "",
+      "equipado": true
     },
     "Transporte": {
       "capacidade": {

@@ -168,6 +168,20 @@ export default class tagmarAltSheet extends ActorSheet {
             item.sheet.render(true);
         });
 
+        html.find('.item-equipa').click(ev => {
+            const li = $(ev.currentTarget).parents(".item");
+            const item = this.document.items.get(li.data('itemId'));
+            if (item.system.equipado) {
+                item.update({
+                    "system.equipado": false
+                });
+            } else {
+                item.update({
+                    "system.equipado": true
+                });
+            }
+        });
+
         html.find('.item-delete').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             let dialog = new Dialog({
@@ -224,7 +238,7 @@ export default class tagmarAltSheet extends ActorSheet {
         html.find(".newCombat").click(this._newCombate.bind(this));
         html.find(".newMagia").click(this._newMagia.bind(this));
         html.find(".newPertence").click(this._newPertence.bind(this));
-        html.find(".calculaNovaEH").click(this._passandoEH.bind(this));
+        html.find(".subir_estagio").click(this._subirEstagio.bind(this));
         html.find(".rolarIniciativa").click(this._rolarIniciativa.bind(this));
         html.find('.rolaR_Fis').hover(function (event) {
             $(event.currentTarget).html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
@@ -240,18 +254,6 @@ export default class tagmarAltSheet extends ActorSheet {
             $(event.currentTarget).html("<i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i><i class='fas fa-dice-d20' style='margin-right:5px;'></i>");
         }, function (event) {
             $(event.currentTarget).html("Iniciativa");
-        });
-        html.find(".roll1d10").click(ev => {
-            let formula = "1d10";
-            let r = new Roll(formula);
-            r.evaluate({async: false});
-            r.toMessage({
-                user: game.user.id,
-                speaker: ChatMessage.getSpeaker({ actor: this.document }),
-                flavor: ``
-            });
-            $(html.find(".valord10EH")).val(r.total);
-            $('.calculaNovaEH').css('color', 'rgb(94, 8, 8)');
         });
         html.find(".clickHab").mousedown( function (event) {
             $('.clickHab').html("Nível");
@@ -1159,54 +1161,48 @@ export default class tagmarAltSheet extends ActorSheet {
         }
     }
 
-    _passandoEH(event) {
+    async _subirEstagio(event) {
         let estagio_atual = this.document.system.estagio;
-        let valord10 = parseInt($(".valord10EH").val());
-        if (!valord10 && estagio_atual > 1) {
-            ui.notifications.warn("Clique em '1d10' para rolar o dado ou preencha o valor no campo.");
-            $('.roll1d10').css('color', 'rgb(94, 8, 8)');
-            return;
-        }
-        let raca_list = [];
+        let r = new Roll('1d10');
+        await r.evaluate();
+        let valord10 = r.total;
         let nova_eh = 0;
         let eh_atual = this.document.system.eh.max;
         let attFIS = this.document.system.atributos.FIS;
-        if (estagio_atual > 1 && valord10 > 0 && valord10 <= 10) {
-            if (this.profissao) {
-                if (valord10 >= 1 && valord10 <= 2) {
-                    nova_eh = this.profissao.system.lista_eh.v1;
-                    this.document.update({
-                        "system.eh.max": eh_atual + nova_eh + attFIS
-                    });
-                    ui.notifications.info("Nova EH calculada.");
-                } else if (valord10 >= 3 && valord10 <= 5) {
-                    nova_eh = this.profissao.system.lista_eh.v2;
-                    this.document.update({
-                        "system.eh.max": eh_atual + nova_eh + attFIS
-                    });
-                    ui.notifications.info("Nova EH calculada.");
-                } else if (valord10 >= 6 && valord10 <= 8) {
-                    nova_eh = this.profissao.system.lista_eh.v3;
-                    this.document.update({
-                        "system.eh.max": eh_atual + nova_eh + attFIS
-                    });
-                    ui.notifications.info("Nova EH calculada.");
-                } else if (valord10 >= 9 && valord10 <= 10) {
-                    nova_eh = this.profissao.system.lista_eh.v4;
-                    this.document.update({
-                        "system.eh.max": eh_atual + nova_eh + attFIS
-                    });
-                    ui.notifications.info("Nova EH calculada.");
-                }
+        if (this.profissao) {
+            if (valord10 >= 1 && valord10 <= 2) {
+                nova_eh = this.profissao.system.lista_eh.v1;
+                this.document.update({
+                    "system.eh.max": eh_atual + nova_eh + attFIS,
+                    "system.estagio": estagio_atual + 1
+                });
+                ui.notifications.info("Nova EH calculada. Seu estágio agora é "+(estagio_atual+1)+".");
+            } else if (valord10 >= 3 && valord10 <= 5) {
+                nova_eh = this.profissao.system.lista_eh.v2;
+                this.document.update({
+                    "system.eh.max": eh_atual + nova_eh + attFIS,
+                    "system.estagio": estagio_atual + 1
+                });
+                ui.notifications.info("Nova EH calculada. Seu estágio agora é "+(estagio_atual+1)+".");
+            } else if (valord10 >= 6 && valord10 <= 8) {
+                nova_eh = this.profissao.system.lista_eh.v3;
+                this.document.update({
+                    "system.eh.max": eh_atual + nova_eh + attFIS,
+                    "system.estagio": estagio_atual + 1
+                });
+                ui.notifications.info("Nova EH calculada. Seu estágio agora é "+(estagio_atual+1)+".");
+            } else if (valord10 >= 9 && valord10 <= 10) {
+                nova_eh = this.profissao.system.lista_eh.v4;
+                this.document.update({
+                    "system.eh.max": eh_atual + nova_eh + attFIS,
+                    "system.estagio": estagio_atual + 1
+                });
+                ui.notifications.info("Nova EH calculada. Seu estágio agora é "+(estagio_atual+1)+".");
             }
-        }
-        if (this.document.system.valor_dado_eh) {
-            this.document.update({
-                "system.valor_dado_eh": null
-            });
-        }
-        //$(".valord10EH").val("");
-        //this.render();
+            await r.toMessage({user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.document }),
+                flavor: ``})
+        } else return;
     }
 
     _ativaEfeito(event) {

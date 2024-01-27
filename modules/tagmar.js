@@ -105,7 +105,7 @@ Hooks.once("init", function(){
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("tagmar", tagmarActorSheet, {makeDefault: true});
   Actors.registerSheet("tagmar", tagmarAltSheet, {makeDefault: false});
-
+  
   Handlebars.registerHelper('ifeq', function (a, b, options) {
     if (a == b) { return options.fn(this); }
     return options.inverse(this);
@@ -113,6 +113,11 @@ Hooks.once("init", function(){
 
   Handlebars.registerHelper('ifgr', function (a, b, options) {
     if (a > b) { return options.fn(this); }
+    return options.inverse(this);
+  });
+
+  Handlebars.registerHelper('ifge', function (a, b, options) {
+    if (a >= b) { return options.fn(this); }
     return options.inverse(this);
   });
 
