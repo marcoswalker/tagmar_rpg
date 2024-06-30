@@ -823,9 +823,10 @@ Hooks.once("dragRuler.ready", (SpeedProvider) => {
       }
 
       getRanges(token) {
-          const baseSpeed = token.actor.system.vb;
+        let baseSpeed = 0;
+        if (token.document.elevation != 0) baseSpeed = token.actor.system.vbe;
+        else baseSpeed = token.actor.system.vb; 
 
-    // A character can always walk it's base speed and dash twice it's base speed
     const ranges = [
       {range: baseSpeed, color: "walk"},
       {range: baseSpeed / 2, color: "dash"}
