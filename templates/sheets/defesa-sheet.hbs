@@ -21,12 +21,8 @@
                         </div>
                         <div class="col-md-2">
                             <select class="mediaeval" name="system.defesa_base.tipo" type="text" value="{{data.system.defesa_base.tipo}}" data-dtype="String" height="30" style="font-size: 110%;">
-                                {{#select data.system.defesa_base.tipo}}
-                                <option value=""></option>
-                                <option value="L">L</option>
-                                <option value="M">M</option>
-                                <option value="P">P</option>
-                                {{/select}}
+                                {{#selectOptions item.def_tipos selected=data.system.defesa_base.tipo valueAttr="key"}}
+                                {{/selectOptions}}
                             </select>    
                         </div>
                         <div class="col-md-2">

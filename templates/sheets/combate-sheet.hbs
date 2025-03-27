@@ -59,13 +59,8 @@
                     </div>
                     <div class="col-md-2">
                         <select class="mediaeval" name="system.bonus" type="text" value="{{data.system.bonus}}" data-dtype="String" height="30" style="font-size: 110%;">
-                            {{#select data.system.bonus}}
-                            <option value=""></option>
-                            <option value="AUR">AUR</option>
-                            <option value="FOR">FOR</option>
-                            <option value="AGI">AGI</option>
-                            <option value="PER">PER</option>
-                            {{/select}}
+                            {{#selectOptions item.comb_bonus selected=data.system.bonus valueAttr="key"}}
+                            {{/selectOptions}}
                         </select>         
                     </div>
                     <div class="col-md-2">
@@ -73,26 +68,8 @@
                     </div>
                     <div class="col-md-2">
                         <select class="mediaeval" name="system.tipo" type="text" data-dtype="String" value="{{data.system.tipo}}" height="30">
-                        {{#select data.system.tipo}}
-                            <option value=""></option>
-                            <option value="CD">CD</option>
-                            <option value="CI">CI</option>
-                            <option value="CL">CL</option>
-                            <option value="CLD">CLD</option>
-                            <option value="EL">EL</option>
-                            <option value="CmE">CmE</option>
-                            <option value="CmM">CmM</option>
-                            <option value="EM">EM</option>
-                            <option value="PmA">PmA</option>
-                            <option value="PmL">PmL</option>
-                            <option value="CpE">CpE</option>
-                            <option value="CpM">CpM</option>
-                            <option value="EP">EP</option>
-                            <option value="PP">PP</option>
-                            <option value="PpA">PpA</option>
-                            <option value="PpB">PpB</option>
-                            <!--option value='MAG'>Magia</option-->
-                        {{/select}}
+                        {{#selectOptions item.comb_tipos selected=data.system.tipo valueAttr="key"}}
+                        {{/selectOptions}}
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -100,13 +77,8 @@
                     </div>
                     <div class="col-md-2">
                         <select class="mediaeval" name="system.bonus_dano" type="text" value="{{data.system.bonus_dano}}" data-dtype="String" height="30" style="font-size: 110%;">
-                            {{#select data.system.bonus_dano}}
-                            <option value=""></option>
-                            <option value="AUR">AUR</option>
-                            <option value="FOR">FOR</option>
-                            <option value="AGI">AGI</option>
-                            <option value="PER">PER</option>
-                            {{/select}}
+                            {{#selectOptions item.comb_bonus selected=data.system.bonus_dano valueAttr="key"}}
+                            {{/selectOptions}}
                         </select>       
                     </div>
                 </div>

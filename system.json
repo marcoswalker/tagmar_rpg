@@ -2,7 +2,7 @@
   "id": "tagmar_rpg",
   "title": "Tagmar XXX",
   "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "relationships": {
     "requires": [
       {
@@ -28,6 +28,14 @@
       {
         "id": "polyglot",
         "manifest": "https://github.com/mclemente/fvtt-module-polyglot/releases/latest/download/module.json"
+      },
+      {
+        "id": "tagmar-ammu-nation",
+        "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmar-ammu-nation/master/module.json"
+      },
+      {
+        "id": "tagmartrade",
+        "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmartrade/master/module.json"
       }
     ]
   },
@@ -49,7 +57,7 @@
   ],
   "compatibility": {
     "minimum": "10",
-    "verified": "11"
+    "verified": "12"
   },
   "scripts": [
   ],
@@ -97,8 +105,10 @@
   ],
   "languages": [
   ],
-  "gridDistance": 1.0,
-  "gridUnits": "m",
+  "grid": {
+    "distance": 1.0,
+    "units": "m"
+  },
   "url": "https://github.com/marcoswalker/tagmar_rpg",
   "manifest": "https://raw.githubusercontent.com/marcoswalker/tagmar_rpg/master/system.json",
   "download": "https://codeload.github.com/marcoswalker/tagmar_rpg/zip/master"

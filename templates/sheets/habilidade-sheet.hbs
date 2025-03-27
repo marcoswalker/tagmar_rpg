@@ -33,14 +33,8 @@
                         </div>
                         <div class="col-md-4">
                             <select class="mediaeval" name="system.tipo" type="text" value="{{data.system.tipo}}" data-dtype="String" height="30">
-                                {{#select data.system.tipo}}
-                                <option value="profissional">Profissional</option>
-                                <option value="manobra">Manobra</option>
-                                <option value="conhecimento">Conhecimento</option>
-                                <option value="subterfugio">Subterfúgio</option>
-                                <option value="influencia">Influência</option>
-                                <option value="geral">Geral</option>
-                                {{/select}}
+                                {{#selectOptions item.hab_tipos selected=data.system.tipo valueAttr="key" labelAttr="label"}}
+                                {{/selectOptions}}
                             </select>      
                         </div>
                         <div class="col-md-2"></div>

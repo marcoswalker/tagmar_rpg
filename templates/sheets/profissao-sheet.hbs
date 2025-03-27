@@ -85,16 +85,8 @@
                         </div>
                         <div class="col-md-2">
                             <select class="mediaeval" name="system.atrib_mag" type="text" value="{{data.system.atrib_mag}}" data-dtype="String" height="30">
-                                {{#select data.system.atrib_mag}}
-                                <option value=""></option>
-                                <option value="INT">INT</option>
-                                <option value="AUR">AUR</option>
-                                <option value="CAR">CAR</option>
-                                <option value="FOR">FOR</option>
-                                <option value="FIS">FÍS</option>
-                                <option value="AGI">AGI</option>
-                                <option value="PER">PER</option>
-                                {{/select}}
+                                {{#selectOptions item.prof_atribM selected=data.system.atrib_mag valueAttr="key"}}
+                                {{/selectOptions}}
                             </select> 
                         </div>
                         <div class="col-md-2">
@@ -102,15 +94,8 @@
                         </div>
                         <div class="col-md-4">
                             <select class="mediaeval" name="system.grupo_pen" type="text" value="{{data.system.grupo_pen}}" data-dtype="String" height="30">
-                                {{#select data.system.grupo_pen}}
-                                <option value=""></option>
-                                <option value="profissional">Profissional</option>
-                                <option value="manobra">Manobra</option>
-                                <option value="conhecimento">Conhecimento</option>
-                                <option value="subterfugio">Subterfúgio</option>
-                                <option value="influencia">Influência</option>
-                                <option value="geral">Geral</option>
-                                {{/select}}
+                                {{#selectOptions item.prof_grupo_pen selected=data.system.grupo_pen valueAttr="key" labelAttr="label"}}
+                                {{/selectOptions}}
                             </select>      
                         </div>
                     </div>

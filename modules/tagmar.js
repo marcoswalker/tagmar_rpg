@@ -81,17 +81,7 @@ Hooks.once("init", function(){
   CONFIG.Combat.sounds = Object.assign({ // Exclusivo Tagmar XXX
     tagmar: {
       label: "Tagmar",
-      startEncounter: ["/systems/tagmar_rpg/assets/sounds/vo_anno_fight04.wav"],
-      yourTurn: [
-        "/systems/tagmar_rpg/assets/sounds/Bar_datewithdeath.wav",
-        "/systems/tagmar_rpg/assets/sounds/Bar_meetdeath.wav",
-        "/systems/tagmar_rpg/assets/sounds/Bar_pleasecontinue.wav"
-      ],
-      nextUp: [
-        "/systems/tagmar_rpg/assets/sounds/Nec_soonperhaps.wav",
-        "/systems/tagmar_rpg/assets/sounds/Nec_tellmemore.wav",
-        "/systems/tagmar_rpg/assets/sounds/Nec_letsgo.wav"
-      ]
+      startEncounter: ["/systems/tagmar_rpg/assets/sounds/vo_anno_fight04.wav"]
     }
   }, CONFIG.Combat.sounds);
   CONFIG.Item.documentClass = tagmarItem;
@@ -929,7 +919,7 @@ Hooks.on('tagmar_Critico', async function (coluna, tabela_resol, user, actor, ti
 
 async function rolarCritico(coluna, tabela_resol, user, actor, tipo, falha) {
   let roll = new Roll('1d20');
-  roll.evaluate({async: false});
+  await roll.evaluate();
   let result = roll.total;
   let conteudo = "<h1 class='mediaeval rola' style='text-align:center;'>Rolagem do Crítico</h1><br><p class='mediaeval rola_desc'>";
   let table = "";
@@ -1363,7 +1353,7 @@ async function rollTabela(colunaR) {
   let r = new Roll("1d20");
   let resultado = "";
   let PrintResult = "";
-  r.evaluate({async: false});
+  await r.evaluate();
   var Dresult = r.total;
   let coluna_table = tabela_resol.find(h => h[0] == colunaR);
   resultado = coluna_table[Dresult];
@@ -1419,7 +1409,7 @@ async function rollResistencia(resist, f_ataque) {
     else if (def_ataq <= -16) valorSucess = 20;
   }
   const r = new Roll("1d20");
-  r.evaluate({async: false});
+  await r.evaluate();
   const Dresult = r.total;
   if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
       stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#00a1e8;'>SUCESSO</h1>";
@@ -1506,6 +1496,9 @@ Hooks.on("renderCombatTracker",async function (combatTracker, html) {
 async function createTagmarMacro(data, slot) {
   if (data.type !== "Item") return;
   let data_a = data.uuid.split('.');
+  if (data_a.length != 4) {
+    return ui.notifications.error("Verifique se o token está linkado com a ficha.");
+  }
   let item_id = data_a[data_a.length-1];
   let actor_id = data_a[1];
   const item = game.actors.get(actor_id).items.get(item_id);

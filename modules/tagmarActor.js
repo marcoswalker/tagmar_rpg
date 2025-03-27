@@ -118,7 +118,7 @@ export class tagmarActor extends Actor {
         let resultado = "";
         let col_tab = [];
         let PrintResult = "";
-        await r.evaluate({async: false});
+        await r.evaluate();
         let Dresult = r.total;
         if (moral <= 20) {
             col_tab = tabela_resol.find(h => h[0] == moral);
@@ -138,7 +138,7 @@ export class tagmarActor extends Actor {
             if (valor_hab == 0) {
                 let vezes = moral / 20;
                 for (let x = 0; x < vezes; x++){
-                    let ds = await new Roll("1d20").evaluate({async: false});
+                    let ds = await new Roll("1d20").evaluate();
                     col_tab = tabela_resol.find(h => h[0] == 20);
                     resultado = col_tab[ds.total];
                     PrintResult = await this.evalAtrib(resultado);
@@ -156,7 +156,7 @@ export class tagmarActor extends Actor {
                     let vezes = parseInt(moral / 20);
                     let sobra = moral % 20;
                     for (let x = 0; x < vezes; x++){
-                        let ds = await new Roll("1d20").evaluate({async: false});
+                        let ds = await new Roll("1d20").evaluate();
                         col_tab = tabela_resol.find(h => h[0] == 20);
                         resultado = col_tab[ds.total];
                         PrintResult = await this.evalAtrib(resultado);
@@ -170,7 +170,7 @@ export class tagmarActor extends Actor {
                             flavor: `<h2 class='mediaeval rola'>Moral: ${moral}</h2>${coluna}${PrintResult}`
                         });
                     }
-                    let dado = await new Roll(formulaD).evaluate({async: false});
+                    let dado = await new Roll(formulaD).evaluate();
                     col_tab = tabela_resol.find(h => h[0] == sobra);
                     resultado = col_tab[dado.total];
                     PrintResult = await this.evalAtrib(resultado);
@@ -187,7 +187,7 @@ export class tagmarActor extends Actor {
         }
     }
 
-    _rollResistencia(forcAtaqueI, tipo) {
+    async _rollResistencia(forcAtaqueI, tipo) {
         const table_resFisMag = game.tagmar.table_resFisMag;
         let valorDefI;
         if (tipo == "Magía") valorDefI = this.system.rm;
@@ -224,7 +224,7 @@ export class tagmarActor extends Actor {
             else if (def_ataq <= -16) valorSucess = 20;
         }
         const r = new Roll("1d20");
-        r.evaluate({async: false});
+        await r.evaluate();
         const Dresult = r.total;
         if ((Dresult >= valorSucess || Dresult == 20) && Dresult > 1) { // Sucesso
             stringSucesso = "<h1 class='mediaeval rola' style='text-align:center; color: white;background-color:#00a1e8;'>SUCESSO</h1>";
@@ -281,7 +281,7 @@ export class tagmarActor extends Actor {
         const actorImg = `<img src='${this.img}' style='display:block;border-width:0;margin-left:auto;margin-right:auto;'/>`;
         for (let x = 0; x < vezes; x++){
             dados[x] = new Roll("1d20");
-            dados[x].evaluate({async: false});
+            await dados[x].evaluate();
             let coluna_tab = tabela_resol.filter(b => b[0] === 20);
             let color = "";
             let resultado = coluna_tab[0][dados[x].total];
@@ -334,7 +334,7 @@ export class tagmarActor extends Actor {
         }
         if (sobra > 0) {
             let dado = new Roll("1d20");
-            dado.evaluate({async: false});
+            await dado.evaluate();
             let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
             let resultado = coluna_tab[0][dado.total];
             let color = "";
@@ -426,7 +426,7 @@ export class tagmarActor extends Actor {
         }
         if (valor_teste < -7) valor_teste = -7;
         if (valor_teste <= 20) {
-            let r = await new Roll("1d20").evaluate({async: false});
+            let r = await new Roll("1d20").evaluate();
             let col_tab = tabela_resol.find(h => h[0] == valor_teste);
             let resultado = col_tab[r.total];
             await this.AtribToChat(resultado, r, col_tab[0], cat, habil);

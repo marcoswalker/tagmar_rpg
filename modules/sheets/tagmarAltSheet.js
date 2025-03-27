@@ -3,7 +3,7 @@ export default class tagmarAltSheet extends ActorSheet {
     static get defaultOptions() {
         this.lastUpdate = {};
         this.lastItemsUpdate = [];
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "actor"],
         //width: 900,
         height: 855,
@@ -1271,7 +1271,7 @@ export default class tagmarAltSheet extends ActorSheet {
         const h_sub = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "subterfugio");
         const h_inf = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "influencia");
         const h_geral = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "geral");
-        const tecnicas = actorData.items.filter(item => item.type == "TecnicasCombate");
+        const tecnicas = actorData.items.filter(item => item.type == "Tecnica_Combate");
         const defesas = actorData.items.filter(item => item.type == "Defesa");
         const transportes = actorData.items.filter(item => item.type == "Transporte");
         const pertences = actorData.items.filter(item => item.type == "Pertence" && !item.system.inTransport);
@@ -1338,7 +1338,10 @@ export default class tagmarAltSheet extends ActorSheet {
             [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
         ];
         if (profissoes[0]) {
-            especializacoes = profissoes[0].system.especializacoes.split(",");
+            //especializacoes = profissoes[0].system.especializacoes.split(",");
+            profissoes[0].system.especializacoes.split(",").forEach(function (espec) {
+                especializacoes.push({key : espec});
+            });
         } // Alow
         
         if (h_prof.length > 1) h_prof.sort(function (a, b) {
@@ -1367,9 +1370,6 @@ export default class tagmarAltSheet extends ActorSheet {
         });
         if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
             return a.name.localeCompare(b.name);
-        });
-        if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
-            return a.system.categoria.localeCompare(b.system.categoria);
         });
         if (defesas.length > 1) defesas.sort(function (a, b) {
             return a.name.localeCompare(b.name);
@@ -1409,6 +1409,8 @@ export default class tagmarAltSheet extends ActorSheet {
         actorData.h_sub = h_sub;
         actorData.h_inf = h_inf;
         actorData.h_geral = h_geral;
+        actorData.habilidades = h_prof.concat(h_man, h_con, h_sub, h_inf, h_geral);
+        actorData.cat_def = [{key : "L"}, {key : "M"}, {key : "P"}];
         actorData.combate = combate;
         actorData.combate_fav = combate_fav;
         actorData.tecnica_fav = tecnica_fav;

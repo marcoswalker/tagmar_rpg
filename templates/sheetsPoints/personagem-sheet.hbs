@@ -102,11 +102,8 @@
                     </div>
                     <div class="col-md-4 col-8">
                         <select name="system.especializacao" type="text" data-dtype="String" value="{{data.system.especializacao}}" height="30" title="Caia na real, você não tem nada de especial. Se você escolheu uma profissão, pode escolher algo aqui tambem."/>
-                            {{#select data.system.especializacao}}
-                                {{#each actor.especializacoes as |especializacao|}}
-                                    <option value="{{especializacao}}">{{especializacao}}</option>
-                                {{/each}}
-                            {{/select}}
+                            {{#selectOptions actor.especializacoes selected=data.system.especializacao valueAttr="key"}}
+                            {{/selectOptions}}
                         </select>
                     </div>
                     <div class="col-md-1 col-4">
@@ -448,27 +445,8 @@
                     </div>
                     <div class="col-md-4 col-6">
                         <select class="mediaeval" name="system.hab_nata" type="text" data-dtype="String" value="{{data.system.hab_nata}}" height="30" title="Selecione sua Habilidade Nata."/>
-                            {{#select data.system.hab_nata}}
-                                <option value=""></option>
-                                {{#each actor.h_prof as |h_prof|}}
-                                    <option value="{{h_prof.name}}">{{h_prof.name}}</option>
-                                {{/each}}
-                                {{#each actor.h_man as |h_man|}}
-                                    <option value="{{h_man.name}}">{{h_man.name}}</option>
-                                {{/each}}
-                                {{#each actor.h_con as |h_con|}}
-                                    <option value="{{h_con.name}}">{{h_con.name}}</option>
-                                {{/each}}
-                                {{#each actor.h_sub as |h_sub|}}
-                                    <option value="{{h_sub.name}}">{{h_sub.name}}</option>
-                                {{/each}}
-                                {{#each actor.h_inf as |h_inf|}}
-                                    <option value="{{h_inf.name}}">{{h_inf.name}}</option>
-                                {{/each}}
-                                {{#each actor.h_geral as |h_geral|}}
-                                    <option value="{{h_geral.name}}">{{h_geral.name}}</option>
-                                {{/each}}
-                            {{/select}}
+                            {{#selectOptions actor.habilidades selected=data.system.hab_nata valueAttr="name"}}
+                            {{/selectOptions}}
                         </select>
                     </div>
                     <div class="col-md-4 col-12">
@@ -644,11 +622,8 @@
                     <div class="col-md-2 col-3 mediaeval">Def. Oponente:</div>
                     <div class="col-md-1 col-2">
                         <select title="Tipo da defesa do oponente." class="mediaeval" name="system.inf_ataque.cat_def" type="text" value="{{data.system.inf_ataque.cat_def}}" data-dtype="String" height="30" style="font-size: 110%;">
-                            {{#select data.system.inf_ataque.cat_def}}
-                                <option value="L">L</option>
-                                <option value="M">M</option>
-                                <option value="P">P</option>
-                            {{/select}}
+                            {{#selectOptions actor.cat_def selected=data.system.inf_ataque.cat_def valueAttr="key"}}
+                            {{/selectOptions}}
                         </select>
                     </div>
                     <div class="col-md-1 col-2">
@@ -821,8 +796,7 @@
                             <tr style="text-align: left;">
                                 <th width="50px"></th>
                                 <th class="mediaeval"><a class="showImg" data-item-id="Tecnicas">Técnica de Combate</a></th>
-                                <th class="mediaeval">Total</th>
-                                <th class="mediaeval">Categoria</th>
+                                <th class="mediaeval">FA</th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.tecnicas as |tecnica|}}
@@ -833,8 +807,7 @@
                                     </a>
                                 </td>
                                 <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica.id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
-                                <td class="mediaeval" style="text-align:center;">{{tecnica.system.total}}</td>
-                                <td class="mediaeval">{{tecnica.system.categoria}}</td>
+                                <td class="mediaeval" style="text-align:left;">{{tecnica.system.fa}}</td>
                                 <td>
                                     <div class="item-controls">
                                         <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
@@ -847,34 +820,28 @@
                             {{#idfind actor.system.combos "Tecnicas"}}
                             <tr style="text-align: left;">
                                 <th class="mediaeval"><a class="showImg" data-item-id="Tecnicas">Técnica de Combate</a></th>
-                                <th class="mediaeval">Total</th>
-                                <th class="mediaeval">Categoria</th>
+                                <th class="mediaeval">FA</th>
+                                <th class="mediaeval" style="text-align: center;">Mecânica</th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.tecnicas as |tecnica|}}
                             <tr class="item" data-item-id="{{tecnica.id}}">
                                 <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica.id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
-                                <td class="mediaeval" style="text-align:center;">{{tecnica.system.total}}</td>
-                                {{#ifeq tecnica.system.categoria "Perícia"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}</td>
+                                <td class="mediaeval" style="text-align:left;">{{tecnica.system.fa}}</td>
+                                {{#ifeq tecnica.system.mecanica 0}}
+                                    <td class="mediaeval">Bônus de FA</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Postura"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="far fa-hand-paper" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 1}}
+                                    <td class="mediaeval">Efeito de nível</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Ataque"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-gavel" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 2}}
+                                    <td class="mediaeval">Rolamento de dados</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Precisão"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-bullseye" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 3}}
+                                    <td class="mediaeval">Bônus especiais</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Agressão"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-skull-crossbones" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Proteção"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-shield-alt" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Suporte"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-chess-rook" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 4}}
+                                    <td class="mediaeval">Aprimoramento de Técnica</td>
                                 {{/ifeq}}
                                 <td>
                                     <div class="item-controls">
@@ -1285,8 +1252,8 @@
                             <tr style="text-align: left;">
                                 <th width="50px"></th>
                                 <th class="mediaeval">Técnica de Combate</th>
-                                <th class="mediaeval">Total</th>
-                                <th class="mediaeval">Categoria</th>
+                                <th class="mediaeval">FA</th>
+                                <th class="mediaeval">Mecânica</th>
                                 <th class="mediaeval">Editar</th>
                             </tr>
                             {{#each actor.tecnica_fav as |tecnica|}}
@@ -1297,27 +1264,21 @@
                                     </a>
                                 </td>
                                 <td class="mediaeval combateName"><a class="rollable dragable" data-item-id="{{tecnica.id}}" title="Clique para rolar ou arraste para sua barra de macros.">{{tecnica.name}}</a></td>
-                                <td class="mediaeval">{{tecnica.system.total}}</td>
-                                {{#ifeq tecnica.system.categoria "Perícia"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}</td>
+                                <td class="mediaeval">{{tecnica.system.fa}}</td>
+                                {{#ifeq tecnica.system.mecanica 0}}
+                                    <td class="mediaeval">Bônus de FA</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Postura"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="far fa-hand-paper" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 1}}
+                                    <td class="mediaeval">Efeito de nível</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Ataque"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-gavel" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 2}}
+                                    <td class="mediaeval">Rolamento de dados</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Precisão"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-bullseye" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 3}}
+                                    <td class="mediaeval">Bônus especiais</td>
                                 {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Agressão"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-skull-crossbones" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Proteção"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-shield-alt" style='margin-left:5px;'></i></td>
-                                {{/ifeq}}
-                                {{#ifeq tecnica.system.categoria "Suporte"}}
-                                    <td class="mediaeval">{{tecnica.system.categoria}}<i class="fas fa-chess-rook" style='margin-left:5px;'></i></td>
+                                {{#ifeq tecnica.system.mecanica 4}}
+                                    <td class="mediaeval">Aprimoramento de Técnica</td>
                                 {{/ifeq}}
                                 <td>
                                     <div class="item-controls">

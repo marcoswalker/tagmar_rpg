@@ -1,6 +1,6 @@
 export default class tagmarItemSheet extends ItemSheet {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "item"],
         width: 600,
         height: 600,
@@ -28,6 +28,10 @@ export default class tagmarItemSheet extends ItemSheet {
             this['options']['height'] = 595;
             this['position']['height'] = 595;
         }
+        if (this.object.type == "Tecnica_Combate") {
+            this['options']['height'] = 700;
+            this['position']['height'] = 730;
+        }
         if (layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.object.type.toLowerCase() +'-ficha.hbs';
         } else {
@@ -37,11 +41,57 @@ export default class tagmarItemSheet extends ItemSheet {
 
     getData(options) {
         const data = super.getData(options);
-        
+        this._prepareItemData(data);
         if (this.object.type == "Profissao" && this.object.system.especializacoes != "") {
             data.data.system.especializacoes = this.object.system.especializacoes.split(",");
         } else if (this.object.type == "Profissao") data.data.system.especializacoes = [];
         return data;
+    }
+
+    _prepareItemData(sheetData) {
+        const itemData = sheetData.document;
+        itemData.comb_bonus = [{key : ""}, {key : "AUR"}, {key : "FOR"}, {key : "AGI"}, {key : "PER"}];
+        itemData.comb_tipos = [ {key : ""}, {key : "CD"}, {key : "CI"}, {key : "CL"}, {key : "CLD"}, {key : "EL"}, {key : "CmE"}, {key : "CmM"}, {key : "EM"}, {key : "PmA"}, {key : "PmL"}, {key : "CpE"}, {key : "CpM"}, {key : "EP"}, {key : "PP"}, {key : "PpA"}, {key : "PpB"}];
+        itemData.def_tipos = [{key : ""}, {key : "L"}, {key : "M"}, {key : "P"}];
+        const atrib_bas = [{key : "INT"}, {key : "AUR"}, {key : "CAR"}, {key : "FOR"}, {key : "FIS"}, {key : "AGI"}, {key : "PER"}];
+        const atrib_res = [{key : "EF"}, {key : "ABS"}, {key : "DEF"}, {key : "KMA"}, {key : "VB"}, {key : "RFIS"}, {key : "RMAG"}, {key : "PHAB"}, {key : "PTEC"}, {key : "PARM"}, {key : "PMAG"}];
+        itemData.efeitos_tipos = atrib_bas.concat(atrib_res);
+        const actor = game.actors.find(a => a.items.find(i => i.id == itemData._id));
+        itemData.tecnicas = [{name : ""}];
+        if (typeof actor != 'undefined') {
+            if (actor.ficha != "Sorteio") {
+                itemData.efeitos_tipos = atrib_res;
+            } 
+        }
+        const tecnicas = game.items.filter(e => e.type == "Tecnica_Combate" && e.system.complemento == "Sim");
+        if (tecnicas.length > 0) itemData.tecnicas = [{name : ""}].concat(tecnicas);
+        itemData.efeitos_oper = [{key : "+"}, {key : "-"}, {key : "/"}, {key : "*"}];
+        itemData.hab_tipos = [
+            {key : "profissional", label : "Profissional"},
+            {key : "manobra", label : "Manobra"},
+            {key : "conhecimento", label : "Conhecimento"},
+            {key : "subterfugio", label : "Subterfúgio"},
+            {key : "influencia", label : "Influência"},
+            {key : "geral", label : "Geral"}
+        ];
+        itemData.prof_grupo_pen = [{key : "", label : ""}].concat(itemData.hab_tipos);
+        itemData.prof_atribM = [{key : ""}].concat(atrib_bas);
+        itemData.tec_mecanicas = [
+            {value: 0, label: "Bônus de FA"},
+            {value: 1, label: "Efeito de nível"},
+            {value: 2, label: "Rolamento de dados"},
+            {value: 3, label: "Bônus especiais"},
+            {value: 4, label: "Aprimoramento de Técnica"}
+        ];
+        itemData.tec_perg = [
+            {key: "Não"},
+            {key: "Sim"}
+        ];
+        itemData.tec_durac = [
+            {key: "Ataque(s)"},
+            {key: "Rodada(s)"},
+            {key: "Combate"}
+        ];
     }
 
     activateListeners(html) {

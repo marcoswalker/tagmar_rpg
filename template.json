@@ -181,7 +181,7 @@
     }
   },
   "Item": {
-    "types": ["Combate", "Magia", "TecnicasCombate","Habilidade","Defesa","Transporte","Pertence", "Profissao", "Raca", "Efeito"],
+    "types": ["Combate", "Magia","Habilidade","Defesa","Transporte","Pertence", "Profissao", "Raca", "Efeito", "Tecnica_Combate"],
     "templates": {
       "base": {
         "alcance": "",
@@ -241,17 +241,26 @@
       "tipo": "",
       "municao": 0
     },
-    "TecnicasCombate": {
+    "Tecnica_Combate": {
       "templates": ["custoNivel"],
       "descricao": "",
       "ajuste": {
         "atributo": "",
         "valor": 0
       },
-      "total": 0,
-      "categoria": "",
-      "restricaoP": ""
-
+      "fa": 0,
+      "mecanica": 0,
+      "duracao": {
+        "valor": 0,
+        "tipo": "Ataque(s)"
+      },
+      "teste": "Não",
+      "restricao": "",
+      "pre_requisito": {
+        "valor": "Não",
+        "tecnica": ""
+      },
+      "complemento": "Não"
     },
     "Magia": {
       "templates": ["base", "custoNivel"],

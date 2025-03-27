@@ -43,7 +43,7 @@ export class tagmarItem extends Item {
         let m_cor;
         for (let x = 0; x < vezes; x++){
             dados[x] = new Roll("1d20");
-            dados[x].evaluate({async: false});
+            await dados[x].evaluate();
             let coluna_tab = tabela_resol.filter(b => b[0] === 20);
             let resultado = coluna_tab[0][dados[x].total];
             let PrintResult = await this.evalHab(resultado);
@@ -96,7 +96,7 @@ export class tagmarItem extends Item {
         }
         if (sobra > 0) {
             let dado = new Roll("1d20");
-            dado.evaluate({async: false});
+            await dado.evaluate();
             let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
             let resultado = coluna_tab[0][dado.total];
             let PrintResult = await this.evalHab(resultado);
@@ -165,7 +165,7 @@ export class tagmarItem extends Item {
         if (h_total < -7) h_total = -7;
         if (h_total <= 20) {
             let r = new Roll('1d20');
-            r.evaluate({async: false});
+            await r.evaluate();
             let coluna_tab = tabela_resol.filter(b => b[0] === h_total);
             let resultado = coluna_tab[0][r.total];
             await this.habToChat(resultado, r, h_total, coluna_tab[0][0]);
@@ -198,7 +198,33 @@ export class tagmarItem extends Item {
     async tecnicaToChat(resultado, r, coluna_rolada) {
         let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
         let PrintResult = "";
-        let conteudo = "<h3 class='mediaeval rola'><a class='showDesc'>Descrição: <i class='far fa-eye-slash'></i></a> </h3>" + "<p class='mediaeval rola rola_desc' style='display: none;'>" + this.system.descricao + "</p>";
+        let mecanica = "";
+        let mec_num = parseInt(this.system.mecanica);
+        switch (mec_num) {
+            case 0:
+                mecanica = "Bônus de FA";
+                break;
+            case 1:
+                mecanica = "Efeito de nível";
+                break;
+            case 2:
+                mecanica = "Rolamento de dados";
+                break;
+            case 3:
+                mecanica = "Bônus especiais";
+                break;
+            case 4:
+                mecanica = "Aprimoramento de Técnica";
+                break;
+            default:
+                mecanica = "";
+        }
+        let pre_requisito = "";
+        let pre_sim = this.system.pre_requisito.valor;
+        if (pre_sim == "Sim") {
+            pre_requisito = this.system.pre_requisito.tecnica;
+        } else pre_requisito = this.system.pre_requisito.valor;
+        let conteudo = "<img src='"+ this.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + this.name + "</h1>" + "<h2 class='mediaeval rola' style='text-align: center'>Força de Ataque: " + this.system.fa + "</h2><p class='mediaeval rola_desc'><b>Mecânica:</b> <span>" + mecanica + "</span></p><p class='mediaeval rola_desc'><b>Duração:</b> <span>" + this.system.duracao.valor + " " + this.system.duracao.tipo + "</span></p><p class='mediaeval rola_desc'><b>Teste Resistência:</b> <span>" + this.system.teste + "</p><p class='mediaeval rola_desc'><b>Restrição:</b> <span>" + this.system.restricao + "</p><p class='mediaeval rola_desc'><b>Pré-requisito:</b> <span>" + pre_requisito + "</p>" + "<div class='mediaeval rola rola_desc'>" + this.system.descricao + "</div>";
         if (resultado == "verde") PrintResult = "<h1 class='mediaeval rola' style='color: white; text-align:center;background-color:#91cf50;'>Verde - Falha</h1>";
         else if (resultado == "branco") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:white;'>Branco - Rotineiro</h1>";
         else if (resultado == "amarelo") PrintResult = "<h1 class='mediaeval rola' style='color: black; text-align:center;background-color:#ffff00;'>Amarelo - Fácil</h1>";
@@ -213,21 +239,47 @@ export class tagmarItem extends Item {
         r.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${this.name}: ${this.system.total}</h2>${conteudo}${coluna}${PrintResult}`
+            flavor: `${conteudo}${coluna}${PrintResult}`
         });
     }
 
     async tecnicaToChat2(vezes, total, tabela_resol, sobra) {
         let dados = [];
         let dadosColoridos = await import("/systems/"+game.system.id+"/modules/dadosColoridos.js");
-        let conteudo = "<h3 class='mediaeval rola'><a class='showDesc'>Descrição: <i class='far fa-eye-slash'></i></a> </h3>" + "<p class='mediaeval rola rola_desc' style='display: none;'>" + this.system.descricao + "</p>";
+        let mecanica = "";
+        let mec_num = parseInt(this.system.mecanica);
+        switch (mec_num) {
+            case 0:
+                mecanica = "Bônus de FA";
+                break;
+            case 1:
+                mecanica = "Efeito de nível";
+                break;
+            case 2:
+                mecanica = "Rolamento de dados";
+                break;
+            case 3:
+                mecanica = "Bônus especiais";
+                break;
+            case 4:
+                mecanica = "Aprimoramento de Técnica";
+                break;
+            default:
+                mecanica = "";
+        }
+        let pre_requisito = "";
+        let pre_sim = this.system.pre_requisito.valor;
+        if (pre_sim == "Sim") {
+            pre_requisito = this.system.pre_requisito.tecnica;
+        } else pre_requisito = this.system.pre_requisito.valor;
+        let conteudo = "<img src='"+ this.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + this.name + "</h1>" + "<h2 class='mediaeval rola' style='text-align: center'>Força de Ataque: " + this.system.fa + "</h2><p class='mediaeval rola_desc'><b>Mecânica:</b> <span>" + mecanica + "</span></p><p class='mediaeval rola_desc'><b>Duração:</b> <span>" + this.system.duracao.valor + " " + this.system.duracao.tipo + "</span></p><p class='mediaeval rola_desc'><b>Teste Resistência:</b> <span>" + this.system.teste + "</p><p class='mediaeval rola_desc'><b>Restrição:</b> <span>" + this.system.restricao + "</p><p class='mediaeval rola_desc'><b>Pré-requisito:</b> <span>" + pre_requisito + "</p>" + "<div class='mediaeval rola rola_desc'>" + this.system.descricao + "</div>";
         let melhor;
         let valor = 0;
         let m_valor = 0;
         let m_cor;
         for (let x = 0; x < vezes; x++) {
             dados[x] = new Roll('1d20');
-            dados[x].evaluate({async: false});
+            await dados[x].evaluate();
             let coluna_tab = tabela_resol.filter(b => b[0] === 20);
             let resultado = coluna_tab[0][dados[x].total];
             if (resultado == "roxo") resultado = "azul";
@@ -281,7 +333,7 @@ export class tagmarItem extends Item {
         }
         if (sobra > 0) {
             let dado = new Roll('1d20');
-            dado.evaluate({async: false});
+            await dado.evaluate();
             let coluna_tab = tabela_resol.filter(b => b[0] === sobra);
             let resultado = coluna_tab[0][dado.total];
             if (resultado == 'roxo') resultado = 'azul';
@@ -335,30 +387,74 @@ export class tagmarItem extends Item {
         melhor.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `<img src="${this.img}" style="display: block; margin-left: auto; margin-right: auto;" /><h2 class='mediaeval rola' style="text-align:center;">${this.name}: ${this.system.total}</h2>${conteudo}`
+            flavor: `${conteudo}`
         });
     }
 
-    async rollTecnicaCombate() {
+    async rollTecnica_Combate() {
         const tabela_resol = game.tagmar.tabela_resol;
-        let total = this.system.total;
-        if (total < -7) total = -7;
-        if (total <= 20) {
-            let r = new Roll('1d20');
-            r.evaluate({async: false});
-            let coluna_tab = tabela_resol.filter(b => b[0] === total);
-            let resultado = coluna_tab[0][r.total];
-            await this.tecnicaToChat(resultado, r, coluna_tab[0][0]);
-        } else {
-            let valor_total = total % 20;
-            if (valor_total == 0) {
-                let vezes = total / 20;
-                await this.tecnicaToChat2(vezes, total, tabela_resol, 0);
-            } else if (valor_total > 0){
-                let vezes = parseInt(total / 20);
-                await this.tecnicaToChat2(vezes, total, tabela_resol, valor_total);
+        let mecanica = this.system.mecanica;
+        if (mecanica == 2) { // Rolar dados
+            let fa = this.system.fa;
+            if (fa < -7) fa = -7;
+            if (fa <= 20) {
+                let r = new Roll('1d20');
+                await r.evaluate();
+                let coluna_tab = tabela_resol.filter(b => b[0] === fa);
+                let resultado = coluna_tab[0][r.total];
+                await this.tecnicaToChat(resultado, r, coluna_tab[0][0]);
+            } else {
+                let valor_total = fa % 20;
+                if (valor_total == 0) {
+                    let vezes = fa / 20;
+                    await  this.tecnicaToChat2(vezes, fa, tabela_resol, 0);
+                } else if (valor_total > 0) {
+                    let vezes = parseInt(fa / 20);
+                    await this.tecnicaToChat2(vezes, fa, tabela_resol, valor_total);
+                }
             }
+        } else {
+            this.tecnica_combateToChat()
         }
+    }
+
+    async tecnica_combateToChat() {
+        let itemId = `<h1 class="esconde" id="itemId" data-item-id="${this.id}">id</h1>`;
+        let chatData = {
+            user: game.user.id,
+            flavor: `${itemId}`,
+            speaker: ChatMessage.getSpeaker({
+                actor: this.actor
+              })
+        };
+        let mecanica = "";
+        let mec_num = parseInt(this.system.mecanica);
+        switch (mec_num) {
+            case 0:
+                mecanica = "Bônus de FA";
+                break;
+            case 1:
+                mecanica = "Efeito de nível";
+                break;
+            case 2:
+                mecanica = "Rolamento de dados";
+                break;
+            case 3:
+                mecanica = "Bônus especiais";
+                break;
+            case 4:
+                mecanica = "Aprimoramento de Técnica";
+                break;
+            default:
+                mecanica = "";
+        }
+        let pre_requisito = "";
+        let pre_sim = this.system.pre_requisito.valor;
+        if (pre_sim == "Sim") {
+            pre_requisito = this.system.pre_requisito.tecnica;
+        } else pre_requisito = this.system.pre_requisito.valor;
+        chatData.content = "<img src='"+ this.img +"' style='display: block; margin-left: auto; margin-right: auto;' /><h1 class='mediaeval rola' style='text-align: center;'>" + this.name + "</h1>" + "<h2 class='mediaeval rola' style='text-align: center'>Força de Ataque: " + this.system.fa + "</h2><p class='mediaeval rola_desc'><b>Mecânica:</b> <span>" + mecanica + "</span></p><p class='mediaeval rola_desc'><b>Duração:</b> <span>" + this.system.duracao.valor + " " + this.system.duracao.tipo + "</span></p><p class='mediaeval rola_desc'><b>Teste Resistência:</b> <span>" + this.system.teste + "</p><p class='mediaeval rola_desc'><b>Restrição:</b> <span>" + this.system.restricao + "</p><p class='mediaeval rola_desc'><b>Pré-requisito:</b> <span>" + pre_requisito + "</p>" + "<div class='mediaeval rola rola_desc'>" + this.system.descricao + "</div>";
+        ChatMessage.create(chatData);
     }
 
     async combateToChat(coluna_rolada, resultado, puni_25, puni_50, puni_75, puni_100, r, municao_text, valor_tabela) {
@@ -743,7 +839,7 @@ export class tagmarItem extends Item {
         if (this.system.tipo == "" || this.system.tipo == "MAG") valor_tabela = total_l + this.actor.system.inf_ataque.bonus; // Magia de Ataque
         if (valor_tabela < -7) valor_tabela = -7; // Abaixo da Tabela
         let r = new Roll("1d20");
-        r.evaluate({async: false});
+        await r.evaluate();
         let Dresult = r.total;
         if (valor_tabela <= 20) {
             let coluna_tab = tabela_resol.filter(b => b[0] === valor_tabela);
@@ -765,10 +861,10 @@ export class tagmarItem extends Item {
             this.rollHabilidade();
         } else if (this.type === "Magia") {
             this.magiaToChat();
-        } else if (this.type === "TecnicasCombate") {
-            this.rollTecnicaCombate();
         } else if (this.type === "Combate") {
             this.rollCombate();
+        } else if (this.type == "Tecnica_Combate") {
+            this.rollTecnica_Combate();
         }
     }
 

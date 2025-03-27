@@ -3,7 +3,7 @@ export default class tagmarActorSheet extends ActorSheet {
     static get defaultOptions() {
         this.lastUpdate = {};
         this.lastItemsUpdate = [];
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "actor"],
         //width: 900,
         height: 890,
@@ -256,15 +256,17 @@ export default class tagmarActorSheet extends ActorSheet {
         }, function (event) {
             $(event.currentTarget).html("Iniciativa");
         });
-        html.find(".rollAtributos").click(ev => {
+        html.find(".rollAtributos").click(rollCaracters);
+        async function rollCaracters(event) {
             let formula = "{3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl,3d10dl}";
             let r = new Roll(formula);
-            r.evaluate({async: false}).toMessage({
+            await r.evaluate();
+            r.toMessage({
                 user: game.user.id,
                 speaker: ChatMessage.getSpeaker({ actor: this.document }),
                 flavor: ``
             });
-        });
+        }
         html.find(".clickHab").mousedown( function (event) {
             $('.clickHab').html("Nível");
             $('.habNivel').removeClass('esconde');
@@ -608,7 +610,7 @@ export default class tagmarActorSheet extends ActorSheet {
                     let tipoItem = "";
                     if (tipo == "Ataque") tipoItem = "Combate";
                     else if (tipo == "Defesa") tipoItem = "Defesa";
-                    else if (tipo == "Tecnica") tipoItem = "TecnicasCombate";
+                    else if (tipo == "Tecnica") tipoItem = "Tecnica_Combate";
                     if (tipoItem.length > 0) {
                         actor.createEmbeddedDocuments("Item", [{name: "Novo Item Criado", type: tipoItem}]).then(function (item) {
                             item[0].sheet.render(true);
@@ -1224,7 +1226,7 @@ export default class tagmarActorSheet extends ActorSheet {
         const h_sub = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "subterfugio");
         const h_inf = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "influencia");
         const h_geral = actorData.items.filter(item => item.type == "Habilidade" && item.system.tipo == "geral");
-        const tecnicas = actorData.items.filter(item => item.type == "TecnicasCombate");
+        const tecnicas = actorData.items.filter(item => item.type == "Tecnica_Combate");
         const defesas = actorData.items.filter(item => item.type == "Defesa");
         const transportes = actorData.items.filter(item => item.type == "Transporte");
         const pertences = actorData.items.filter(item => item.type == "Pertence" && !item.system.inTransport);
@@ -1291,7 +1293,10 @@ export default class tagmarActorSheet extends ActorSheet {
             [20,  2,  2,  2,  2,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7,  8,  9, 10, 11]
         ];
         if (profissoes[0]) {
-            especializacoes = profissoes[0].system.especializacoes.split(",");
+            //especializacoes = profissoes[0].system.especializacoes.split(",");
+            profissoes[0].system.especializacoes.split(",").forEach(function (espec) {
+                especializacoes.push({key : espec});
+            });
         } // Alow
         
         if (h_prof.length > 1) h_prof.sort(function (a, b) {
@@ -1320,9 +1325,6 @@ export default class tagmarActorSheet extends ActorSheet {
         });
         if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
             return a.name.localeCompare(b.name);
-        });
-        if (tecnicas.length > 1) tecnicas.sort(function (a, b) {
-            return a.system.categoria.localeCompare(b.system.categoria);
         });
         if (defesas.length > 1) defesas.sort(function (a, b) {
             return a.name.localeCompare(b.name);
@@ -1362,6 +1364,8 @@ export default class tagmarActorSheet extends ActorSheet {
         actorData.h_sub = h_sub;
         actorData.h_inf = h_inf;
         actorData.h_geral = h_geral;
+        actorData.habilidades = h_prof.concat(h_man, h_con, h_sub, h_inf, h_geral);
+        actorData.cat_def = [{key : "L"}, {key : "M"}, {key : "P"}];
         actorData.combate = combate;
         actorData.combate_fav = combate_fav;
         actorData.tecnica_fav = tecnica_fav;

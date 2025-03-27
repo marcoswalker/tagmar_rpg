@@ -27,29 +27,9 @@
                             <label><h4 class="mediaeval">Atributo:</h4></label>
                         </div>
                         <div class="col-md-8">
-                            <select class="mediaeval" style="font-size: 90%;" name="data.atributo" type="text" value="{{data.system.atributo}}" data-dtype="String" height="30">
-                                {{#select data.system.atributo}}
-                                {{#fichaPontos data}}
-                                <option value="INT">INT</option>
-                                <option value="CAR">CAR</option>
-                                <option value="AUR">AUR</option>
-                                <option value="FOR">FOR</option>
-                                <option value="FIS">FIS</option>
-                                <option value="AGI">AGI</option>
-                                <option value="PER">PER</option>
-                                {{/fichaPontos}}
-                                <option value="EF">EF</option>
-                                <option value="ABS">Absorção</option>
-                                <option value="DEF">Defesa</option>
-                                <option value="KMA">Karma</option>
-                                <option value="VB">VB</option>
-                                <option value="RFIS">R.Física</option>
-                                <option value="RMAG">R.Magia</option>
-                                <option value="PHAB">Pontos Hab.</option>
-                                <option value="PTEC">Pontos Tec.</option>
-                                <option value="PARM">Pontos Arm.</option>
-                                <option value="PMAG">Pontos Mag.</option>
-                                {{/select}}
+                            <select class="mediaeval" style="font-size: 90%;" name="system.atributo" type="text" value="{{data.system.atributo}}" data-dtype="String" height="30">
+                                {{#selectOptions item.efeitos_tipos selected=data.system.atributo valueAttr="key"}}
+                                {{/selectOptions}}
                             </select>     
                         </div>
                     </div>
@@ -58,13 +38,9 @@
                             <label><h4 class="mediaeval">Tipo:</h4></label>
                         </div>
                         <div class="col-md-8">
-                            <select class="mediaeval" style="font-size: 100%;" name="data.tipo" type="text" value="{{data.system.tipo}}" data-dtype="String" height="30">
-                                {{#select data.system.tipo}}
-                                <option value="+">+</option>
-                                <option value="-">-</option>
-                                <option value="/">/</option>
-                                <option value="*">*</option>
-                                {{/select}}
+                            <select class="mediaeval" style="font-size: 100%;" name="system.tipo" type="text" value="{{data.system.tipo}}" data-dtype="String" height="30">
+                                {{#selectOptions item.efeitos_oper selected=data.system.tipo valueAttr="key"}}
+                                {{/selectOptions}}
                             </select>     
                         </div>
                     </div>
@@ -73,7 +49,7 @@
                             <label><h4 class="mediaeval">Valor:</h4></label>
                         </div>
                         <div class="col-md-8">
-                            <input name="data.valor" type="number" value="{{data.system.valor}}" height="30"/>
+                            <input name="system.valor" type="number" value="{{data.system.valor}}" height="30"/>
                         </div>
                     </div>
                     <div class="row dados">
@@ -82,9 +58,9 @@
                         </div>
                         <div class="col-md-8">
                             {{#if data.system.ativo}}
-                            <input type='checkbox' name='data.ativo' checked/>
+                            <input type='checkbox' name='system.ativo' checked/>
                             {{else}}
-                            <input type="checkbox" name="data.ativo"/>
+                            <input type="checkbox" name="system.ativo"/>
                             {{/if}}
                         </div>
                     </div>
