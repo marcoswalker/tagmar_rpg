@@ -47,6 +47,9 @@
     min-height: 200px;
     font-family: "GoudyMediaeval";
 }
+.form_tagmar .editor span {
+    font-family: "GoudyMediaeval" !important;
+}
 .form_tagmar .editor strong {
     color:rgb(94, 8, 8);
 }

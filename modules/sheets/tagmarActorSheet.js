@@ -6,7 +6,7 @@ export default class tagmarActorSheet extends ActorSheet {
         return foundry.utils.mergeObject(super.defaultOptions, {
         classes: ["tagmar", "sheet", "actor"],
         //width: 900,
-        height: 890,
+        height: 925,
         tabs: [{
             navSelector: ".prim-tabs",
             contentSelector: ".sheet-primary",
@@ -336,7 +336,22 @@ export default class tagmarActorSheet extends ActorSheet {
             html.find('.searchHabilidade').keyup(this._realcaHablidade.bind(this));
             html.find('.searchEfeito').keyup(this._realcaEfeito.bind(this));
             html.find('.descansar').click(this._descanso.bind(this));
+            html.find('input[name="grupo_aprim"]').click(this._radio_grupo_aprim.bind(this));
         } 
+    }
+
+    _radio_grupo_aprim(event) {
+        event.preventDefault();
+        let old_grup = this.document.system.grupo_aprim;
+        if (old_grup == $(event.currentTarget).val()) {
+            this.document.update({
+                'system.grupo_aprim': ""
+            });
+        } else {
+            this.document.update({
+                'system.grupo_aprim': $(event.currentTarget).val()
+            });
+        }
     }
     
     _linguasDialog(event) {
@@ -1235,6 +1250,14 @@ export default class tagmarActorSheet extends ActorSheet {
         const profissoes = actorData.items.filter(item => item.type == "Profissao");
         //if (racas.length >= 1) this.document.deleteEmbeddedDocuments("Item", [racas]);
         //if (profissoes.length >= 1) this.document.deleteEmbeddedDocuments("Item", [item._id]);
+        const old_tecnicas = actorData.items.filter(item => item.type == "TecnicasCombate");
+        if (old_tecnicas.length > 0) {
+            let old_ids = [];
+            old_tecnicas.forEach(function (old) {
+                old_ids.push(old.id);
+            });
+            this.document.deleteEmbeddedDocuments("Item", old_ids);
+        }
         var especializacoes = [];
         const efeitos = actorData.items.filter(item => item.type == "Efeito");
         const tabela_resol = [
@@ -1372,6 +1395,90 @@ export default class tagmarActorSheet extends ActorSheet {
         actorData.magia_fav = magia_fav;
         actorData.magias = magias;
         actorData.ficha = "Sorteio";
+        actorData.cd_aprim = false;
+        actorData.ci_aprim = false;
+        actorData.cl_aprim = false;
+        actorData.cld_aprim = false;
+        actorData.el_aprim = false;
+        actorData.cme_aprim = false;
+        actorData.cmm_aprim = false;
+        actorData.em_aprim = false;
+        actorData.pma_aprim = false;
+        actorData.pml_aprim = false;
+        actorData.cpe_aprim = false;
+        actorData.cpm_aprim = false;
+        actorData.ep_aprim = false;
+        actorData.pp_aprim = false;
+        actorData.ppa_aprim = false;
+        actorData.ppb_aprim = false;
+        switch (actorData.system.grupo_aprim) {
+            case "CD":
+                actorData.cd_aprim = true;
+                break;
+            case "CI":
+                actorData.ci_aprim = true;
+                break;
+            case "CL":
+                actorData.cl_aprim = true;
+                break;
+            case "CLD":
+                actorData.cld_aprim = true;
+                break;
+            case "EL":
+                actorData.el_aprim = true;
+                break;
+            case "CmE":
+                actorData.cme_aprim = true;
+                break;
+            case "CmM":
+                actorData.cmm_aprim = true;
+                break;
+            case "EM":
+                actorData.em_aprim = true;
+                break;
+            case "PmA":
+                actorData.pma_aprim = true;
+                break;
+            case "PmL":
+                actorData.pml_aprim = true;
+                break;
+            case "CpE":
+                actorData.cpe_aprim = true;
+                break;
+            case "CpM":
+                actorData.cpm_aprim = true;
+                break;
+            case "EP":
+                actorData.ep_aprim = true;
+                break;
+            case "PP":
+                actorData.pp_aprim = true;
+                break;
+            case "PpA":
+                actorData.ppa_aprim = true;
+                break;
+            case "PpB":
+                actorData.ppb_aprim = true;
+                break;
+            default:
+                actorData.cd_aprim = false;
+                actorData.ci_aprim = false;
+                actorData.cl_aprim = false;
+                actorData.cld_aprim = false;
+                actorData.el_aprim = false;
+                actorData.cme_aprim = false;
+                actorData.cmm_aprim = false;
+                actorData.em_aprim = false;
+                actorData.pma_aprim = false;
+                actorData.pml_aprim = false;
+                actorData.cpe_aprim = false;
+                actorData.cpm_aprim = false;
+                actorData.ep_aprim = false;
+                actorData.pp_aprim = false;
+                actorData.ppa_aprim = false;
+                actorData.ppb_aprim = false;
+                break;
+        }
     }
 
     async _rolarMoral(event) {

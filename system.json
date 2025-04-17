@@ -1,8 +1,8 @@
 {
   "id": "tagmar_rpg",
   "title": "Tagmar XXX",
-  "description": "Sistema simples para Tagmar 3.0. Módulo Obrigatório: Compendium Folders, Módulos Recomendados: Bar Brawl, Dice So Nice!, Dice Tray, Portuguese (BR) Core",
-  "version": "2.3.2",
+  "description": "Sistema simples para Tagmar 3.01.",
+  "version": "2.3.3",
   "relationships": {
     "requires": [
       {
@@ -56,7 +56,7 @@
     }
   ],
   "compatibility": {
-    "minimum": "10",
+    "minimum": "12",
     "verified": "12"
   },
   "scripts": [
@@ -77,17 +77,6 @@
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER",
-        "GAMEMASTER": "OWNER"
-      }
-    },
-    {
-      "name": "criaturas-e-arquetipos",
-      "label": "Criaturas e Arquetipos",
-      "system": "tagmar_rpg",
-      "path": "packs/criaturas-e-arquetipos",
-      "type": "Actor",
-      "ownership": {
-        "PLAYER": "NONE",
         "GAMEMASTER": "OWNER"
       }
     },

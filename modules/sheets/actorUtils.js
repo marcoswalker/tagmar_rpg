@@ -318,7 +318,9 @@ export function _attProfissao(sheetData, updatePers, items_toUpdate) {
             pontos_gra -= actorSheetData.grupos.PP * 3;
             pontos_gra -= actorSheetData.grupos.PpA * 3;
             pontos_gra -= actorSheetData.grupos.PpB * 3;
-
+            if (actorSheetData.grupo_aprim != "") {
+                pontos_gra -= actorSheetData.grupos[actorSheetData.grupo_aprim] * 2;
+            }
         }
         let tecnicasP = actorData.items.filter(item => item.type == "Tecnica_Combate");
         tecnicasP.forEach(function (tecnica) {
@@ -724,6 +726,7 @@ export function _updateTencnicasItems(sheetData, items_toUpdate) {
         else if (ajusteTecnica.atributo == "PER") total = actorData.atributos.PER + nivel_tecnica;
         else total = nivel_tecnica;
         total += ajusteTecnica.valor;
+        total += tec.bonus;
         if (tec.total != total) {
             items_toUpdate.push({
                 "_id": tecnica.id,

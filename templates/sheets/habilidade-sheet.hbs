@@ -50,20 +50,20 @@
                         <div class="col-md-2">
                             <label><h4 class="mediaeval">Ajuste:</h4></label>
                         </div>
-                        <div class="col-md-4">
-                            <input name="system.ajuste.atributo" type="text" list="atributos" value="{{data.system.ajuste.atributo}}" height="30"/>
-                            <datalist id="atributos">
-                                <option value=""></option>
-                                <option value="INT">INTELECTO</option>
-                                <option value="AUR">AURA</option>
-                                <option value="CAR">CARISMA</option>
-                                <option value="FOR">FORÇA</option>
-                                <option value="FIS">FÍSICO</option>
-                                <option value="AGI">AGILIDADE</option>
-                                <option value="PER">PERCEPÇÃO</option>
-                            </datalist>
+                        <div class="col-md-2">
+                            <select class="mediaeval" name="system.ajuste.atributo" type="text" list="atributos" value="{{data.system.ajuste.atributo}}" height="30" data-dtype="String">
+                                {{#selectOptions item.prof_atribM selected=data.system.ajuste.atributo valueAttr="key"}}
+                                {{/selectOptions}}
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            
                         </div>
                         <div class="col-md-2">
+                            <label title="Proibido rolamento sem nível." style="vertical-align: center;"><i class="fa-solid fa-ban"></i></label>
+                            <input type="checkbox" name="system.nao_rolar_sem_nivel" data-dtype="Boolean" value="{{data.system.nao_rolar_sem_nivel}}" {{checked data.system.nao_rolar_sem_nivel}} title="Proibido rolamento sem nível."/>
+                        </div>
+                        <div class="col-md-1">
                             <input class="ajuste hiddenT" name="system.ajuste.valor" type="number" value="{{data.system.ajuste.valor}}" height="30"/>
                         </div>
                         <div class="col-md-2">

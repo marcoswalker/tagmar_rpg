@@ -155,7 +155,8 @@
       }
     },
     "Personagem": {
-      "templates": ["base"]
+      "templates": ["base"],
+      "grupo_aprim": ""
     },
     "NPC": {
       "templates": ["base"],
@@ -240,6 +241,8 @@
       },
       "tipo": "",
       "municao": 0
+    },"TecnicasCombate": {
+      "templates": ["custoNivel"]
     },
     "Tecnica_Combate": {
       "templates": ["custoNivel"],
@@ -260,7 +263,8 @@
         "valor": "Não",
         "tecnica": ""
       },
-      "complemento": "Não"
+      "complemento": "Não",
+      "bonus": 0
     },
     "Magia": {
       "templates": ["base", "custoNivel"],
@@ -288,7 +292,8 @@
       },
       "hab_nata": false,
       "descricao": "",
-      "tarefAperf": ""
+      "tarefAperf": "",
+      "nao_rolar_sem_nivel": false
     },
     "Defesa": {
       "defesa_base": {
@@ -336,7 +341,8 @@
         "p_gra": 0,
         "p_mag": 0
       },
-      "atrib_mag": ""
+      "atrib_mag": "",
+      "grupo_aprim": false
     },
     "Raca": {
       "descricao": "",

@@ -25,12 +25,16 @@ export default class tagmarItemSheet extends ItemSheet {
             this['position']['height'] = 560;
         }
         if (this.object.type == "Profissao") {
-            this['options']['height'] = 595;
-            this['position']['height'] = 595;
+            this['options']['height'] = 600;
+            this['position']['height'] = 600;
         }
         if (this.object.type == "Tecnica_Combate") {
-            this['options']['height'] = 700;
+            this['options']['height'] = 730;
             this['position']['height'] = 730;
+        }
+        if (this.object.type == "Habilidade") {
+            this['options']['height'] = 605;
+            this['position']['height'] = 605;
         }
         if (layout != "base") {
             return 'systems/tagmar_rpg/templates/sheets/'+ this.object.type.toLowerCase() +'-ficha.hbs';
@@ -45,7 +49,22 @@ export default class tagmarItemSheet extends ItemSheet {
         if (this.object.type == "Profissao" && this.object.system.especializacoes != "") {
             data.data.system.especializacoes = this.object.system.especializacoes.split(",");
         } else if (this.object.type == "Profissao") data.data.system.especializacoes = [];
+        console.log(this.object.img);
         return data;
+    }
+
+    revemoDupTec(tecnicas) {
+        let unique = [];
+        tecnicas.forEach(element => {
+            if (!unique.includes(element.name)) {
+                unique.push(element.name);
+            }
+        });
+        let retorno = [];
+        unique.forEach(element => {
+            retorno.push({"name": element});
+        });
+        return retorno;
     }
 
     _prepareItemData(sheetData) {
@@ -63,7 +82,7 @@ export default class tagmarItemSheet extends ItemSheet {
                 itemData.efeitos_tipos = atrib_res;
             } 
         }
-        const tecnicas = game.items.filter(e => e.type == "Tecnica_Combate" && e.system.complemento == "Sim");
+        const tecnicas = this.revemoDupTec(game.items.filter(e => e.type == "Tecnica_Combate" && e.system.complemento == "Sim"));
         if (tecnicas.length > 0) itemData.tecnicas = [{name : ""}].concat(tecnicas);
         itemData.efeitos_oper = [{key : "+"}, {key : "-"}, {key : "/"}, {key : "*"}];
         itemData.hab_tipos = [

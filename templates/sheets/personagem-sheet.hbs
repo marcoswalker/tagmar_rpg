@@ -246,6 +246,28 @@
                                 <th class="mediaeval">PpA</th>
                                 <th class="mediaeval">PpB</th>
                             </tr>
+                            {{#if actor.profissao.system.grupo_aprim}}
+                                {{#ifge data.system.estagio 5}}
+                                    <tr>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CD" {{checked actor.cd_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CL" {{checked actor.cl_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CI" {{checked actor.ci_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CLD" {{checked actor.cld_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="EL" {{checked actor.el_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CmE" {{checked actor.cme_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CmM" {{checked actor.cmm_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="EM" {{checked actor.em_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="PmA" {{checked actor.pma_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="PmL" {{checked actor.pml_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CpE" {{checked actor.cpe_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="CpM" {{checked actor.cpm_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="EP" {{checked actor.ep_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="PP" {{checked actor.pp_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="PpA" {{checked actor.ppa_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                        <td style="text-align: center;"><input type="checkbox" name="grupo_aprim" value="PpB" {{checked actor.ppb_aprim}} title="Grupo de Armas Aprimorado"/></td>
+                                    </tr>
+                                {{/ifge}}
+                            {{/if}}
                             <tr style="text-align: center;">
                                 <td><a class="addGrupoArmas" data-item-id="CD"><i class="fas fa-plus-circle"></i></a></td>
                                 <td><a class="addGrupoArmas" data-item-id="CI"><i class="fas fa-plus-circle"></i></a></td>
@@ -510,7 +532,7 @@
                             {{#each actor.h_prof as |h_prof|}}      <!--Habilidades Profissionais-->
                             <tr class="item" data-item-id="{{h_prof.id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_prof.id}}" title="Rolar Habilidade">{{h_prof.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_prof.system.total}}</td>
+                                <td class="mediaeval habTotal">{{#if h_prof.system.nao_rolar_sem_nivel}}{{#ifle h_prof.system.nivel 0}}<i class="fa-solid fa-ban"></i>{{/ifle}}{{#ifgr h_prof.system.nivel 0}}{{h_prof.system.total}}{{/ifgr}}{{else}}{{h_prof.system.total}}{{/if}}</td>
                                 <td class="mediaeval habNivel esconde">{{h_prof.system.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -532,7 +554,7 @@
                             {{#each actor.h_man as |h_man|}}        <!--Habilidades Manuais-->
                             <tr class="item" data-item-id="{{h_man.id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-roll="{{h_man.total}}" data-item-id="{{h_man.id}}" title="Rolar Habilidade">{{h_man.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_man.system.total}}</td>
+                                <td class="mediaeval habTotal">{{#if h_man.system.nao_rolar_sem_nivel}}{{#ifle h_man.system.nivel 0}}<i class="fa-solid fa-ban"></i>{{/ifle}}{{#ifgr h_man.system.nivel 0}}{{h_man.system.total}}{{/ifgr}}{{else}}{{h_man.system.total}}{{/if}}</td>
                                 <td class="mediaeval habNivel esconde">{{h_man.system.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -554,7 +576,7 @@
                             {{#each actor.h_con as |h_con|}}        <!--Habilidades de Conhecimento-->
                             <tr class="item" data-item-id="{{h_con.id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_con.id}}" title="Rolar Habilidade">{{h_con.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_con.system.total}}</td>
+                                <td class="mediaeval habTotal">{{#if h_con.system.nao_rolar_sem_nivel}}{{#ifle h_con.system.nivel 0}}<i class="fa-solid fa-ban"></i>{{/ifle}}{{#ifgr h_con.system.nivel 0}}{{h_con.system.total}}{{/ifgr}}{{else}}{{h_con.system.total}}{{/if}}</td>
                                 <td class="mediaeval habNivel esconde">{{h_con.system.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -583,7 +605,7 @@
                             {{#each actor.h_sub as |h_sub|}}    <!--Habilidades de Subterfúgio-->
                             <tr class="item" data-item-id="{{h_sub.id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_sub.id}}" title="Rolar Habilidade">{{h_sub.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_sub.system.total}}</td>
+                                <td class="mediaeval habTotal">{{#if h_sub.system.nao_rolar_sem_nivel}}{{#ifle h_sub.system.nivel 0}}<i class="fa-solid fa-ban"></i>{{/ifle}}{{#ifgr h_sub.system.nivel 0}}{{h_sub.system.total}}{{/ifgr}}{{else}}{{h_sub.system.total}}{{/if}}</td>
                                 <td class="mediaeval habNivel esconde">{{h_sub.system.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -605,7 +627,7 @@
                             {{#each actor.h_inf as |h_inf|}}    <!--Habilidades de Influência-->
                             <tr class="item" data-item-id="{{h_inf.id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_inf.id}}" title="Rolar Habilidade">{{h_inf.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_inf.system.total}}</td>
+                                <td class="mediaeval habTotal">{{#if h_inf.system.nao_rolar_sem_nivel}}{{#ifle h_inf.system.nivel 0}}<i class="fa-solid fa-ban"></i>{{/ifle}}{{#ifgr h_inf.system.nivel 0}}{{h_inf.system.total}}{{/ifgr}}{{else}}{{h_inf.system.total}}{{/if}}</td>
                                 <td class="mediaeval habNivel esconde">{{h_inf.system.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
@@ -627,7 +649,7 @@
                             {{#each actor.h_geral as |h_geral|}}        <!--Habilidades Gerais-->
                             <tr class="item" data-item-id="{{h_geral.id}}">
                                 <td class="mediaeval habName"><a class="rollable mediaeval dragable" data-item-id="{{h_geral.id}}" title="Rolar Habilidade">{{h_geral.name}}</a></td>
-                                <td class="mediaeval habTotal">{{h_geral.system.total}}</td>
+                                <td class="mediaeval habTotal">{{#if h_geral.system.nao_rolar_sem_nivel}}{{#ifle h_geral.system.nivel 0}}<i class="fa-solid fa-ban"></i>{{/ifle}}{{#ifgr h_geral.system.nivel 0}}{{h_geral.system.total}}{{/ifgr}}{{else}}{{h_geral.system.total}}{{/if}}</td>
                                 <td class="mediaeval habNivel esconde">{{h_geral.system.nivel}}</td>
                                 <td>
                                     <div class="item-controls">
